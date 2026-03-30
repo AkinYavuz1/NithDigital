@@ -37,5 +37,4 @@ This is a static site. Deploy to any static hosting provider:
 ## Contact
 
 - **Email:** hello@nithdigital.uk
-- **LinkedIn:** [linkedin.com/in/akinyavuz](https://linkedin.com/in/akinyavuz)
 - **Location:** Sanquhar, Dumfries & Galloway, DG4
