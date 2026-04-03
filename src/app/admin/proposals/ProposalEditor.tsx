@@ -3,8 +3,15 @@
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
-import { Plus, Trash2, Download, Save, ArrowLeft } from 'lucide-react'
+import { Plus, Trash2, Download, Save, ArrowLeft, Layout } from 'lucide-react'
 import ProposalPreview from './ProposalPreview'
+
+const TEMPLATE_PICKS = [
+  { slug: 'highland-rest', name: 'Highland Rest B&B', type: 'B&B / Holiday Let', path: '/templates/highland-rest' },
+  { slug: 'nithsdale-plumbing', name: 'Nithsdale Plumbing', type: 'Tradesperson', path: '/templates/nithsdale-plumbing' },
+  { slug: 'river-kitchen', name: 'The River Kitchen', type: 'Restaurant / Café', path: '/templates/river-kitchen' },
+  { slug: 'galloway-larder', name: 'The Galloway Larder', type: 'Farm Shop / Retail', path: '/templates/galloway-larder' },
+]
 
 export interface ProposalForm {
   business_name: string
@@ -94,6 +101,7 @@ export default function ProposalEditor({ proposal, prefill }: Props) {
   const [saving, setSaving] = useState(false)
   const [toast, setToast] = useState('')
   const [activeTab, setActiveTab] = useState<'form' | 'preview'>('form')
+  const [showTemplatePicker, setShowTemplatePicker] = useState(false)
 
   const set = useCallback((field: keyof ProposalForm, value: unknown) => {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -322,7 +330,37 @@ export default function ProposalEditor({ proposal, prefill }: Props) {
             <h2 style={sectionTitle}>Extras</h2>
             <div style={{ marginBottom: 14 }}>
               <label style={labelStyle}>Demo URL (optional)</label>
-              <input value={form.demo_url} onChange={e => set('demo_url', e.target.value)} style={inputStyle} placeholder="demo-bnb.nithdigital.uk" />
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input value={form.demo_url} onChange={e => set('demo_url', e.target.value)} style={{ ...inputStyle, flex: 1 }} placeholder="e.g. /templates/highland-rest?name=My+B%26B" />
+                <button
+                  type="button"
+                  onClick={() => setShowTemplatePicker(p => !p)}
+                  title="Choose a template"
+                  style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 5, padding: '8px 12px', background: showTemplatePicker ? '#1B2A4A' : '#f9f8f5', color: showTemplatePicker ? '#D4A84B' : '#5A6A7A', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 6, cursor: 'pointer', fontSize: 12, fontWeight: 600, fontFamily: 'inherit' }}
+                >
+                  <Layout size={13} /> Templates
+                </button>
+              </div>
+              {showTemplatePicker && (
+                <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                  {TEMPLATE_PICKS.map(t => {
+                    const url = `${t.path}?name=${encodeURIComponent(form.business_name || t.name)}&phone=${encodeURIComponent(form.contact_email || '')}&email=${encodeURIComponent(form.contact_email || '')}`
+                    return (
+                      <button
+                        key={t.slug}
+                        type="button"
+                        onClick={() => { set('demo_url', url); setShowTemplatePicker(false) }}
+                        style={{ padding: '10px 12px', background: '#f9f8f5', border: '1px solid rgba(27,42,74,0.12)', borderRadius: 6, cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', transition: 'border-color 0.15s' }}
+                        onMouseEnter={e => (e.currentTarget.style.borderColor = '#D4A84B')}
+                        onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(27,42,74,0.12)')}
+                      >
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A' }}>{t.name}</div>
+                        <div style={{ fontSize: 11, color: '#5A6A7A', marginTop: 2 }}>{t.type}</div>
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
             </div>
             {form.pricing_model !== 'custom' && (
               <div style={{ marginBottom: 14 }}>
