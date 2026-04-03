@@ -1,48 +1,61 @@
-import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request })
+// Lightweight middleware — no @supabase/ssr import to keep Worker bundle under 3MB.
+// We check for the Supabase session cookie as a proxy for "logged in".
+// Full auth validation happens client-side in each protected page.
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({ request })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
+const PROJECT_REF = 'mrdozyxbonbukpmywxqi'
+const SESSION_COOKIE = `sb-${PROJECT_REF}-auth-token`
 
-  const { data: { user } } = await supabase.auth.getUser()
+function getEmailFromToken(token: string): string | null {
+  try {
+    const parts = token.split('.')
+    if (parts.length < 2) return null
+    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')))
+    return payload?.email ?? null
+  } catch {
+    return null
+  }
+}
 
-  if (!user && (request.nextUrl.pathname.startsWith('/os') || request.nextUrl.pathname.startsWith('/admin'))) {
+export function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname
+
+  // Check for session cookie
+  const sessionCookie = request.cookies.get(SESSION_COOKIE)
+  const hasSession = !!sessionCookie?.value
+
+  // Redirect unauthenticated users away from /os and /admin
+  if (!hasSession && (path.startsWith('/os') || path.startsWith('/admin'))) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
-    url.searchParams.set('next', request.nextUrl.pathname)
+    url.searchParams.set('next', path)
     return NextResponse.redirect(url)
   }
 
-  // Admin check — only hello@nithdigital.uk
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    if (!user || user.email !== 'hello@nithdigital.uk') {
+  // Admin check — decode JWT to read email claim
+  if (path.startsWith('/admin') && hasSession) {
+    try {
+      const raw = sessionCookie!.value
+      // Cookie value may be JSON array [access_token, ...]
+      const parsed = JSON.parse(raw)
+      const accessToken = Array.isArray(parsed) ? parsed[0] : parsed.access_token ?? parsed
+      const email = getEmailFromToken(String(accessToken))
+      if (email !== 'hello@nithdigital.uk') {
+        const url = request.nextUrl.clone()
+        url.pathname = '/os'
+        return NextResponse.redirect(url)
+      }
+    } catch {
+      // If we can't parse the token, deny access to admin
       const url = request.nextUrl.clone()
       url.pathname = '/os'
       return NextResponse.redirect(url)
     }
   }
 
-  return supabaseResponse
+  return NextResponse.next()
 }
 
 export const config = {
