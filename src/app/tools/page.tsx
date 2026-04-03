@@ -5,16 +5,16 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Free Business Tools — Nith Digital',
-  description: 'Free calculators and tools for Scottish businesses. LBTT calculator, VAT threshold checker, sole trader vs limited company comparator, take-home pay calculator, invoice generator.',
+  description: 'Free calculators and tools for Scottish businesses. VAT threshold checker, sole trader vs limited company comparator, take-home pay calculator, invoice generator.',
 }
 
 const TOOLS = [
   {
-    href: '/tools/lbtt-calculator',
-    icon: '🏠',
-    title: 'LBTT Calculator',
-    desc: 'Calculate Land and Buildings Transaction Tax for Scottish property purchases, including first-time buyer relief and additional dwelling supplement.',
-    tags: ['Property', 'Scotland'],
+    href: '/tools/site-audit',
+    icon: '🔍',
+    title: 'Free Website Audit',
+    desc: 'Instant SEO, performance, security, and mobile analysis for any website. See exactly what\'s holding your site back — and how to fix it.',
+    tags: ['SEO', 'Performance', 'Security'],
   },
   {
     href: '/tools/vat-checker',
