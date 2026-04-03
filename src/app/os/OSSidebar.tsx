@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Users, FileText, ClipboardList, Receipt,
   TrendingUp, Car, Calculator, BarChart3, Settings, LogOut,
-  Calendar, Mail,
+  Calendar, Mail, FolderOpen, Gift, HelpCircle,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   { href: '/os', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/os/bookings', icon: Calendar, label: 'Bookings' },
   { href: '/os/clients', icon: Users, label: 'Clients' },
+  { href: '/os/files', icon: FolderOpen, label: 'Files' },
   { href: '/os/invoices', icon: FileText, label: 'Invoices' },
   { href: '/os/quotes', icon: ClipboardList, label: 'Quotes' },
   { href: '/os/expenses', icon: Receipt, label: 'Expenses' },
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
   { href: '/os/mileage', icon: Car, label: 'Mileage' },
   { href: '/os/tax', icon: Calculator, label: 'Tax Estimator' },
   { href: '/os/reports', icon: BarChart3, label: 'Reports' },
+  { href: '/os/referrals', icon: Gift, label: 'Referrals' },
   { href: '/os/emails', icon: Mail, label: 'Emails' },
   { href: '/os/settings', icon: Settings, label: 'Settings' },
 ]
@@ -91,6 +93,27 @@ export default function OSSidebar() {
             )
           })}
         </nav>
+
+        {/* Help link */}
+        <div style={{ padding: '0 8px 4px' }}>
+          <Link
+            href="/help"
+            target="_blank"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              padding: '10px 12px',
+              borderRadius: 6,
+              color: 'rgba(245,240,230,0.4)',
+              fontSize: 13,
+              transition: 'color 0.2s ease',
+            }}
+          >
+            <HelpCircle size={16} />
+            Help Centre
+          </Link>
+        </div>
 
         {/* Sign out */}
         <div style={{ padding: '12px 8px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>

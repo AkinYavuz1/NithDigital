@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import SignupForm from './SignupForm'
 import Logo from '@/components/Logo'
 import Link from 'next/link'
@@ -45,7 +46,9 @@ export default function SignupPage() {
           </h1>
           <p style={{ fontSize: 13, color: '#5A6A7A' }}>Free — save your Launchpad progress</p>
         </div>
-        <SignupForm />
+        <Suspense fallback={null}>
+          <SignupForm />
+        </Suspense>
         <p style={{ textAlign: 'center', fontSize: 13, color: '#5A6A7A', marginTop: 24 }}>
           Already have an account?{' '}
           <Link href="/auth/login" style={{ color: '#D4A84B', fontWeight: 600 }}>

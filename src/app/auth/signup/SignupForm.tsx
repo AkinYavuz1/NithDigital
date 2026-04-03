@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
 const inputStyle: React.CSSProperties = {
@@ -29,6 +30,8 @@ export default function SignupForm() {
   const [form, setForm] = useState({ email: '', full_name: '', business_name: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [errMsg, setErrMsg] = useState('')
+  const searchParams = useSearchParams()
+  const refCode = searchParams.get('ref')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,8 +40,8 @@ export default function SignupForm() {
     const { error } = await supabase.auth.signInWithOtp({
       email: form.email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-        data: { full_name: form.full_name, business_name: form.business_name },
+        emailRedirectTo: `${window.location.origin}/auth/callback${refCode ? `?ref=${refCode}` : ''}`,
+        data: { full_name: form.full_name, business_name: form.business_name, referral_code: refCode || null },
       },
     })
     if (error) {
@@ -64,6 +67,12 @@ export default function SignupForm() {
   }
 
   return (
+    <>
+    {refCode && (
+      <div style={{ background: 'rgba(212,168,75,0.1)', border: '1px solid rgba(212,168,75,0.3)', borderRadius: 8, padding: '12px 16px', marginBottom: 16, fontSize: 13, color: '#1B2A4A' }}>
+        🎁 <strong>Referral bonus active!</strong> Sign up and you&apos;ll both get a free month of Business OS.
+      </div>
+    )}
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <label style={labelStyle}>Full name</label>
@@ -124,5 +133,6 @@ export default function SignupForm() {
         {status === 'sending' ? 'Creating account...' : 'Create account'}
       </button>
     </form>
+    </>
   )
 }

@@ -44,6 +44,13 @@ const TOOLS = [
     desc: 'Create and download a professional invoice as a PDF. No signup required, nothing saved to our servers.',
     tags: ['Invoicing', 'Free'],
   },
+  {
+    href: '/tools/website-quote',
+    icon: '💻',
+    title: 'Website Quote Calculator',
+    desc: 'Get an instant price estimate for your website based on your requirements. Answer a few questions and see a realistic cost range.',
+    tags: ['Websites', 'Quote', 'UK'],
+  },
 ]
 
 export default function ToolsPage() {
