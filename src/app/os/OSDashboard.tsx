@@ -1,0 +1,300 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { createClient } from '@/lib/supabase'
+import Link from 'next/link'
+import { Plus } from 'lucide-react'
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer,
+  PieChart, Pie, Cell,
+} from 'recharts'
+import { formatCurrency } from '@/lib/taxCalc'
+
+const TAX_DEADLINES = [
+  { date: '5 Apr 2025', label: 'Tax year ends' },
+  { date: '6 Apr 2025', label: 'New tax year starts' },
+  { date: '31 Jul 2025', label: 'Second payment on account' },
+  { date: '31 Jan 2026', label: 'Online return + first payment on account' },
+]
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+const STATUS_COLORS: Record<string, string> = {
+  draft: '#9CA3AF',
+  sent: '#3B82F6',
+  paid: '#10B981',
+  overdue: '#EF4444',
+  cancelled: '#6B7280',
+}
+
+export default function OSDashboard() {
+  const [kpis, setKpis] = useState({ revenue: 0, outstanding: 0, outstandingCount: 0, expenses: 0, taxLiability: 0 })
+  const [recentInvoices, setRecentInvoices] = useState<{ id: string; invoice_number: string; client_name: string; due_date: string; total: number; status: string }[]>([])
+  const [chartData, setChartData] = useState<{ month: string; revenue: number; expenses: number }[]>([])
+  const [incomeBySource, setIncomeBySource] = useState<{ name: string; value: number }[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadDashboard()
+  }, [])
+
+  const loadDashboard = async () => {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { setLoading(false); return }
+
+    const taxYearStart = new Date().getMonth() >= 3
+      ? new Date(new Date().getFullYear(), 3, 6)
+      : new Date(new Date().getFullYear() - 1, 3, 6)
+
+    const [invoicesRes, expensesRes, incomeRes] = await Promise.all([
+      supabase.from('invoices').select('*, clients(name)').eq('user_id', user.id).order('created_at', { ascending: false }),
+      supabase.from('expenses').select('*').eq('user_id', user.id).gte('date', taxYearStart.toISOString().split('T')[0]),
+      supabase.from('income').select('*').eq('user_id', user.id).gte('date', taxYearStart.toISOString().split('T')[0]),
+    ])
+
+    const invoices = invoicesRes.data || []
+    const expenses = expensesRes.data || []
+    const incomes = incomeRes.data || []
+
+    const revenue = invoices.filter(i => i.status === 'paid' && new Date(i.issue_date) >= taxYearStart)
+      .reduce((s: number, i: { total: number }) => s + Number(i.total), 0)
+      + incomes.reduce((s: number, i: { amount: number }) => s + Number(i.amount), 0)
+
+    const outstanding = invoices.filter(i => i.status === 'sent' || i.status === 'overdue')
+    const totalExpenses = expenses.reduce((s: number, e: { amount: number }) => s + Number(e.amount), 0)
+
+    // Build monthly chart data (last 12 months)
+    const monthly: Record<string, { revenue: number; expenses: number }> = {}
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date()
+      d.setMonth(d.getMonth() - i)
+      const key = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+      monthly[key] = { revenue: 0, expenses: 0 }
+    }
+
+    invoices.filter(i => i.status === 'paid').forEach((inv: { issue_date: string; total: number }) => {
+      const d = new Date(inv.issue_date)
+      const key = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+      if (monthly[key]) monthly[key].revenue += Number(inv.total)
+    })
+    incomes.forEach((inc: { date: string; amount: number }) => {
+      const d = new Date(inc.date)
+      const key = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+      if (monthly[key]) monthly[key].revenue += Number(inc.amount)
+    })
+    expenses.forEach((exp: { date: string; amount: number }) => {
+      const d = new Date(exp.date)
+      const key = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+      if (monthly[key]) monthly[key].expenses += Number(exp.amount)
+    })
+
+    const chartArr = Object.entries(monthly).map(([month, v]) => ({ month: month.split(' ')[0], ...v }))
+
+    // Income by source
+    const sourceMap: Record<string, number> = {}
+    incomes.forEach((inc: { source: string; amount: number }) => {
+      sourceMap[inc.source] = (sourceMap[inc.source] || 0) + Number(inc.amount)
+    })
+    const sourceArr = Object.entries(sourceMap).map(([name, value]) => ({ name, value }))
+
+    // Simple tax estimate
+    const taxableProfit = Math.max(0, revenue - totalExpenses)
+    const taxLiability = taxableProfit > 12570 ? (Math.min(taxableProfit, 50270) - 12570) * 0.2 + Math.max(0, taxableProfit - 50270) * 0.4 : 0
+
+    setKpis({
+      revenue,
+      outstanding: outstanding.reduce((s: number, i: { total: number }) => s + Number(i.total), 0),
+      outstandingCount: outstanding.length,
+      expenses: totalExpenses,
+      taxLiability,
+    })
+    setRecentInvoices(
+      invoices.slice(0, 5).map((inv: { id: string; invoice_number: string; clients: { name: string } | null; due_date: string; total: number; status: string }) => ({
+        id: inv.id,
+        invoice_number: inv.invoice_number,
+        client_name: inv.clients?.name ?? 'Unknown',
+        due_date: inv.due_date,
+        total: Number(inv.total),
+        status: inv.status,
+      }))
+    )
+    setChartData(chartArr)
+    setIncomeBySource(sourceArr.length > 0 ? sourceArr : [{ name: 'No income yet', value: 1 }])
+    setLoading(false)
+  }
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <div style={{ fontSize: 14, color: '#5A6A7A' }}>Loading dashboard...</div>
+      </div>
+    )
+  }
+
+  const DONUT_COLORS = ['#1B2A4A', '#D4A84B', '#F5F0E6', '#2D4A7A', '#E8C97A']
+
+  return (
+    <div style={{ padding: 32, maxWidth: 1200 }}>
+      <div style={{ marginBottom: 32 }}>
+        <h1 style={{ fontSize: 24, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>Dashboard</h1>
+        <p style={{ fontSize: 13, color: '#5A6A7A' }}>Welcome back. Here&apos;s your business at a glance.</p>
+      </div>
+
+      {/* KPI cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }}>
+        {[
+          { label: 'Revenue (tax year)', value: formatCurrency(kpis.revenue), sub: 'From paid invoices + income' },
+          { label: 'Outstanding invoices', value: formatCurrency(kpis.outstanding), sub: `${kpis.outstandingCount} unpaid` },
+          { label: 'Expenses (tax year)', value: formatCurrency(kpis.expenses), sub: 'Total allowable + other' },
+          { label: 'Est. tax liability', value: formatCurrency(kpis.taxLiability), sub: 'Rough estimate' },
+        ].map((kpi) => (
+          <div
+            key={kpi.label}
+            style={{
+              background: '#1B2A4A',
+              borderRadius: 10,
+              padding: '20px 24px',
+              borderTop: '3px solid #D4A84B',
+            }}
+          >
+            <div style={{ fontSize: 11, color: 'rgba(245,240,230,0.5)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1, fontWeight: 500 }}>
+              {kpi.label}
+            </div>
+            <div style={{ fontSize: 26, fontWeight: 700, color: '#D4A84B', marginBottom: 4 }}>
+              {kpi.value}
+            </div>
+            <div style={{ fontSize: 11, color: 'rgba(245,240,230,0.4)' }}>{kpi.sub}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Charts */}
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24, marginBottom: 32 }}>
+        <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
+          <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Revenue vs Expenses (last 12 months)</h3>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={chartData}>
+              <XAxis dataKey="month" tick={{ fontSize: 11 }} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `£${v}`} />
+              <Tooltip formatter={(v) => typeof v === 'number' ? formatCurrency(v) : v} />
+              <Legend />
+              <Bar dataKey="revenue" fill="#1B2A4A" name="Revenue" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="expenses" fill="#D4A84B" name="Expenses" radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
+          <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Income by source</h3>
+          <ResponsiveContainer width="100%" height={240}>
+            <PieChart>
+              <Pie data={incomeBySource} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value">
+                {incomeBySource.map((_, i) => (
+                  <Cell key={i} fill={DONUT_COLORS[i % DONUT_COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(v) => typeof v === 'number' ? formatCurrency(v) : v} />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Bottom row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24 }}>
+        {/* Recent invoices */}
+        <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A' }}>Recent invoices</h3>
+            <Link href="/os/invoices/new" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>New invoice</Link>
+          </div>
+          {recentInvoices.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '24px 0', color: '#5A6A7A', fontSize: 13 }}>
+              No invoices yet.{' '}
+              <Link href="/os/invoices/new" style={{ color: '#D4A84B' }}>Create your first invoice →</Link>
+            </div>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <thead>
+                <tr>
+                  {['Invoice', 'Client', 'Due', 'Amount', 'Status'].map((h) => (
+                    <th key={h} style={{ textAlign: 'left', padding: '8px 0', borderBottom: '1px solid rgba(27,42,74,0.08)', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.8, color: '#5A6A7A', fontWeight: 500 }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {recentInvoices.map((inv) => (
+                  <tr key={inv.id} style={{ borderBottom: '1px solid rgba(27,42,74,0.05)' }}>
+                    <td style={{ padding: '10px 0' }}>
+                      <Link href={`/os/invoices/${inv.id}`} style={{ color: '#2D4A7A', fontWeight: 600 }}>
+                        {inv.invoice_number}
+                      </Link>
+                    </td>
+                    <td style={{ padding: '10px 0', color: '#5A6A7A' }}>{inv.client_name}</td>
+                    <td style={{ padding: '10px 0', color: '#5A6A7A' }}>{new Date(inv.due_date).toLocaleDateString('en-GB')}</td>
+                    <td style={{ padding: '10px 0', fontWeight: 600 }}>{formatCurrency(inv.total)}</td>
+                    <td style={{ padding: '10px 0' }}>
+                      <span style={{ padding: '3px 8px', borderRadius: 100, fontSize: 11, fontWeight: 600, background: `${STATUS_COLORS[inv.status]}20`, color: STATUS_COLORS[inv.status] }}>
+                        {inv.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+
+        {/* Tax deadlines + quick actions */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
+            <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 16 }}>Upcoming deadlines</h3>
+            {TAX_DEADLINES.map((d) => (
+              <div key={d.date} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(27,42,74,0.05)', fontSize: 12 }}>
+                <span style={{ color: '#1B2A4A', fontWeight: 500 }}>{d.label}</span>
+                <span style={{ color: '#D4A84B', fontWeight: 600 }}>{d.date}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
+            <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 16 }}>Quick actions</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[
+                { label: 'New Invoice', href: '/os/invoices/new' },
+                { label: 'Log Expense', href: '/os/expenses/new' },
+                { label: 'Add Client', href: '/os/clients/new' },
+              ].map((a) => (
+                <Link
+                  key={a.href}
+                  href={a.href}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '10px 14px',
+                    background: '#F5F0E6',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: '#1B2A4A',
+                  }}
+                >
+                  <Plus size={14} /> {a.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 1024px) {
+          div[style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+          div[style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </div>
+  )
+}
