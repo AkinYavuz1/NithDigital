@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
-import { ChevronDown, ChevronUp, Download } from 'lucide-react'
+import { ChevronDown, ChevronUp, Download, FileSignature } from 'lucide-react'
 
 interface QuoteLead {
   id: string
@@ -37,10 +38,23 @@ const BIZ_LABELS: Record<string, string> = {
   agriculture: 'Agriculture', creative: 'Creative', other: 'Other',
 }
 
+// Map quote lead business_type values to proposal business_type values
+const BIZ_TYPE_MAP: Record<string, string> = {
+  tradesperson: 'tradesperson',
+  hospitality: 'bnb',
+  retail: 'retail',
+  professional: 'professional',
+  health_beauty: 'health_beauty',
+  agriculture: 'agriculture',
+  creative: 'other',
+  other: 'other',
+}
+
 export default function AdminQuoteLeadsClient() {
   const [leads, setLeads] = useState<QuoteLead[]>([])
   const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState<string | null>(null)
+  const router = useRouter()
 
   const fetchLeads = async () => {
     const supabase = createClient()
@@ -71,6 +85,34 @@ export default function AdminQuoteLeadsClient() {
     const a = document.createElement('a')
     a.href = url; a.download = 'quote-leads.csv'; a.click()
     URL.revokeObjectURL(url)
+  }
+
+  const createProposal = async (l: QuoteLead) => {
+    const supabase = createClient()
+    const req = l.requirements as { features?: string[]; extras?: string[] }
+    const services: string[] = []
+    if (req.features?.includes('booking')) services.push('Online booking / scheduling system')
+    if (req.features?.includes('gallery')) services.push('Photo gallery with lightbox')
+    if (req.features?.includes('ecommerce')) services.push('E-commerce with product listings and payments')
+    if (req.features?.includes('blog')) services.push('Blog / news section')
+    if (req.extras?.includes('seo')) services.push('SEO setup for local search (Google Business Profile, meta tags, sitemap)')
+    if (req.extras?.includes('hosting')) services.push('Monthly hosting and support')
+    services.push('Mobile-responsive business website')
+    services.push('Contact form with email notifications')
+    const { data } = await supabase.from('proposals').insert({
+      business_name: l.business_name || l.name,
+      contact_name: l.name,
+      contact_email: l.email,
+      business_type: BIZ_TYPE_MAP[l.business_type || ''] || 'other',
+      selected_services: [...new Set(services)],
+      custom_bullets: [],
+      pricing_model: 'standard',
+      estimated_price_low: l.estimated_price_low,
+      estimated_price_high: l.estimated_price_high,
+      monthly_cost: null,
+      status: 'draft',
+    }).select().single()
+    if (data) router.push(`/admin/proposals/${data.id}/edit`)
   }
 
   const thisMonth = leads.filter(l => new Date(l.created_at).getMonth() === new Date().getMonth()).length
@@ -118,7 +160,7 @@ export default function AdminQuoteLeadsClient() {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ borderBottom: '2px solid rgba(27,42,74,0.08)', background: 'rgba(27,42,74,0.02)' }}>
-                {['', 'Date', 'Name', 'Email', 'Business Type', 'Estimate', 'Status'].map(h => (
+                {['', 'Date', 'Name', 'Email', 'Business Type', 'Estimate', 'Status', ''].map(h => (
                   <th key={h} style={{ padding: '12px 14px', textAlign: 'left', fontWeight: 600, color: '#5A6A7A', fontSize: 11 }}>{h}</th>
                 ))}
               </tr>
@@ -126,7 +168,7 @@ export default function AdminQuoteLeadsClient() {
             <tbody>
               {leads.length === 0 ? (
                 <tr>
-                  <td colSpan={7} style={{ padding: 48, textAlign: 'center', color: '#5A6A7A', fontSize: 14 }}>No leads yet</td>
+                  <td colSpan={8} style={{ padding: 48, textAlign: 'center', color: '#5A6A7A', fontSize: 14 }}>No leads yet</td>
                 </tr>
               ) : leads.map((l, i) => {
                 const sc = STATUS_COLORS[l.status] || STATUS_COLORS.new
@@ -161,10 +203,19 @@ export default function AdminQuoteLeadsClient() {
                           {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
                         </select>
                       </td>
+                      <td style={{ padding: '12px 14px' }}>
+                        <button
+                          onClick={() => createProposal(l)}
+                          title="Create proposal"
+                          style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 10px', background: 'rgba(212,168,75,0.12)', color: '#D4A84B', border: 'none', borderRadius: 100, cursor: 'pointer', fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap' }}
+                        >
+                          <FileSignature size={12} /> Proposal
+                        </button>
+                      </td>
                     </tr>
                     {isExpanded && (
                       <tr key={`${l.id}-expanded`} style={{ borderBottom: i < leads.length - 1 ? '1px solid rgba(27,42,74,0.06)' : 'none' }}>
-                        <td colSpan={7} style={{ padding: '0 14px 16px 48px', background: 'rgba(27,42,74,0.02)' }}>
+                        <td colSpan={8} style={{ padding: '0 14px 16px 48px', background: 'rgba(27,42,74,0.02)' }}>
                           <div style={{ padding: '14px 0', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, fontSize: 12 }}>
                             <div>
                               <strong style={{ color: '#5A6A7A', display: 'block', marginBottom: 4 }}>Requirements:</strong>
