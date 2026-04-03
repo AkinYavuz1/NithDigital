@@ -45,11 +45,7 @@ export default function ReferralsClient() {
     ? `https://nithdigital.uk/ref/${profile.referral_code}`
     : ''
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  async function fetchData() {
+  const fetchData = async () => {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
@@ -63,7 +59,12 @@ export default function ReferralsClient() {
     setLoading(false)
   }
 
-  async function copyLink() {
+  useEffect(() => {
+    fetchData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const copyLink = async () => {
     await navigator.clipboard.writeText(referralLink)
     setCopied(true)
     setTimeout(() => setCopied(false), 2500)

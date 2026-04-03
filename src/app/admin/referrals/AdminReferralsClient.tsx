@@ -28,11 +28,7 @@ export default function AdminReferralsClient() {
   const [referrals, setReferrals] = useState<Referral[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  async function fetchData() {
+  const fetchData = async () => {
     const supabase = createClient()
     const { data } = await supabase
       .from('referrals')
@@ -42,7 +38,9 @@ export default function AdminReferralsClient() {
     setLoading(false)
   }
 
-  async function applyReward(r: Referral) {
+  useEffect(() => { fetchData() }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const applyReward = async (r: Referral) => {
     if (!confirm('Mark this reward as applied?')) return
     const supabase = createClient()
     await supabase.from('referrals').update({

@@ -65,11 +65,7 @@ export default function NotificationsClient() {
   const [typeFilter, setTypeFilter] = useState('all')
   const router = useRouter()
 
-  useEffect(() => {
-    fetchAll()
-  }, [])
-
-  async function fetchAll() {
+  const fetchAll = async () => {
     const supabase = createClient()
     const { data } = await supabase
       .from('notifications')
@@ -87,7 +83,12 @@ export default function NotificationsClient() {
     setLoading(false)
   }
 
-  async function markAllRead() {
+  useEffect(() => {
+    fetchAll()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const markAllRead = async () => {
     const supabase = createClient()
     await supabase.from('notifications').update({ read: true, read_at: new Date().toISOString() }).eq('read', false)
     setNotifications(prev => prev.map(n => ({ ...n, read: true })))

@@ -34,10 +34,6 @@ export default function OSDashboard() {
   const [incomeBySource, setIncomeBySource] = useState<{ name: string; value: number }[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    loadDashboard()
-  }, [])
-
   const loadDashboard = async () => {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -123,6 +119,11 @@ export default function OSDashboard() {
     setIncomeBySource(sourceArr.length > 0 ? sourceArr : [{ name: 'No income yet', value: 1 }])
     setLoading(false)
   }
+
+  useEffect(() => {
+    loadDashboard()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (loading) {
     return (

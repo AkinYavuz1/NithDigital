@@ -42,18 +42,16 @@ export default function AdminQuoteLeadsClient() {
   const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetchLeads()
-  }, [])
-
-  async function fetchLeads() {
+  const fetchLeads = async () => {
     const supabase = createClient()
     const { data } = await supabase.from('quote_leads').select('*').order('created_at', { ascending: false })
     if (data) setLeads(data)
     setLoading(false)
   }
 
-  async function updateStatus(id: string, status: string) {
+  useEffect(() => { fetchLeads() }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const updateStatus = async (id: string, status: string) => {
     const supabase = createClient()
     await supabase.from('quote_leads').update({ status }).eq('id', id)
     setLeads(prev => prev.map(l => l.id === id ? { ...l, status } : l))

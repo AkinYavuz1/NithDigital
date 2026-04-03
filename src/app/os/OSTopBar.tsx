@@ -49,12 +49,23 @@ export default function OSTopBar() {
 
   const unread = notifications.filter(n => !n.read).length
 
+  const fetchNotifications = async () => {
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('notifications')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(20)
+    if (data) setNotifications(data)
+  }
+
   useEffect(() => {
     const supabase = createClient()
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) setUserEmail(data.user.email || '')
     })
     fetchNotifications()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -67,17 +78,7 @@ export default function OSTopBar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  async function fetchNotifications() {
-    const supabase = createClient()
-    const { data } = await supabase
-      .from('notifications')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(20)
-    if (data) setNotifications(data)
-  }
-
-  async function markAllRead() {
+  const markAllRead = async () => {
     const supabase = createClient()
     const unreadIds = notifications.filter(n => !n.read).map(n => n.id)
     if (!unreadIds.length) return
@@ -85,7 +86,7 @@ export default function OSTopBar() {
     setNotifications(prev => prev.map(n => ({ ...n, read: true })))
   }
 
-  async function markRead(id: string) {
+  const markRead = async (id: string) => {
     const supabase = createClient()
     await supabase.from('notifications').update({ read: true, read_at: new Date().toISOString() }).eq('id', id)
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n))

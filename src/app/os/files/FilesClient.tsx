@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   Upload, Download, Trash2, Copy, Check, FolderOpen,
   FileText, Image, Archive, File as FileIcon, X, Users,
@@ -35,7 +35,7 @@ function formatBytes(bytes: number) {
 }
 
 function FileTypeIcon({ type }: { type: string }) {
-  if (type.includes('image')) return <Image size={16} color="#3b82f6" />
+  if (type.includes('image')) return <Image size={16} color="#3b82f6" aria-label="image file" />
   if (type.includes('pdf')) return <FileText size={16} color="#ef4444" />
   if (type.includes('zip') || type.includes('archive')) return <Archive size={16} color="#D4A84B" />
   return <FileIcon size={16} color="#5A6A7A" />
@@ -59,15 +59,7 @@ export default function FilesClient({ scopedClientId }: { scopedClientId?: strin
   const [userId, setUserId] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    init()
-  }, [])
-
-  useEffect(() => {
-    if (userId) fetchFiles()
-  }, [selectedClient, userId])
-
-  async function init() {
+  const init = async () => {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
@@ -77,7 +69,7 @@ export default function FilesClient({ scopedClientId }: { scopedClientId?: strin
     setLoading(false)
   }
 
-  async function fetchFiles() {
+  const fetchFiles = async () => {
     const supabase = createClient()
     let q = supabase
       .from('client_files')
@@ -88,6 +80,9 @@ export default function FilesClient({ scopedClientId }: { scopedClientId?: strin
     if (data) setFiles(data as ClientFile[])
   }
 
+  useEffect(() => { init() }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (userId) fetchFiles() }, [selectedClient, userId]) // eslint-disable-line react-hooks/exhaustive-deps
+
   async function handleUpload() {
     if (!uploadFile || !uploadClient || !userId) return
     if (uploadFile.size > 10 * 1024 * 1024) {
@@ -97,7 +92,6 @@ export default function FilesClient({ scopedClientId }: { scopedClientId?: strin
     setUploading(true)
     setUploadProgress(10)
     const supabase = createClient()
-    const ext = uploadFile.name.split('.').pop()
     const safeFilename = `${Date.now()}-${uploadFile.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
     const path = `${userId}/${uploadClient}/${safeFilename}`
     const { error: storageErr } = await supabase.storage

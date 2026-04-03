@@ -43,17 +43,15 @@ export default function AdminHelpClient() {
   const [saving, setSaving] = useState(false)
   const [preview, setPreview] = useState(false)
 
-  useEffect(() => {
-    fetchArticles()
-  }, [])
-
-  async function fetchArticles() {
+  const fetchArticles = async () => {
     const supabase = createClient()
     const { data } = await supabase.from('help_articles').select('*').order('category').order('sort_order')
     if (data) setArticles(data)
   }
 
-  async function togglePublished(a: HelpArticle) {
+  useEffect(() => { fetchArticles() }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const togglePublished = async (a: HelpArticle) => {
     const supabase = createClient()
     await supabase.from('help_articles').update({ published: !a.published }).eq('id', a.id)
     setArticles(prev => prev.map(x => x.id === a.id ? { ...x, published: !a.published } : x))
