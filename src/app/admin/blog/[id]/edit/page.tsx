@@ -1,4 +1,4 @@
-export const dynamic = 'force-static'
+export const runtime = 'edge'
 
 import type { Metadata } from 'next'
 import BlogEditor from '../../BlogEditor'
