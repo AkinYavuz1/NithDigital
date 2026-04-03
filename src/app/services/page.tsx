@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
+import TestimonialsSection from '@/components/TestimonialsSection'
 
 export const metadata: Metadata = {
   title: 'Services & Pricing — Nith Digital',
@@ -56,7 +58,15 @@ const PRICING = [
   { svc: 'Ongoing support', inc: 'Monthly maintenance, updates, backups, priority support', price: '£40/mo' },
 ]
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const supabase = await createServerSupabaseClient()
+  const { data: testimonials } = await supabase
+    .from('testimonials')
+    .select('id,client_name,business_name,quote,rating,location')
+    .eq('published', true)
+    .order('approved_at', { ascending: false })
+    .limit(3)
+
   return (
     <>
       {/* Page header */}
@@ -192,6 +202,8 @@ export default function ServicesPage() {
             </tbody>
           </table>
 
+          <TestimonialsSection testimonials={testimonials || []} />
+
           {/* CTA */}
           <div
             style={{
@@ -224,8 +236,8 @@ export default function ServicesPage() {
               Book a free 30-minute consultation. We&apos;ll discuss your business and recommend the
               right approach.
             </p>
-            <Link href="/contact" style={btnPrimary}>
-              Get a free quote
+            <Link href="/book" style={btnPrimary}>
+              Book a free call
             </Link>
           </div>
         </div>

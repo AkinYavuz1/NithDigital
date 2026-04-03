@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
+import TestimonialsSection from '@/components/TestimonialsSection'
 
 export const metadata: Metadata = {
   title: 'Nith Digital — Websites, Data & Apps for Dumfries & Galloway',
@@ -50,7 +52,15 @@ const S: Record<string, React.CSSProperties> = {
   },
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createServerSupabaseClient()
+  const { data: testimonials } = await supabase
+    .from('testimonials')
+    .select('id,client_name,business_name,quote,rating,location')
+    .eq('published', true)
+    .order('approved_at', { ascending: false })
+    .limit(3)
+
   return (
     <>
       {/* Hero */}
@@ -108,8 +118,8 @@ export default function HomePage() {
                 className="fade-up fade-up-d3"
                 style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}
               >
-                <Link href="/contact" style={S.btnPrimary}>
-                  Get a free quote
+                <Link href="/book" style={S.btnPrimary}>
+                  Book a free call
                 </Link>
                 <Link href="/services" style={S.btnSecondary}>
                   View services &amp; pricing
@@ -421,6 +431,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <TestimonialsSection testimonials={testimonials || []} />
+
       {/* CTA Banner */}
       <section style={S.sectionSm}>
         <div style={S.container}>
@@ -456,8 +469,8 @@ export default function HomePage() {
               Free initial consultation. No jargon, no pressure. Based in Sanquhar, serving
               Dumfries, Thornhill, Castle Douglas, Stranraer, and all of D&amp;G.
             </p>
-            <Link href="/contact" style={S.btnPrimary}>
-              Get a free quote
+            <Link href="/book" style={S.btnPrimary}>
+              Book a free call
             </Link>
           </div>
         </div>

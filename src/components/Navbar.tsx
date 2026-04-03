@@ -8,6 +8,8 @@ const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
   { href: '/work', label: 'Work' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/tools', label: 'Tools', badge: 'Free' },
   { href: '/about', label: 'About' },
   { href: '/launchpad', label: 'Launchpad', badge: 'Free' },
   { href: '/contact', label: 'Contact' },
@@ -119,7 +121,7 @@ export default function Navbar() {
         </ul>
 
         <Link
-          href="/contact"
+          href="/book"
           style={{
             fontSize: 12,
             padding: '8px 20px',
@@ -138,7 +140,7 @@ export default function Navbar() {
             (e.currentTarget.style.background = 'var(--color-gold)')
           }
         >
-          Get a free quote
+          Book a free call
         </Link>
       </div>
 
