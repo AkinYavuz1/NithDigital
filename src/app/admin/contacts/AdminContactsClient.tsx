@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
 
 interface Submission {
@@ -31,6 +31,13 @@ export default function AdminContactsClient({ initialSubmissions }: { initialSub
   const [expanded, setExpanded] = useState<string | null>(null)
   const [filter, setFilter] = useState('all')
   const supabase = createClient()
+
+  useEffect(() => {
+    if (initialSubmissions.length === 0) {
+      supabase.from('contact_submissions').select('*').order('created_at', { ascending: false })
+        .then(({ data }) => { if (data) setSubmissions(data) })
+    }
+  }, [])
 
   const updateStatus = async (id: string, status: string) => {
     await supabase.from('contact_submissions').update({ status }).eq('id', id)

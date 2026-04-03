@@ -1,5 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 interface ProgressRow {
@@ -31,12 +33,31 @@ function formatDate(d: string) {
 }
 
 export default function AdminLaunchpadClient({
-  progress, profiles, promoCodes,
+  progress: initialProgress, profiles: initialProfiles, promoCodes: initialPromoCodes,
 }: {
   progress: ProgressRow[]
   profiles: Profile[]
   promoCodes: PromoCode[]
 }) {
+  const [progress, setProgress] = useState(initialProgress)
+  const [profiles, setProfiles] = useState(initialProfiles)
+  const [promoCodes, setPromoCodes] = useState(initialPromoCodes)
+  const supabase = createClient()
+
+  useEffect(() => {
+    if (initialProgress.length === 0) {
+      Promise.all([
+        supabase.from('launchpad_progress').select('user_id,step_number,completed,created_at,updated_at'),
+        supabase.from('profiles').select('id,email,full_name,business_name,created_at'),
+        supabase.from('promo_codes').select('user_id,code,redeemed,created_at,redeemed_at'),
+      ]).then(([p, pr, pc]) => {
+        if (p.data) setProgress(p.data)
+        if (pr.data) setProfiles(pr.data)
+        if (pc.data) setPromoCodes(pc.data)
+      })
+    }
+  }, [])
+
   const profileMap = Object.fromEntries(profiles.map(p => [p.id, p]))
 
   // Per-user step sets

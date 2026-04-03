@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
 import { renderEmailTemplate } from '@/lib/email-templates'
 
@@ -41,6 +41,13 @@ export default function AdminTestimonialsClient({ initialTestimonials, clients }
   const [sending, setSending] = useState(false)
   const [successMsg, setSuccessMsg] = useState('')
   const supabase = createClient()
+
+  useEffect(() => {
+    if (initialTestimonials.length === 0) {
+      supabase.from('testimonials').select('*').order('submitted_at', { ascending: false })
+        .then(({ data }) => { if (data) setTestimonials(data) })
+    }
+  }, [])
 
   const approve = async (id: string) => {
     await supabase.from('testimonials').update({ published: true, approved_at: new Date().toISOString() }).eq('id', id)

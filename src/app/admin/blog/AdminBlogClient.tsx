@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 
@@ -32,6 +32,13 @@ export default function AdminBlogClient({ initialPosts }: { initialPosts: BlogPo
   const [posts, setPosts] = useState(initialPosts)
   const [deleting, setDeleting] = useState<string | null>(null)
   const supabase = createClient()
+
+  useEffect(() => {
+    if (initialPosts.length === 0) {
+      supabase.from('blog_posts').select('*').order('created_at', { ascending: false })
+        .then(({ data }) => { if (data) setPosts(data) })
+    }
+  }, [])
 
   const togglePublished = async (id: string, published: boolean) => {
     const update: { published: boolean; published_at?: string | null } = { published: !published }

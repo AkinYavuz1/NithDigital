@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase'
 
 interface User {
   id: string
@@ -17,9 +18,18 @@ function formatDate(d: string) {
 }
 
 export default function AdminUsersClient({ initialUsers }: { initialUsers: User[] }) {
+  const [users, setUsers] = useState(initialUsers)
   const [search, setSearch] = useState('')
+  const supabase = createClient()
 
-  const filtered = initialUsers.filter(u =>
+  useEffect(() => {
+    if (initialUsers.length === 0) {
+      supabase.from('profiles').select('*').order('created_at', { ascending: false })
+        .then(({ data }) => { if (data) setUsers(data) })
+    }
+  }, [])
+
+  const filtered = users.filter(u =>
     !search || u.email?.includes(search.toLowerCase()) || u.business_name?.toLowerCase().includes(search.toLowerCase()) || u.full_name?.toLowerCase().includes(search.toLowerCase())
   )
 
@@ -29,7 +39,7 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: User[
         <div>
           <p style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 4, fontWeight: 600 }}>Admin</p>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400 }}>Users</h1>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginTop: 4 }}>{initialUsers.length} total users</p>
+          <p style={{ fontSize: 14, color: '#5A6A7A', marginTop: 4 }}>{users.length} total users</p>
         </div>
         <input
           type="search"

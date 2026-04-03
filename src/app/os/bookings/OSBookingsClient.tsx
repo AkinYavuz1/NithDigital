@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
 import OSPageHeader from '@/components/OSPageHeader'
 
@@ -40,6 +40,13 @@ export default function OSBookingsClient({ initialBookings }: { initialBookings:
   const [filter, setFilter] = useState<string>('all')
 
   const supabase = createClient()
+
+  useEffect(() => {
+    if (initialBookings.length === 0) {
+      supabase.from('bookings').select('*').order('date', { ascending: true })
+        .then(({ data }) => { if (data) setBookings(data) })
+    }
+  }, [])
 
   const updateStatus = async (id: string, status: Booking['status']) => {
     await supabase.from('bookings').update({ status }).eq('id', id)

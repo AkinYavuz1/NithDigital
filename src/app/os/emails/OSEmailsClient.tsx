@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
 import OSPageHeader from '@/components/OSPageHeader'
 import { renderEmailTemplate } from '@/lib/email-templates'
@@ -46,6 +46,13 @@ export default function OSEmailsClient({ initialEmails, clients }: { initialEmai
   const [successMsg, setSuccessMsg] = useState('')
 
   const supabase = createClient()
+
+  useEffect(() => {
+    if (initialEmails.length === 0) {
+      supabase.from('email_queue').select('*').order('created_at', { ascending: false }).limit(100)
+        .then(({ data }) => { if (data) setEmails(data) })
+    }
+  }, [])
 
   const filtered = emails.filter(e => {
     if (filterStatus !== 'all' && e.status !== filterStatus) return false

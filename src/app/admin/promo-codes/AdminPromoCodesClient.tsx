@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
 
 interface PromoCode {
@@ -23,6 +23,13 @@ export default function AdminPromoCodesClient({ initialCodes }: { initialCodes: 
   const [creating, setCreating] = useState(false)
   const [newCode, setNewCode] = useState('')
   const supabase = createClient()
+
+  useEffect(() => {
+    if (initialCodes.length === 0) {
+      supabase.from('promo_codes').select('id,code,type,redeemed,created_at,redeemed_at,user_id,profiles!promo_codes_user_id_fkey(email,business_name,full_name)').order('created_at', { ascending: false })
+        .then(({ data }) => { if (data) setCodes(data as PromoCode[]) })
+    }
+  }, [])
 
   const generateCode = () => {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
