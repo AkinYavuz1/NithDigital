@@ -187,7 +187,7 @@ ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'ne
 -- Seed booking slots (Mon–Fri, 9am–5pm, 30-min slots)
 -- =============================================
 INSERT INTO booking_slots (day_of_week, start_time, end_time, is_active)
-SELECT d.day, t.start_t, t.end_t, true
+SELECT d.day, t.start_t::time, t.end_t::time, true
 FROM (VALUES (1),(2),(3),(4),(5)) AS d(day)
 CROSS JOIN (VALUES
   ('09:00','09:30'),('09:30','10:00'),
