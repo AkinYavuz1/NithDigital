@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
 const SERVICES = ['Website', 'Dashboard / BI', 'Booking system', 'Custom app', 'Consulting', 'Other']
@@ -25,7 +26,9 @@ function StarPicker({ value, onChange }: { value: number; onChange: (v: number) 
   )
 }
 
-export default function TestimonialSubmitClient({ token }: { token: string }) {
+export default function TestimonialSubmitClient({ token: tokenProp }: { token: string }) {
+  const searchParams = useSearchParams()
+  const token = tokenProp || searchParams.get('token') || ''
   const [valid, setValid] = useState<boolean | null>(null)
   const [existingName, setExistingName] = useState('')
   const [form, setForm] = useState({ name: '', business: '', rating: 0, quote: '', service: '', location: '' })

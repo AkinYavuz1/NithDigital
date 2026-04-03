@@ -1,8 +1,7 @@
-export const runtime = 'edge'
+export const dynamic = 'force-static'
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
 import TestimonialsSection from '@/components/TestimonialsSection'
 
 export const metadata: Metadata = {
@@ -54,15 +53,7 @@ const S: Record<string, React.CSSProperties> = {
   },
 }
 
-export default async function HomePage() {
-  const supabase = await createServerSupabaseClient()
-  const { data: testimonials } = await supabase
-    .from('testimonials')
-    .select('id,client_name,business_name,quote,rating,location')
-    .eq('published', true)
-    .order('approved_at', { ascending: false })
-    .limit(3)
-
+export default function HomePage() {
   return (
     <>
       {/* Hero */}
@@ -434,7 +425,7 @@ export default async function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <TestimonialsSection testimonials={testimonials || []} />
+      <TestimonialsSection testimonials={[]} />
 
       {/* CTA Banner */}
       <section style={S.sectionSm}>

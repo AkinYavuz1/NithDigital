@@ -1,9 +1,8 @@
 export const runtime = 'edge'
 
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { edgeSupabase } from '@/lib/supabase-edge'
 import BlogPostClient from './BlogPostClient'
 
 interface BlogPost {
@@ -39,9 +38,7 @@ function formatDate(d: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const supabase = await createServerSupabaseClient()
-  const { data } = await supabase
-    .from('blog_posts')
+  const { data } = await edgeSupabase('blog_posts')
     .select('title,meta_title,meta_description,excerpt,cover_image_url,published_at')
     .eq('slug', slug)
     .eq('published', true)
@@ -49,42 +46,48 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!data) return { title: 'Post not found — Nith Digital' }
 
+  const post = data as { title: string; meta_title: string | null; meta_description: string | null; excerpt: string; cover_image_url: string | null; published_at: string }
+
   return {
-    title: `${data.meta_title || data.title} — Nith Digital`,
-    description: data.meta_description || data.excerpt,
+    title: `${post.meta_title || post.title} — Nith Digital`,
+    description: post.meta_description || post.excerpt,
     openGraph: {
-      title: data.meta_title || data.title,
-      description: data.meta_description || data.excerpt,
+      title: post.meta_title || post.title,
+      description: post.meta_description || post.excerpt,
       type: 'article',
-      publishedTime: data.published_at,
-      images: data.cover_image_url ? [{ url: data.cover_image_url }] : [],
+      publishedTime: post.published_at,
+      images: post.cover_image_url ? [{ url: post.cover_image_url }] : [],
     },
   }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const supabase = await createServerSupabaseClient()
 
-  const { data: post } = await supabase
-    .from('blog_posts')
+  const { data: postData } = await edgeSupabase('blog_posts')
     .select('*')
     .eq('slug', slug)
     .eq('published', true)
     .single()
 
-  if (!post) notFound()
+  if (!postData) {
+    return (
+      <div style={{ maxWidth: 720, margin: '80px auto', padding: '0 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, marginBottom: 16 }}>Post not found</h1>
+        <Link href="/blog" style={{ color: '#D4A84B', fontWeight: 600 }}>← Back to Blog</Link>
+      </div>
+    )
+  }
+
+  const blogPost = postData as unknown as BlogPost
 
   // Related posts (same category, exclude current)
-  const { data: related } = await supabase
-    .from('blog_posts')
+  const { data: related } = await edgeSupabase('blog_posts')
     .select('id,slug,title,excerpt,read_time_minutes,published_at')
     .eq('published', true)
-    .eq('category', post.category)
+    .eq('category', blogPost.category)
     .neq('slug', slug)
     .limit(3)
-
-  const blogPost = post as BlogPost
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -129,7 +132,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
 
       {/* Article body */}
-      <BlogPostClient post={blogPost} related={related || []} />
+      <BlogPostClient post={blogPost} related={(related || []) as { id: string; slug: string; title: string; excerpt: string; read_time_minutes: number; published_at: string }[]} />
     </>
   )
 }

@@ -1,4 +1,4 @@
-export const runtime = 'edge'
+export const dynamic = 'force-static'
 
 import type { Metadata } from 'next'
 import TestimonialSubmitClient from './TestimonialSubmitClient'
@@ -8,11 +8,6 @@ export const metadata: Metadata = {
   description: 'Share your experience working with Nith Digital. Your feedback helps other local businesses in Dumfries & Galloway find us.',
 }
 
-export default async function TestimonialSubmitPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ token?: string }>
-}) {
-  const { token } = await searchParams
-  return <TestimonialSubmitClient token={token || ''} />
+export default function TestimonialSubmitPage() {
+  return <TestimonialSubmitClient token="" />
 }

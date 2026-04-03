@@ -1,8 +1,7 @@
-export const runtime = 'edge'
+export const dynamic = 'force-static'
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
 import TestimonialsSection from '@/components/TestimonialsSection'
 
 export const metadata: Metadata = {
@@ -60,15 +59,7 @@ const PRICING = [
   { svc: 'Ongoing support', inc: 'Monthly maintenance, updates, backups, priority support', price: '£40/mo' },
 ]
 
-export default async function ServicesPage() {
-  const supabase = await createServerSupabaseClient()
-  const { data: testimonials } = await supabase
-    .from('testimonials')
-    .select('id,client_name,business_name,quote,rating,location')
-    .eq('published', true)
-    .order('approved_at', { ascending: false })
-    .limit(3)
-
+export default function ServicesPage() {
   return (
     <>
       {/* Page header */}
@@ -204,7 +195,7 @@ export default async function ServicesPage() {
             </tbody>
           </table>
 
-          <TestimonialsSection testimonials={testimonials || []} />
+          <TestimonialsSection testimonials={[]} />
 
           {/* CTA */}
           <div
