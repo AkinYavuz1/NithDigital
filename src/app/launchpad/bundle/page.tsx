@@ -30,9 +30,14 @@ export default function BundlePage() {
         <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 520, margin: '0 auto 32px' }}>
           Complete the Launchpad checklist and we&apos;ll build your website for free
         </p>
-        <Link href="/launchpad/checklist" style={{ padding: '14px 36px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 14, fontWeight: 600 }}>
-          Start the checklist →
-        </Link>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href="/launchpad/checklist" style={{ padding: '14px 36px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 14, fontWeight: 600 }}>
+            Start the checklist →
+          </Link>
+          <Link href="/os/demo" style={{ padding: '14px 36px', background: 'transparent', color: '#F5F0E6', borderRadius: 100, fontSize: 14, fontWeight: 500, border: '1px solid rgba(245,240,230,0.3)' }}>
+            Try the Business OS demo
+          </Link>
+        </div>
       </div>
 
       <section style={{ padding: '64px 0' }}>

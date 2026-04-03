@@ -52,6 +52,12 @@ export default function LoginPage() {
             Sign up
           </Link>
         </p>
+        <div style={{ textAlign: 'center', marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(27,42,74,0.08)' }}>
+          <span style={{ fontSize: 12, color: '#9CA3AF' }}>Just exploring? </span>
+          <Link href="/os/demo" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>
+            Try the demo — no account needed →
+          </Link>
+        </div>
       </div>
     </div>
   )

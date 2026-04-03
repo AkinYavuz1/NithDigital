@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: '/tools', label: 'Tools', badge: 'Free' },
   { href: '/about', label: 'About' },
   { href: '/launchpad', label: 'Launchpad', badge: 'Free' },
+  { href: '/os/demo', label: 'Try Demo', badge: 'Live' },
   { href: '/contact', label: 'Contact' },
 ]
 

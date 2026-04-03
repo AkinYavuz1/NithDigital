@@ -27,7 +27,8 @@ export function middleware(request: NextRequest) {
   const hasSession = !!sessionCookie?.value
 
   // Redirect unauthenticated users away from /os and /admin
-  if (!hasSession && (path.startsWith('/os') || path.startsWith('/admin'))) {
+  // /os/demo is public — no auth required
+  if (!hasSession && (path.startsWith('/os') || path.startsWith('/admin')) && !path.startsWith('/os/demo')) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
     url.searchParams.set('next', path)

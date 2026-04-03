@@ -117,6 +117,9 @@ export default function HomePage() {
                 <Link href="/services" style={S.btnSecondary}>
                   View services &amp; pricing
                 </Link>
+                <Link href="/os/demo" style={{ ...S.btnSecondary, color: '#D4A84B', borderColor: '#D4A84B' }}>
+                  See it in action →
+                </Link>
               </div>
             </div>
             <div className="fade-up fade-up-d2">
