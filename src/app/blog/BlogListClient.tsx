@@ -269,7 +269,7 @@ export default function BlogListClient() {
             <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>Calculators</div>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 400, marginBottom: 10 }}>Free business tools</h3>
             <p style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.6, marginBottom: 16 }}>
-              LBTT calculator, VAT threshold checker, take-home pay, and more.
+              VAT threshold checker, take-home pay, and more.
             </p>
             <Link href="/tools" style={{ display: 'inline-block', fontSize: 12, padding: '8px 20px', background: '#1B2A4A', color: '#F5F0E6', borderRadius: 100, fontWeight: 600 }}>
               View all tools →
