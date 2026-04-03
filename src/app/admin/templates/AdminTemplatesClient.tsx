@@ -76,6 +76,48 @@ const TEMPLATES: TemplateConfig[] = [
       email: 'hello@gallowaylarder.co.uk',
     },
   },
+  {
+    slug: 'nithsdale-motors',
+    name: 'Nithsdale Motors',
+    businessType: 'Car Mechanic / MOT Centre',
+    description: 'Industrial garage template with MOT booking, price list, service cards, fleet accounts, and quote form.',
+    previewUrl: '/templates/nithsdale-motors',
+    defaultConfig: {
+      name: 'Nithsdale Motors',
+      tagline: 'Your local garage in Thornhill — honest, reliable, affordable',
+      location: 'Thornhill',
+      phone: '01848 330 789',
+      email: 'info@nithsdalemotors.co.uk',
+    },
+  },
+  {
+    slug: 'upper-nithsdale-construction',
+    name: 'Upper Nithsdale Construction',
+    businessType: 'Building Company',
+    description: 'Premium building company template with project gallery, process timeline, accreditations, and site survey form.',
+    previewUrl: '/templates/upper-nithsdale-construction',
+    defaultConfig: {
+      name: 'Upper Nithsdale Construction Ltd',
+      tagline: 'Building excellence across Dumfries & Galloway',
+      location: 'Sanquhar',
+      phone: '01659 50234',
+      email: 'info@uppernithsdaleconstruction.co.uk',
+    },
+  },
+  {
+    slug: 'nith-valley-joinery',
+    name: 'Nith Valley Joinery',
+    businessType: 'Joinery / Carpentry',
+    description: 'Warm, artisanal joinery template with portfolio gallery, materials section, process timeline, and project enquiry form.',
+    previewUrl: '/templates/nith-valley-joinery',
+    defaultConfig: {
+      name: 'Nith Valley Joinery',
+      tagline: 'Bespoke joinery, handcrafted in Nithsdale',
+      location: 'Sanquhar',
+      phone: '01659 50567',
+      email: 'hello@nithvalleyjoinery.co.uk',
+    },
+  },
 ]
 
 const STYLE_TAGS: Record<string, { bg: string; color: string }> = {
@@ -83,6 +125,9 @@ const STYLE_TAGS: Record<string, { bg: string; color: string }> = {
   'Tradesperson': { bg: 'rgba(232,114,12,0.12)', color: '#C25A00' },
   'Restaurant / Café': { bg: 'rgba(201,168,76,0.15)', color: '#8A6A00' },
   'Farm Shop / Retail': { bg: 'rgba(59,107,74,0.12)', color: '#2D5238' },
+  'Car Mechanic / MOT Centre': { bg: 'rgba(211,47,47,0.1)', color: '#B71C1C' },
+  'Building Company': { bg: 'rgba(44,62,80,0.1)', color: '#2C3E50' },
+  'Joinery / Carpentry': { bg: 'rgba(45,80,22,0.1)', color: '#2D5016' },
 }
 
 function buildUrl(baseUrl: string, config: Partial<typeof TEMPLATES[0]['defaultConfig']> & { accent?: string }): string {
@@ -172,7 +217,7 @@ export default function AdminTemplatesClient() {
       </div>
 
       {/* Template grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
         {TEMPLATES.map((template) => {
           const tag = STYLE_TAGS[template.businessType] ?? { bg: 'rgba(27,42,74,0.08)', color: '#1B2A4A' }
           return (
