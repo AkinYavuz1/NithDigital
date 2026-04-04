@@ -44,6 +44,11 @@ export default function ContactForm() {
       const supabase = createClient()
       const { error } = await supabase.from('contact_submissions').insert([form])
       if (error) throw error
+      await fetch('/api/notify-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
       setStatus('sent')
     } catch {
       setStatus('error')
