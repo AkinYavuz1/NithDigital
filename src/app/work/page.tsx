@@ -28,9 +28,10 @@ const PROJECTS = [
     title: 'Not an Octavia',
     desc1: 'A curated UK used car deals site. An XGBoost ML model trained on admin decisions scores listings against market data, surfacing genuine bargains daily.',
     desc2: 'Features include multi-source content seeding, Gemini vision API for plate extraction, vehicle history integration, and market comparables pricing.',
-    tags: ['Next.js 14', 'TypeScript', 'Supabase', 'XGBoost', 'Cloudflare', 'Groq', 'Tailwind'],
+    tags: ['Next.js 14', 'TypeScript', 'Supabase', 'XGBoost', 'Groq', 'Tailwind'],
     link: 'https://not-an-octavia.uk',
     linkLabel: 'Visit not-an-octavia.uk →',
+    moreInfo: '/work/not-an-octavia',
   },
   {
     badge: 'In development',
@@ -41,16 +42,29 @@ const PROJECTS = [
     tags: ['React', 'Vite', 'Supabase', 'Anthropic API', 'Stripe', 'Recharts'],
     link: 'https://gainsai.uk',
     linkLabel: 'Visit site →',
+    moreInfo: '/work/gains',
+  },
+  {
+    badge: 'Live',
+    live: true,
+    title: 'Daily Duel',
+    desc1: '30 daily rotating mini-games across word, number, knowledge, visual, and speed categories. Every player gets the same game each day — scores are date-seeded for a level playing field.',
+    desc2: 'Private friend leagues with invite codes, weekly leaderboards, streak tracking, and per-player score history. Requires sign-up.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind', 'Supabase', 'Postgres'],
+    link: 'https://daily-duel.akinyavuz.workers.dev/auth',
+    linkLabel: 'Play Daily Duel →',
+    moreInfo: '/work/daily-duel',
   },
   {
     badge: 'Live',
     live: true,
     title: 'Tumble Tots',
     desc1: 'A warm, welcoming website for a local childminding service. Designed to give parents all the information they need — services, availability, and how to get in touch.',
-    desc2: 'Clean, mobile-friendly design with a focus on trust and accessibility. Hosted on Cloudflare Pages for fast, reliable delivery.',
-    tags: ['HTML', 'CSS', 'JavaScript', 'Cloudflare Pages'],
+    desc2: 'Clean, mobile-friendly design with a focus on trust and accessibility.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
     link: 'https://tumbletots.pages.dev/',
     linkLabel: 'Visit tumbletots.pages.dev →',
+    moreInfo: '/work/tumble-tots',
   },
 ]
 
@@ -79,7 +93,7 @@ export default function WorkPage() {
 
       <section style={{ padding: '72px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 48 }}>
+          <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 48 }}>
             {PROJECTS.map((p) => (
               <div
                 key={p.title}
@@ -110,9 +124,14 @@ export default function WorkPage() {
                     </span>
                   ))}
                 </div>
-                <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>
-                  {p.linkLabel}
-                </a>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>
+                    {p.linkLabel}
+                  </a>
+                  <Link href={p.moreInfo} style={{ fontSize: 12, color: '#2D4A7A', fontWeight: 500 }}>
+                    More info →
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -137,7 +156,7 @@ export default function WorkPage() {
           </div>
 
           {/* CTA */}
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '56px 48px', textAlign: 'center', color: '#F5F0E6' }}>
+          <div className="cta-banner" style={{ background: '#1B2A4A', borderRadius: 12, padding: '56px 48px', textAlign: 'center', color: '#F5F0E6' }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, marginBottom: 8 }}>
               Want something built?
             </h2>
@@ -153,7 +172,8 @@ export default function WorkPage() {
         .work-card-hover { transition: transform 0.25s ease; }
         .work-card-hover:hover { transform: translateY(-2px); }
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          .two-col-grid { grid-template-columns: 1fr !important; }
+          .cta-banner { padding: 40px 24px !important; }
         }
       `}</style>
     </>
