@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
 const inputStyle: React.CSSProperties = {
@@ -13,41 +14,30 @@ const inputStyle: React.CSSProperties = {
   color: '#1B2A4A',
   outline: 'none',
   transition: 'border-color 0.25s ease',
+  boxSizing: 'border-box',
 }
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [password, setPassword] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [errMsg, setErrMsg] = useState('')
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const next = searchParams.get('next') ?? '/os'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setStatus('sending')
+    setStatus('loading')
+    setErrMsg('')
     const supabase = createClient()
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
-    })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
-      setErrMsg(error.message)
+      setErrMsg('Incorrect email or password.')
       setStatus('error')
     } else {
-      setStatus('sent')
+      router.push(next)
     }
-  }
-
-  if (status === 'sent') {
-    return (
-      <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 40, marginBottom: 16 }}>✉️</div>
-        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
-          Check your email
-        </h3>
-        <p style={{ fontSize: 13, color: '#5A6A7A' }}>
-          We&apos;ve sent a magic link to <strong>{email}</strong>. Click it to sign in.
-        </p>
-      </div>
-    )
   }
 
   return (
@@ -60,19 +50,32 @@ export default function LoginForm() {
           type="email"
           required
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
           placeholder="your@email.com"
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#1B2A4A')}
-          onBlur={(e) => (e.target.style.borderColor = 'rgba(27,42,74,0.15)')}
+          onFocus={e => (e.target.style.borderColor = '#1B2A4A')}
+          onBlur={e => (e.target.style.borderColor = 'rgba(27,42,74,0.15)')}
         />
       </div>
-      {status === 'error' && (
-        <p style={{ color: '#dc2626', fontSize: 13 }}>{errMsg}</p>
-      )}
+      <div>
+        <label style={{ display: 'block', fontSize: 12, fontWeight: 500, marginBottom: 6, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          Password
+        </label>
+        <input
+          type="password"
+          required
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder="••••••••"
+          style={inputStyle}
+          onFocus={e => (e.target.style.borderColor = '#1B2A4A')}
+          onBlur={e => (e.target.style.borderColor = 'rgba(27,42,74,0.15)')}
+        />
+      </div>
+      {errMsg && <p style={{ color: '#dc2626', fontSize: 13, margin: 0 }}>{errMsg}</p>}
       <button
         type="submit"
-        disabled={status === 'sending'}
+        disabled={status === 'loading'}
         style={{
           padding: '12px 28px',
           background: '#D4A84B',
@@ -81,11 +84,11 @@ export default function LoginForm() {
           fontSize: 13,
           fontWeight: 600,
           border: 'none',
-          cursor: 'pointer',
-          transition: 'background 0.25s ease',
+          cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+          opacity: status === 'loading' ? 0.7 : 1,
         }}
       >
-        {status === 'sending' ? 'Sending...' : 'Send magic link'}
+        {status === 'loading' ? 'Signing in...' : 'Sign in'}
       </button>
     </form>
   )

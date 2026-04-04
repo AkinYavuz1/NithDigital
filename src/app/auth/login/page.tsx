@@ -43,7 +43,7 @@ export default function LoginPage() {
           >
             Sign in
           </h1>
-          <p style={{ fontSize: 13, color: '#5A6A7A' }}>We&apos;ll send you a magic link</p>
+          <p style={{ fontSize: 13, color: '#5A6A7A' }}>Enter your email and password</p>
         </div>
         <LoginForm />
         <p style={{ textAlign: 'center', fontSize: 13, color: '#5A6A7A', marginTop: 24 }}>
