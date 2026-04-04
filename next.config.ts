@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   experimental: {
     // Ensure server actions and edge runtime work correctly
   },
+  // Exclude large client-only libraries from server/edge bundles
+  serverExternalPackages: ['jspdf', 'jspdf-autotable'],
 };
 
 export default nextConfig;
