@@ -43,7 +43,8 @@ export function middleware(request: NextRequest) {
       const parsed = JSON.parse(raw)
       const accessToken = Array.isArray(parsed) ? parsed[0] : parsed.access_token ?? parsed
       const email = getEmailFromToken(String(accessToken))
-      if (email !== 'hello@nithdigital.uk') {
+      const ADMIN_EMAILS = ['hello@nithdigital.uk', 'akinyavuz@outlook.com', 'akinyavuz2009@hotmail.co.uk']
+      if (!email || !ADMIN_EMAILS.includes(email)) {
         const url = request.nextUrl.clone()
         url.pathname = '/os'
         return NextResponse.redirect(url)
