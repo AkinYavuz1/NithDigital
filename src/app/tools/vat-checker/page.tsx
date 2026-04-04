@@ -4,13 +4,41 @@ import type { Metadata } from 'next'
 import VATCheckerClient from './VATCheckerClient'
 
 export const metadata: Metadata = {
-  title: 'VAT Threshold Checker — Do I Need to Register for VAT? | Nith Digital',
-  description: 'Find out if you need to register for VAT in the UK. The 2025/26 VAT registration threshold is £90,000. Check your position with our free tool.',
+  title: 'Do I Need to Register for VAT? Free UK VAT Threshold Checker',
+  description:
+    'Check if your business needs to register for VAT. Enter your turnover and get an instant answer. Current UK threshold, flat rate scheme, forward-look test.',
+  alternates: { canonical: 'https://nithdigital.uk/tools/vat-checker' },
+  openGraph: {
+    title: 'Do I Need to Register for VAT? Free UK VAT Threshold Checker',
+    description: 'Check if your business needs to register for VAT. Current UK threshold, flat rate scheme, forward-look test.',
+    url: 'https://nithdigital.uk/tools/vat-checker',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Do I Need to Register for VAT? Free UK VAT Threshold Checker',
+    description: 'Check if your business needs to register for VAT. Instant answer. Free.',
+  },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'UK VAT Threshold Checker',
+  description: 'Check if your business needs to register for VAT. Enter your turnover and get an instant answer.',
+  url: 'https://nithdigital.uk/tools/vat-checker',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+  provider: { '@type': 'Organization', name: 'Nith Digital', url: 'https://nithdigital.uk' },
 }
 
 export default function VATCheckerPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           <p style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>Free tool · No signup</p>

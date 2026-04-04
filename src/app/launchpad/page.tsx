@@ -4,9 +4,23 @@ import { CheckCircle, BookOpen, Gift, Star, HelpCircle } from 'lucide-react'
 import LaunchpadFAQ from './LaunchpadFAQ'
 
 export const metadata: Metadata = {
-  title: 'Launch Your Scottish Business — Nith Digital Launchpad',
+  title: 'Free Business Startup Checklist for Scotland — Nith Digital',
   description:
-    'Free startup checklist for new Scottish sole traders. Based on Business Gateway guidance. Complete all 10 steps and unlock the Startup Bundle.',
+    'Everything you need to start a sole trader business in Scotland. 10-step checklist: insurance, HMRC, bank accounts, bookkeeping, marketing. Free, no signup.',
+  alternates: { canonical: 'https://nithdigital.uk/launchpad' },
+  openGraph: {
+    title: 'Free Business Startup Checklist for Scotland — Nith Digital',
+    description: 'Everything you need to start a sole trader business in Scotland. 10-step checklist. Free, no signup.',
+    url: 'https://nithdigital.uk/launchpad',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Business Startup Checklist for Scotland — Nith Digital',
+    description: 'Everything you need to start a sole trader business in Scotland. Free, no signup.',
+  },
 }
 
 const STEPS = [
@@ -45,9 +59,20 @@ const FAQS = [
   },
 ]
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+}
+
 export default function LaunchpadPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       {/* Page header */}
       <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: '#F5F0E6', fontWeight: 400, marginBottom: 12 }}>

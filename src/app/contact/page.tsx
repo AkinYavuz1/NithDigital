@@ -2,8 +2,23 @@ import type { Metadata } from 'next'
 import ContactForm from './ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Contact — Nith Digital',
-  description: 'Get in touch with Nith Digital. Free initial consultation, no jargon, no pressure. Based in Sanquhar, serving all of Dumfries & Galloway.',
+  title: 'Contact Nith Digital — Free Consultation for D&G Businesses',
+  description:
+    'Get in touch for a free, no-obligation consultation. Based in Sanquhar, serving Dumfries, Thornhill, Castle Douglas, Stranraer, and all of D&G.',
+  alternates: { canonical: 'https://nithdigital.uk/contact' },
+  openGraph: {
+    title: 'Contact Nith Digital — Free Consultation for D&G Businesses',
+    description: 'Get in touch for a free, no-obligation consultation. Based in Sanquhar, serving all of Dumfries & Galloway.',
+    url: 'https://nithdigital.uk/contact',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Nith Digital — Free Consultation for D&G Businesses',
+    description: 'Get in touch for a free, no-obligation consultation. Based in Sanquhar, serving all of D&G.',
+  },
 }
 
 const AREAS = [

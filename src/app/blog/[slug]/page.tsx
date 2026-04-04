@@ -48,15 +48,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const post = data as { title: string; meta_title: string | null; meta_description: string | null; excerpt: string; cover_image_url: string | null; published_at: string }
 
+  const title = post.meta_title || post.title
+  const description = post.meta_description || post.excerpt
+
   return {
-    title: `${post.meta_title || post.title} — Nith Digital`,
-    description: post.meta_description || post.excerpt,
+    title: `${title} | Nith Digital Blog`,
+    description,
+    alternates: { canonical: `https://nithdigital.uk/blog/${slug}` },
     openGraph: {
-      title: post.meta_title || post.title,
-      description: post.meta_description || post.excerpt,
+      title,
+      description,
+      url: `https://nithdigital.uk/blog/${slug}`,
+      siteName: 'Nith Digital',
+      locale: 'en_GB',
       type: 'article',
       publishedTime: post.published_at,
+      authors: ['Akin Yavuz'],
       images: post.cover_image_url ? [{ url: post.cover_image_url }] : [],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description,
     },
   }
 }
@@ -96,12 +109,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     description: blogPost.excerpt,
     author: { '@type': 'Person', name: blogPost.author },
     datePublished: blogPost.published_at,
+    dateModified: blogPost.created_at,
+    url: `https://nithdigital.uk/blog/${blogPost.slug}`,
     publisher: {
       '@type': 'Organization',
       name: 'Nith Digital',
       url: 'https://nithdigital.uk',
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://nithdigital.uk/blog/${blogPost.slug}` },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://nithdigital.uk' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://nithdigital.uk/blog' },
+        { '@type': 'ListItem', position: 3, name: blogPost.title },
+      ],
+    },
   }
 
   return (

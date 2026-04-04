@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
     'websites-and-digital', 'tools-and-resources', 'local-business'
   )),
   tags TEXT[] DEFAULT '{}',
-  author TEXT DEFAULT 'Akin Yavuz',
+  author TEXT DEFAULT 'Nith Digital',
   published BOOLEAN DEFAULT false,
   published_at TIMESTAMPTZ,
   meta_title TEXT,

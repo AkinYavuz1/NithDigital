@@ -4,13 +4,41 @@ import type { Metadata } from 'next'
 import TakeHomeClient from './TakeHomeClient'
 
 export const metadata: Metadata = {
-  title: 'Sole Trader Take-Home Pay Calculator 2025/26 | Nith Digital',
-  description: 'Calculate your take-home pay as a self-employed sole trader in Scotland. Includes income tax, National Insurance Class 2 & 4, and student loan repayments.',
+  title: 'Self-Employed Take-Home Pay Calculator UK 2026 | Nith Digital',
+  description:
+    'Calculate your take-home pay as a UK sole trader. Income tax, National Insurance, student loan deductions. See your monthly and annual net income.',
+  alternates: { canonical: 'https://nithdigital.uk/tools/take-home-calculator' },
+  openGraph: {
+    title: 'Self-Employed Take-Home Pay Calculator UK 2026 | Nith Digital',
+    description: 'Calculate your take-home pay as a UK sole trader. Income tax, NI, student loan. Monthly and annual.',
+    url: 'https://nithdigital.uk/tools/take-home-calculator',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Self-Employed Take-Home Pay Calculator UK 2026',
+    description: 'Calculate your take-home pay as a UK sole trader. Free.',
+  },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Self-Employed Take-Home Pay Calculator UK 2026',
+  description: 'Calculate your take-home pay as a UK sole trader. Income tax, National Insurance, student loan deductions.',
+  url: 'https://nithdigital.uk/tools/take-home-calculator',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+  provider: { '@type': 'Organization', name: 'Nith Digital', url: 'https://nithdigital.uk' },
 }
 
 export default function TakeHomePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           <p style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>Free tool</p>

@@ -2,8 +2,23 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Our Work — Nith Digital',
-  description: 'Products built and shipped by Nith Digital. Not an Octavia, gAIns, Tumble Tots — real things, live in the wild.',
+  title: 'Our Work — Websites & Apps Built by Nith Digital',
+  description:
+    'See our portfolio: ML-powered car deals site, AI gym tracker, and local business websites. Real products, live and deployed.',
+  alternates: { canonical: 'https://nithdigital.uk/work' },
+  openGraph: {
+    title: 'Our Work — Websites & Apps Built by Nith Digital',
+    description: 'ML-powered car deals site, AI gym tracker, and local business websites. Real products, live and deployed.',
+    url: 'https://nithdigital.uk/work',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Our Work — Websites & Apps Built by Nith Digital',
+    description: 'ML-powered car deals site, AI gym tracker, and local business websites. Real products, live and deployed.',
+  },
 }
 
 const PROJECTS = [

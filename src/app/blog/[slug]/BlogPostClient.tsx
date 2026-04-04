@@ -188,11 +188,11 @@ export default function BlogPostClient({ post, related }: { post: Post; related:
         {/* Author card */}
         <div style={{ marginTop: 40, background: '#F5F0E6', borderRadius: 12, padding: 28, borderLeft: '4px solid #D4A84B' }}>
           <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#5A6A7A', marginBottom: 8, fontWeight: 600 }}>Written by</div>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, marginBottom: 10 }}>Akin Yavuz</h3>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, marginBottom: 10 }}>Nith Digital</h3>
           <p style={{ fontSize: 13, lineHeight: 1.7, color: '#5A6A7A', marginBottom: 12 }}>
-            Founder of Nith Digital and senior BI developer with 10+ years experience across NHS, energy and finance sectors. Based in Sanquhar, Dumfries & Galloway.
+            Founded by a senior BI developer with 10+ years experience across NHS, energy and finance sectors. Based in Sanquhar, Dumfries & Galloway.
           </p>
-          <Link href="/about" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>About Akin →</Link>
+          <Link href="/about" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>About us →</Link>
         </div>
 
         {/* Launchpad CTA */}

@@ -4,8 +4,23 @@ import BundleRedeemForm from './BundleRedeemForm'
 import LaunchpadFAQ from '../LaunchpadFAQ'
 
 export const metadata: Metadata = {
-  title: 'Startup Bundle — Nith Digital',
-  description: 'Complete the Launchpad checklist and get your business website built for free. Pay just £40/month hosting. Plus 1 month free Business OS.',
+  title: 'Startup Bundle — Free Website for New Businesses in D&G | Nith Digital',
+  description:
+    'Complete our free checklist and get your business website built for £0 upfront. £40/month hosting, 12-month minimum. Business OS included.',
+  alternates: { canonical: 'https://nithdigital.uk/launchpad/bundle' },
+  openGraph: {
+    title: 'Startup Bundle — Free Website for New Businesses in D&G | Nith Digital',
+    description: 'Complete our free checklist and get your business website built for £0 upfront. £40/month hosting.',
+    url: 'https://nithdigital.uk/launchpad/bundle',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Startup Bundle — Free Website for New Businesses in D&G',
+    description: 'Complete our free checklist and get your business website built for £0 upfront.',
+  },
 }
 
 const BUNDLE_FAQS = [
@@ -16,9 +31,20 @@ const BUNDLE_FAQS = [
   { q: 'How long does the website take to build?', a: 'Typically 1–2 weeks from receiving your content. We keep it fast.' },
 ]
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: BUNDLE_FAQS.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+}
+
 export default function BundlePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       {/* Hero */}
       <div style={{ background: '#1B2A4A', padding: '64px 24px', textAlign: 'center', color: '#F5F0E6' }}>
         <div style={{ fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>

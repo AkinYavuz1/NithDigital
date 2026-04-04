@@ -4,8 +4,23 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Free Business Tools — Nith Digital',
-  description: 'Free calculators and tools for Scottish businesses. VAT threshold checker, sole trader vs limited company comparator, take-home pay calculator, invoice generator.',
+  title: 'Free Business Tools & Calculators — Nith Digital',
+  description:
+    'Free calculators for UK sole traders: LBTT, VAT threshold, sole trader vs limited, take-home pay, invoice generator, website quote estimator, site audit.',
+  alternates: { canonical: 'https://nithdigital.uk/tools' },
+  openGraph: {
+    title: 'Free Business Tools & Calculators — Nith Digital',
+    description: 'Free calculators for UK sole traders: VAT, take-home pay, invoice generator, site audit, and more.',
+    url: 'https://nithdigital.uk/tools',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Business Tools & Calculators — Nith Digital',
+    description: 'Free calculators for UK sole traders: VAT, take-home pay, invoice generator, site audit, and more.',
+  },
 }
 
 const TOOLS = [

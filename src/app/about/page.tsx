@@ -1,8 +1,23 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'About — Nith Digital',
-  description: 'About Akin Yavuz and Nith Digital — a decade of data, a passion for building, rooted in Dumfries & Galloway.',
+  title: 'About Nith Digital — Akin Yavuz, Web Developer in Sanquhar, D&G',
+  description:
+    '10+ years in data & BI across NHS, energy, finance. Based in Sanquhar, Dumfries & Galloway. Building modern digital tools for local businesses.',
+  alternates: { canonical: 'https://nithdigital.uk/about' },
+  openGraph: {
+    title: 'About Nith Digital — Akin Yavuz, Web Developer in Sanquhar, D&G',
+    description: '10+ years in data & BI across NHS, energy, finance. Based in Sanquhar, Dumfries & Galloway.',
+    url: 'https://nithdigital.uk/about',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Nith Digital — Akin Yavuz, Web Developer in Sanquhar, D&G',
+    description: '10+ years in data & BI across NHS, energy, finance. Based in Sanquhar, Dumfries & Galloway.',
+  },
 }
 
 const EXPERIENCE = [
@@ -68,7 +83,7 @@ export default function AboutPage() {
                 Built in the Nith Valley, for the Nith Valley
               </h2>
               <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 16 }}>
-                Nith Digital is run by Akin Yavuz — a Senior BI Developer based in Sanquhar, Dumfries &amp; Galloway. With over a decade of experience across healthcare, energy, finance, and the public sector, Akin specialises in turning messy data into clear decisions and building modern digital tools.
+                Nith Digital is run by a Senior BI Developer based in Sanquhar, Dumfries &amp; Galloway. With over a decade of experience across healthcare, energy, finance, and the public sector, the focus is on turning messy data into clear decisions and building modern digital tools.
               </p>
               <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 16 }}>
                 The business was born from a simple observation: rural Scotland deserves the same quality of digital services as any city. Too many brilliant local businesses in D&amp;G are held back by outdated websites, manual processes, and spreadsheets that should be dashboards. Nith Digital exists to change that.
@@ -77,7 +92,7 @@ export default function AboutPage() {
                 The name comes from the River Nith, which flows right through Sanquhar on its 70-mile journey to the Solway Firth — connecting communities across Nithsdale just as we connect businesses to their digital potential.
               </p>
               <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A' }}>
-                Outside of work, Akin is a competitive powerlifter with four Commonwealth gold medals — which tells you everything about the approach: show up consistently, put in the reps, and don&apos;t cut corners.
+                Outside of work, there are four Commonwealth gold medals in competitive powerlifting — which tells you everything about the approach: show up consistently, put in the reps, and don&apos;t cut corners.
               </p>
             </div>
 

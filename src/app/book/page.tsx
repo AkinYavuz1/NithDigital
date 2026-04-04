@@ -4,13 +4,43 @@ import type { Metadata } from 'next'
 import BookingClient from './BookingClient'
 
 export const metadata: Metadata = {
-  title: 'Book a Free Call — Nith Digital',
-  description: 'Book a free 30-minute consultation with Nith Digital. Discuss your website, dashboard, or app project with no obligation.',
+  title: 'Book a Free Consultation — Nith Digital, Dumfries & Galloway',
+  description:
+    'Book a free 30-minute consultation to discuss your website, dashboard, or app project. Choose a time that suits you. No obligation.',
+  alternates: { canonical: 'https://nithdigital.uk/book' },
+  openGraph: {
+    title: 'Book a Free Consultation — Nith Digital, Dumfries & Galloway',
+    description: 'Book a free 30-minute consultation to discuss your website, dashboard, or app project. No obligation.',
+    url: 'https://nithdigital.uk/book',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Book a Free Consultation — Nith Digital, Dumfries & Galloway',
+    description: 'Book a free 30-minute consultation. No obligation.',
+  },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Free Business Consultation',
+  provider: {
+    '@type': 'ProfessionalService',
+    name: 'Nith Digital',
+    url: 'https://nithdigital.uk',
+  },
+  description: 'Free 30-minute consultation to discuss your website, dashboard, or app project',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+  areaServed: { '@type': 'Place', name: 'Dumfries and Galloway' },
 }
 
 export default function BookPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Page header */}
       <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>

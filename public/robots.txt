@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /os/
+Disallow: /admin/
+Disallow: /auth/
+Allow: /os/demo
 
 Sitemap: https://nithdigital.uk/sitemap.xml

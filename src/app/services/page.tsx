@@ -5,8 +5,24 @@ import Link from 'next/link'
 import TestimonialsSection from '@/components/TestimonialsSection'
 
 export const metadata: Metadata = {
-  title: 'Services & Pricing — Nith Digital',
-  description: 'Clear pricing, no surprises. Websites from £500, BI dashboards, custom web apps, booking systems for businesses in Dumfries & Galloway.',
+  title: 'Web Design Services & Pricing — Nith Digital, Dumfries & Galloway',
+  description:
+    'Business websites from £500, booking systems, Power BI dashboards, custom web apps. Clear pricing, no surprises. Free consultation. Based in Sanquhar, D&G.',
+  alternates: { canonical: 'https://nithdigital.uk/services' },
+  openGraph: {
+    title: 'Web Design Services & Pricing — Nith Digital, Dumfries & Galloway',
+    description:
+      'Business websites from £500, booking systems, Power BI dashboards, custom web apps. Clear pricing, no surprises. Free consultation.',
+    url: 'https://nithdigital.uk/services',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Web Design Services & Pricing — Nith Digital, Dumfries & Galloway',
+    description: 'Business websites from £500, booking systems, Power BI dashboards, custom web apps. Free consultation.',
+  },
 }
 
 const btnPrimary: React.CSSProperties = {
