@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'Sign up and you both get a free month of Business OS.',
 }
 
-const ReferralContent = dynamic(() => import('./ReferralContent'), { ssr: false })
+const ReferralContent = dynamicImport(() => import('./ReferralContent'), { ssr: false })
 
 export default function ReferralLandingPage() {
   return (
