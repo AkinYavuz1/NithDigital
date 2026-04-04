@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
-import ProposalEditor from '../ProposalEditor'
+import dynamic from 'next/dynamic'
 import type { ProposalForm } from '../ProposalEditor'
+
+const ProposalEditor = dynamic(() => import('../ProposalEditor'), { ssr: false })
 
 export const runtime = 'edge'
 export const metadata: Metadata = { title: 'New Proposal — Admin' }

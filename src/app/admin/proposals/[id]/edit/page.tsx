@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import ProposalEditorLoader from '../../ProposalEditorLoader'
+import dynamic from 'next/dynamic'
+
+const ProposalEditorLoader = dynamic(() => import('../../ProposalEditorLoader'), { ssr: false })
 
 export const runtime = 'edge'
 export const metadata: Metadata = { title: 'Edit Proposal — Admin' }
