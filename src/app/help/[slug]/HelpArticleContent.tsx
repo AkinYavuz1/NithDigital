@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import HelpArticleClient from './HelpArticleClient'
@@ -21,13 +22,16 @@ const CATEGORY_LABELS: Record<string, string> = {
   'troubleshooting': 'Troubleshooting',
 }
 
-export default function HelpArticleContent({ slug }: { slug: string }) {
+export default function HelpArticleContent() {
+  const params = useParams()
+  const slug = params.slug as string
   const [article, setArticle] = useState<Parameters<typeof HelpArticleClient>[0]['article'] | null>(null)
   const [related, setRelated] = useState<Parameters<typeof HelpArticleClient>[0]['related']>([])
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
   useEffect(() => {
+    if (!slug) return
     const supabase = createClient()
     supabase
       .from('help_articles')
