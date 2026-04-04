@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Logo from './Logo'
 
 const NAV_LINKS = [
@@ -18,6 +19,12 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
+
+  function handleNavClick(href: string) {
+    setOpen(false)
+    router.push(href)
+  }
 
   return (
     <nav
@@ -42,6 +49,7 @@ export default function Navbar() {
         {/* Brand */}
         <Link
           href="/"
+          onClick={() => setOpen(false)}
           style={{ display: 'flex', alignItems: 'center', gap: 10 }}
         >
           <Logo size={32} />
@@ -66,10 +74,12 @@ export default function Navbar() {
             border: 'none',
             color: 'var(--color-cream)',
             fontSize: 24,
+            padding: '8px',
+            lineHeight: 1,
           }}
           className="mobile-toggle"
         >
-          ☰
+          {open ? '✕' : '☰'}
         </button>
 
         {/* Desktop nav */}
@@ -85,14 +95,19 @@ export default function Navbar() {
         >
           {NAV_LINKS.map((link) => (
             <li key={link.href} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Link
-                href={link.href}
+              <button
+                onClick={() => handleNavClick(link.href)}
                 style={{
                   fontSize: 13,
                   color: 'rgba(245,240,230,0.5)',
                   fontWeight: 500,
                   letterSpacing: '0.3px',
                   transition: 'color 0.25s ease',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  fontFamily: 'inherit',
                 }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.color = 'var(--color-cream)')
@@ -102,7 +117,7 @@ export default function Navbar() {
                 }
               >
                 {link.label}
-              </Link>
+              </button>
               {link.badge && (
                 <span
                   style={{
@@ -119,10 +134,30 @@ export default function Navbar() {
               )}
             </li>
           ))}
+          <li className="nav-book-mobile" style={{ display: 'none', marginTop: 8 }}>
+            <button
+              onClick={() => handleNavClick('/book')}
+              style={{
+                display: 'inline-block',
+                fontSize: 13,
+                padding: '10px 24px',
+                background: 'var(--color-gold)',
+                color: 'var(--color-navy)',
+                borderRadius: 100,
+                fontWeight: 600,
+                border: 'none',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+              }}
+            >
+              Book a free call
+            </button>
+          </li>
         </ul>
 
         <Link
           href="/book"
+          className="nav-book-btn"
           style={{
             fontSize: 12,
             padding: '8px 20px',
@@ -148,9 +183,11 @@ export default function Navbar() {
       {/* Mobile nav overlay */}
       <style>{`
         @media (max-width: 768px) {
-          .mobile-toggle { display: block !important; }
+          .mobile-toggle { display: flex !important; align-items: center; justify-content: center; }
+          .nav-book-btn { display: none !important; }
           .nav-links { display: none !important; flex-direction: column !important; position: absolute !important; top: 64px !important; left: 0 !important; right: 0 !important; background: var(--color-navy) !important; padding: 24px !important; gap: 16px !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; z-index: 99 !important; }
           .nav-links.open { display: flex !important; }
+          .nav-book-mobile { display: block !important; }
         }
       `}</style>
     </nav>

@@ -81,7 +81,7 @@ export default function RootLayout({
               telephone: '+447949116770',
               founder: {
                 '@type': 'Person',
-                name: 'Akin Yavuz',
+                name: 'Nith Digital Team',
                 jobTitle: 'Founder & Senior BI Developer',
               },
               address: {

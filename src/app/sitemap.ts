@@ -58,7 +58,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/launchpad/checklist`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/launchpad/bundle`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/tools`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/tools/lbtt-calculator`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/tools/vat-checker`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/tools/sole-trader-vs-limited`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/tools/take-home-calculator`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -82,7 +81,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/web-design/langholm`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/web-design/gatehouse-of-fleet`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/web-design/wigtown`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/power-bi/dumfries-galloway`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/power-bi/dumfries-galloway`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/power-bi/scotland`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/power-bi/small-business-scotland`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/microsoft-fabric/scotland`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/freelance-data-analyst/scotland`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/web-apps/dumfries-galloway`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 

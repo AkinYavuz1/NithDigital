@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'About Nith Digital — Akin Yavuz, Web Developer in Sanquhar, D&G',
+  title: 'About Nith Digital — Web Design & Development in Sanquhar, D&G',
   description:
     '10+ years in data & BI across NHS, energy, finance. Based in Sanquhar, Dumfries & Galloway. Building modern digital tools for local businesses.',
   alternates: { canonical: 'https://nithdigital.uk/about' },
   openGraph: {
-    title: 'About Nith Digital — Akin Yavuz, Web Developer in Sanquhar, D&G',
+    title: 'About Nith Digital — Web Design & Development in Sanquhar, D&G',
     description: '10+ years in data & BI across NHS, energy, finance. Based in Sanquhar, Dumfries & Galloway.',
     url: 'https://nithdigital.uk/about',
     siteName: 'Nith Digital',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About Nith Digital — Akin Yavuz, Web Developer in Sanquhar, D&G',
+    title: 'About Nith Digital — Web Design & Development in Sanquhar, D&G',
     description: '10+ years in data & BI across NHS, energy, finance. Based in Sanquhar, Dumfries & Galloway.',
   },
 }
@@ -76,6 +76,7 @@ export default function AboutPage() {
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           {/* Bio + timeline */}
           <div
+            className="two-col-grid"
             style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start', marginBottom: 48 }}
           >
             <div>
@@ -124,7 +125,7 @@ export default function AboutPage() {
           </div>
 
           {/* Credentials */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 32, marginBottom: 48 }}>
+          <div className="three-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 32, marginBottom: 48 }}>
             {CREDS.map((g) => (
               <div key={g.title}>
                 <h4 style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#5A6A7A', marginBottom: 10, fontWeight: 500 }}>
@@ -145,8 +146,8 @@ export default function AboutPage() {
 
       <style>{`
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
-          div[style*="grid-template-columns: 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          .two-col-grid { grid-template-columns: 1fr !important; }
+          .three-col-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </>

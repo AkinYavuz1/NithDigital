@@ -125,8 +125,8 @@ export default function BlogListClient() {
       </section>
 
       {/* Category filter pills */}
-      <div style={{ borderBottom: '1px solid rgba(27,42,74,0.1)', overflowX: 'auto' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '16px 24px', display: 'flex', gap: 8, whiteSpace: 'nowrap' }}>
+      <div style={{ borderBottom: '1px solid rgba(27,42,74,0.1)' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '16px 24px', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {CATEGORIES.map((cat) => (
             <button
               key={cat.value}

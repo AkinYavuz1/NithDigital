@@ -75,9 +75,10 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section style={{ padding: '80px 0 64px' }}>
+      <section className="hero-section" style={{ padding: '80px 0 64px' }}>
         <div style={S.container}>
           <div
+            className="hero-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 240px',
@@ -100,10 +101,9 @@ export default function HomePage() {
                 Websites • Data • Apps
               </div>
               <h1
-                className="fade-up fade-up-d1"
+                className="fade-up fade-up-d1 hero-h1"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  fontSize: 36,
                   lineHeight: 1.25,
                   fontWeight: 400,
                   marginBottom: 16,
@@ -228,6 +228,7 @@ export default function HomePage() {
       <section style={S.sectionSm}>
         <div style={S.container}>
           <div
+            className="two-col-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
@@ -269,7 +270,7 @@ export default function HomePage() {
           </div>
 
           {/* Pricing table */}
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table className="pricing-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
                 {['Service', 'What you get', 'Starting from'].map((h, i) => (
@@ -356,7 +357,7 @@ export default function HomePage() {
       {/* Work */}
       <section style={S.sectionSm}>
         <div style={S.container}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+          <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
             {[
               {
                 badge: 'Live',
@@ -452,6 +453,7 @@ export default function HomePage() {
       <section style={S.sectionSm}>
         <div style={S.container}>
           <div
+            className="cta-banner"
             style={{
               background: '#1B2A4A',
               borderRadius: 12,
@@ -493,7 +495,7 @@ export default function HomePage() {
       {/* Credentials */}
       <section style={S.sectionSm}>
         <div style={S.container}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 32 }}>
+          <div className="three-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 32 }}>
             {[
               {
                 title: 'Qualifications',
@@ -551,10 +553,19 @@ export default function HomePage() {
       <style>{`
         .work-card-hover { transition: transform 0.25s ease; }
         .work-card-hover:hover { transform: translateY(-2px); }
+        .hero-h1 { font-size: clamp(24px, 5vw, 36px); }
         @media (max-width: 768px) {
-          section > div > div[style*="grid-template-columns: 1fr 240px"] { grid-template-columns: 1fr !important; }
-          section > div > div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
-          div[style*="grid-template-columns: 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          .hero-section { padding: 48px 0 36px !important; }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+          .two-col-grid { grid-template-columns: 1fr !important; }
+          .three-col-grid { grid-template-columns: 1fr !important; }
+          .cta-banner { padding: 40px 24px !important; }
+          .pricing-table thead { display: none; }
+          .pricing-table tbody tr { display: block; padding: 16px 0; border-bottom: 1px solid rgba(27,42,74,0.1); }
+          .pricing-table tbody td { display: block; padding: 2px 0 !important; border-bottom: none !important; text-align: left !important; }
+          .pricing-table tbody td:first-child { font-size: 15px !important; margin-bottom: 4px; }
+          .pricing-table tbody td:last-child { margin-top: 8px; }
         }
       `}</style>
     </>

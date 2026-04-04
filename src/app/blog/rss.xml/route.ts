@@ -66,8 +66,8 @@ export async function GET() {
     <language>en-GB</language>
     <atom:link href="${BASE}/blog/rss.xml" rel="self" type="application/rss+xml"/>
     <copyright>© ${new Date().getFullYear()} Nith Digital</copyright>
-    <managingEditor>hello@nithdigital.uk (Akin Yavuz)</managingEditor>
-    <webMaster>hello@nithdigital.uk (Akin Yavuz)</webMaster>
+    <managingEditor>hello@nithdigital.uk (Nith Digital)</managingEditor>
+    <webMaster>hello@nithdigital.uk (Nith Digital)</webMaster>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>${items}
   </channel>
 </rss>`

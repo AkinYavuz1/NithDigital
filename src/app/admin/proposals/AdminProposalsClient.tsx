@@ -243,7 +243,7 @@ export default function AdminProposalsClient() {
               I put together a quick proposal for a website based on what we discussed. You can view it here:<br />
               <span style={{ color: '#1B2A4A', textDecoration: 'underline' }}>{typeof window !== 'undefined' ? window.location.origin : ''}/proposal/view/{sendModal.public_token}</span><br /><br />
               Happy to chat through it whenever suits — feel free to book a call at nithdigital.uk/book or just drop me an email.<br /><br />
-              Cheers,<br />Akin
+              Cheers,<br />Nith Digital
             </div>
             <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
               <button onClick={() => setSendModal(null)} style={{ padding: '9px 18px', borderRadius: 100, border: '1px solid rgba(27,42,74,0.2)', background: 'none', cursor: 'pointer', fontSize: 13 }}>Cancel</button>

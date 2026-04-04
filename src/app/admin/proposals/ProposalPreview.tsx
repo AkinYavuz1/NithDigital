@@ -123,7 +123,7 @@ export default function ProposalPreview({ form }: Props) {
             <div style={{ padding: '8px 16px 12px', borderTop: '1px solid rgba(27,42,74,0.06)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                 <div style={{ width: 3, height: 16, background: '#D4A84B', borderRadius: 2 }} />
-                <div style={{ fontWeight: 700, fontSize: 12, color: '#1B2A4A' }}>A note from Akin</div>
+                <div style={{ fontWeight: 700, fontSize: 12, color: '#1B2A4A' }}>A note from us</div>
               </div>
               <div style={{ fontSize: 10, color: '#5A6A7A', fontStyle: 'italic', paddingLeft: 12 }}>
                 &ldquo;{form.notes}&rdquo;

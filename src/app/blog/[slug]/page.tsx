@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       locale: 'en_GB',
       type: 'article',
       publishedTime: post.published_at,
-      authors: ['Akin Yavuz'],
+      authors: ['Nith Digital'],
       images: post.cover_image_url ? [{ url: post.cover_image_url }] : [],
     },
     twitter: {

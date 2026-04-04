@@ -664,7 +664,7 @@ export async function generateAuditPDF(result: AuditResult): Promise<void> {
   doc.setFont('helvetica', 'normal')
   doc.setTextColor(...LIGHT_GRAY)
   const callLines = doc.splitTextToSize(
-    "Get a free 30-minute call with Akin to discuss your audit results and how we can improve your site. No sales pitch — just honest advice.",
+    "Get a free 30-minute call with the Nith Digital team to discuss your audit results and how we can improve your site. No sales pitch — just honest advice.",
     W - 80
   )
   doc.text(callLines, 22, y + 20)

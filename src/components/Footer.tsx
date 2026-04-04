@@ -14,7 +14,6 @@ const LINKS = [
   {
     heading: 'Free Tools',
     items: [
-      { label: 'LBTT Calculator', href: '/tools/lbtt-calculator' },
       { label: 'VAT Threshold Checker', href: '/tools/vat-checker' },
       { label: 'Take-Home Calculator', href: '/tools/take-home-calculator' },
       { label: 'Invoice Generator', href: '/tools/invoice-generator' },

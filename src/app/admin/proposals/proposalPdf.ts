@@ -213,7 +213,7 @@ export async function generateProposalPDF(proposal: ProposalData) {
     doc.setFontSize(13)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(...NAVY)
-    doc.text('A note from Akin', 20, y + 5)
+    doc.text('A note from us', 20, y + 5)
     y += 12
 
     doc.setFontSize(10)

@@ -173,7 +173,7 @@ export default function PublicProposalClient({ token }: { token: string }) {
         {/* Personal note */}
         {proposal.notes && proposal.pricing_model !== 'custom' && (
           <div style={{ background: '#fff', borderRadius: 12, padding: '28px 36px', marginBottom: 24, boxShadow: '0 2px 12px rgba(27,42,74,0.06)', borderLeft: '4px solid #D4A84B' }}>
-            <h2 style={{ fontFamily: 'var(--font-display, serif)', fontSize: 20, fontWeight: 400, color: '#1B2A4A', marginBottom: 16 }}>A note from Akin</h2>
+            <h2 style={{ fontFamily: 'var(--font-display, serif)', fontSize: 20, fontWeight: 400, color: '#1B2A4A', marginBottom: 16 }}>A note from us</h2>
             <p style={{ fontSize: 15, color: '#5A6A7A', fontStyle: 'italic', lineHeight: 1.7, margin: 0 }}>&ldquo;{proposal.notes}&rdquo;</p>
           </div>
         )}
@@ -193,7 +193,7 @@ export default function PublicProposalClient({ token }: { token: string }) {
           <div style={{ background: '#dcfce7', border: '1px solid #86efac', borderRadius: 12, padding: '28px 36px', textAlign: 'center' }}>
             <CheckCircle size={40} color="#16a34a" style={{ marginBottom: 12 }} />
             <h2 style={{ fontSize: 20, color: '#16a34a', marginBottom: 8 }}>Proposal accepted!</h2>
-            <p style={{ color: '#15803d', fontSize: 14 }}>Thanks for accepting. Akin will be in touch shortly to get things moving.</p>
+            <p style={{ color: '#15803d', fontSize: 14 }}>Thanks for accepting. We'll be in touch shortly to get things moving.</p>
           </div>
         ) : (
           <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '32px 36px', textAlign: 'center', boxShadow: '0 4px 20px rgba(27,42,74,0.15)' }}>
