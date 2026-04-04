@@ -118,7 +118,7 @@ export default function LaunchpadPage() {
       <section style={{ padding: '64px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           {/* Benefit cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, marginBottom: 56 }}>
+          <div className="three-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, marginBottom: 56 }}>
             {[
               { icon: CheckCircle, title: 'Step-by-step guidance', desc: 'Clear, actionable steps you can complete in order — no jargon.' },
               { icon: BookOpen, title: 'Based on Business Gateway advice', desc: 'Aligned with official Scottish Government business guidance.' },
@@ -181,6 +181,7 @@ export default function LaunchpadPage() {
 
           {/* Startup Bundle teaser */}
           <div
+            className="cta-banner"
             style={{
               background: '#1B2A4A',
               borderRadius: 12,
@@ -244,7 +245,8 @@ export default function LaunchpadPage() {
 
       <style>{`
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          .three-col-grid { grid-template-columns: 1fr !important; }
+          .cta-banner { padding: 40px 24px !important; }
         }
       `}</style>
     </>

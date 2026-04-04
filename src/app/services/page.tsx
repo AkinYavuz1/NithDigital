@@ -106,6 +106,7 @@ export default function ServicesPage() {
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           {/* Service cards */}
           <div
+            className="two-col-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
@@ -140,7 +141,7 @@ export default function ServicesPage() {
           >
             Pricing guide
           </h2>
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 48 }}>
+          <table className="pricing-table" style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 48 }}>
             <thead>
               <tr>
                 {['Service', "What's included", 'Starting from'].map((h, i) => (
@@ -213,8 +214,44 @@ export default function ServicesPage() {
 
           <TestimonialsSection testimonials={[]} />
 
+          {/* Data & BI specialist pages */}
+          <div style={{ marginBottom: 48 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+              Data &amp; BI consulting
+            </h2>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: '#5A6A7A', marginBottom: 20 }}>
+              10+ years delivering data and business intelligence solutions across NHS, energy, finance, and the public sector.
+            </p>
+            <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              {[
+                { href: '/power-bi/scotland', label: 'Power BI Consultant — Scotland', desc: 'Dashboards, data modelling, and automated reporting. Day rate and fixed-price.' },
+                { href: '/power-bi/dumfries-galloway', label: 'Power BI Consultant — Dumfries & Galloway', desc: 'Local Power BI consulting for D&G businesses. From £500/day.' },
+                { href: '/power-bi/small-business-scotland', label: 'Power BI for Small Business', desc: 'Affordable dashboards for SMEs across Scotland. From £500.' },
+                { href: '/microsoft-fabric/scotland', label: 'Microsoft Fabric Consultant — Scotland', desc: 'Migration from Power BI Premium and legacy BI tools to Microsoft Fabric.' },
+                { href: '/freelance-data-analyst/scotland', label: 'Freelance Data Analyst — Scotland', desc: 'SQL, Python, Power BI. Contract, fixed-price, and retainer.' },
+                { href: '/web-apps/dumfries-galloway', label: 'Custom Web Apps — D&G', desc: 'Bespoke tools for job tracking, CRM, booking, and more.' },
+              ].map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  style={{
+                    display: 'block',
+                    padding: '16px 20px',
+                    border: '1px solid rgba(27,42,74,0.1)',
+                    borderRadius: 8,
+                    textDecoration: 'none',
+                  }}
+                >
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{l.label}</div>
+                  <div style={{ fontSize: 12, color: '#5A6A7A' }}>{l.desc}</div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
           {/* CTA */}
           <div
+            className="cta-banner"
             style={{
               background: '#1B2A4A',
               borderRadius: 12,
@@ -254,8 +291,13 @@ export default function ServicesPage() {
 
       <style>{`
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
-          table thead th, table tbody td { padding: 10px 8px !important; font-size: 12px !important; }
+          .two-col-grid { grid-template-columns: 1fr !important; }
+          .cta-banner { padding: 40px 24px !important; }
+          .pricing-table thead { display: none; }
+          .pricing-table tbody tr { display: block; padding: 16px 0; border-bottom: 1px solid rgba(27,42,74,0.1); }
+          .pricing-table tbody td { display: block; padding: 2px 0 !important; border-bottom: none !important; text-align: left !important; }
+          .pricing-table tbody td:first-child { font-size: 15px !important; margin-bottom: 4px; }
+          .pricing-table tbody td:last-child { margin-top: 8px; }
         }
       `}</style>
     </>

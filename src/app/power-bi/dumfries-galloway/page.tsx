@@ -137,6 +137,36 @@ export default function PowerBIDGPage() {
           ))}
         </div>
 
+        {/* Related pages */}
+        <div style={{ marginBottom: 48 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, marginBottom: 16, color: '#1B2A4A' }}>
+            More data &amp; BI services
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="bi-grid">
+            {[
+              { href: '/power-bi/scotland', label: 'Power BI Consultant — Scotland', desc: 'Available Scotland-wide for contract and fixed-price work.' },
+              { href: '/power-bi/small-business-scotland', label: 'Power BI for Small Business', desc: 'Affordable dashboards built for SMEs. From £500.' },
+              { href: '/microsoft-fabric/scotland', label: 'Microsoft Fabric Consultant', desc: 'Migration from Power BI Premium to the next-generation platform.' },
+              { href: '/freelance-data-analyst/scotland', label: 'Freelance Data Analyst — Scotland', desc: 'SQL, Python, Power BI. Contract and project work.' },
+            ].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                style={{
+                  display: 'block',
+                  padding: '16px 20px',
+                  border: '1px solid rgba(27,42,74,0.1)',
+                  borderRadius: 8,
+                  textDecoration: 'none',
+                }}
+              >
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{l.label}</div>
+                <div style={{ fontSize: 12, color: '#5A6A7A' }}>{l.desc}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '40px 48px', textAlign: 'center', color: '#F5F0E6' }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8 }}>
             Ready to see your data clearly?

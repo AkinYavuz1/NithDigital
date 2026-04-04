@@ -1,40 +1,9 @@
 export const runtime = 'edge'
 
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { edgeSupabase } from '@/lib/supabase-edge'
-import BlogPostClient from './BlogPostClient'
 
-interface BlogPost {
-  id: string
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  cover_image_url: string | null
-  category: string
-  tags: string[]
-  author: string
-  published: boolean
-  published_at: string
-  meta_title: string | null
-  meta_description: string | null
-  read_time_minutes: number
-  created_at: string
-}
-
-const CATEGORIES: Record<string, string> = {
-  'starting-a-business': 'Starting a Business',
-  'tax-and-finance': 'Tax & Finance',
-  'marketing': 'Marketing',
-  'websites-and-digital': 'Websites & Digital',
-  'tools-and-resources': 'Tools & Resources',
-  'local-business': 'Local Business',
-}
-
-function formatDate(d: string) {
-  return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-}
+import BlogPostWrapper from './BlogPostWrapper'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -47,7 +16,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!data) return { title: 'Post not found — Nith Digital' }
 
   const post = data as { title: string; meta_title: string | null; meta_description: string | null; excerpt: string; cover_image_url: string | null; published_at: string }
-
   const title = post.meta_title || post.title
   const description = post.meta_description || post.excerpt
 
@@ -56,106 +24,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description,
     alternates: { canonical: `https://nithdigital.uk/blog/${slug}` },
     openGraph: {
-      title,
-      description,
+      title, description,
       url: `https://nithdigital.uk/blog/${slug}`,
-      siteName: 'Nith Digital',
-      locale: 'en_GB',
-      type: 'article',
-      publishedTime: post.published_at,
-      authors: ['Nith Digital'],
+      siteName: 'Nith Digital', locale: 'en_GB', type: 'article',
+      publishedTime: post.published_at, authors: ['Nith Digital'],
       images: post.cover_image_url ? [{ url: post.cover_image_url }] : [],
     },
-    twitter: {
-      card: 'summary_large_image' as const,
-      title,
-      description,
-    },
+    twitter: { card: 'summary_large_image', title, description },
   }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-
-  const { data: postData } = await edgeSupabase('blog_posts')
-    .select('*')
-    .eq('slug', slug)
-    .eq('published', true)
-    .single()
-
-  if (!postData) {
-    return (
-      <div style={{ maxWidth: 720, margin: '80px auto', padding: '0 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, marginBottom: 16 }}>Post not found</h1>
-        <Link href="/blog" style={{ color: '#D4A84B', fontWeight: 600 }}>← Back to Blog</Link>
-      </div>
-    )
-  }
-
-  const blogPost = postData as unknown as BlogPost
-
-  // Related posts (same category, exclude current)
-  const { data: related } = await edgeSupabase('blog_posts')
-    .select('id,slug,title,excerpt,read_time_minutes,published_at')
-    .eq('published', true)
-    .eq('category', blogPost.category)
-    .neq('slug', slug)
-    .limit(3)
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: blogPost.title,
-    description: blogPost.excerpt,
-    author: { '@type': 'Person', name: blogPost.author },
-    datePublished: blogPost.published_at,
-    dateModified: blogPost.created_at,
-    url: `https://nithdigital.uk/blog/${blogPost.slug}`,
-    publisher: {
-      '@type': 'Organization',
-      name: 'Nith Digital',
-      url: 'https://nithdigital.uk',
-    },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://nithdigital.uk/blog/${blogPost.slug}` },
-    breadcrumb: {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://nithdigital.uk' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://nithdigital.uk/blog' },
-        { '@type': 'ListItem', position: 3, name: blogPost.title },
-      ],
-    },
-  }
-
-  return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-
-      {/* Page header */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <Link href="/blog" style={{ fontSize: 12, color: 'rgba(245,240,230,0.5)', marginBottom: 20, display: 'inline-block' }}>
-            ← Back to Blog
-          </Link>
-          <div style={{ marginBottom: 16 }}>
-            <span style={{
-              display: 'inline-block', fontSize: 10, padding: '3px 10px', borderRadius: 100,
-              background: '#D4A84B', color: '#1B2A4A', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px',
-            }}>
-              {CATEGORIES[blogPost.category] || blogPost.category}
-            </span>
-          </div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, lineHeight: 1.3, maxWidth: 720, marginBottom: 16 }}>
-            {blogPost.title}
-          </h1>
-          <p style={{ fontSize: 13, color: 'rgba(245,240,230,0.5)' }}>
-            By {blogPost.author} · {blogPost.read_time_minutes} min read · Published {formatDate(blogPost.published_at)}
-          </p>
-        </div>
-      </section>
-
-      {/* Article body */}
-      <BlogPostClient post={blogPost} related={(related || []) as { id: string; slug: string; title: string; excerpt: string; read_time_minutes: number; published_at: string }[]} />
-    </>
-  )
+  return <BlogPostWrapper slug={slug} />
 }

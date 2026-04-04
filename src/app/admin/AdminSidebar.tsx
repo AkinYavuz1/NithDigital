@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Inbox, Rocket, Calendar, Ticket,
-  Users, Mail, FileText, Star, LogOut, HelpCircle, Gift, Calculator, FileSignature, Layout, BarChart2,
+  Users, Mail, FileText, Star, LogOut, HelpCircle, Gift, Calculator, FileSignature, Layout, BarChart2, Target,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
@@ -25,6 +25,7 @@ const NAV_ITEMS = [
   { href: '/admin/referrals', icon: Gift, label: 'Referrals' },
   { href: '/admin/quote-leads', icon: Calculator, label: 'Quote Leads' },
   { href: '/admin/audits', icon: BarChart2, label: 'Site Audits' },
+  { href: '/admin/leads', icon: Target, label: 'Lead Generator' },
 ]
 
 export default function AdminSidebar() {

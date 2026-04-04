@@ -72,7 +72,7 @@ export default function BundlePage() {
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, textAlign: 'center', marginBottom: 32 }}>
             How it works
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, marginBottom: 56 }}>
+          <div className="three-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, marginBottom: 56 }}>
             {[
               { n: '1', icon: '📋', title: 'Complete the free Launchpad checklist', desc: '10 steps to launch your Scottish sole trader business. Free, no account required.' },
               { n: '2', icon: '🎁', title: 'Receive your unique promo code', desc: 'On completing all 10 steps, you\'ll instantly receive a unique LAUNCH-XXXX-XXXX code.' },
@@ -125,7 +125,7 @@ export default function BundlePage() {
           </div>
 
           {/* What you get */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 56 }}>
+          <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 56 }}>
             <div>
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16 }}>
                 What&apos;s included
@@ -208,8 +208,8 @@ export default function BundlePage() {
 
       <style>{`
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
-          div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          .three-col-grid { grid-template-columns: 1fr !important; }
+          .two-col-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </>

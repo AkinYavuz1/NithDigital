@@ -42,7 +42,7 @@ export default function ContactPage() {
 
       <section style={{ padding: '72px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start', marginBottom: 48 }}>
+          <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start', marginBottom: 48 }}>
             <div>
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, marginBottom: 12 }}>
                 Let&apos;s talk about your project
@@ -81,7 +81,7 @@ export default function ContactPage() {
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 20 }}>
             Areas we serve
           </h2>
-          <div style={{ columns: 3, gap: 12, fontSize: 13, color: '#5A6A7A', lineHeight: 2.2, marginBottom: 32 }}>
+          <div className="areas-cols" style={{ columns: 3, gap: 12, fontSize: 13, color: '#5A6A7A', lineHeight: 2.2, marginBottom: 32 }}>
             {AREAS.map((a) => (
               <div key={a}>{a}</div>
             ))}
@@ -91,8 +91,11 @@ export default function ContactPage() {
 
       <style>{`
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
-          div[style*="columns: 3"] { columns: 2 !important; }
+          .two-col-grid { grid-template-columns: 1fr !important; }
+          .areas-cols { columns: 2 !important; }
+        }
+        @media (max-width: 480px) {
+          .areas-cols { columns: 1 !important; }
         }
       `}</style>
     </>

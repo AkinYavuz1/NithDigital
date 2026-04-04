@@ -3,8 +3,6 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-export const runtime = 'edge'
-
 interface Props {
   params: Promise<{ code: string }>
 }
