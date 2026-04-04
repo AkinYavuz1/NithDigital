@@ -3,13 +3,24 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-export const metadata: Metadata = {
-  title: "You've been invited to Nith Digital",
-  description: 'Sign up and you both get a free month of Business OS.',
-}
+export const runtime = 'edge'
 
 interface Props {
   params: Promise<{ code: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { code } = await params
+  const title = "You've been invited to Nith Digital"
+  const description = 'Sign up and you both get a free month of Business OS.'
+  const url = `https://nithdigital.uk/ref/${code}`
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, siteName: 'Nith Digital', locale: 'en_GB', type: 'website' },
+    twitter: { card: 'summary_large_image', title, description },
+  }
 }
 
 export default async function ReferralLandingPage({ params }: Props) {

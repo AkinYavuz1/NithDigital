@@ -1,6 +1,8 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 
+export const runtime = 'edge'
+
 const serviceLabels: Record<string, string> = {
   website: 'Business website',
   ecommerce: 'E-commerce website',

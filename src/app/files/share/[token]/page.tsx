@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 
+export const runtime = 'edge'
 export const metadata: Metadata = { title: 'Download File — Nith Digital' }
 
 interface Props {

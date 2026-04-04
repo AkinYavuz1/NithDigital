@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
+
+export const runtime = 'edge'
 import { ChevronRight } from 'lucide-react'
 
 interface Props {
@@ -28,9 +30,15 @@ const CATEGORY_INFO: Record<string, { label: string; desc: string }> = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params
   const info = CATEGORY_INFO[category]
+  const title = info ? `${info.label} — Help Centre` : 'Help Category — Nith Digital'
+  const description = info?.desc || ''
+  const url = `https://nithdigital.uk/help/category/${category}`
   return {
-    title: info ? `${info.label} — Help Centre` : 'Help Category — Nith Digital',
-    description: info?.desc || '',
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, siteName: 'Nith Digital', locale: 'en_GB', type: 'website' },
+    twitter: { card: 'summary_large_image', title, description },
   }
 }
 

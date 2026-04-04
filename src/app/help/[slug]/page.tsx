@@ -3,6 +3,8 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import HelpArticleClient from './HelpArticleClient'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+
+export const runtime = 'edge'
 import Link from 'next/link'
 
 interface Props {
@@ -13,9 +15,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const supabase = await createServerSupabaseClient()
   const { data } = await supabase.from('help_articles').select('title, content').eq('slug', slug).single()
+  const title = data ? `${data.title} — Help Centre` : 'Help Article — Nith Digital'
+  const description = data?.content?.slice(0, 160).replace(/[#*`]/g, '') || ''
+  const url = `https://nithdigital.uk/help/${slug}`
   return {
-    title: data ? `${data.title} — Help Centre` : 'Help Article — Nith Digital',
-    description: data?.content?.slice(0, 160).replace(/[#*`]/g, '') || '',
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, siteName: 'Nith Digital', locale: 'en_GB', type: 'article' },
+    twitter: { card: 'summary_large_image', title, description },
   }
 }
 

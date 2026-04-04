@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import ProposalEditor from '../ProposalEditor'
 import type { ProposalForm } from '../ProposalEditor'
 
+export const runtime = 'edge'
 export const metadata: Metadata = { title: 'New Proposal — Admin' }
 
 interface Props {

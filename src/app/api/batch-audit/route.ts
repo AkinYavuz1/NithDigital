@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 export const maxDuration = 120
 
 // Reuse the audit logic inline — lightweight version for batch processing
@@ -80,7 +80,7 @@ async function auditUrl(url: string): Promise<{
     if (!(!isHttps || /src\s*=\s*["']http:\/\//i.test(html))) security += 20
 
     // Performance score
-    const htmlKb = Buffer.byteLength(html, 'utf8') / 1024
+    const htmlKb = new TextEncoder().encode(html).length / 1024
     let performance = 0
     if (htmlKb < 100) performance += 20
     const hasViewport = metas.some(t => /name\s*=\s*["']viewport["']/i.test(t))
