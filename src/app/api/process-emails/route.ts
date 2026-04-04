@@ -1,7 +1,8 @@
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { Resend } from 'resend'
 import { renderEmailTemplate, EmailTemplate } from '@/lib/email-templates'
 
 export async function POST(req: NextRequest) {
@@ -11,6 +12,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  const resend = new Resend(process.env.RESEND_API_KEY)
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -50,19 +52,20 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Mark as sent (actual delivery via Resend/SendGrid to be connected later)
-    await supabase
-      .from('email_queue')
-      .update({
-        status: 'sent',
-        body_html: bodyHtml,
-        body_text: bodyText,
-        subject,
-        sent_at: new Date().toISOString(),
-      })
-      .eq('id', email.id)
+    const { error: sendError } = await resend.emails.send({
+      from: 'Nith Digital <hello@nithdigital.uk>',
+      to: email.to_email,
+      subject,
+      html: bodyHtml,
+      ...(bodyText ? { text: bodyText } : {}),
+    })
 
-    processed++
+    if (sendError) {
+      await supabase.from('email_queue').update({ status: 'failed', body_html: bodyHtml, body_text: bodyText, subject, sent_at: new Date().toISOString() }).eq('id', email.id)
+    } else {
+      processed++
+      await supabase.from('email_queue').update({ status: 'sent', body_html: bodyHtml, body_text: bodyText, subject, sent_at: new Date().toISOString() }).eq('id', email.id)
+    }
   }
 
   return NextResponse.json({ processed })

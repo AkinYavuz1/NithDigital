@@ -4,9 +4,8 @@ import { createClient } from '@supabase/supabase-js'
 
 export const runtime = 'nodejs'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
   const authHeader = req.headers.get('Authorization')
   const secret = process.env.EMAIL_PROCESSOR_SECRET || 'nith-email-secret'
   if (authHeader !== `Bearer ${secret}`) {

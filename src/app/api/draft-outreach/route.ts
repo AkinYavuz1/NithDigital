@@ -3,8 +3,6 @@ import Anthropic from '@anthropic-ai/sdk'
 
 export const runtime = 'nodejs'
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
 interface LeadData {
   businessName: string
   website: string | null
@@ -19,6 +17,7 @@ interface LeadData {
 }
 
 export async function POST(req: NextRequest) {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   const authHeader = req.headers.get('Authorization')
   const secret = process.env.EMAIL_PROCESSOR_SECRET || 'nith-email-secret'
   if (authHeader !== `Bearer ${secret}`) {
