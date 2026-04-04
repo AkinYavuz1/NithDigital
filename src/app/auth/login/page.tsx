@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import LoginForm from './LoginForm'
 import Logo from '@/components/Logo'
 import Link from 'next/link'
@@ -45,7 +46,9 @@ export default function LoginPage() {
           </h1>
           <p style={{ fontSize: 13, color: '#5A6A7A' }}>Enter your email and password</p>
         </div>
-        <LoginForm />
+        <Suspense fallback={null}>
+          <LoginForm />
+        </Suspense>
         <p style={{ textAlign: 'center', fontSize: 13, color: '#5A6A7A', marginTop: 24 }}>
           Don&apos;t have an account?{' '}
           <Link href="/auth/signup" style={{ color: '#D4A84B', fontWeight: 600 }}>
