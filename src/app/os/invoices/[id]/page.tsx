@@ -1,8 +1,6 @@
 export const runtime = 'edge'
-import dynamic from 'next/dynamic'
-
-const InvoiceDetail = dynamic(() => import('./InvoiceDetail'), { ssr: false })
+import InvoiceDetailWrapper from './InvoiceDetailWrapper'
 
 export default function InvoiceDetailPage({ params }: { params: { id: string } }) {
-  return <InvoiceDetail id={params.id} />
+  return <InvoiceDetailWrapper id={params.id} />
 }

@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
+import ProposalEditorWrapper from '../ProposalEditorWrapper'
 import type { ProposalForm } from '../ProposalEditor'
-
-const ProposalEditor = dynamic(() => import('../ProposalEditor'), { ssr: false })
 
 export const runtime = 'edge'
 export const metadata: Metadata = { title: 'New Proposal — Admin' }
@@ -26,5 +24,5 @@ export default async function NewProposalPage({ searchParams }: Props) {
   if (params.contact_name) prefill.contact_name = decodeURIComponent(params.contact_name)
   if (params.contact_email) prefill.contact_email = decodeURIComponent(params.contact_email)
   if (params.notes) prefill.notes = decodeURIComponent(params.notes)
-  return <ProposalEditor proposal={null} prefill={Object.keys(prefill).length > 0 ? prefill : undefined} />
+  return <ProposalEditorWrapper proposal={null} prefill={Object.keys(prefill).length > 0 ? prefill : undefined} />
 }
