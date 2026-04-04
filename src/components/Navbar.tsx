@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Logo from './Logo'
 
 const NAV_LINKS = [
@@ -19,12 +18,6 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-  const router = useRouter()
-
-  function handleNavClick(href: string) {
-    setOpen(false)
-    router.push(href)
-  }
 
   return (
     <nav
@@ -95,19 +88,15 @@ export default function Navbar() {
         >
           {NAV_LINKS.map((link) => (
             <li key={link.href} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <button
-                onClick={() => handleNavClick(link.href)}
+              <Link
+                href={link.href}
+                onClick={() => setOpen(false)}
                 style={{
                   fontSize: 13,
                   color: 'rgba(245,240,230,0.5)',
                   fontWeight: 500,
                   letterSpacing: '0.3px',
                   transition: 'color 0.25s ease',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  fontFamily: 'inherit',
                 }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.color = 'var(--color-cream)')
@@ -117,7 +106,7 @@ export default function Navbar() {
                 }
               >
                 {link.label}
-              </button>
+              </Link>
               {link.badge && (
                 <span
                   style={{
@@ -135,8 +124,9 @@ export default function Navbar() {
             </li>
           ))}
           <li className="nav-book-mobile" style={{ display: 'none', marginTop: 8 }}>
-            <button
-              onClick={() => handleNavClick('/book')}
+            <Link
+              href="/book"
+              onClick={() => setOpen(false)}
               style={{
                 display: 'inline-block',
                 fontSize: 13,
@@ -145,13 +135,10 @@ export default function Navbar() {
                 color: 'var(--color-navy)',
                 borderRadius: 100,
                 fontWeight: 600,
-                border: 'none',
-                cursor: 'pointer',
-                fontFamily: 'inherit',
               }}
             >
               Book a free call
-            </button>
+            </Link>
           </li>
         </ul>
 
