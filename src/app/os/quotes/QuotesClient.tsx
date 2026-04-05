@@ -56,7 +56,7 @@ export default function QuotesClient() {
             <Link href="/os/quotes/new" style={{ padding: '10px 20px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 600 }}>Create first quote</Link>
           </div>
         ) : (
-          <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
+          <div style={{ background: '#fff', borderRadius: 10, overflowX: 'auto' }}>
             <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: '#F5F0E6' }}>

@@ -42,7 +42,7 @@ export default function DemoInvoicesPage() {
             <p>No invoices in this category.</p>
           </div>
         ) : (
-          <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }} className="mobile-card-table-wrap">
+          <div style={{ background: '#fff', borderRadius: 10, overflowX: 'auto' }} className="mobile-card-table-wrap">
             <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: '#F5F0E6' }}>

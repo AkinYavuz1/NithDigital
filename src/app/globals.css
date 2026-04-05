@@ -67,9 +67,12 @@ html, body {
   max-width: 100%;
 }
 
-/* OS mobile padding */
+/* OS mobile padding + grid fixes */
 @media (max-width: 768px) {
   .os-page-wrap { padding: 16px !important; }
+  .expenses-stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .mileage-stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .bookings-stats-grid { grid-template-columns: 1fr 1fr !important; }
 }
 
 /* Mobile table → card layout */
@@ -103,6 +106,7 @@ html, body {
     margin-right: 12px;
   }
   .mobile-card-table tbody td.td-primary {
+    display: block;
     font-size: 14px;
     font-weight: 600;
     padding-bottom: 6px !important;
@@ -121,5 +125,5 @@ html, body {
   /* Donut chart legend vertical */
   .recharts-legend-wrapper { overflow: visible !important; }
 
-  .expenses-stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .mobile-card-table-wrap { overflow-x: auto !important; }
 }

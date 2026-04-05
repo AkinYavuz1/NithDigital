@@ -51,7 +51,7 @@ export default function DemoTopBar({ onMenuToggle }: { onMenuToggle?: () => void
         </button>
 
         {open && (
-          <div style={{
+          <div className="notif-dropdown" style={{
             position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: 300,
             background: '#fff', borderRadius: 10, border: '1px solid rgba(27,42,74,0.1)',
             boxShadow: '0 8px 32px rgba(27,42,74,0.12)', zIndex: 100, overflow: 'hidden',
@@ -96,7 +96,12 @@ export default function DemoTopBar({ onMenuToggle }: { onMenuToggle?: () => void
         Sign up free
       </Link>
 
-      <style>{`@media (max-width: 768px) { .os-menu-toggle { display: flex !important; } }`}</style>
+      <style>{`
+        @media (max-width: 768px) {
+          .os-menu-toggle { display: flex !important; }
+          .notif-dropdown { position: fixed !important; top: 56px !important; right: 8px !important; left: 8px !important; width: auto !important; }
+        }
+      `}</style>
     </div>
   )
 }

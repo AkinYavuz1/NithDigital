@@ -31,7 +31,7 @@ export default function DemoIncomePage() {
           <div style={{ fontSize: 11, color: 'rgba(245,240,230,0.5)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Total income</div>
           <div style={{ fontSize: 28, fontWeight: 700, color: '#D4A84B' }}>{formatCurrency(total)}</div>
         </div>
-        <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
+        <div style={{ background: '#fff', borderRadius: 10, overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: '#F5F0E6' }}>

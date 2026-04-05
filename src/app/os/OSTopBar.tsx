@@ -169,7 +169,7 @@ export default function OSTopBar({ onMenuToggle }: { onMenuToggle?: () => void }
         </button>
 
         {open && (
-          <div style={{
+          <div className="notif-dropdown" style={{
             position: 'absolute',
             right: 0,
             top: 'calc(100% + 8px)',
@@ -254,7 +254,10 @@ export default function OSTopBar({ onMenuToggle }: { onMenuToggle?: () => void }
 
       <style>{`
         @media (min-width: 768px) { .os-topbar-email { display: block !important; } }
-        @media (max-width: 768px) { .os-menu-toggle { display: flex !important; } }
+        @media (max-width: 768px) {
+          .os-menu-toggle { display: flex !important; }
+          .notif-dropdown { position: fixed !important; top: 56px !important; right: 8px !important; left: 8px !important; width: auto !important; max-width: none !important; }
+        }
       `}</style>
     </div>
   )

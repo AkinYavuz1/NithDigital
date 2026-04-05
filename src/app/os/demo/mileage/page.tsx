@@ -49,7 +49,7 @@ export default function DemoMileagePage() {
           <p style={{ fontSize: 11, color: '#5A6A7A', marginTop: 8 }}>HMRC rate: 45p/mile for first 10,000 miles, 25p/mile thereafter</p>
         </div>
 
-        <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
+        <div style={{ background: '#fff', borderRadius: 10, overflowX: 'auto' }}>
           <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ background: '#F5F0E6' }}>

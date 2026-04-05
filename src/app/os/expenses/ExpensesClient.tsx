@@ -66,7 +66,7 @@ export default function ExpensesClient() {
             </Link>
           </div>
         ) : (
-          <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
+          <div style={{ background: '#fff', borderRadius: 10, overflowX: 'auto' }}>
             <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: '#F5F0E6' }}>
