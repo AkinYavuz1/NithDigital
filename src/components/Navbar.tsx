@@ -4,178 +4,226 @@ import Link from 'next/link'
 import { useState } from 'react'
 import Logo from './Logo'
 
-const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
-  { href: '/work', label: 'Work' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/tools', label: 'Tools', badge: 'Free' },
-  { href: '/about', label: 'About' },
-  { href: '/launchpad', label: 'Launchpad', badge: 'Free' },
-  { href: '/os/demo', label: 'Try Demo', badge: 'Live' },
-  { href: '/contact', label: 'Contact' },
+const linkStyle: React.CSSProperties = {
+  fontSize: 13,
+  color: 'rgba(245,240,230,0.5)',
+  fontWeight: 500,
+  letterSpacing: '0.3px',
+  transition: 'color 0.25s ease',
+  cursor: 'pointer',
+  background: 'none',
+  border: 'none',
+  padding: 0,
+  fontFamily: 'inherit',
+}
+
+const TOOLS_ITEMS = [
+  { href: '/tools/site-audit', label: 'Website Audit' },
+  { href: '/tools/take-home-calculator', label: 'Take Home Calculator' },
+  { href: '/tools/vat-checker', label: 'VAT Checker' },
+  { href: '/tools/invoice-generator', label: 'Invoice Generator' },
+  { href: '/tools/sole-trader-vs-limited', label: 'Sole Trader vs Ltd' },
+  { href: '/tools/website-quote', label: 'Website Quote' },
 ]
 
-export default function Navbar() {
+const RESOURCES_ITEMS = [
+  { href: '/launchpad', label: 'Launchpad' },
+  { href: '/os/demo', label: 'Try Business OS' },
+  { href: '/help', label: 'Help Centre' },
+]
+
+function DropdownItem({ href, label, onClick }: { href: string; label: string; onClick: () => void }) {
+  return (
+    <li>
+      <Link
+        href={href}
+        onClick={onClick}
+        style={{
+          display: 'block',
+          padding: '8px 16px',
+          fontSize: 13,
+          color: '#1B2A4A',
+          fontWeight: 500,
+          textDecoration: 'none',
+          whiteSpace: 'nowrap',
+          transition: 'background 0.15s ease',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(27,42,74,0.06)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      >
+        {label}
+      </Link>
+    </li>
+  )
+}
+
+function Dropdown({ label, items, onClose }: { label: string; items: { href: string; label: string }[]; onClose: () => void }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        background: 'var(--color-navy)',
-        padding: '0 24px',
-      }}
+    <li style={{ position: 'relative' }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
     >
-      <div
-        style={{
-          maxWidth: 'var(--max-width)',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: 64,
-        }}
+      <button
+        style={{ ...linkStyle, display: 'flex', alignItems: 'center', gap: 4 }}
+        onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-cream)')}
+        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,240,230,0.5)')}
       >
+        {label}
+        <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
+      </button>
+      {open && (
+        <ul style={{
+          position: 'absolute',
+          top: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: '#F5F0E6',
+          borderRadius: 10,
+          boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+          listStyle: 'none',
+          margin: 0,
+          padding: '6px 0',
+          minWidth: 200,
+          zIndex: 200,
+          marginTop: 8,
+        }}>
+          {items.map(item => (
+            <DropdownItem key={item.href} href={item.href} label={item.label} onClick={() => { setOpen(false); onClose() }} />
+          ))}
+        </ul>
+      )}
+    </li>
+  )
+}
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false)
+  const [mobileSection, setMobileSection] = useState<string | null>(null)
+
+  const close = () => setOpen(false)
+
+  return (
+    <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'var(--color-navy)', padding: '0 24px' }}>
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 64 }}>
+
         {/* Brand */}
-        <Link
-          href="/"
-          onClick={() => setOpen(false)}
-          style={{ display: 'flex', alignItems: 'center', gap: 10 }}
-        >
+        <Link href="/" onClick={close} style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
           <Logo size={32} />
-          <span
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 18,
-              color: 'var(--color-cream)',
-            }}
-          >
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--color-cream)' }}>
             Nith Digital
           </span>
         </Link>
 
         {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-          style={{
-            display: 'none',
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-cream)',
-            fontSize: 24,
-            padding: '8px',
-            lineHeight: 1,
-          }}
-          className="mobile-toggle"
-        >
+        <button onClick={() => setOpen(!open)} aria-label="Menu" className="mobile-toggle"
+          style={{ display: 'none', background: 'none', border: 'none', color: 'var(--color-cream)', fontSize: 24, padding: '8px', lineHeight: 1, cursor: 'pointer' }}>
           {open ? '✕' : '☰'}
         </button>
 
         {/* Desktop nav */}
-        <ul
-          className={`nav-links${open ? ' open' : ''}`}
-          style={{
-            display: 'flex',
-            gap: 32,
-            listStyle: 'none',
-            margin: 0,
-            padding: 0,
-            marginLeft: 32,
-          }}
-        >
-          {NAV_LINKS.map((link) => (
-            <li key={link.href} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Link
-                href={link.href}
-                onClick={() => setOpen(false)}
-                style={{
-                  fontSize: 13,
-                  color: 'rgba(245,240,230,0.5)',
-                  fontWeight: 500,
-                  letterSpacing: '0.3px',
-                  transition: 'color 0.25s ease',
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = 'var(--color-cream)')
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = 'rgba(245,240,230,0.5)')
-                }
-              >
+        <ul className="nav-links" style={{ display: 'flex', gap: 28, listStyle: 'none', margin: '0 0 0 32px', padding: 0, alignItems: 'center', flex: 1 }}>
+          {[
+            { href: '/services', label: 'Services' },
+            { href: '/work', label: 'Work' },
+            { href: '/blog', label: 'Blog' },
+            { href: '/about', label: 'About' },
+            { href: '/contact', label: 'Contact' },
+          ].map(link => (
+            <li key={link.href}>
+              <Link href={link.href} onClick={close}
+                style={linkStyle}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-cream)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,240,230,0.5)')}>
                 {link.label}
               </Link>
-              {link.badge && (
-                <span
-                  style={{
-                    fontSize: 10,
-                    padding: '2px 7px',
-                    background: 'var(--color-gold)',
-                    color: 'var(--color-navy)',
-                    borderRadius: 100,
-                    fontWeight: 600,
-                  }}
-                >
-                  {link.badge}
-                </span>
-              )}
             </li>
           ))}
-          <li className="nav-book-mobile" style={{ display: 'none', marginTop: 8 }}>
-            <Link
-              href="/book"
-              onClick={() => setOpen(false)}
-              style={{
-                display: 'inline-block',
-                fontSize: 13,
-                padding: '10px 24px',
-                background: 'var(--color-gold)',
-                color: 'var(--color-navy)',
-                borderRadius: 100,
-                fontWeight: 600,
-              }}
-            >
-              Book a free call
-            </Link>
-          </li>
+          <Dropdown label="Tools" items={TOOLS_ITEMS} onClose={close} />
+          <Dropdown label="Free Resources" items={RESOURCES_ITEMS} onClose={close} />
         </ul>
 
-        <Link
-          href="/book"
-          className="nav-book-btn"
-          style={{
-            fontSize: 12,
-            padding: '8px 20px',
-            background: 'var(--color-gold)',
-            color: 'var(--color-navy)',
-            borderRadius: 100,
-            fontWeight: 600,
-            border: 'none',
-            transition: 'background 0.25s ease',
-            letterSpacing: '0.3px',
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = 'var(--color-gold-light)')
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background = 'var(--color-gold)')
-          }
-        >
+        <Link href="/book" className="nav-book-btn"
+          style={{ fontSize: 12, padding: '8px 20px', background: 'var(--color-gold)', color: 'var(--color-navy)', borderRadius: 100, fontWeight: 600, border: 'none', letterSpacing: '0.3px', flexShrink: 0 }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-gold-light)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'var(--color-gold)')}>
           Book a free call
         </Link>
       </div>
 
-      {/* Mobile nav overlay */}
+      {/* Mobile nav */}
+      {open && (
+        <ul className="nav-links-mobile" style={{ listStyle: 'none', margin: 0, padding: '16px 0 24px', display: 'flex', flexDirection: 'column', gap: 0, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          {[
+            { href: '/services', label: 'Services' },
+            { href: '/work', label: 'Work' },
+            { href: '/blog', label: 'Blog' },
+            { href: '/about', label: 'About' },
+            { href: '/contact', label: 'Contact' },
+          ].map(link => (
+            <li key={link.href}>
+              <Link href={link.href} onClick={close}
+                style={{ display: 'block', padding: '10px 0', fontSize: 14, color: 'rgba(245,240,230,0.8)', fontWeight: 500, textDecoration: 'none' }}>
+                {link.label}
+              </Link>
+            </li>
+          ))}
+
+          {/* Mobile Tools */}
+          <li>
+            <button onClick={() => setMobileSection(mobileSection === 'tools' ? null : 'tools')}
+              style={{ background: 'none', border: 'none', padding: '10px 0', fontSize: 14, color: 'rgba(245,240,230,0.8)', fontWeight: 500, cursor: 'pointer', width: '100%', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
+              Tools <span>{mobileSection === 'tools' ? '▲' : '▼'}</span>
+            </button>
+            {mobileSection === 'tools' && (
+              <ul style={{ listStyle: 'none', margin: 0, padding: '0 0 0 16px' }}>
+                {TOOLS_ITEMS.map(item => (
+                  <li key={item.href}>
+                    <Link href={item.href} onClick={close}
+                      style={{ display: 'block', padding: '8px 0', fontSize: 13, color: 'rgba(245,240,230,0.6)', textDecoration: 'none' }}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          {/* Mobile Free Resources */}
+          <li>
+            <button onClick={() => setMobileSection(mobileSection === 'resources' ? null : 'resources')}
+              style={{ background: 'none', border: 'none', padding: '10px 0', fontSize: 14, color: 'rgba(245,240,230,0.8)', fontWeight: 500, cursor: 'pointer', width: '100%', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
+              Free Resources <span>{mobileSection === 'resources' ? '▲' : '▼'}</span>
+            </button>
+            {mobileSection === 'resources' && (
+              <ul style={{ listStyle: 'none', margin: 0, padding: '0 0 0 16px' }}>
+                {RESOURCES_ITEMS.map(item => (
+                  <li key={item.href}>
+                    <Link href={item.href} onClick={close}
+                      style={{ display: 'block', padding: '8px 0', fontSize: 13, color: 'rgba(245,240,230,0.6)', textDecoration: 'none' }}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          <li style={{ marginTop: 8 }}>
+            <Link href="/book" onClick={close}
+              style={{ display: 'inline-block', fontSize: 13, padding: '10px 24px', background: 'var(--color-gold)', color: 'var(--color-navy)', borderRadius: 100, fontWeight: 600 }}>
+              Book a free call
+            </Link>
+          </li>
+        </ul>
+      )}
+
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .mobile-toggle { display: flex !important; align-items: center; justify-content: center; }
           .nav-book-btn { display: none !important; }
-          .nav-links { display: none !important; flex-direction: column !important; position: absolute !important; top: 64px !important; left: 0 !important; right: 0 !important; background: var(--color-navy) !important; padding: 24px !important; gap: 16px !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; z-index: 99 !important; }
-          .nav-links.open { display: flex !important; }
-          .nav-book-mobile { display: block !important; }
+          .nav-links { display: none !important; }
         }
       `}</style>
     </nav>
