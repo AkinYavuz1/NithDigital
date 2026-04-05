@@ -187,17 +187,27 @@ export default function OSDashboard() {
         </div>
         <div style={{ background: '#fff', borderRadius: 10, padding: 24, overflow: 'hidden' }}>
           <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Income by source</h3>
-          <ResponsiveContainer width="100%" height={280}>
+          <ResponsiveContainer width="100%" height={200}>
             <PieChart>
-              <Pie data={incomeBySource} cx="50%" cy="42%" innerRadius={55} outerRadius={80} dataKey="value">
+              <Pie data={incomeBySource} cx="50%" cy="50%" innerRadius={55} outerRadius={80} dataKey="value">
                 {incomeBySource.map((_, i) => (
                   <Cell key={i} fill={DONUT_COLORS[i % DONUT_COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip formatter={(v) => typeof v === 'number' ? formatCurrency(v) : v} />
-              <Legend />
             </PieChart>
           </ResponsiveContainer>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 12 }}>
+            {incomeBySource.slice(0, 3).map((item, i) => (
+              <div key={item.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: DONUT_COLORS[i % DONUT_COLORS.length], flexShrink: 0, display: 'inline-block' }} />
+                  <span style={{ color: '#5A6A7A' }}>{item.name}</span>
+                </div>
+                <span style={{ fontWeight: 600, color: '#1B2A4A' }}>{formatCurrency(item.value)}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
