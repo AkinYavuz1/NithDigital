@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Lightweight middleware — no @supabase/ssr import to keep Worker bundle under 3MB.
-// We check for the Supabase session cookie as a proxy for "logged in".
+// Middleware checks for a Supabase session cookie as a proxy for "logged in".
 // Full auth validation happens client-side in each protected page.
 
 const PROJECT_REF = 'mrdozyxbonbukpmywxqi'

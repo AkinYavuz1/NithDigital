@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export const runtime = 'edge'
 
 // ---------------------------------------------------------------------------
 // Rate limiting (in-memory, resets on cold start)

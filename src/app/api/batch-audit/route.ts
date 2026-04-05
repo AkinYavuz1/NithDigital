@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export const runtime = 'edge'
 export const maxDuration = 120
 
 // Reuse the audit logic inline — lightweight version for batch processing

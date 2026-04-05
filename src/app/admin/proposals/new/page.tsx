@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import ProposalEditorWrapper from '../ProposalEditorWrapper'
 
-export const dynamic = 'force-static'
 export const metadata: Metadata = { title: 'New Proposal — Admin' }
 
 export default function NewProposalPage() {
