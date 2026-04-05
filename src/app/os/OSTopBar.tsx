@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Bell, CheckCheck, AlertCircle, CreditCard, Calendar, Gift, Info, Lightbulb, Star, FileText } from 'lucide-react'
+import { Bell, CheckCheck, AlertCircle, CreditCard, Calendar, Gift, Info, Lightbulb, Star, FileText, Menu } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 
 interface Notification {
@@ -40,7 +40,7 @@ function NotifIcon({ type }: { type: string }) {
   return <Info size={14} color="#5A6A7A" style={style} />
 }
 
-export default function OSTopBar() {
+export default function OSTopBar({ onMenuToggle }: { onMenuToggle?: () => void }) {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [open, setOpen] = useState(false)
   const [userEmail, setUserEmail] = useState('')
@@ -110,8 +110,20 @@ export default function OSTopBar() {
       gap: 16,
       position: 'sticky',
       top: 0,
-      zIndex: 50,
+      zIndex: 48,
     }}>
+      {/* Mobile hamburger */}
+      {onMenuToggle && (
+        <button
+          onClick={onMenuToggle}
+          className="os-menu-toggle"
+          style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: '#1B2A4A', padding: 4, marginRight: 'auto' }}
+          aria-label="Menu"
+        >
+          <Menu size={22} />
+        </button>
+      )}
+
       {userEmail && (
         <span style={{ fontSize: 12, color: '#5A6A7A', display: 'none' }} className="os-topbar-email">{userEmail}</span>
       )}
@@ -242,6 +254,7 @@ export default function OSTopBar() {
 
       <style>{`
         @media (min-width: 768px) { .os-topbar-email { display: block !important; } }
+        @media (max-width: 768px) { .os-menu-toggle { display: flex !important; } }
       `}</style>
     </div>
   )

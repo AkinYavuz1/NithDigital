@@ -28,7 +28,7 @@ const NAV_ITEMS = [
   { href: '/os/settings', icon: Settings, label: 'Settings' },
 ]
 
-export default function OSSidebar() {
+export default function OSSidebar({ open, onClose }: { open?: boolean; onClose?: () => void }) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -36,6 +36,10 @@ export default function OSSidebar() {
     const supabase = createClient()
     await supabase.auth.signOut()
     router.push('/')
+  }
+
+  const handleNav = () => {
+    if (onClose) onClose()
   }
 
   return (
@@ -52,7 +56,7 @@ export default function OSSidebar() {
           height: '100vh',
           overflowY: 'auto',
         }}
-        className="os-sidebar"
+        className={`os-sidebar${open ? ' os-sidebar-open' : ''}`}
       >
         {/* Brand */}
         <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
@@ -72,6 +76,7 @@ export default function OSSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={handleNav}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -143,9 +148,18 @@ export default function OSSidebar() {
       </aside>
       <style>{`
         @media (max-width: 768px) {
-          .os-sidebar { width: 56px !important; }
-          .os-sidebar span { display: none; }
-          .os-sidebar a span, .os-sidebar button span { display: none; }
+          .os-sidebar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            height: 100vh !important;
+            z-index: 50 !important;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease;
+          }
+          .os-sidebar.os-sidebar-open {
+            transform: translateX(0);
+          }
         }
       `}</style>
     </>
