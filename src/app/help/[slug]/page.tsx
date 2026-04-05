@@ -3,13 +3,11 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import HelpArticleWrapper from './HelpArticleWrapper'
 
-export const dynamic = 'force-static'
-export const runtime = 'edge'
-
 export const metadata: Metadata = {
   title: 'Help Article — Nith Digital',
   description: 'Business OS help centre — guides and support articles.',
 }
+export function generateStaticParams() { return [] }
 
 export default function HelpArticlePage() {
   return (
