@@ -21,8 +21,8 @@ function getEmailFromToken(token: string): string | null {
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
-  // Check for session cookie
-  const sessionCookie = request.cookies.get(SESSION_COOKIE)
+  // Check for session cookie (may be chunked as .0, .1, etc.)
+  const sessionCookie = request.cookies.get(SESSION_COOKIE) ?? request.cookies.get(`${SESSION_COOKIE}.0`)
   const hasSession = !!sessionCookie?.value
 
   // Redirect unauthenticated users away from /os and /admin
@@ -37,7 +37,17 @@ export function middleware(request: NextRequest) {
   // Admin check — decode JWT to read email claim
   if (path.startsWith('/admin') && hasSession) {
     try {
-      let raw = sessionCookie!.value
+      // Supabase may split the cookie into chunks: sb-xxx-auth-token.0, .1, etc.
+      // Reassemble all chunks in order
+      const cookies = request.cookies
+      let raw = ''
+      for (let i = 0; ; i++) {
+        const chunk = i === 0
+          ? cookies.get(SESSION_COOKIE)?.value
+          : cookies.get(`${SESSION_COOKIE}.${i}`)?.value
+        if (!chunk) break
+        raw += chunk
+      }
       // Cookie value may be base64-encoded (prefixed with "base64-")
       if (raw.startsWith('base64-')) {
         raw = atob(raw.slice(7))
