@@ -17,13 +17,28 @@ const linkStyle: React.CSSProperties = {
   fontFamily: 'inherit',
 }
 
-const TOOLS_ITEMS = [
-  { href: '/tools/site-audit', label: 'Website Audit' },
-  { href: '/tools/take-home-calculator', label: 'Take Home Calculator' },
-  { href: '/tools/vat-checker', label: 'VAT Checker' },
-  { href: '/tools/invoice-generator', label: 'Invoice Generator' },
-  { href: '/tools/sole-trader-vs-limited', label: 'Sole Trader vs Ltd' },
-  { href: '/tools/website-quote', label: 'Website Quote' },
+const TOOLS_GROUPS = [
+  {
+    label: 'Tax & Finance',
+    items: [
+      { href: '/tools/mtd-checker', label: 'MTD Readiness Checker', desc: 'When does MTD apply to you?' },
+      { href: '/tools/expense-tracker', label: 'Expense Tracker', desc: 'Track income & expenses, MTD-ready' },
+      { href: '/tools/vat-checker', label: 'VAT Threshold Checker', desc: 'Do you need to register for VAT?' },
+      { href: '/tools/take-home-calculator', label: 'Take-Home Calculator', desc: 'Your pay after tax & NI' },
+      { href: '/tools/sole-trader-vs-limited', label: 'Sole Trader vs Ltd', desc: 'Compare structures at your profit' },
+      { href: '/tools/invoice-generator', label: 'Invoice Generator', desc: 'Create & download a PDF invoice' },
+    ],
+  },
+  {
+    label: 'Website & Visibility',
+    items: [
+      { href: '/tools/website-calculator', label: 'Website Cost Calculator', desc: 'Instant price estimate for your site' },
+      { href: '/tools/visibility-checker', label: 'Google Visibility Checker', desc: 'Can customers find you on Google?' },
+      { href: '/tools/local-seo-scorecard', label: 'Local SEO Score Card', desc: 'Score your online presence in 2 min' },
+      { href: '/tools/site-audit', label: 'Website Audit', desc: 'SEO, speed, security & mobile check' },
+      { href: '/tools/website-quote', label: 'Website Quote', desc: 'Quick quote for a new website' },
+    ],
+  },
 ]
 
 const RESOURCES_ITEMS = [
@@ -53,6 +68,76 @@ function DropdownItem({ href, label, onClick }: { href: string; label: string; o
       >
         {label}
       </Link>
+    </li>
+  )
+}
+
+function ToolsMegaDropdown({ onClose }: { onClose: () => void }) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <li style={{ position: 'relative' }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        style={{ ...linkStyle, display: 'flex', alignItems: 'center', gap: 4 }}
+        onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-cream)')}
+        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,240,230,0.5)')}
+      >
+        Tools
+        <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
+      </button>
+      {open && (
+        <div style={{
+          position: 'absolute',
+          top: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: '#F5F0E6',
+          borderRadius: 12,
+          boxShadow: '0 12px 32px rgba(0,0,0,0.14)',
+          zIndex: 200,
+          marginTop: 8,
+          padding: '20px 24px 16px',
+          display: 'flex',
+          gap: 32,
+          minWidth: 520,
+        }}>
+          {TOOLS_GROUPS.map(group => (
+            <div key={group.label} style={{ flex: 1 }}>
+              <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: '#D4A84B', margin: '0 0 10px' }}>
+                {group.label}
+              </p>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                {group.items.map(item => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => { setOpen(false); onClose() }}
+                      style={{ display: 'block', padding: '7px 8px', borderRadius: 6, textDecoration: 'none', transition: 'background 0.12s ease' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(27,42,74,0.07)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                      <span style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#1B2A4A' }}>{item.label}</span>
+                      <span style={{ display: 'block', fontSize: 11, color: '#6A7A8A', marginTop: 1 }}>{item.desc}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div style={{ borderTop: '1px solid rgba(27,42,74,0.1)', marginTop: 4, paddingTop: 12, gridColumn: '1 / -1', display: 'flex', justifyContent: 'center', width: '100%', position: 'absolute', bottom: 0, left: 0, padding: '10px 24px' }}>
+            <Link
+              href="/tools"
+              onClick={() => { setOpen(false); onClose() }}
+              style={{ fontSize: 12, fontWeight: 600, color: '#D4A84B', textDecoration: 'none' }}
+            >
+              View all tools →
+            </Link>
+          </div>
+        </div>
+      )}
     </li>
   )
 }
@@ -140,7 +225,7 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
-          <Dropdown label="Tools" items={TOOLS_ITEMS} onClose={close} />
+          <ToolsMegaDropdown onClose={close} />
           <Dropdown label="Free Resources" items={RESOURCES_ITEMS} onClose={close} />
         </ul>
 
@@ -177,16 +262,29 @@ export default function Navbar() {
               Tools <span>{mobileSection === 'tools' ? '▲' : '▼'}</span>
             </button>
             {mobileSection === 'tools' && (
-              <ul style={{ listStyle: 'none', margin: 0, padding: '0 0 0 16px' }}>
-                {TOOLS_ITEMS.map(item => (
-                  <li key={item.href}>
-                    <Link href={item.href} onClick={close}
-                      style={{ display: 'block', padding: '8px 0', fontSize: 13, color: 'rgba(245,240,230,0.6)', textDecoration: 'none' }}>
-                      {item.label}
-                    </Link>
-                  </li>
+              <div style={{ paddingLeft: 12, paddingBottom: 8 }}>
+                {TOOLS_GROUPS.map(group => (
+                  <div key={group.label} style={{ marginBottom: 12 }}>
+                    <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: '#D4A84B', margin: '8px 0 4px' }}>
+                      {group.label}
+                    </p>
+                    <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                      {group.items.map(item => (
+                        <li key={item.href}>
+                          <Link href={item.href} onClick={close}
+                            style={{ display: 'block', padding: '7px 0', fontSize: 13, color: 'rgba(245,240,230,0.65)', textDecoration: 'none' }}>
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+                <Link href="/tools" onClick={close}
+                  style={{ display: 'inline-block', fontSize: 12, fontWeight: 600, color: '#D4A84B', textDecoration: 'none', paddingTop: 4 }}>
+                  View all tools →
+                </Link>
+              </div>
             )}
           </li>
 
