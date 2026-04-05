@@ -1,5 +1,3 @@
-import Anthropic from 'npm:@anthropic-ai/sdk'
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, content-type',
@@ -38,7 +36,7 @@ Deno.serve(async (req: Request) => {
     return new Response(JSON.stringify({ error: 'Maximum 100 leads per batch' }), { status: 400, headers: corsHeaders })
   }
 
-  const client = new Anthropic({ apiKey: Deno.env.get('ANTHROPIC_API_KEY') })
+  const groqApiKey = Deno.env.get('GROQ_API_KEY')
   const drafts: { businessName: string; subject: string; body: string }[] = []
 
   for (let i = 0; i < leads.length; i += 10) {
@@ -51,66 +49,70 @@ Deno.serve(async (req: Request) => {
 
       let context = ''
       if (hasNoWebsite) {
-        context = `This business has no website at all. They are completely invisible online.`
+        context = `This business has no website. They are invisible online.`
       } else if (overall < 40) {
-        context = `This business has a website (${lead.website}) but it scored ${overall}/100 overall. Key issues: ${issues.slice(0, 4).join('; ')}.`
+        context = `Their website (${lead.website}) scored ${overall}/100. Key issues: ${issues.slice(0, 4).join('; ')}.`
       } else if (overall < 65) {
-        context = `This business has a website (${lead.website}) that scored ${overall}/100. It has some strengths but clear gaps: ${issues.slice(0, 3).join('; ')}.`
+        context = `Their website (${lead.website}) scored ${overall}/100. Clear gaps: ${issues.slice(0, 3).join('; ')}.`
       } else {
-        context = `This business has a reasonably decent website (${lead.website}, score ${overall}/100) but there are still improvements possible: ${issues.slice(0, 2).join('; ')}.`
+        context = `Their website (${lead.website}) scored ${overall}/100 but has room to improve: ${issues.slice(0, 2).join('; ')}.`
       }
 
-      if (lead.platform) context += ` They are using ${lead.platform}.`
-      if (lead.category) context += ` Business category: ${lead.category}.`
+      if (lead.platform) context += ` Built on ${lead.platform}.`
+      if (lead.category) context += ` Category: ${lead.category}.`
 
-      const prompt = `You are writing a cold outreach email on behalf of the Nith Digital team (nithdigital.uk), a local digital agency based in Dumfries & Galloway, Scotland.
+      const prompt = `You are writing a cold outreach email on behalf of Akin Yavuz, founder of Nith Digital (nithdigital.uk), a local digital agency based in Dumfries & Galloway, Scotland.
 
-Email style:
-- Greeting: "Hi," (no name if we don't have a contact name, just "Hi,")
-- Tone: warm, direct, not salesy — like a helpful local business person
-- Length: short — 3 to 5 short paragraphs max
-- Sign-off: "Cheers,\nNith Digital"
-- No fluff, no corporate speak, no excessive punctuation
-- Mention specific issues found on their site (be concrete, not vague)
-- One soft call to action at the end (e.g. "Happy to send over a full report if useful." or "Worth a quick chat?")
-- Never use phrases like "I hope this email finds you well" or "I wanted to reach out"
-- Always mention Nith Digital is local to D&G
-- Services start from £40/month with no upfront cost for websites
+Writing style — follow this exactly:
+- Get straight to the point, no warm-up line
+- Short, direct sentences
+- Mention the specific issues found — be concrete, not vague
+- No rhetorical questions as standalone paragraphs
+- Not salesy — more like a helpful local person flagging something useful
+- Mention being local to D&G
+- One soft CTA at the end, woven into a sentence (e.g. "Happy to send over a free report if useful.")
+- Sign-off: "Cheers,\nAkin\nNith Digital"
+- Never use: "I hope this finds you well", "I wanted to reach out", "Quick heads up", "Worth a conversation?"
 
-Business details:
-- Name: ${lead.businessName}
-- Context: ${context}
+Business: ${lead.businessName}
+${context}
 
-Write a personalised cold outreach email. Return JSON with exactly two fields:
-- "subject": the email subject line (concise, specific, not clickbait)
-- "body": the full email body (plain text, use line breaks between paragraphs)
+Nith Digital builds websites from £40/month with no upfront cost.
 
-Return only valid JSON, nothing else.`
+Return only valid JSON with two fields: "subject" (concise, specific) and "body" (plain text, line breaks between paragraphs).`
 
       try {
-        const message = await client.messages.create({
-          model: 'claude-haiku-4-5',
-          max_tokens: 600,
-          messages: [{ role: 'user', content: prompt }],
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${groqApiKey}`,
+          },
+          body: JSON.stringify({
+            model: 'llama-3.1-8b-instant',
+            max_tokens: 600,
+            messages: [{ role: 'user', content: prompt }],
+          }),
         })
 
-        const text = message.content[0].type === 'text' ? message.content[0].text : ''
+        const data = await res.json()
+        const text = data.choices?.[0]?.message?.content || ''
         const parsed = JSON.parse(text.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim())
 
         return {
           businessName: lead.businessName,
-          subject: parsed.subject || `Your website — a quick note from Nith Digital`,
+          subject: parsed.subject || `Your website — a note from Nith Digital`,
           body: parsed.body || '',
         }
       } catch (err) {
         console.error(`Draft error for ${lead.businessName}:`, err)
         const fallbackBody = hasNoWebsite
-          ? `Hi,\n\nI noticed ${lead.businessName} doesn't have a website yet — you're missing out on customers who search online before getting in touch.\n\nWe're Nith Digital, a local agency based in Dumfries & Galloway. We build clean, professional websites for local businesses starting at £40/month with no upfront cost.\n\nWorth a quick chat?\n\nCheers,\nNith Digital`
-          : `Hi,\n\nWe ran a quick check on ${lead.businessName}'s website and spotted a few things that are likely holding back your online visibility.\n\nWe're Nith Digital, based locally in D&G. We help local businesses improve their online presence — websites, SEO, and more — from £40/month.\n\nHappy to send over a free full report if that would be useful.\n\nCheers,\nNith Digital`
+          ? `Hi,\n\nI noticed ${lead.businessName} doesn't have a website — you're missing out on customers who search online before getting in touch.\n\nWe're Nith Digital, based locally in Dumfries & Galloway. We build websites from £40/month with no upfront cost.\n\nHappy to send over some examples if useful.\n\nCheers,\nAkin\nNith Digital`
+          : `Hi,\n\nI ran a quick check on ${lead.businessName}'s website and spotted a few things likely holding back your online visibility.\n\nWe're Nith Digital, based locally in D&G. Websites from £40/month, no upfront cost.\n\nHappy to send over a free full report if that would be useful.\n\nCheers,\nAkin\nNith Digital`
 
         return {
           businessName: lead.businessName,
-          subject: `Your website — a quick note from Nith Digital`,
+          subject: `Your website — a note from Nith Digital`,
           body: fallbackBody,
         }
       }
