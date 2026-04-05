@@ -94,11 +94,13 @@ function ToolsMegaDropdown({ onClose }: { onClose: () => void }) {
           top: '100%',
           left: '50%',
           transform: 'translateX(-50%)',
+          zIndex: 200,
+          paddingTop: 8,
+        }}>
+        <div style={{
           background: '#F5F0E6',
           borderRadius: 12,
           boxShadow: '0 12px 32px rgba(0,0,0,0.14)',
-          zIndex: 200,
-          marginTop: 8,
           padding: '20px 24px 16px',
           display: 'flex',
           gap: 32,
@@ -137,6 +139,7 @@ function ToolsMegaDropdown({ onClose }: { onClose: () => void }) {
             </Link>
           </div>
         </div>
+        </div>
       )}
     </li>
   )
@@ -159,25 +162,21 @@ function Dropdown({ label, items, onClose }: { label: string; items: { href: str
         <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
       </button>
       {open && (
-        <ul style={{
-          position: 'absolute',
-          top: '100%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: '#F5F0E6',
-          borderRadius: 10,
-          boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-          listStyle: 'none',
-          margin: 0,
-          padding: '6px 0',
-          minWidth: 200,
-          zIndex: 200,
-          marginTop: 8,
-        }}>
-          {items.map(item => (
-            <DropdownItem key={item.href} href={item.href} label={item.label} onClick={() => { setOpen(false); onClose() }} />
-          ))}
-        </ul>
+        <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', zIndex: 200, paddingTop: 8 }}>
+          <ul style={{
+            background: '#F5F0E6',
+            borderRadius: 10,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+            listStyle: 'none',
+            margin: 0,
+            padding: '6px 0',
+            minWidth: 200,
+          }}>
+            {items.map(item => (
+              <DropdownItem key={item.href} href={item.href} label={item.label} onClick={() => { setOpen(false); onClose() }} />
+            ))}
+          </ul>
+        </div>
       )}
     </li>
   )
