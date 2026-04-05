@@ -37,7 +37,11 @@ export function middleware(request: NextRequest) {
   // Admin check — decode JWT to read email claim
   if (path.startsWith('/admin') && hasSession) {
     try {
-      const raw = sessionCookie!.value
+      let raw = sessionCookie!.value
+      // Cookie value may be base64-encoded (prefixed with "base64-")
+      if (raw.startsWith('base64-')) {
+        raw = atob(raw.slice(7))
+      }
       // Cookie value may be JSON array [access_token, ...]
       const parsed = JSON.parse(raw)
       const accessToken = Array.isArray(parsed) ? parsed[0] : parsed.access_token ?? parsed
