@@ -251,7 +251,7 @@ export default function AdminAuditsClient() {
   // ── Download PDF ─────────────────────────────────────────
 
   const downloadPDF = async (audit: SiteAudit) => {
-    const { generateAuditPDF } = await import('@/app/tools/site-audit/auditPdf')
+    const { generateAuditPDF } = await import('@/app/(site)/tools/site-audit/auditPdf')
     await generateAuditPDF(audit.audit_result)
   }
 

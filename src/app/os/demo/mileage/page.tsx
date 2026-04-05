@@ -84,12 +84,11 @@ export default function DemoMileagePage() {
           </table>
         </div>
       </div>
-    </div>
-
       <style>{`
         @media (max-width: 640px) {
           .mileage-stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
+    </div>
   )
 }
