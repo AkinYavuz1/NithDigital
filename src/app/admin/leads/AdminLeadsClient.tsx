@@ -105,23 +105,6 @@ export default function AdminLeadsClient() {
         return
       }
 
-      // Save to Supabase
-      const rows = businesses.map((b: {
-        name: string; website: string | null; phone: string | null;
-        address: string | null; category: string | null; source: string
-      }) => ({
-        business_name: b.name,
-        website: b.website,
-        phone: b.phone,
-        address: b.address,
-        category: b.category,
-        source: b.source,
-        status: 'new',
-      }))
-
-      const { error } = await supabaseClient.from('scraped_leads').insert(rows)
-      if (error) throw new Error(error.message)
-
       showToast(`Scraped ${businesses.length} businesses successfully`)
       await fetchLeads()
       setTab('audit')

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 
 export const maxDuration = 60
 
@@ -217,6 +218,23 @@ export async function POST(req: NextRequest) {
     seen.add(key)
     return true
   })
+
+  // Insert into Supabase using service role key (bypasses RLS)
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+  const rows = unique.map(b => ({
+    business_name: b.name,
+    website: b.website,
+    phone: b.phone,
+    address: b.address,
+    category: b.category,
+    source: b.source,
+    status: 'new',
+  }))
+  const { error } = await supabase.from('scraped_leads').insert(rows)
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
   return NextResponse.json({ businesses: unique, total: unique.length })
 }
