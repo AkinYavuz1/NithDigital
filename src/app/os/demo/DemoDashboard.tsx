@@ -90,7 +90,7 @@ export default function DemoDashboard() {
       </div>
 
       {/* Charts */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24, marginBottom: 32 }}>
+      <div className="demo-charts-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24, marginBottom: 32 }}>
         <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
           <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Revenue vs Expenses (last 12 months)</h3>
           <ResponsiveContainer width="100%" height={240}>
@@ -104,9 +104,9 @@ export default function DemoDashboard() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
+        <div style={{ background: '#fff', borderRadius: 10, padding: 24, overflow: 'hidden' }}>
           <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Income by source</h3>
-          <ResponsiveContainer width="100%" height={240}>
+          <ResponsiveContainer width="100%" height={280}>
             <PieChart>
               <Pie data={incomeBySource} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value">
                 {incomeBySource.map((_, i) => <Cell key={i} fill={DONUT_COLORS[i % DONUT_COLORS.length]} />)}
@@ -190,6 +190,7 @@ export default function DemoDashboard() {
       <style>{`
         @media (max-width: 768px) {
           .demo-bottom-grid { grid-template-columns: 1fr !important; }
+          .demo-charts-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
