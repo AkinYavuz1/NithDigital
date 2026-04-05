@@ -84,6 +84,7 @@ export default function Navbar() {
             listStyle: 'none',
             margin: 0,
             padding: 0,
+            marginLeft: 32,
           }}
         >
           {NAV_LINKS.map((link) => (
