@@ -173,7 +173,7 @@ async function scrapeScoot(category: string = 'business'): Promise<ScrapedBusine
       const phone = block.match(/(\+44\s?|0)[\d\s]{9,12}/)?.[0]?.trim() || null
       const website = block.match(/href="(https?:\/\/(?!scoot)[^"]+)"/i)?.[1] || null
 
-      if (name) {
+      if (name && !name.toLowerCase().includes('is your business')) {
         businesses.push({ name, website, phone, address: 'Dumfries & Galloway', category, source: 'Scoot' })
       }
     }
