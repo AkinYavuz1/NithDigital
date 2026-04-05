@@ -25,10 +25,21 @@ export default function AuthCallbackPage() {
       const type = searchParams.get('type') ?? 'magiclink'
       const next = searchParams.get('next') ?? '/os'
 
+      async function upsertProfile() {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+        const meta = user.user_metadata ?? {}
+        await supabase.from('profiles').upsert(
+          { id: user.id, email: user.email, full_name: meta.full_name ?? null, business_name: meta.business_name ?? null },
+          { onConflict: 'id', ignoreDuplicates: false }
+        )
+      }
+
       try {
         if (accessToken && refreshToken) {
           // Hash fragment flow — Supabase verified the token and gave us tokens directly
           await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken })
+          await upsertProfile()
           router.replace(next)
           return
         }
@@ -36,6 +47,7 @@ export default function AuthCallbackPage() {
         if (code) {
           // PKCE flow
           await supabase.auth.exchangeCodeForSession(code)
+          await upsertProfile()
           router.replace(next)
           return
         }
@@ -43,6 +55,7 @@ export default function AuthCallbackPage() {
         if (tokenHash && type) {
           // Token hash flow (some email clients)
           await supabase.auth.verifyOtp({ token_hash: tokenHash, type: type as 'magiclink' | 'email' | 'recovery' | 'invite' })
+          await upsertProfile()
           router.replace(next)
           return
         }
