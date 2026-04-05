@@ -126,7 +126,7 @@ export default function DemoDashboard() {
             <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A' }}>Recent invoices</h3>
             <Link href="/os/demo/invoices/new" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>New invoice</Link>
           </div>
-          <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 420 }}>
+          <div><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr>
                 {['Invoice', 'Client', 'Due', 'Amount', 'Status'].map((h) => (

@@ -9,7 +9,7 @@ export default function DemoLayoutClient({ children }: { children: React.ReactNo
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#F5F0E6' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#F5F0E6', overflowX: 'hidden', maxWidth: '100vw' }}>
       {sidebarOpen && (
         <div onClick={() => setSidebarOpen(false)}
           style={{ display: 'none', position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 49 }}

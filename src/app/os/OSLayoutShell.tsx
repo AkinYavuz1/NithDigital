@@ -13,7 +13,7 @@ export default function OSLayoutShell({ children }: { children: React.ReactNode 
   if (isDemo) return <>{children}</>
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#F5F0E6' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#F5F0E6', overflowX: 'hidden', maxWidth: '100vw' }}>
       {/* Mobile overlay backdrop */}
       {sidebarOpen && (
         <div
