@@ -74,8 +74,7 @@ export default function MileageClient() {
           </div>
         ) : (
           <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
-            <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 560 }}>
+            <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: '#F5F0E6' }}>
                   {['Date', 'From', 'To', 'Miles', 'Purpose', 'Rate', 'Claim'].map(h => (
@@ -86,13 +85,17 @@ export default function MileageClient() {
               <tbody>
                 {logs.map(log => (
                   <tr key={log.id} style={{ borderBottom: '1px solid rgba(27,42,74,0.06)' }}>
-                    <td style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(log.date).toLocaleDateString('en-GB')}</td>
-                    <td style={{ padding: '12px 16px' }}>{log.from_location}</td>
-                    <td style={{ padding: '12px 16px' }}>{log.to_location}</td>
-                    <td style={{ padding: '12px 16px', fontWeight: 600 }}>{Number(log.miles).toFixed(1)}</td>
-                    <td style={{ padding: '12px 16px', color: '#5A6A7A' }}>{log.purpose}</td>
-                    <td style={{ padding: '12px 16px' }}>{(Number(log.rate_per_mile) * 100).toFixed(0)}p</td>
-                    <td style={{ padding: '12px 16px', fontWeight: 600 }}>{formatCurrency(Number(log.total_claim))}</td>
+                    <td className="td-primary" data-label="" style={{ padding: '12px 16px', fontWeight: 600 }}>
+                      {log.from_location} → {log.to_location}
+                      <span style={{ marginLeft: 8, fontSize: 12, color: '#5A6A7A', fontWeight: 400 }}>{Number(log.miles).toFixed(1)} mi</span>
+                    </td>
+                    <td data-label="Date" style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(log.date).toLocaleDateString('en-GB')}</td>
+                    <td className="td-hide" data-label="From" style={{ padding: '12px 16px' }}>{log.from_location}</td>
+                    <td className="td-hide" data-label="To" style={{ padding: '12px 16px' }}>{log.to_location}</td>
+                    <td className="td-hide" data-label="Miles" style={{ padding: '12px 16px', fontWeight: 600 }}>{Number(log.miles).toFixed(1)}</td>
+                    <td data-label="Purpose" style={{ padding: '12px 16px', color: '#5A6A7A' }}>{log.purpose}</td>
+                    <td className="td-hide" data-label="Rate" style={{ padding: '12px 16px' }}>{(Number(log.rate_per_mile) * 100).toFixed(0)}p</td>
+                    <td data-label="Claim" style={{ padding: '12px 16px', fontWeight: 600, color: '#D4A84B' }}>{formatCurrency(Number(log.total_claim))}</td>
                   </tr>
                 ))}
                 <tr style={{ background: '#F5F0E6', fontWeight: 700 }}>
@@ -103,7 +106,6 @@ export default function MileageClient() {
                 </tr>
               </tbody>
             </table>
-            </div>
           </div>
         )}
       </div>

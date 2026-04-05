@@ -62,8 +62,8 @@ export default function DemoBookingsPage() {
       {filtered.length === 0 ? (
         <p style={{ color: '#5A6A7A', fontSize: 14, padding: '40px 0', textAlign: 'center' }}>No bookings in this filter.</p>
       ) : (
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 640 }}>
+        <div>
+          <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ borderBottom: '2px solid rgba(27,42,74,0.08)' }}>
                 {['Date', 'Time', 'Name', 'Email', 'Service', 'Status', 'Actions'].map(h => (
@@ -74,18 +74,23 @@ export default function DemoBookingsPage() {
             <tbody>
               {filtered.map(b => (
                 <tr key={b.id} style={{ borderBottom: '1px solid rgba(27,42,74,0.06)' }}>
-                  <td style={{ padding: '12px 12px', whiteSpace: 'nowrap' }}>{formatDate(b.date)}</td>
-                  <td style={{ padding: '12px 12px', whiteSpace: 'nowrap', color: '#5A6A7A' }}>{formatTime(b.start_time)}</td>
-                  <td style={{ padding: '12px 12px', fontWeight: 600 }}>{b.name}</td>
-                  <td style={{ padding: '12px 12px', color: '#5A6A7A' }}>{b.email}</td>
-                  <td style={{ padding: '12px 12px', maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.service}</td>
-                  <td style={{ padding: '12px 12px' }}>
+                  <td className="td-primary" data-label="" style={{ padding: '12px 12px', fontWeight: 600 }}>
+                    {b.name}
+                    <span style={{ marginLeft: 8, fontSize: 12, color: '#5A6A7A', fontWeight: 400 }}>{formatTime(b.start_time)}</span>
+                    <span style={{ marginLeft: 8 }}><span style={{ padding: '3px 10px', borderRadius: 100, fontSize: 11, fontWeight: 600, background: STATUS_COLORS[b.status]?.bg, color: STATUS_COLORS[b.status]?.color }}>{b.status.replace('_', '-')}</span></span>
+                  </td>
+                  <td data-label="Date" style={{ padding: '12px 12px', whiteSpace: 'nowrap' }}>{formatDate(b.date)}</td>
+                  <td className="td-hide" data-label="Time" style={{ padding: '12px 12px', whiteSpace: 'nowrap', color: '#5A6A7A' }}>{formatTime(b.start_time)}</td>
+                  <td className="td-hide" data-label="Name" style={{ padding: '12px 12px', fontWeight: 600 }}>{b.name}</td>
+                  <td data-label="Email" style={{ padding: '12px 12px', color: '#5A6A7A' }}>{b.email}</td>
+                  <td data-label="Service" style={{ padding: '12px 12px', maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.service}</td>
+                  <td className="td-hide" data-label="Status" style={{ padding: '12px 12px' }}>
                     <span style={{ padding: '3px 10px', borderRadius: 100, fontSize: 11, fontWeight: 600, background: STATUS_COLORS[b.status]?.bg, color: STATUS_COLORS[b.status]?.color }}>
                       {b.status.replace('_', '-')}
                     </span>
                   </td>
-                  <td style={{ padding: '12px 12px' }}>
-                    <div style={{ display: 'flex', gap: 6 }}>
+                  <td data-label="" style={{ padding: '12px 12px' }}>
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                       {b.status === 'confirmed' && (
                         <>
                           <button onClick={() => updateStatus(b.id, 'completed')} style={{ padding: '4px 10px', background: 'rgba(39,174,96,0.1)', color: '#27ae60', border: 'none', borderRadius: 6, fontSize: 11, cursor: 'pointer', fontWeight: 600 }}>Done</button>

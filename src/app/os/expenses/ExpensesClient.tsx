@@ -44,7 +44,7 @@ export default function ExpensesClient() {
         }
       />
       <div style={{ padding: 32 }} className="os-page-wrap">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }} className="expenses-stats-grid">
           {[
             { label: 'Total expenses', value: formatCurrency(total) },
             { label: 'Allowable expenses', value: formatCurrency(allowable) },
@@ -67,8 +67,7 @@ export default function ExpensesClient() {
           </div>
         ) : (
           <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
-            <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 480 }}>
+            <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: '#F5F0E6' }}>
                   {['Date', 'Category', 'Description', 'Amount', 'Allowable'].map(h => (
@@ -79,16 +78,19 @@ export default function ExpensesClient() {
               <tbody>
                 {expenses.map(exp => (
                   <tr key={exp.id} style={{ borderBottom: '1px solid rgba(27,42,74,0.06)' }}>
-                    <td style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(exp.date).toLocaleDateString('en-GB')}</td>
-                    <td style={{ padding: '12px 16px' }}><span style={{ fontSize: 11, padding: '2px 8px', background: '#F5F0E6', borderRadius: 100, color: '#1B2A4A' }}>{CATEGORY_LABELS[exp.category] || exp.category}</span></td>
-                    <td style={{ padding: '12px 16px' }}>{exp.description}</td>
-                    <td style={{ padding: '12px 16px', fontWeight: 600 }}>{formatCurrency(Number(exp.amount))}</td>
-                    <td style={{ padding: '12px 16px' }}>{exp.is_allowable ? <Check size={16} color="#10B981" /> : <X size={16} color="#EF4444" />}</td>
+                    <td className="td-primary" data-label="" style={{ padding: '12px 16px', fontWeight: 600 }}>
+                      {exp.description}
+                      <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', background: '#F5F0E6', borderRadius: 100, color: '#1B2A4A', fontWeight: 400 }}>{CATEGORY_LABELS[exp.category] || exp.category}</span>
+                    </td>
+                    <td data-label="Date" style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(exp.date).toLocaleDateString('en-GB')}</td>
+                    <td className="td-hide" data-label="Category" style={{ padding: '12px 16px' }}><span style={{ fontSize: 11, padding: '2px 8px', background: '#F5F0E6', borderRadius: 100, color: '#1B2A4A' }}>{CATEGORY_LABELS[exp.category] || exp.category}</span></td>
+                    <td className="td-hide" data-label="Description" style={{ padding: '12px 16px' }}>{exp.description}</td>
+                    <td data-label="Amount" style={{ padding: '12px 16px', fontWeight: 600 }}>{formatCurrency(Number(exp.amount))}</td>
+                    <td data-label="Allowable" style={{ padding: '12px 16px' }}>{exp.is_allowable ? <Check size={16} color="#10B981" /> : <X size={16} color="#EF4444" />}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            </div>
           </div>
         )}
       </div>

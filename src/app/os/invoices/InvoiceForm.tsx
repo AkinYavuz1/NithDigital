@@ -100,7 +100,7 @@ export default function InvoiceForm({ invoiceId }: InvoiceFormProps) {
       <OSPageHeader title={isEdit ? 'Edit Invoice' : 'New Invoice'} />
       <div style={{ padding: 32, maxWidth: 800 }}>
         <div style={{ background: '#fff', borderRadius: 10, padding: 32 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }} className="invoice-date-grid">
             <div>
               <label style={labelStyle}>Client</label>
               <select value={form.client_id} onChange={e => setForm({ ...form, client_id: e.target.value })} style={inputStyle}>

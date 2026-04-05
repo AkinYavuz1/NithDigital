@@ -94,7 +94,7 @@ export default function DemoReportsPage() {
 
         {activeReport === 'pl' && (
           <>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 32 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 32 }} className="reports-pl-kpis">
               {[
                 { label: 'Total income', value: formatCurrency(reportData.totals.income), color: '#10B981' },
                 { label: 'Total expenses', value: formatCurrency(reportData.totals.expenses), color: '#EF4444' },
@@ -123,12 +123,12 @@ export default function DemoReportsPage() {
         )}
 
         {activeReport === 'expenses' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="reports-2col">
             <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
               <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 20 }}>Expenses by Category</h3>
-              <ResponsiveContainer width="100%" height={280}>
+              <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
-                  <Pie data={reportData.expenseByCategory} cx="50%" cy="50%" outerRadius={100} dataKey="value">
+                  <Pie data={reportData.expenseByCategory} cx="50%" cy="42%" outerRadius={100} dataKey="value">
                     {reportData.expenseByCategory.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                   </Pie>
                   <Tooltip formatter={(v) => typeof v === 'number' ? formatCurrency(v) : v} />
@@ -153,9 +153,9 @@ export default function DemoReportsPage() {
         {activeReport === 'income' && (
           <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
             <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 20 }}>Income by Source</h3>
-            <ResponsiveContainer width="100%" height={280}>
+            <ResponsiveContainer width="100%" height={300}>
               <PieChart>
-                <Pie data={reportData.incomeBySource} cx="50%" cy="50%" outerRadius={100} dataKey="value">
+                <Pie data={reportData.incomeBySource} cx="50%" cy="42%" outerRadius={100} dataKey="value">
                   {reportData.incomeBySource.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                 </Pie>
                 <Tooltip formatter={(v) => typeof v === 'number' ? formatCurrency(v) : v} />
@@ -196,7 +196,7 @@ export default function DemoReportsPage() {
         )}
 
         {activeReport === 'tax' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="reports-2col">
             <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
               <h3 style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Tax Year Summary</h3>
               {[

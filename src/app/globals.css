@@ -65,3 +65,55 @@ button {
 @media (max-width: 768px) {
   .os-page-wrap { padding: 16px !important; }
 }
+
+/* Mobile table → card layout */
+@media (max-width: 640px) {
+  .mobile-card-table thead { display: none; }
+  .mobile-card-table tbody tr {
+    display: block;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 14px 16px;
+    border: 1px solid rgba(27,42,74,0.08);
+    border-bottom: none !important;
+  }
+  .mobile-card-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0 !important;
+    border: none !important;
+    font-size: 13px;
+  }
+  .mobile-card-table tbody td::before {
+    content: attr(data-label);
+    font-size: 11px;
+    color: #5A6A7A;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+  .mobile-card-table tbody td.td-primary {
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 6px !important;
+  }
+  .mobile-card-table tbody td.td-primary::before { content: ''; margin: 0; }
+  .mobile-card-table tbody td.td-hide { display: none; }
+  .mobile-card-table { border-radius: 0 !important; overflow: visible !important; }
+
+  /* Reports responsive grids */
+  .reports-pl-kpis { grid-template-columns: 1fr !important; }
+  .reports-2col { grid-template-columns: 1fr !important; }
+
+  /* Invoice form date fields stack */
+  .invoice-date-grid { grid-template-columns: 1fr !important; }
+
+  /* Donut chart legend vertical */
+  .recharts-legend-wrapper { overflow: visible !important; }
+
+  .expenses-stats-grid { grid-template-columns: 1fr 1fr !important; }
+}

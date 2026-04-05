@@ -57,8 +57,7 @@ export default function QuotesClient() {
           </div>
         ) : (
           <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
-            <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 560 }}>
+            <table className="mobile-card-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: '#F5F0E6' }}>
                   {['Quote', 'Client', 'Issued', 'Valid until', 'Total', 'Status', ''].map(h => (
@@ -69,22 +68,22 @@ export default function QuotesClient() {
               <tbody>
                 {filtered.map(q => (
                   <tr key={q.id} style={{ borderBottom: '1px solid rgba(27,42,74,0.06)' }}>
-                    <td style={{ padding: '12px 16px', fontWeight: 600 }}>
+                    <td className="td-primary" data-label="" style={{ padding: '12px 16px', fontWeight: 600 }}>
                       <Link href={`/os/quotes/${q.id}`} style={{ color: '#2D4A7A' }}>{q.quote_number}</Link>
+                      <span style={{ marginLeft: 8, fontSize: 12, color: '#5A6A7A', fontWeight: 400 }}>{q.client_name}</span>
                     </td>
-                    <td style={{ padding: '12px 16px', color: '#5A6A7A' }}>{q.client_name}</td>
-                    <td style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(q.issue_date).toLocaleDateString('en-GB')}</td>
-                    <td style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(q.valid_until).toLocaleDateString('en-GB')}</td>
-                    <td style={{ padding: '12px 16px', fontWeight: 600 }}>{formatCurrency(q.total)}</td>
-                    <td style={{ padding: '12px 16px' }}>
+                    <td className="td-hide" data-label="Client" style={{ padding: '12px 16px', color: '#5A6A7A' }}>{q.client_name}</td>
+                    <td data-label="Issued" style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(q.issue_date).toLocaleDateString('en-GB')}</td>
+                    <td data-label="Valid until" style={{ padding: '12px 16px', color: '#5A6A7A' }}>{new Date(q.valid_until).toLocaleDateString('en-GB')}</td>
+                    <td data-label="Total" style={{ padding: '12px 16px', fontWeight: 600 }}>{formatCurrency(q.total)}</td>
+                    <td data-label="Status" style={{ padding: '12px 16px' }}>
                       <span style={{ padding: '3px 8px', borderRadius: 100, fontSize: 11, fontWeight: 600, background: `${STATUS_COLORS[q.status]}20`, color: STATUS_COLORS[q.status] }}>{q.status}</span>
                     </td>
-                    <td style={{ padding: '12px 16px' }}><Link href={`/os/quotes/${q.id}`} style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>View →</Link></td>
+                    <td data-label="" style={{ padding: '12px 16px' }}><Link href={`/os/quotes/${q.id}`} style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>View →</Link></td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            </div>
           </div>
         )}
       </div>

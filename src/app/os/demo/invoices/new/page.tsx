@@ -69,7 +69,7 @@ function DemoNewInvoiceForm() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {/* Client + Dates */}
           <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="invoice-date-grid">
               <div style={{ gridColumn: '1/-1' }}>
                 <label style={labelStyle}>Client</label>
                 <select value={clientId} onChange={e => setClientId(e.target.value)} style={inputStyle}>
