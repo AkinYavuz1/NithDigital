@@ -1,6 +1,4 @@
 import type { Metadata } from 'next'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 import HelpCategoryWrapper from './HelpCategoryWrapper'
 
 export const metadata: Metadata = {
@@ -9,11 +7,5 @@ export const metadata: Metadata = {
 }
 
 export default function HelpCategoryPage() {
-  return (
-    <>
-      <Navbar />
-      <HelpCategoryWrapper />
-      <Footer />
-    </>
-  )
+  return <HelpCategoryWrapper />
 }

@@ -143,7 +143,7 @@ export default function OSDashboard() {
       </div>
 
       {/* KPI cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }} className="os-kpi-grid">
         {[
           { label: 'Revenue (tax year)', value: formatCurrency(kpis.revenue), sub: 'From paid invoices + income' },
           { label: 'Outstanding invoices', value: formatCurrency(kpis.outstanding), sub: `${kpis.outstandingCount} unpaid` },
@@ -171,7 +171,7 @@ export default function OSDashboard() {
       </div>
 
       {/* Charts */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24, marginBottom: 32 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24, marginBottom: 32 }} className="os-charts-grid">
         <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
           <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Revenue vs Expenses (last 12 months)</h3>
           <ResponsiveContainer width="100%" height={240}>
@@ -185,11 +185,11 @@ export default function OSDashboard() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
+        <div style={{ background: '#fff', borderRadius: 10, padding: 24, overflow: 'hidden' }}>
           <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Income by source</h3>
-          <ResponsiveContainer width="100%" height={240}>
+          <ResponsiveContainer width="100%" height={280}>
             <PieChart>
-              <Pie data={incomeBySource} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value">
+              <Pie data={incomeBySource} cx="50%" cy="42%" innerRadius={55} outerRadius={80} dataKey="value">
                 {incomeBySource.map((_, i) => (
                   <Cell key={i} fill={DONUT_COLORS[i % DONUT_COLORS.length]} />
                 ))}
@@ -202,7 +202,7 @@ export default function OSDashboard() {
       </div>
 
       {/* Bottom row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24 }} className="os-bottom-grid">
         {/* Recent invoices */}
         <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
@@ -215,7 +215,7 @@ export default function OSDashboard() {
               <Link href="/os/invoices/new" style={{ color: '#D4A84B' }}>Create your first invoice →</Link>
             </div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+            <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 400 }}>
               <thead>
                 <tr>
                   {['Invoice', 'Client', 'Due', 'Amount', 'Status'].map((h) => (
@@ -244,7 +244,7 @@ export default function OSDashboard() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
 
@@ -291,9 +291,10 @@ export default function OSDashboard() {
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          div[style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
-          div[style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+        @media (max-width: 768px) {
+          .os-kpi-grid { grid-template-columns: 1fr 1fr !important; }
+          .os-charts-grid { grid-template-columns: 1fr !important; }
+          .os-bottom-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

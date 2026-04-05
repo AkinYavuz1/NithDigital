@@ -25,7 +25,7 @@ export default function DemoMileagePage() {
         }
       />
       <div style={{ padding: 32 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 16 }} className="mileage-stats-grid">
           {[
             { label: 'Total miles (tax year)', value: `${totalMiles.toFixed(1)} mi` },
             { label: 'Total claim', value: formatCurrency(totalClaim) },
@@ -50,7 +50,8 @@ export default function DemoMileagePage() {
         </div>
 
         <div style={{ background: '#fff', borderRadius: 10, overflow: 'hidden' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 560 }}>
             <thead>
               <tr style={{ background: '#F5F0E6' }}>
                 {['Date', 'From', 'To', 'Miles', 'Purpose', 'Rate', 'Claim'].map(h => (
@@ -78,8 +79,15 @@ export default function DemoMileagePage() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .mileage-stats-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
   )
 }

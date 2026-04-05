@@ -74,7 +74,7 @@ export default function DemoDashboard() {
       </div>
 
       {/* KPI cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }} className="demo-kpi-grid">
         {[
           { label: 'Revenue (tax year)', value: formatCurrency(revenue), sub: 'From paid invoices + income' },
           { label: 'Outstanding invoices', value: formatCurrency(outstanding.reduce((s, i) => s + i.total, 0)), sub: `${outstanding.length} unpaid` },
@@ -106,9 +106,9 @@ export default function DemoDashboard() {
         </div>
         <div style={{ background: '#fff', borderRadius: 10, padding: 24, overflow: 'hidden' }}>
           <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 20 }}>Income by source</h3>
-          <ResponsiveContainer width="100%" height={280}>
+          <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie data={incomeBySource} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value">
+              <Pie data={incomeBySource} cx="50%" cy="42%" innerRadius={55} outerRadius={80} dataKey="value">
                 {incomeBySource.map((_, i) => <Cell key={i} fill={DONUT_COLORS[i % DONUT_COLORS.length]} />)}
               </Pie>
               <Tooltip formatter={(v) => typeof v === 'number' ? formatCurrency(v) : v} />
@@ -191,6 +191,7 @@ export default function DemoDashboard() {
         @media (max-width: 768px) {
           .demo-bottom-grid { grid-template-columns: 1fr !important; }
           .demo-charts-grid { grid-template-columns: 1fr !important; }
+          .demo-kpi-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
     </div>

@@ -54,7 +54,7 @@ export default function DemoReferralsPage() {
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }} className="demo-referral-stats">
           {[
             { label: 'Links sent', value: 3 },
             { label: 'Successful signups', value: signedUp },
@@ -83,6 +83,12 @@ export default function DemoReferralsPage() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .demo-referral-stats { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }

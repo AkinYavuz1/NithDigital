@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 import {
   Rocket, CheckCircle2, FileText, Receipt, Users, Calculator,
   Car, ClipboardList, BarChart3, Settings, CreditCard, Calendar,
@@ -61,8 +59,6 @@ export default function HelpIndexClient() {
 
   return (
     <>
-      <Navbar />
-
       {/* Hero */}
       <section style={{ background: '#1B2A4A', padding: '64px 24px 48px' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
@@ -179,8 +175,6 @@ export default function HelpIndexClient() {
           </>
         )}
       </div>
-
-      <Footer />
 
       <style>{`
         @media (max-width: 900px) { .help-grid { grid-template-columns: 1fr 1fr !important; } }

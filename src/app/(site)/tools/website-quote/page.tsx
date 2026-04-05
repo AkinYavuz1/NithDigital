@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import WebsiteQuoteClient from './WebsiteQuoteClient'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'How Much Does a Website Cost? Free Instant Quote Calculator | Nith Digital',
@@ -40,9 +38,7 @@ export default function WebsiteQuotePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <Navbar />
       <WebsiteQuoteClient />
-      <Footer />
     </>
   )
 }

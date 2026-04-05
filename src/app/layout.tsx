@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Libre_Baskerville, DM_Sans } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 
 const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
@@ -189,9 +187,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   )

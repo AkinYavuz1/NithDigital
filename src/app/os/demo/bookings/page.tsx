@@ -37,7 +37,7 @@ export default function DemoBookingsPage() {
     <div style={{ padding: '32px 40px', flex: 1 }}>
       <OSPageHeader title="Bookings" description={`${upcoming} upcoming consultation${upcoming !== 1 ? 's' : ''}`} />
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }} className="bookings-stats-grid">
         {[
           { label: 'Upcoming', value: data.bookings.filter(b => b.date >= new Date().toISOString().split('T')[0] && b.status === 'confirmed').length, color: '#1B2A4A' },
           { label: 'Completed', value: data.bookings.filter(b => b.status === 'completed').length, color: '#27ae60' },
@@ -51,9 +51,9 @@ export default function DemoBookingsPage() {
         ))}
       </div>
 
-      <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+      <div style={{ display: 'flex', gap: 8, marginBottom: 20, overflowX: 'auto', paddingBottom: 4 }} className="bookings-filter-row">
         {['all', 'confirmed', 'completed', 'cancelled', 'no_show'].map(f => (
-          <button key={f} onClick={() => setFilter(f)} style={{ padding: '6px 16px', borderRadius: 100, fontSize: 12, fontWeight: filter === f ? 600 : 400, background: filter === f ? '#1B2A4A' : 'transparent', color: filter === f ? '#F5F0E6' : '#5A6A7A', border: '1px solid', borderColor: filter === f ? '#1B2A4A' : 'rgba(27,42,74,0.15)', cursor: 'pointer' }}>
+          <button key={f} onClick={() => setFilter(f)} style={{ padding: '6px 16px', borderRadius: 100, fontSize: 12, fontWeight: filter === f ? 600 : 400, background: filter === f ? '#1B2A4A' : 'transparent', color: filter === f ? '#F5F0E6' : '#5A6A7A', border: '1px solid', borderColor: filter === f ? '#1B2A4A' : 'rgba(27,42,74,0.15)', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
             {f === 'all' ? 'All' : f.replace('_', '-').replace(/\b\w/g, c => c.toUpperCase())}
           </button>
         ))}
@@ -63,7 +63,7 @@ export default function DemoBookingsPage() {
         <p style={{ color: '#5A6A7A', fontSize: 14, padding: '40px 0', textAlign: 'center' }}>No bookings in this filter.</p>
       ) : (
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 640 }}>
             <thead>
               <tr style={{ borderBottom: '2px solid rgba(27,42,74,0.08)' }}>
                 {['Date', 'Time', 'Name', 'Email', 'Service', 'Status', 'Actions'].map(h => (
@@ -101,6 +101,11 @@ export default function DemoBookingsPage() {
           </table>
         </div>
       )}
+      <style>{`
+        @media (max-width: 640px) {
+          .bookings-stats-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }
