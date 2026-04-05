@@ -1,5 +1,6 @@
 
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import TestimonialSubmitClient from './TestimonialSubmitClient'
 
 export const metadata: Metadata = {
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 }
 
 export default function TestimonialSubmitPage() {
-  return <TestimonialSubmitClient token="" />
+  return <Suspense fallback={null}><TestimonialSubmitClient token="" /></Suspense>
 }

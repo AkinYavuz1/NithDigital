@@ -1,5 +1,6 @@
 
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import BlogListClient from './BlogListClient'
 
 export const metadata: Metadata = {
@@ -23,5 +24,5 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
-  return <BlogListClient />
+  return <Suspense fallback={null}><BlogListClient /></Suspense>
 }
