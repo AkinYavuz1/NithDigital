@@ -24,6 +24,46 @@ export const metadata: Metadata = {
 
 const TOOLS = [
   {
+    href: '/tools/mtd-checker',
+    icon: '📋',
+    title: 'MTD Readiness Checker',
+    desc: 'Find out when Making Tax Digital for Income Tax applies to you and exactly what you need to do. Step-by-step checker for sole traders and landlords.',
+    tags: ['MTD', 'Tax', 'Self-employed'],
+    isNew: true,
+  },
+  {
+    href: '/tools/website-calculator',
+    icon: '💻',
+    title: 'Website Cost Calculator',
+    desc: 'Get an instant price estimate for a professional website. Select your features and see a realistic cost range with no hidden fees.',
+    tags: ['Websites', 'Quote', 'Pricing'],
+    isNew: true,
+  },
+  {
+    href: '/tools/local-seo-scorecard',
+    icon: '📈',
+    title: 'Local SEO Score Card',
+    desc: 'Answer 10 quick questions about your website and get a score with specific, prioritised fixes for anything holding you back.',
+    tags: ['SEO', 'Local', 'Scotland'],
+    isNew: true,
+  },
+  {
+    href: '/tools/visibility-checker',
+    icon: '🗺️',
+    title: 'Google Visibility Checker',
+    desc: 'Find out how visible your business is to customers searching on Google — with a personalised result showing what they\'d actually see.',
+    tags: ['Google', 'Local SEO', 'Maps'],
+    isNew: true,
+  },
+  {
+    href: '/tools/expense-tracker',
+    icon: '📒',
+    title: 'Expense Tracker',
+    desc: 'Track business income and expenses in your browser. MTD-compatible categories, quarterly summaries, and CSV export. Data never leaves your device.',
+    tags: ['MTD', 'Expenses', 'Free'],
+    isNew: true,
+  },
+  {
     href: '/tools/site-audit',
     icon: '🔍',
     title: 'Free Website Audit',
@@ -60,7 +100,7 @@ const TOOLS = [
   },
   {
     href: '/tools/website-quote',
-    icon: '💻',
+    icon: '🖥️',
     title: 'Website Quote Calculator',
     desc: 'Get an instant price estimate for your website based on your requirements. Answer a few questions and see a realistic cost range.',
     tags: ['Websites', 'Quote', 'UK'],
@@ -104,9 +144,13 @@ export default function ToolsPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 12,
+                  position: 'relative',
                 }}
                 className="tool-card-hover"
               >
+                {'isNew' in tool && tool.isNew && (
+                  <span style={{ position: 'absolute', top: 16, right: 16, fontSize: 10, fontWeight: 700, padding: '3px 8px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100 }}>NEW</span>
+                )}
                 <div style={{ fontSize: 36 }}>{tool.icon}</div>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#1B2A4A', margin: 0 }}>
                   {tool.title}
