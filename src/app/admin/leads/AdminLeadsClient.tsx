@@ -62,7 +62,7 @@ export default function AdminLeadsClient() {
 
   // Scrape form
   const [scrapeCategory, setScrapeCategory] = useState('business')
-  const [scrapeSources, setScrapeSources] = useState<string[]>(['yell', 'thomson', 'chamber', 'scoot'])
+  const [scrapeSources, setScrapeSources] = useState<string[]>(['thomson', 'chamber', 'scoot'])
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })

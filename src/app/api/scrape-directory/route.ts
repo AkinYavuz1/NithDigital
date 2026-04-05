@@ -131,17 +131,18 @@ async function scrapeThomsonLocal(category: string = 'business'): Promise<Scrape
     const url = `https://www.thomsonlocal.com/search/${encodeURIComponent(category)}/dumfries-and-galloway`
     const html = await fetchHtml(url)
 
-    const listingPattern = /<div[^>]*class="[^"]*listing[^"]*"[^>]*>([\s\S]*?)<\/div>\s*(?=<div[^>]*class="[^"]*listing)/gi
+    // Real structure: <h2 class="businessName">Name</h2> inside <div class="listingDetailsCont">
+    const blockPattern = /<div[^>]*class="[^"]*listingDetailsCont[^"]*"[^>]*>([\s\S]*?)(?=<div[^>]*class="[^"]*listingDetailsCont|$)/gi
     let match
-    while ((match = listingPattern.exec(html)) !== null) {
+    while ((match = blockPattern.exec(html)) !== null) {
       const block = match[1]
-      const name = block.match(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/i)?.[1]?.replace(/<[^>]+>/g, '').trim() || null
+      const name = block.match(/class="[^"]*businessName[^"]*"[^>]*>([\s\S]*?)<\/h[23]>/i)?.[1]?.replace(/<[^>]+>/g, '').trim() || null
       const phone = block.match(/(\+44\s?|0)[\d\s]{9,12}/)?.[0]?.trim() || null
-      const address = block.match(/class="[^"]*address[^"]*"[^>]*>([\s\S]*?)<\/[^>]+>/i)?.[1]?.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() || null
+      const address = block.match(/class="[^"]*address[^"]*"[^>]*>([\s\S]*?)<\/div>/i)?.[1]?.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() || null
       const website = block.match(/href="(https?:\/\/(?!thomsonlocal)[^"]+)"/i)?.[1] || null
 
       if (name) {
-        businesses.push({ name, website, phone, address, category, source: 'Thomson Local' })
+        businesses.push({ name, website, phone, address: address || 'Dumfries & Galloway', category, source: 'Thomson Local' })
       }
     }
   } catch (err) {
@@ -158,14 +159,16 @@ async function scrapeScoot(category: string = 'business'): Promise<ScrapedBusine
   const businesses: ScrapedBusiness[] = []
 
   try {
-    const url = `https://www.scoot.co.uk/find/${encodeURIComponent(category)}-in-Dumfries-DG1`
+    // Real URL format: /find/plumber-in-dumfries (lowercase, no postcode)
+    const url = `https://www.scoot.co.uk/find/${encodeURIComponent(category)}-in-dumfries`
     const html = await fetchHtml(url)
 
-    const listingPattern = /<li[^>]*class="[^"]*result[^"]*"[^>]*>([\s\S]*?)<\/li>/gi
+    // Real structure: <div class="result relative"> containing <h2 class="result-title">
+    const blockPattern = /<div[^>]*class="[^"]*result[^"]*relative[^"]*"[^>]*>([\s\S]*?)(?=<div[^>]*class="[^"]*result[^"]*relative|$)/gi
     let match
-    while ((match = listingPattern.exec(html)) !== null) {
+    while ((match = blockPattern.exec(html)) !== null) {
       const block = match[1]
-      const name = block.match(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/i)?.[1]?.replace(/<[^>]+>/g, '').trim() || null
+      const name = block.match(/class="[^"]*result-title[^"]*"[^>]*>([\s\S]*?)<\/h[23]>/i)?.[1]?.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').trim() || null
       const phone = block.match(/(\+44\s?|0)[\d\s]{9,12}/)?.[0]?.trim() || null
       const website = block.match(/href="(https?:\/\/(?!scoot)[^"]+)"/i)?.[1] || null
 
