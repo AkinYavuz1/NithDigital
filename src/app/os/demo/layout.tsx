@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { DemoDataProvider } from '@/lib/demo-context'
-import DemoSidebar from './DemoSidebar'
-import DemoTopBar from './DemoTopBar'
-import DemoBanner from './DemoBanner'
+import DemoLayoutClient from './DemoLayoutClient'
 
 export const metadata: Metadata = {
   title: 'Business OS Demo — Nith Digital',
@@ -25,14 +23,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   return (
     <DemoDataProvider>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div style={{ display: 'flex', minHeight: '100vh', background: '#F5F0E6' }}>
-        <DemoSidebar />
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-          <DemoTopBar />
-          <DemoBanner />
-          {children}
-        </div>
-      </div>
+      <DemoLayoutClient>{children}</DemoLayoutClient>
     </DemoDataProvider>
   )
 }

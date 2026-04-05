@@ -119,14 +119,14 @@ export default function DemoDashboard() {
       </div>
 
       {/* Bottom row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24 }}>
+      <div className="demo-bottom-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24 }}>
         {/* Recent invoices */}
         <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
             <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A' }}>Recent invoices</h3>
             <Link href="/os/demo/invoices/new" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>New invoice</Link>
           </div>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: 420 }}>
             <thead>
               <tr>
                 {['Invoice', 'Client', 'Due', 'Amount', 'Status'].map((h) => (
@@ -149,7 +149,7 @@ export default function DemoDashboard() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
 
         {/* Tax deadlines + quick actions */}
@@ -184,6 +184,12 @@ export default function DemoDashboard() {
         @media (max-width: 1024px) {
           div[style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
           div[style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .demo-bottom-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

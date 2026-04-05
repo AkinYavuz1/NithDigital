@@ -2,10 +2,10 @@
 
 import Link from 'next/link'
 import { useRef, useState } from 'react'
-import { Bell } from 'lucide-react'
+import { Bell, Menu } from 'lucide-react'
 import { useDemo } from '@/lib/demo-context'
 
-export default function DemoTopBar() {
+export default function DemoTopBar({ onMenuToggle }: { onMenuToggle?: () => void }) {
   const { data } = useDemo()
   const [open, setOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -26,7 +26,7 @@ export default function DemoTopBar() {
       top: 0,
       zIndex: 50,
     }}>
-      <span style={{ fontSize: 12, color: '#5A6A7A' }}>Demo User</span>
+      {onMenuToggle && (<button onClick={onMenuToggle} className="os-menu-toggle" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: '#1B2A4A', padding: 4, marginRight: 'auto' }} aria-label="Menu"><Menu size={22} /></button>)}<span style={{ fontSize: 12, color: '#5A6A7A' }}>Demo User</span>
 
       {/* Notification Bell */}
       <div style={{ position: 'relative' }} ref={dropdownRef}>
@@ -95,6 +95,8 @@ export default function DemoTopBar() {
       >
         Sign up free
       </Link>
+
+      <style>{`@media (max-width: 768px) { .os-menu-toggle { display: flex !important; } }`}</style>
     </div>
   )
 }

@@ -69,7 +69,7 @@ function DemoNewInvoiceForm() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {/* Client + Dates */}
           <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
               <div style={{ gridColumn: '1/-1' }}>
                 <label style={labelStyle}>Client</label>
                 <select value={clientId} onChange={e => setClientId(e.target.value)} style={inputStyle}>
@@ -98,7 +98,7 @@ function DemoNewInvoiceForm() {
           {/* Line items */}
           <div style={{ background: '#fff', borderRadius: 10, padding: 24 }}>
             <h3 style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', marginBottom: 16 }}>Line items</h3>
-            <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 12 }}>
+            <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 12, minWidth: 400 }}>
               <thead>
                 <tr style={{ background: '#F5F0E6' }}>
                   {['Description', 'Qty', 'Unit price', 'Total', ''].map((h, i) => (
@@ -127,7 +127,7 @@ function DemoNewInvoiceForm() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
             <button onClick={addItem} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#D4A84B', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
               <Plus size={13} /> Add line item
             </button>

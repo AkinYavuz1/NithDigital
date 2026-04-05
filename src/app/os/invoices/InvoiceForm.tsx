@@ -124,7 +124,7 @@ export default function InvoiceForm({ invoiceId }: InvoiceFormProps) {
 
           {/* Line items */}
           <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Line items</h3>
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
+          <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16, minWidth: 400 }}>
             <thead>
               <tr>
                 {['Description', 'Qty', 'Unit price', 'Total', ''].map(h => (
@@ -155,7 +155,7 @@ export default function InvoiceForm({ invoiceId }: InvoiceFormProps) {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           <button onClick={() => setItems([...items, { description: '', quantity: 1, unit_price: 0, total: 0 }])}
             style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', background: '#F5F0E6', border: '1px dashed rgba(27,42,74,0.2)', borderRadius: 6, cursor: 'pointer', fontSize: 13, color: '#5A6A7A', marginBottom: 24 }}>
             <Plus size={14} /> Add line item
