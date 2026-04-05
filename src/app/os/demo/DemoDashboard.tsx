@@ -67,7 +67,7 @@ export default function DemoDashboard() {
   const recentInvoices = data.invoices.slice(0, 5)
 
   return (
-    <div style={{ padding: 32, maxWidth: 1200 }}>
+    <div style={{ padding: 32, maxWidth: 1200 }} className="demo-dashboard-wrap">
       <div style={{ marginBottom: 32 }}>
         <h1 style={{ fontSize: 24, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>Dashboard</h1>
         <p style={{ fontSize: 13, color: '#5A6A7A' }}>Welcome to your demo. Here&apos;s your business at a glance.</p>
@@ -181,17 +181,11 @@ export default function DemoDashboard() {
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          div[style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
-          div[style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-
-      <style>{`
         @media (max-width: 768px) {
-          .demo-bottom-grid { grid-template-columns: 1fr !important; }
-          .demo-charts-grid { grid-template-columns: 1fr !important; }
+          .demo-dashboard-wrap { padding: 16px !important; }
           .demo-kpi-grid { grid-template-columns: 1fr 1fr !important; }
+          .demo-charts-grid { grid-template-columns: 1fr !important; }
+          .demo-bottom-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

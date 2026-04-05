@@ -30,7 +30,7 @@ export default function DemoExpensesPage() {
           </Link>
         }
       />
-      <div style={{ padding: 32 }}>
+      <div style={{ padding: 32 }} className="os-page-wrap">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
           {[
             { label: 'Total expenses', value: formatCurrency(total) },

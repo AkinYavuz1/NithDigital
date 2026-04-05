@@ -34,7 +34,7 @@ export default function DemoBookingsPage() {
   }
 
   return (
-    <div style={{ padding: '32px 40px', flex: 1 }}>
+    <div style={{ padding: '32px 40px', flex: 1 }} className="os-page-wrap">
       <OSPageHeader title="Bookings" description={`${upcoming} upcoming consultation${upcoming !== 1 ? 's' : ''}`} />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }} className="bookings-stats-grid">
@@ -102,7 +102,8 @@ export default function DemoBookingsPage() {
         </div>
       )}
       <style>{`
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+          .os-page-wrap { padding: 16px !important; }
           .bookings-stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>

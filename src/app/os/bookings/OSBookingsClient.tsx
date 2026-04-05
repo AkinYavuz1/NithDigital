@@ -57,7 +57,7 @@ export default function OSBookingsClient({ initialBookings }: { initialBookings:
   const upcoming = bookings.filter(b => b.date >= new Date().toISOString().split('T')[0] && b.status === 'confirmed').length
 
   return (
-    <div style={{ padding: '32px 40px', flex: 1, overflowY: 'auto' }}>
+    <div style={{ padding: '32px 40px', flex: 1, overflowY: 'auto' }} className="os-page-wrap">
       <OSPageHeader title="Bookings" description={`${upcoming} upcoming consultation${upcoming !== 1 ? 's' : ''}`} />
 
       {/* Stats */}
@@ -128,7 +128,10 @@ export default function OSBookingsClient({ initialBookings }: { initialBookings:
         </div>
       )}
       <style>{`
-        @media (max-width: 640px) { .os-bookings-stats { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 768px) {
+          .os-page-wrap { padding: 16px !important; }
+          .os-bookings-stats { grid-template-columns: 1fr 1fr !important; }
+        }
       `}</style>
     </div>
   )

@@ -24,7 +24,7 @@ export default function DemoMileagePage() {
           </Link>
         }
       />
-      <div style={{ padding: 32 }}>
+      <div style={{ padding: 32 }} className="os-page-wrap">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 16 }} className="mileage-stats-grid">
           {[
             { label: 'Total miles (tax year)', value: `${totalMiles.toFixed(1)} mi` },

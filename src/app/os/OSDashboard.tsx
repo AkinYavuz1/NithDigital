@@ -136,7 +136,7 @@ export default function OSDashboard() {
   const DONUT_COLORS = ['#1B2A4A', '#D4A84B', '#F5F0E6', '#2D4A7A', '#E8C97A']
 
   return (
-    <div style={{ padding: 32, maxWidth: 1200 }}>
+    <div style={{ padding: 32, maxWidth: 1200 }} className="os-dashboard-wrap">
       <div style={{ marginBottom: 32 }}>
         <h1 style={{ fontSize: 24, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>Dashboard</h1>
         <p style={{ fontSize: 13, color: '#5A6A7A' }}>Welcome back. Here&apos;s your business at a glance.</p>
@@ -292,6 +292,7 @@ export default function OSDashboard() {
 
       <style>{`
         @media (max-width: 768px) {
+          .os-dashboard-wrap { padding: 16px !important; }
           .os-kpi-grid { grid-template-columns: 1fr 1fr !important; }
           .os-charts-grid { grid-template-columns: 1fr !important; }
           .os-bottom-grid { grid-template-columns: 1fr !important; }

@@ -60,3 +60,8 @@ button {
 .fade-up-d2 { animation-delay: 0.2s; }
 .fade-up-d3 { animation-delay: 0.3s; }
 .fade-up-d4 { animation-delay: 0.4s; }
+
+/* OS mobile padding */
+@media (max-width: 768px) {
+  .os-page-wrap { padding: 16px !important; }
+}

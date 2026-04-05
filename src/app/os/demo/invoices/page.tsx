@@ -27,7 +27,7 @@ export default function DemoInvoicesPage() {
           </Link>
         }
       />
-      <div style={{ padding: 32 }}>
+      <div style={{ padding: 32 }} className="os-page-wrap">
         <div style={{ display: 'flex', gap: 4, marginBottom: 24, background: '#fff', borderRadius: 8, padding: 4, width: 'fit-content', border: '1px solid rgba(27,42,74,0.08)' }}>
           {TABS.map(t => (
             <button key={t} onClick={() => setTab(t)}
