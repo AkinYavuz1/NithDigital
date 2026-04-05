@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   title: 'Help Category — Nith Digital',
   description: 'Business OS help centre.',
 }
-export function generateStaticParams() { return [] }
 
 export default function HelpCategoryPage() {
   return (

@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import ProposalEditorLoaderWrapper from '../../ProposalEditorLoaderWrapper'
 
 export const metadata: Metadata = { title: 'Edit Proposal — Admin' }
-export function generateStaticParams() { return [] }
 
 export default function EditProposalPage() {
   return <ProposalEditorLoaderWrapper />
