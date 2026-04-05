@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Users, FileText, ClipboardList, Receipt,
   TrendingUp, Car, Calculator, BarChart3, Settings, LogOut,
-  Calendar, Mail, FolderOpen, Gift, HelpCircle,
+  Calendar, Mail, FolderOpen, Gift, HelpCircle, MoreHorizontal,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
@@ -28,7 +28,15 @@ const NAV_ITEMS = [
   { href: '/os/settings', icon: Settings, label: 'Settings' },
 ]
 
-export default function OSSidebar({ open, onClose }: { open?: boolean; onClose?: () => void }) {
+// Top 4 items shown in the mobile bottom nav
+const BOTTOM_NAV_ITEMS = [
+  { href: '/os', icon: LayoutDashboard, label: 'Home' },
+  { href: '/os/bookings', icon: Calendar, label: 'Bookings' },
+  { href: '/os/clients', icon: Users, label: 'Clients' },
+  { href: '/os/invoices', icon: FileText, label: 'Invoices' },
+]
+
+export default function OSSidebar({ open, onClose, onMoreToggle }: { open?: boolean; onClose?: () => void; onMoreToggle?: () => void }) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -44,6 +52,7 @@ export default function OSSidebar({ open, onClose }: { open?: boolean; onClose?:
 
   return (
     <>
+      {/* Desktop / slide-in sidebar */}
       <aside
         style={{
           width: 240,
@@ -146,12 +155,70 @@ export default function OSSidebar({ open, onClose }: { open?: boolean; onClose?:
           </button>
         </div>
       </aside>
+
+      {/* Mobile bottom navigation bar */}
+      <nav className="os-bottom-nav" style={{ display: 'none' }}>
+        {BOTTOM_NAV_ITEMS.map((item) => {
+          const isActive = pathname === item.href || (item.href !== '/os' && pathname.startsWith(item.href))
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 4,
+                padding: '8px 4px',
+                color: isActive ? '#D4A84B' : 'rgba(245,240,230,0.5)',
+                fontSize: 10,
+                fontWeight: isActive ? 600 : 400,
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+                minWidth: 0,
+              }}
+            >
+              <item.icon size={22} strokeWidth={isActive ? 2.5 : 1.75} />
+              {item.label}
+            </Link>
+          )
+        })}
+
+        {/* More button */}
+        <button
+          onClick={onMoreToggle}
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 4,
+            padding: '8px 4px',
+            color: open ? '#D4A84B' : 'rgba(245,240,230,0.5)',
+            fontSize: 10,
+            fontWeight: open ? 600 : 400,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'color 0.2s ease',
+          }}
+        >
+          <MoreHorizontal size={22} strokeWidth={open ? 2.5 : 1.75} />
+          More
+        </button>
+      </nav>
+
       <style>{`
         @media (max-width: 768px) {
           .os-sidebar {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
+            width: 85vw !important;
+            max-width: 320px !important;
             height: 100vh !important;
             z-index: 50 !important;
             transform: translateX(-100%);
@@ -159,6 +226,18 @@ export default function OSSidebar({ open, onClose }: { open?: boolean; onClose?:
           }
           .os-sidebar.os-sidebar-open {
             transform: translateX(0);
+          }
+          .os-bottom-nav {
+            display: flex !important;
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 64px !important;
+            background: #1B2A4A !important;
+            border-top: 1px solid rgba(255,255,255,0.08) !important;
+            z-index: 47 !important;
+            padding-bottom: env(safe-area-inset-bottom) !important;
           }
         }
       `}</style>

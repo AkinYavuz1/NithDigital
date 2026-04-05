@@ -29,9 +29,9 @@ export default function OSLayoutShell({ children }: { children: React.ReactNode 
         />
       )}
 
-      <OSSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <OSSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} onMoreToggle={() => setSidebarOpen(o => !o)} />
 
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }} className="os-main-content">
         <OSTopBar onMenuToggle={() => setSidebarOpen(o => !o)} />
         {children}
       </div>
@@ -39,6 +39,7 @@ export default function OSLayoutShell({ children }: { children: React.ReactNode 
       <style>{`
         @media (max-width: 768px) {
           .sidebar-backdrop { display: block !important; }
+          .os-main-content { padding-bottom: calc(64px + env(safe-area-inset-bottom)) !important; }
         }
       `}</style>
     </div>
