@@ -35,15 +35,15 @@ const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
 
 const SCORE_COLOR = (s: number) => s >= 8 ? '#15803d' : s >= 6.5 ? '#92660a' : '#b91c1c'
 
-const DEFAULT_SUBJECT = `Quick question about {{business_name}}'s website`
+const DEFAULT_SUBJECT = `Quick question — {{business_name}}`
 
 const DEFAULT_BODY = `Hi,
 
-I came across {{business_name}} while looking at local businesses in the area and wanted to drop you a quick note.
+I was looking at local businesses in {{location}} and came across {{business_name}} — wanted to drop you a quick note.
 
-Your website caught my attention — and I think there's a real opportunity to get more customers finding you online.
+{{outreach_hook}}
 
-I'm Akin, founder of Nith Digital. We're a small web design agency based in Dumfries & Galloway and we specialise in helping local businesses like yours get found online and win more work. You can see some examples of what we build here: www.nithdigital.uk/templates
+I'm Akin, founder of Nith Digital. We're a small web design agency based in Dumfries & Galloway and we specialise in helping local businesses get found online and win more work. You can see some of what we build here: www.nithdigital.uk/templates
 
 I'd love to have a quick 15-minute chat — no pitch, just a look at what's possible. If it's not a fit, no worries at all.
 

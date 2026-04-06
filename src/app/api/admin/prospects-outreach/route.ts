@@ -10,6 +10,15 @@ const BREVO_API_KEY = process.env.BREVO_API_KEY!
 const FROM_EMAIL = process.env.BREVO_FROM_EMAIL || 'hello@mail.nithdigital.uk'
 const FROM_NAME = process.env.BREVO_FROM_NAME || 'Akin at Nith Digital'
 
+// Detect if a business name is a person's name (e.g. "Ian Lewis Plumber", "John Smith Electrician")
+// Returns true if the name starts with two capitalised words that look like a first + last name
+function looksLikePersonName(name: string): boolean {
+  const words = name.trim().split(/\s+/)
+  if (words.length < 2) return false
+  const firstTwo = words.slice(0, 2)
+  return firstTwo.every(w => /^[A-Z][a-z]+$/.test(w))
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const sector = searchParams.get('sector')
@@ -42,23 +51,22 @@ export async function POST(req: NextRequest) {
         continue
       }
 
-      // Personalise subject and body
-      const personalSubject = subject
-        .replace(/\{\{business_name\}\}/g, p.business_name)
-        .replace(/\{\{location\}\}/g, p.location || '')
+      // Use business name or "your business" if name looks like a person
+      const displayName = looksLikePersonName(p.business_name)
+        ? 'your business'
+        : p.business_name
 
-      // Strip internal-only sentences from why_them before sending
-      // Internal notes start with phrases like "Easy close", "Upsell", "Show him", etc.
-      const cleanWhyThem = (p.why_them || '')
-        .split('. ')
-        .filter((s: string) => !/^(easy close|upsell|show him|show her|show them|quick win|note:|tip:|action:|next step)/i.test(s.trim()))
-        .join('. ')
-        .replace(/\.\s*$/, '') + '.'
+      // outreach_hook: use dedicated column if available, fall back to nothing
+      const outreachHook = p.outreach_hook || ''
+
+      const personalSubject = subject
+        .replace(/\{\{business_name\}\}/g, displayName)
+        .replace(/\{\{location\}\}/g, p.location || '')
 
       const personalBody = body
-        .replace(/\{\{business_name\}\}/g, p.business_name)
+        .replace(/\{\{business_name\}\}/g, displayName)
         .replace(/\{\{location\}\}/g, p.location || '')
-        .replace(/\{\{why_them\}\}/g, cleanWhyThem)
+        .replace(/\{\{outreach_hook\}\}/g, outreachHook)
         .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
 
       try {
