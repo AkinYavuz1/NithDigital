@@ -39,13 +39,13 @@ const DEFAULT_SUBJECT = `Quick question about {{business_name}}'s website`
 
 const DEFAULT_BODY = `Hi,
 
-I came across {{business_name}} while researching businesses in the area and wanted to reach out.
+I came across {{business_name}} while looking at local businesses in the area and wanted to drop you a quick note.
 
-I noticed something that might be affecting how customers find you online — {{why_them}}
+Your website caught my attention — and I think there's a real opportunity to get more customers finding you online.
 
-I'm Akin, founder of Nith Digital, a web design agency based right here in Dumfries & Galloway. We help local businesses get found online and win new business. You can see the kind of sites we build here: www.nithdigital.uk/templates
+I'm Akin, founder of Nith Digital. We're a small web design agency based in Dumfries & Galloway and we specialise in helping local businesses like yours get found online and win more work. You can see some examples of what we build here: www.nithdigital.uk/templates
 
-I'd love to have a quick 15-minute chat to show you what we could do. No pressure at all — if it's not a fit, no worries.
+I'd love to have a quick 15-minute chat — no pitch, just a look at what's possible. If it's not a fit, no worries at all.
 
 Would you be open to a call this week?
 
