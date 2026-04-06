@@ -1,17 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import nodemailer from 'nodemailer'
 
 const sb = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-const BREVO_API_KEY = process.env.BREVO_API_KEY!
 const FROM_EMAIL = process.env.BREVO_FROM_EMAIL || 'hello@mail.nithdigital.uk'
 const FROM_NAME = process.env.BREVO_FROM_NAME || 'Akin at Nith Digital'
 
+const transporter = nodemailer.createTransport({
+  host: process.env.SES_SMTP_HOST || 'email-smtp.eu-north-1.amazonaws.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.SES_SMTP_USER!,
+    pass: process.env.SES_SMTP_PASS!,
+  },
+})
+
 // Detect if a business name is a person's name (e.g. "Ian Lewis Plumber", "John Smith Electrician")
-// Returns true if the name starts with two capitalised words that look like a first + last name
 function looksLikePersonName(name: string): boolean {
   const words = name.trim().split(/\s+/)
   if (words.length < 2) return false
@@ -51,12 +60,10 @@ export async function POST(req: NextRequest) {
         continue
       }
 
-      // Use business name or "your business" if name looks like a person
       const displayName = looksLikePersonName(p.business_name)
         ? 'your business'
         : p.business_name
 
-      // outreach_hook: use dedicated column if available, fall back to nothing
       const outreachHook = p.outreach_hook || ''
 
       const personalSubject = subject
@@ -70,33 +77,19 @@ export async function POST(req: NextRequest) {
         .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
 
       try {
-        const res = await fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'api-key': BREVO_API_KEY,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sender: { name: FROM_NAME, email: FROM_EMAIL },
-            to: [{ email: p.contact_email, name: p.business_name }],
-            subject: personalSubject,
-            htmlContent: `<div style="font-family:sans-serif;max-width:600px;line-height:1.6">${personalBody.replace(/\n/g, '<br>')}</div>`,
-            trackOpens: false,
-            trackClicks: false,
-          }),
+        await transporter.sendMail({
+          from: `"${FROM_NAME}" <${FROM_EMAIL}>`,
+          to: `${p.business_name} <${p.contact_email}>`,
+          subject: personalSubject,
+          text: personalBody,
+          html: `<div style="font-family:sans-serif;max-width:600px;line-height:1.6">${personalBody.replace(/\n/g, '<br>')}</div>`,
         })
 
-        if (res.ok) {
-          await sb.from('prospects').update({
-            pipeline_status: 'contacted',
-            last_contacted_at: new Date().toISOString(),
-          }).eq('id', p.id)
-          results.sent++
-        } else {
-          const err = await res.json()
-          results.failed++
-          results.errors.push(`${p.business_name}: ${err.message || res.status}`)
-        }
+        await sb.from('prospects').update({
+          pipeline_status: 'contacted',
+          last_contacted_at: new Date().toISOString(),
+        }).eq('id', p.id)
+        results.sent++
       } catch (e: any) {
         results.failed++
         results.errors.push(`${p.business_name}: ${e.message}`)

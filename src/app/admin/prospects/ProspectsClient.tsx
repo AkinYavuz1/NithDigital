@@ -23,6 +23,7 @@ interface Prospect {
   contact_email: string | null
   pipeline_status: string
   source: string
+  outreach_hook: string | null
 }
 
 const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
@@ -63,6 +64,20 @@ const SECTORS = [
 ]
 
 const STATUSES = ['new', 'contacted', 'interested', 'won', 'lost']
+
+function buildMailto(p: Prospect, subject: string, body: string) {
+  const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
+  const personalSubject = subject
+    .replace(/\{\{business_name\}\}/g, displayName)
+    .replace(/\{\{location\}\}/g, p.location || '')
+  const personalBody = body
+    .replace(/\{\{business_name\}\}/g, displayName)
+    .replace(/\{\{location\}\}/g, p.location || '')
+    .replace(/\{\{outreach_hook\}\}/g, p.outreach_hook || '')
+    .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
+  const to = p.contact_email || ''
+  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(personalSubject)}&body=${encodeURIComponent(personalBody)}`
+}
 
 export default function ProspectsClient() {
   const [prospects, setProspects] = useState<Prospect[]>([])
@@ -193,7 +208,7 @@ export default function ProspectsClient() {
       {showCompose && (
         <div style={{ background: '#FFF8E7', border: '1px solid #E9C97E', borderRadius: 8, padding: 16, marginBottom: 20 }}>
           <p style={{ fontSize: 12, color: '#92660a', marginBottom: 8, marginTop: 0 }}>
-            Variables: <code>{'{{business_name}}'}</code> <code>{'{{location}}'}</code> <code>{'{{why_them}}'}</code> <code>{'{{recommended_service}}'}</code>
+            Variables: <code>{'{{business_name}}'}</code> <code>{'{{location}}'}</code> <code>{'{{outreach_hook}}'}</code> <code>{'{{recommended_service}}'}</code>
           </p>
           <input value={subject} onChange={e => setSubject(e.target.value)} placeholder="Subject line" style={{ ...inp, width: '100%', marginBottom: 8, boxSizing: 'border-box' }} />
           <textarea value={body} onChange={e => setBody(e.target.value)} rows={12} style={{ ...inp, width: '100%', resize: 'vertical', fontFamily: 'monospace', fontSize: 12, boxSizing: 'border-box' }} />
@@ -239,9 +254,18 @@ export default function ProspectsClient() {
                   {/* Contact */}
                   <div style={{ flexShrink: 0, display: 'flex', gap: 6, alignItems: 'center' }}>
                     {p.contact_email ? (
-                      <span style={{ fontSize: 11, color: '#15803d', background: 'rgba(22,163,74,0.08)', padding: '2px 7px', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
-                        <Mail size={10} />{p.contact_email}
-                      </span>
+                      <>
+                        <span style={{ fontSize: 11, color: '#15803d', background: 'rgba(22,163,74,0.08)', padding: '2px 7px', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
+                          <Mail size={10} />{p.contact_email}
+                        </span>
+                        <a
+                          href={buildMailto(p, subject, body)}
+                          style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 3 }}
+                          title="Open in Outlook"
+                        >
+                          <Send size={10} />Send
+                        </a>
+                      </>
                     ) : (
                       <span style={{ fontSize: 11, color: '#9CA3AF', background: '#F3F4F6', padding: '2px 7px', borderRadius: 4 }}>no email</span>
                     )}
