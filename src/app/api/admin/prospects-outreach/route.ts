@@ -47,10 +47,18 @@ export async function POST(req: NextRequest) {
         .replace(/\{\{business_name\}\}/g, p.business_name)
         .replace(/\{\{location\}\}/g, p.location || '')
 
+      // Strip internal-only sentences from why_them before sending
+      // Internal notes start with phrases like "Easy close", "Upsell", "Show him", etc.
+      const cleanWhyThem = (p.why_them || '')
+        .split('. ')
+        .filter((s: string) => !/^(easy close|upsell|show him|show her|show them|quick win|note:|tip:|action:|next step)/i.test(s.trim()))
+        .join('. ')
+        .replace(/\.\s*$/, '') + '.'
+
       const personalBody = body
         .replace(/\{\{business_name\}\}/g, p.business_name)
         .replace(/\{\{location\}\}/g, p.location || '')
-        .replace(/\{\{why_them\}\}/g, p.why_them || '')
+        .replace(/\{\{why_them\}\}/g, cleanWhyThem)
         .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
 
       try {
@@ -65,6 +73,8 @@ export async function POST(req: NextRequest) {
             to: [{ email: p.contact_email, name: p.business_name }],
             subject: personalSubject,
             htmlContent: `<div style="font-family:sans-serif;max-width:600px;line-height:1.6">${personalBody.replace(/\n/g, '<br>')}</div>`,
+            trackOpens: false,
+            trackClicks: false,
           }),
         })
 
