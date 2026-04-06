@@ -39,20 +39,20 @@ const DEFAULT_SUBJECT = `Quick question about {{business_name}}'s website`
 
 const DEFAULT_BODY = `Hi,
 
-I came across {{business_name}} while researching businesses in the area and wanted to get in touch.
+I came across {{business_name}} while researching businesses in the area and wanted to reach out.
 
 I noticed something that might be affecting how customers find you online — {{why_them}}
 
-I'm Akin, founder of Nith Digital, a web design agency based right here in Dumfries & Galloway. We specialise in helping local businesses like yours get found online and turn website visitors into enquiries.
+I'm Akin, founder of Nith Digital, a web design agency based right here in Dumfries & Galloway. We help local businesses get found online and win new business. You can see the kind of sites we build here: www.nithdigital.uk/templates
 
 I'd love to have a quick 15-minute chat to show you what we could do. No pressure at all — if it's not a fit, no worries.
 
 Would you be open to a call this week?
 
-Best,
+Cheers,
 Akin
 Nith Digital
-hello@nithdigital.uk
+07949116770
 www.nithdigital.uk`
 
 const SECTORS = [
