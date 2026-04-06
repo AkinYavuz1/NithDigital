@@ -24,6 +24,8 @@ interface Prospect {
   pipeline_status: string
   source: string
   outreach_hook: string | null
+  call_reminder_at: string | null
+  last_contacted_at: string | null
 }
 
 const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
@@ -64,6 +66,16 @@ const SECTORS = [
 ]
 
 const STATUSES = ['new', 'contacted', 'interested', 'won', 'lost']
+
+function getCallCountdown(reminderAt: string | null): { label: string; urgent: boolean } | null {
+  if (!reminderAt) return null
+  const diff = new Date(reminderAt).getTime() - Date.now()
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
+  if (days < 0) return { label: 'Call overdue!', urgent: true }
+  if (days === 0) return { label: 'Call today!', urgent: true }
+  if (days === 1) return { label: 'Call tomorrow', urgent: true }
+  return { label: `Call in ${days}d`, urgent: false }
+}
 
 function buildMailto(p: Prospect, subject: string, body: string) {
   const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
@@ -128,6 +140,24 @@ export default function ProspectsClient() {
 
   const selectEmailOnly = () => {
     setSelected(new Set(filtered.filter(p => p.contact_email).map(p => p.id)))
+  }
+
+  const markEmailed = async (id: string) => {
+    const res = await fetch('/api/admin/prospects-outreach', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'mark_emailed', id }),
+    })
+    const data = await res.json()
+    if (data.ok) {
+      setProspects(prev => prev.map(p => p.id === id ? {
+        ...p,
+        pipeline_status: 'contacted',
+        call_reminder_at: data.call_reminder_at,
+        last_contacted_at: new Date().toISOString(),
+      } : p))
+      showToast('Marked as emailed — call reminder set for 7 days')
+    }
   }
 
   const handleSend = async () => {
@@ -278,6 +308,27 @@ export default function ProspectsClient() {
                   <div style={{ ...STATUS_COLORS[p.pipeline_status] || STATUS_COLORS.new, fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0 }}>
                     {p.pipeline_status}
                   </div>
+
+                  {/* Call countdown */}
+                  {(() => {
+                    const cd = getCallCountdown(p.call_reminder_at)
+                    return cd ? (
+                      <div style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: cd.urgent ? 'rgba(220,38,38,0.1)' : 'rgba(22,163,74,0.08)', color: cd.urgent ? '#b91c1c' : '#15803d' }}>
+                        📞 {cd.label}
+                      </div>
+                    ) : null
+                  })()}
+
+                  {/* Email Sent button */}
+                  {p.pipeline_status === 'new' && (
+                    <button
+                      onClick={() => markEmailed(p.id)}
+                      style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: 'rgba(139,92,246,0.1)', color: '#6d28d9', border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer' }}
+                      title="Mark as emailed and start 7-day call reminder"
+                    >
+                      ✉ Email Sent
+                    </button>
+                  )}
 
                   {/* Expand */}
                   <button onClick={() => setExpanded(isExpanded ? null : p.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF', flexShrink: 0, padding: 0 }}>
