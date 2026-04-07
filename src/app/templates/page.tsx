@@ -29,6 +29,10 @@ const TEMPLATES = [
 export default function TemplatesPage() {
   return (
     <main style={{ background: '#F9F8F5', minHeight: '100vh', padding: '60px 24px' }}>
+      <style>{`
+        .tpl-card { transition: box-shadow 0.2s, transform 0.2s; }
+        .tpl-card:hover { box-shadow: 0 8px 24px rgba(27,42,74,0.12); transform: translateY(-2px); }
+      `}</style>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
 
         {/* Header */}
@@ -47,33 +51,16 @@ export default function TemplatesPage() {
         {/* Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
           {TEMPLATES.map(t => (
-            <Link
-              key={t.slug}
-              href={`/templates/${t.slug}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <div style={{
+            <Link key={t.slug} href={`/templates/${t.slug}`} style={{ textDecoration: 'none' }}>
+              <div className="tpl-card" style={{
                 background: '#fff',
                 borderRadius: 12,
                 overflow: 'hidden',
                 border: '1px solid #E5E9EF',
-                transition: 'box-shadow 0.2s, transform 0.2s',
                 cursor: 'pointer',
-              }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(27,42,74,0.12)'
-                  ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = 'none'
-                  ;(e.currentTarget as HTMLElement).style.transform = 'none'
-                }}
-              >
-                {/* Colour bar */}
+              }}>
                 <div style={{ height: 6, background: t.accent }} />
-
                 <div style={{ padding: '20px 22px 22px' }}>
-                  {/* Type badge */}
                   <span style={{
                     fontSize: 11, fontWeight: 600, letterSpacing: '0.5px',
                     color: t.accent, background: t.accent + '18',
@@ -81,11 +68,9 @@ export default function TemplatesPage() {
                   }}>
                     {t.type}
                   </span>
-
                   <h2 style={{ fontSize: 16, fontWeight: 700, color: '#1B2A4A', margin: '0 0 8px', lineHeight: 1.3 }}>
                     {t.name}
                   </h2>
-
                   <span style={{ fontSize: 13, color: '#D4A84B', fontWeight: 600 }}>
                     View demo →
                   </span>
@@ -101,7 +86,7 @@ export default function TemplatesPage() {
             See something you like?
           </h2>
           <p style={{ fontSize: 15, color: 'rgba(245,240,230,0.7)', margin: '0 0 24px' }}>
-            We'll customise any template for your business — your colours, your content, your domain.
+            We&apos;ll customise any template for your business — your colours, your content, your domain.
           </p>
           <Link href="/contact" style={{
             display: 'inline-block', background: '#D4A84B', color: '#1B2A4A',
