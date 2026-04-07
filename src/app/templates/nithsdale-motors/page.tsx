@@ -15,13 +15,13 @@ const DEFAULTS = {
 const IMAGES = {
   hero: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1600&q=80&fit=crop',
   workshop1: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=800&q=80&fit=crop',
-  workshop2: 'https://images.unsplash.com/photo-1609296048099-4d41b26c2c3d?w=800&q=80&fit=crop',
-  gallery1: 'https://images.unsplash.com/photo-1535137955279-aa7b5b3f1b1a?w=600&q=80&fit=crop',
-  gallery2: 'https://images.unsplash.com/photo-1599639668273-dd0d54f7adf3?w=600&q=80&fit=crop',
+  workshop2: 'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=800&q=80&fit=crop',
+  gallery1: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&fit=crop',
+  gallery2: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&q=80&fit=crop',
   gallery3: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-  gallery4: 'https://images.unsplash.com/photo-1596220720980-a9e9c57f285a?w=600&q=80&fit=crop',
+  gallery4: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80&fit=crop',
   gallery5: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80&fit=crop',
-  gallery6: 'https://images.unsplash.com/photo-1629384786285-64aeabff2e2e?w=600&q=80&fit=crop',
+  gallery6: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80&fit=crop',
 }
 
 const accent = '#D32F2F'

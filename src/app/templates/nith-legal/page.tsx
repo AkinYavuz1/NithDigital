@@ -14,7 +14,7 @@ const DEFAULTS = {
 
 const IMAGES = {
   hero: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=80&fit=crop',
-  about: 'https://images.unsplash.com/photo-1521791055366-0d553872952f?w=900&q=80&fit=crop',
+  about: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&fit=crop',
   team1: 'https://images.unsplash.com/photo-1560250097-0dc05a977884?w=600&q=80&fit=crop',
   team2: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&fit=crop',
   team3: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&q=80&fit=crop',

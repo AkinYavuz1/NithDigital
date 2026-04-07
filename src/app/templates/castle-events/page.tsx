@@ -17,7 +17,7 @@ const IMAGES = {
   venue: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=900&q=80&fit=crop',
   wedding1: 'https://images.unsplash.com/photo-1529636798458-92182e662485?w=600&q=80&fit=crop',
   wedding2: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80&fit=crop',
-  wedding3: 'https://images.unsplash.com/photo-1470290378698-263fa7ca60b4?w=600&q=80&fit=crop',
+  wedding3: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80&fit=crop',
   wedding4: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80&fit=crop',
   detail1: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=600&q=80&fit=crop',
   detail2: 'https://images.unsplash.com/photo-1501139083538-0139583c060f?w=600&q=80&fit=crop',
