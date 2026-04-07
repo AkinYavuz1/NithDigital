@@ -70,8 +70,8 @@ export default function NithsdaleProperties() {
           .np2-services-grid { grid-template-columns: 1fr 1fr !important; }
           .np2-reviews-grid { grid-template-columns: 1fr !important; }
           .np2-hero-inner h1 { font-size: 36px !important; }
-          nav { padding: 0 16px !important; }
-          nav > div:last-child { gap: 12px !important; }
+          nav > div:last-child { display: none !important; }
+          nav { padding: 0 16px !important; height: auto !important; min-height: 56px !important; }
           section { padding-left: 16px !important; padding-right: 16px !important; }
           footer { padding-left: 16px !important; padding-right: 16px !important; }
           form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }

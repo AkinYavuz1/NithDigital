@@ -116,7 +116,8 @@ export default function NithValleyJoinery() {
           .nvj-process-line { display: none !important; }
           .nvj-reviews-grid { grid-template-columns: 1fr !important; }
           .nvj-nav-links { display: none !important; }
-          nav { padding: 0 16px !important; }
+          nav > div:last-child { display: none !important; }
+          nav { padding: 0 16px !important; height: auto !important; min-height: 56px !important; }
           section { padding-left: 16px !important; padding-right: 16px !important; }
           footer { padding-left: 16px !important; padding-right: 16px !important; }
           form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }

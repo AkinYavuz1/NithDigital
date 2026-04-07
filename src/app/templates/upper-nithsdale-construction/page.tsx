@@ -100,7 +100,8 @@ export default function UpperNithsdaleConstruction() {
           .unc-accreditations { grid-template-columns: 1fr 1fr !important; }
           .unc-reviews-grid { grid-template-columns: 1fr !important; }
           .unc-nav-links { display: none !important; }
-          nav { padding: 0 16px !important; }
+          nav > div:last-child { display: none !important; }
+          nav { padding: 0 16px !important; height: auto !important; min-height: 56px !important; }
           section { padding-left: 16px !important; padding-right: 16px !important; }
           footer { padding-left: 16px !important; padding-right: 16px !important; }
           form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
