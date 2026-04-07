@@ -71,15 +71,24 @@ export default function GallowayLarder() {
         .gl-prod-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(44,58,42,0.12); }
         .gl-texture { background-image: repeating-linear-gradient(45deg, rgba(59,107,74,0.015) 0px, rgba(59,107,74,0.015) 1px, transparent 1px, transparent 10px); }
         @media (max-width: 768px) {
+          .gl-body { overflow-x: hidden; }
           .gl-hero h1 { font-size: 40px !important; }
           .gl-two-col { flex-direction: column !important; }
           .gl-cats-grid { grid-template-columns: 1fr 1fr !important; }
           .gl-prods-grid { grid-template-columns: 1fr 1fr !important; }
           .gl-delivery-grid { grid-template-columns: 1fr !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          .gl-suppliers-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 480px) {
           .gl-cats-grid { grid-template-columns: 1fr !important; }
           .gl-prods-grid { grid-template-columns: 1fr !important; }
+          .gl-suppliers-grid { grid-template-columns: 1fr !important; }
+          .gl-hero h1 { font-size: 30px !important; }
         }
       `}</style>
 

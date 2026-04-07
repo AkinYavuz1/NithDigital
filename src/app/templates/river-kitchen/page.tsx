@@ -99,14 +99,22 @@ export default function RiverKitchen() {
         .rk-gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
         .rk-gallery-item:hover .rk-gallery-img { transform: scale(1.04); }
         @media (max-width: 768px) {
+          .rk-body { overflow-x: hidden; }
           .rk-hero h1 { font-size: 42px !important; }
           .rk-about-cols { flex-direction: column !important; }
           .rk-gallery-grid { grid-template-columns: 1fr 1fr !important; }
           .rk-hours-table td { font-size: 13px !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 16px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          .rk-findus-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .rk-gallery-grid { grid-template-columns: 1fr !important; }
           .rk-tab { padding: 10px 16px !important; font-size: 12px !important; }
+          .rk-hero h1 { font-size: 32px !important; }
         }
       `}</style>
 

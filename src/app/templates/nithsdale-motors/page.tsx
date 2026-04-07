@@ -81,7 +81,8 @@ export default function NithsdaleMot() {
         .nm-input:focus { border-color: ${activeAccent}; }
         .nm-stripe { background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.015) 10px, rgba(0,0,0,0.015) 20px); }
         @media (max-width: 768px) {
-          .nm-hero-title { font-size: 34px !important; }
+          .nm-body { overflow-x: hidden; }
+          .nm-hero-title { font-size: 30px !important; }
           .nm-two-col { flex-direction: column !important; }
           .nm-services-grid { grid-template-columns: 1fr !important; }
           .nm-stats-grid { grid-template-columns: 1fr 1fr !important; }
@@ -89,10 +90,15 @@ export default function NithsdaleMot() {
           .nm-reviews-grid { grid-template-columns: 1fr !important; }
           .nm-nav-links { display: none !important; }
           .nm-price-table { font-size: 13px !important; }
+          nav { padding: 0 16px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .nm-stats-grid { grid-template-columns: 1fr !important; }
           .nm-gallery-grid { grid-template-columns: 1fr !important; }
+          .nm-hero-title { font-size: 26px !important; }
         }
       `}</style>
 

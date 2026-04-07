@@ -106,7 +106,8 @@ export default function NithValleyJoinery() {
         .nvj-divider { border: none; border-top: 1px solid rgba(184,115,51,0.2); margin: 0; }
         .nvj-wood-border { border-left: 4px solid ${accentCopper}; }
         @media (max-width: 768px) {
-          .nvj-hero-title { font-size: 38px !important; }
+          .nvj-body { overflow-x: hidden; }
+          .nvj-hero-title { font-size: 32px !important; }
           .nvj-two-col { flex-direction: column !important; }
           .nvj-two-col-rev { flex-direction: column-reverse !important; }
           .nvj-three-col { grid-template-columns: 1fr !important; }
@@ -115,9 +116,14 @@ export default function NithValleyJoinery() {
           .nvj-process-line { display: none !important; }
           .nvj-reviews-grid { grid-template-columns: 1fr !important; }
           .nvj-nav-links { display: none !important; }
+          nav { padding: 0 16px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .nvj-port-grid { grid-template-columns: 1fr !important; }
+          .nvj-hero-title { font-size: 26px !important; }
         }
       `}</style>
 

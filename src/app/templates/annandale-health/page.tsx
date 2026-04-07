@@ -63,14 +63,22 @@ export default function AnnandaleHealth() {
         .ah-condition-pill { background: #E8F5ED; color: ${activeAccent}; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block; margin: 4px; }
         .ah-review-card { background: #fff; padding: 28px; border-radius: 8px; border-left: 4px solid ${activeAccent}; }
         @media (max-width: 768px) {
+          .ah-body { overflow-x: hidden; }
           .ah-hero-inner { flex-direction: column !important; }
           .ah-services-grid { grid-template-columns: 1fr 1fr !important; }
           .ah-team-grid { grid-template-columns: 1fr 1fr !important; }
           .ah-reviews-grid { grid-template-columns: 1fr !important; }
+          .ah-hero-inner h1 { font-size: 36px !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .ah-services-grid { grid-template-columns: 1fr !important; }
           .ah-team-grid { grid-template-columns: 1fr !important; }
+          .ah-hero-inner h1 { font-size: 28px !important; }
         }
       `}</style>
 

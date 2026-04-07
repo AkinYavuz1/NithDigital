@@ -88,6 +88,7 @@ export default function HighlandRest() {
         .hr-gallery-img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.4s; display: block; }
         .hr-gallery-img:hover { transform: scale(1.04); }
         @media (max-width: 768px) {
+          .hr-body { overflow-x: hidden; }
           .hr-hero-title { font-size: 40px !important; }
           .hr-two-col { flex-direction: column !important; }
           .hr-rooms-grid { grid-template-columns: 1fr !important; }
@@ -95,10 +96,15 @@ export default function HighlandRest() {
           .hr-area-grid { grid-template-columns: 1fr 1fr !important; }
           .hr-reviews-grid { grid-template-columns: 1fr !important; }
           .hr-nav-links { display: none !important; }
+          nav { padding: 0 16px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .hr-gallery-grid { grid-template-columns: 1fr !important; }
           .hr-area-grid { grid-template-columns: 1fr !important; }
+          .hr-hero-title { font-size: 30px !important; }
         }
       `}</style>
 

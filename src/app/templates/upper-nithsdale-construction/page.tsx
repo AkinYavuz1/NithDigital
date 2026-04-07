@@ -90,7 +90,8 @@ export default function UpperNithsdaleConstruction() {
         .unc-section-clip { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), 0 100%); }
         .unc-section-clip-top { clip-path: polygon(0 40px, 100% 0, 100% 100%, 0 100%); margin-top: -40px; }
         @media (max-width: 768px) {
-          .unc-hero-title { font-size: 32px !important; }
+          .unc-body { overflow-x: hidden; }
+          .unc-hero-title { font-size: 28px !important; }
           .unc-two-col { flex-direction: column !important; }
           .unc-services-grid { grid-template-columns: 1fr !important; }
           .unc-projects-grid { grid-template-columns: 1fr 1fr !important; }
@@ -99,10 +100,15 @@ export default function UpperNithsdaleConstruction() {
           .unc-accreditations { grid-template-columns: 1fr 1fr !important; }
           .unc-reviews-grid { grid-template-columns: 1fr !important; }
           .unc-nav-links { display: none !important; }
+          nav { padding: 0 16px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .unc-projects-grid { grid-template-columns: 1fr !important; }
           .unc-accreditations { grid-template-columns: 1fr !important; }
+          .unc-hero-title { font-size: 24px !important; }
         }
       `}</style>
 

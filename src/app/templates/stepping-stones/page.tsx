@@ -64,15 +64,23 @@ export default function SteppingStones() {
         .ss-feature-card:hover { box-shadow: 0 8px 28px rgba(232,133,10,0.12); }
         .ss-review-card { background: #fff; padding: 28px; border-radius: 12px; box-shadow: 0 4px 20px rgba(44,26,8,0.06); }
         @media (max-width: 768px) {
+          .ss-body { overflow-x: hidden; }
           .ss-hero-inner { flex-direction: column !important; }
           .ss-sessions-grid { grid-template-columns: 1fr 1fr !important; }
           .ss-features-grid { grid-template-columns: 1fr 1fr !important; }
           .ss-reviews-grid { grid-template-columns: 1fr !important; }
-          .ss-hero-text h1 { font-size: 36px !important; }
+          .ss-hero-text h1 { font-size: 32px !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          .ss-about-inner { flex-direction: column !important; }
         }
         @media (max-width: 480px) {
           .ss-sessions-grid { grid-template-columns: 1fr !important; }
           .ss-features-grid { grid-template-columns: 1fr !important; }
+          .ss-hero-text h1 { font-size: 26px !important; }
         }
       `}</style>
 

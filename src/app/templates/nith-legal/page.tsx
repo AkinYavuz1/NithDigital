@@ -63,14 +63,24 @@ export default function NithLegal() {
         .nl-team-card:hover img { filter: grayscale(0%); }
         .nl-review-card { background: #fff; padding: 28px; border-bottom: 3px solid ${activeAccent}; }
         @media (max-width: 768px) {
+          .nl-body { overflow-x: hidden; }
           .nl-hero-inner { flex-direction: column !important; }
           .nl-services-grid { grid-template-columns: 1fr 1fr !important; }
           .nl-team-grid { grid-template-columns: 1fr 1fr !important; }
           .nl-reviews-grid { grid-template-columns: 1fr !important; }
+          .nl-hero-inner h1 { font-size: 36px !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          .nl-trust-bar { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 480px) {
           .nl-services-grid { grid-template-columns: 1fr !important; }
           .nl-team-grid { grid-template-columns: 1fr !important; }
+          .nl-hero-inner h1 { font-size: 28px !important; }
+          .nl-trust-bar { grid-template-columns: 1fr !important; }
         }
       `}</style>
 

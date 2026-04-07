@@ -68,13 +68,21 @@ export default function CastleEvents() {
         .ce-gallery-item:hover img { transform: scale(1.04); }
         .ce-review-card { background: #fff; padding: 32px; border-top: 2px solid ${activeAccent}; }
         @media (max-width: 768px) {
-          .ce-hero h1 { font-size: 48px !important; }
+          .ce-body { overflow-x: hidden; }
+          .ce-hero h1 { font-size: 44px !important; }
           .ce-packages-grid { grid-template-columns: 1fr !important; }
           .ce-gallery-grid { grid-template-columns: 1fr 1fr !important; }
           .ce-reviews-grid { grid-template-columns: 1fr !important; }
+          .ce-venue-inner { flex-direction: column !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 16px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .ce-gallery-grid { grid-template-columns: 1fr !important; }
+          .ce-hero h1 { font-size: 32px !important; }
         }
       `}</style>
 

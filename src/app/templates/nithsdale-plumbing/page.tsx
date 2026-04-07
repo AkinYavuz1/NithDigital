@@ -61,16 +61,24 @@ export default function NithsdalePlumbing() {
         .np-work-card:hover img { transform: scale(1.05); }
         .np-review-card { background: #fff; padding: 28px; border-left: 4px solid ${activeAccent}; }
         @media (max-width: 768px) {
+          .np-body { overflow-x: hidden; }
           .np-hero-content { flex-direction: column !important; }
           .np-services-grid { grid-template-columns: 1fr 1fr !important; }
           .np-trust-grid { grid-template-columns: 1fr 1fr !important; }
           .np-work-grid { grid-template-columns: 1fr 1fr !important; }
           .np-reviews-grid { grid-template-columns: 1fr !important; }
-          .np-hero-text h1 { font-size: 36px !important; }
+          .np-hero-text h1 { font-size: 32px !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .np-services-grid { grid-template-columns: 1fr !important; }
           .np-work-grid { grid-template-columns: 1fr !important; }
+          .np-trust-grid { grid-template-columns: 1fr !important; }
+          .np-hero-text h1 { font-size: 28px !important; }
         }
       `}</style>
 

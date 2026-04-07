@@ -62,15 +62,23 @@ export default function GallowayFitness() {
         .gf-plan-card:hover, .gf-plan-card.featured { border-color: ${activeAccent}; }
         .gf-review-card { background: #141414; padding: 24px; }
         @media (max-width: 768px) {
-          .gf-hero h1 { font-size: 56px !important; }
+          .gf-body { overflow-x: hidden; }
+          .gf-hero h1 { font-size: 52px !important; }
           .gf-classes-grid { grid-template-columns: 1fr !important; }
           .gf-plans-grid { grid-template-columns: 1fr !important; }
           .gf-reviews-grid { grid-template-columns: 1fr !important; }
           .gf-gallery-grid { grid-template-columns: 1fr 1fr !important; }
+          .gf-stats-grid { grid-template-columns: 1fr 1fr !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
-          .gf-hero h1 { font-size: 40px !important; }
+          .gf-hero h1 { font-size: 36px !important; }
           .gf-gallery-grid { grid-template-columns: 1fr !important; }
+          .gf-stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
 

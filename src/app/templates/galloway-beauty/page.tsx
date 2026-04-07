@@ -65,14 +65,21 @@ export default function GallowayBeauty() {
         .gb-price-row:last-child { border-bottom: none; }
         .gb-review-card { background: #fff; padding: 28px; border-top: 3px solid ${activeAccent}; }
         @media (max-width: 768px) {
+          .gb-body { overflow-x: hidden; }
           .gb-hero-inner { flex-direction: column !important; }
           .gb-services-grid { grid-template-columns: 1fr 1fr !important; }
           .gb-price-grid { grid-template-columns: 1fr !important; }
           .gb-reviews-grid { grid-template-columns: 1fr !important; }
-          .gb-hero-text h1 { font-size: 42px !important; }
+          .gb-hero-text h1 { font-size: 38px !important; }
+          nav { padding: 0 16px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          .gb-hero-inner > div:last-child { position: static !important; }
         }
         @media (max-width: 480px) {
           .gb-services-grid { grid-template-columns: 1fr !important; }
+          .gb-hero-text h1 { font-size: 30px !important; }
         }
       `}</style>
 

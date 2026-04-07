@@ -64,14 +64,24 @@ export default function NithsdaleProperties() {
         .np2-service-card { background: #fff; padding: 28px; border-radius: 8px; border-left: 3px solid ${activeAccent}; }
         .np2-review-card { background: #fff; padding: 28px; border-radius: 8px; box-shadow: 0 4px 20px rgba(43,76,140,0.08); }
         @media (max-width: 768px) {
+          .np2-body { overflow-x: hidden; }
           .np2-hero-inner { flex-direction: column !important; }
           .np2-props-grid { grid-template-columns: 1fr 1fr !important; }
           .np2-services-grid { grid-template-columns: 1fr 1fr !important; }
           .np2-reviews-grid { grid-template-columns: 1fr !important; }
+          .np2-hero-inner h1 { font-size: 36px !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          .np2-stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 480px) {
           .np2-props-grid { grid-template-columns: 1fr !important; }
           .np2-services-grid { grid-template-columns: 1fr !important; }
+          .np2-hero-inner h1 { font-size: 28px !important; }
+          .np2-stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
 

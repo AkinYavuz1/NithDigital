@@ -66,15 +66,23 @@ export default function HighStreetRetail() {
         .hsr-category-pill { background: ${activeAccent}; color: #fff; padding: 6px 14px; font-size: 11px; font-weight: 600; letter-spacing: '1px'; display: inline-block; }
         .hsr-review-card { background: #fff; padding: 24px; border-bottom: 3px solid ${activeAccent}; }
         @media (max-width: 768px) {
+          .hsr-body { overflow-x: hidden; }
           .hsr-hero-inner { flex-direction: column !important; }
           .hsr-products-grid { grid-template-columns: 1fr 1fr !important; }
           .hsr-features-grid { grid-template-columns: 1fr 1fr !important; }
           .hsr-reviews-grid { grid-template-columns: 1fr !important; }
-          .hsr-hero-text h1 { font-size: 38px !important; }
+          .hsr-hero-text h1 { font-size: 34px !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          .hsr-about-inner { flex-direction: column !important; }
         }
         @media (max-width: 480px) {
           .hsr-products-grid { grid-template-columns: 1fr !important; }
           .hsr-features-grid { grid-template-columns: 1fr !important; }
+          .hsr-hero-text h1 { font-size: 26px !important; }
         }
       `}</style>
 

@@ -62,14 +62,21 @@ export default function GallowayAdventures() {
         .ga-activity-card:hover img { transform: scale(1.04); filter: brightness(1); }
         .ga-review-card { background: #0E2014; padding: 24px; border-left: 3px solid ${activeAccent}; }
         @media (max-width: 768px) {
-          .ga-hero h1 { font-size: 44px !important; }
+          .ga-body { overflow-x: hidden; }
+          .ga-hero h1 { font-size: 40px !important; }
           .ga-activities-grid { grid-template-columns: 1fr 1fr !important; }
           .ga-reviews-grid { grid-template-columns: 1fr !important; }
           .ga-info-grid { grid-template-columns: 1fr !important; }
+          .ga-about-inner { flex-direction: column !important; }
+          nav { padding: 0 16px !important; }
+          nav > div:last-child { gap: 12px !important; }
+          section { padding-left: 16px !important; padding-right: 16px !important; }
+          footer { padding-left: 16px !important; padding-right: 16px !important; }
+          form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .ga-activities-grid { grid-template-columns: 1fr !important; }
-          .ga-hero h1 { font-size: 32px !important; }
+          .ga-hero h1 { font-size: 28px !important; }
         }
       `}</style>
 
