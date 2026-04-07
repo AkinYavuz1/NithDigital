@@ -1,4 +1,5 @@
 
+export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 import OSEmailsClient from '@/app/os/emails/OSEmailsClient'
 

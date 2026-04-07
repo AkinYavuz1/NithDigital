@@ -1,1 +1,16 @@
-{"projectId":"prj_VAkZjFTU3QaUw8h62H5ITzlBSRop","orgId":"team_DicLSLATmEbuzsnN9MhO0Lp5","projectName":"nithdigital"}
+{
+  "projectId": "prj_VAkZjFTU3QaUw8h62H5ITzlBSRop",
+  "orgId": "team_DicLSLATmEbuzsnN9MhO0Lp5",
+  "projectName": "nithdigital",
+  "settings": {
+    "createdAt": 1775375293747,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "22.x"
+  }
+}
