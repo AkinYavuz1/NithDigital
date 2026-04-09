@@ -26,9 +26,9 @@ export async function POST(req: NextRequest) {
       campaign_name,
     } = body
 
-    const getField = (name: string): string =>
-      user_column_data.find((f: { column_name: string; string_value: string }) =>
-        f.column_name === name
+    const getField = (id: string): string =>
+      user_column_data.find((f: { column_id: string; string_value: string }) =>
+        f.column_id === id
       )?.string_value || ''
 
     const name = getField('FULL_NAME')
