@@ -39,6 +39,7 @@ const LINKS = [
       { label: 'Contact', href: '/contact' },
       { label: 'Launchpad', href: '/launchpad' },
       { label: 'Help Centre', href: '/help' },
+      { label: 'Privacy Policy', href: '/privacy' },
     ],
   },
 ]
