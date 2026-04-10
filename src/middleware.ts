@@ -25,9 +25,12 @@ export function middleware(request: NextRequest) {
   const sessionCookie = request.cookies.get(SESSION_COOKIE) ?? request.cookies.get(`${SESSION_COOKIE}.0`)
   const hasSession = !!sessionCookie?.value
 
-  // Redirect unauthenticated users away from /os and /admin
-  // /os/demo is public — no auth required
-  if (!hasSession && (path.startsWith('/os') || path.startsWith('/admin')) && !path.startsWith('/os/demo')) {
+  // Public routes — no auth required
+  const publicPaths = ['/auth', '/os/demo', '/api', '/_next', '/favicon', '/']
+  const isPublic = publicPaths.some(p => p === path || path.startsWith(p + '/'))
+
+  // Redirect unauthenticated users to login for all protected routes
+  if (!hasSession && !isPublic) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
     url.searchParams.set('next', path)
@@ -74,5 +77,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/os/:path*', '/admin/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }

@@ -25,7 +25,7 @@ export default function LoginForm() {
   const [showReset, setShowReset] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const next = searchParams.get('next') ?? '/os'
+  const next = searchParams.get('next') ?? '/admin'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
