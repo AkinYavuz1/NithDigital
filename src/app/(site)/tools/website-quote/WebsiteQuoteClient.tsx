@@ -152,6 +152,9 @@ export default function WebsiteQuoteClient() {
     })
     setSubmitted(true)
     setSubmitting(false)
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      ;(window as any).gtag('event', 'conversion', { send_to: 'AW-18063310136/quote_submitted' })
+    }
   }
 
   const progress = ((step - 1) / (TOTAL_STEPS - 1)) * 100

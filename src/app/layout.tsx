@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { Libre_Baskerville, DM_Sans } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
+
+const GA_ID = 'AW-18063310136'
 
 const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
@@ -76,7 +79,7 @@ export default function RootLayout({
                 'Web design, Power BI dashboards, and custom web apps for small businesses in Dumfries & Galloway.',
               url: 'https://nithdigital.uk',
               email: 'hello@nithdigital.uk',
-              telephone: '+447949116770',
+              telephone: '+447404173024',
               founder: {
                 '@type': 'Person',
                 name: 'Nith Digital Team',
@@ -188,6 +191,18 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
       </body>
     </html>
   )

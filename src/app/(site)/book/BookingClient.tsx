@@ -121,6 +121,9 @@ export default function BookingClient() {
       setError(err.code === '23505' ? 'That slot was just taken. Please choose another time.' : 'Something went wrong. Please try again.')
       return
     }
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      ;(window as any).gtag('event', 'conversion', { send_to: 'AW-18063310136/booking_confirmed' })
+    }
     setConfirmed({
       date: dateStr,
       start_time: selectedSlot.start,

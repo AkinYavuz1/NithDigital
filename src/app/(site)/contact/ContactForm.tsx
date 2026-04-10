@@ -50,6 +50,9 @@ export default function ContactForm() {
         body: JSON.stringify(form),
       })
       setStatus('sent')
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        ;(window as any).gtag('event', 'conversion', { send_to: 'AW-18063310136/contact_form_submit' })
+      }
     } catch {
       setStatus('error')
     }
