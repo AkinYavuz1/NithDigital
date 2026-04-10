@@ -402,13 +402,24 @@ export default function ProspectsClient() {
                     </div>
                     {/* Email draft */}
                     <div style={{ marginTop: 14 }}>
-                      <button
-                        onClick={() => generateDraft(p.id)}
-                        disabled={generatingDraft === p.id}
-                        style={{ fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, border: '1px solid #D4A84B', background: 'transparent', color: '#92660a', cursor: 'pointer', opacity: generatingDraft === p.id ? 0.6 : 1 }}
-                      >
-                        {generatingDraft === p.id ? 'Generating...' : (drafts[p.id] || (p as any).email_draft) ? 'Regenerate email' : '✦ Generate email draft'}
-                      </button>
+                      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                        <button
+                          onClick={() => generateDraft(p.id)}
+                          disabled={generatingDraft === p.id}
+                          style={{ fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, border: '1px solid #D4A84B', background: 'transparent', color: '#92660a', cursor: 'pointer', opacity: generatingDraft === p.id ? 0.6 : 1 }}
+                        >
+                          {generatingDraft === p.id ? 'Generating...' : (drafts[p.id] || (p as any).email_draft) ? 'Regenerate email' : '✦ Generate email draft'}
+                        </button>
+                        {p.pipeline_status !== 'contacted' && p.pipeline_status !== 'interested' && p.pipeline_status !== 'won' && (
+                          <button
+                            onClick={() => markEmailed(p.id)}
+                            style={{ fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, background: 'rgba(139,92,246,0.1)', color: '#6d28d9', border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer' }}
+                            title="Mark as emailed — sets 7-day call reminder"
+                          >
+                            ✉ Mark email sent
+                          </button>
+                        )}
+                      </div>
                       {(drafts[p.id] || (p as any).email_draft) && (
                         <pre style={{ marginTop: 10, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: '#1B2A4A', fontFamily: 'inherit' }}>
                           {drafts[p.id] || (p as any).email_draft}
