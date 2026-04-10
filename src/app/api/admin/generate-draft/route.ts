@@ -44,8 +44,9 @@ Rules:
 - Second sentence: briefly introduce Nith Digital as a local D&G web agency that builds custom websites — not templates, not WordPress
 - Third: one concrete benefit relevant to their specific business type and sector (e.g. "more enquiries from people searching for [their trade] in [location]")
 - Close with a simple, low-pressure question asking if they'd be open to a quick call
-- Sign off: Akin | Nith Digital | 07949116770 | www.nithdigital.uk
-- Tone: friendly, direct, local — not corporate
+- Sign off: Akin | Nith Digital | 07404173024 | www.nithdigital.uk
+- When mentioning Nith Digital, always include "based in Sanquhar, in Dumfries & Galloway" or similar local anchor — this is important for building trust with other local businesses
+- Tone: warm but concise, conversational British English — direct but not blunt. Akin's natural voice: personal and active ("I noticed...", "I've built..."), no corporate jargon, no hyperbole, never pushy or salesy
 - Do NOT mention price, cost, packages, or any figures — that conversation comes later
 - Do NOT use "customers searching X in [town] can't find you"
 - Do NOT mention WordPress, Wix, Squarespace, or any website builder — we build fully custom sites
