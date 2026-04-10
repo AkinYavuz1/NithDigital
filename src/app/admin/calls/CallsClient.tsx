@@ -103,6 +103,23 @@ export default function CallsClient() {
     }
   }
 
+  const markEmailed = async (id: string) => {
+    setActioning(id)
+    const res = await fetch('/api/admin/prospects-outreach', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'mark_emailed', id }),
+    })
+    const data = await res.json()
+    setActioning(null)
+    if (data.ok) {
+      setProspects(prev => prev.filter(p => p.id !== id))
+      showToast('Marked as emailed — call reminder set for 7 days')
+    } else {
+      showToast('Failed to update', false)
+    }
+  }
+
   const markCalled = async (id: string) => {
     setActioning(id)
     const res = await fetch('/api/admin/prospects-calls', {
@@ -232,6 +249,14 @@ export default function CallsClient() {
                   </a>
 
                   {/* Actions */}
+                  <button
+                    onClick={() => markEmailed(p.id)}
+                    disabled={actioning === p.id}
+                    title="Email sent — set 7-day call reminder"
+                    style={{ fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 6, flexShrink: 0, background: 'rgba(139,92,246,0.1)', color: '#6d28d9', border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer' }}
+                  >
+                    ✉ Emailed
+                  </button>
                   <button
                     onClick={() => markCalled(p.id)}
                     disabled={actioning === p.id}

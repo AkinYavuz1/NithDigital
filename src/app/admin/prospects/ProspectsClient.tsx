@@ -368,16 +368,7 @@ export default function ProspectsClient() {
                       ) : null
                     })()}
 
-                    {/* Email Sent button */}
-                    {p.pipeline_status === 'new' && (
-                      <button
-                        onClick={() => markEmailed(p.id)}
-                        style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: 'rgba(139,92,246,0.1)', color: '#6d28d9', border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer' }}
-                        title="Mark as emailed and start 7-day call reminder"
-                      >
-                        ✉ Email Sent
-                      </button>
-                    )}
+                    {/* Email Sent button — moved to call list */}
                   </div>
                 </div>
 

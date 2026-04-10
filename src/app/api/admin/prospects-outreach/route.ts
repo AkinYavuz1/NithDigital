@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { action, prospects, subject, body } = await req.json()
+  const { action, prospects, subject, body, id, ids, status, notes } = await req.json()
 
   if (action === 'send') {
     const results = { sent: 0, failed: 0, skipped: 0, errors: [] as string[] }
@@ -103,14 +103,12 @@ export async function POST(req: NextRequest) {
   }
 
   if (action === 'update_status') {
-    const { ids, status } = await req.json()
     const { error } = await sb.from('prospects').update({ pipeline_status: status }).in('id', ids)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ ok: true })
   }
 
   if (action === 'mark_emailed') {
-    const { id } = await req.json()
     const reminderAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
     const { error } = await sb.from('prospects').update({
       pipeline_status: 'contacted',
