@@ -55,7 +55,7 @@ Would you be open to a call this week?
 Cheers,
 Akin
 Nith Digital
-07949116770
+07404173024
 www.nithdigital.uk`
 
 const SECTORS = [
@@ -339,11 +339,11 @@ export default function ProspectsClient() {
                           <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.contact_email}</span>
                         </span>
                         <a
-                          href={buildMailto(p, subject, body)}
+                          href={buildMailto(p, subject, drafts[p.id] || (p as any).email_draft || body)}
                           style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
-                          title="Open in Outlook"
+                          title={drafts[p.id] || (p as any).email_draft ? 'Open AI draft in Outlook' : 'Open template in Outlook'}
                         >
-                          <Send size={10} />Send
+                          <Send size={10} />{drafts[p.id] || (p as any).email_draft ? 'Send draft' : 'Send'}
                         </a>
                       </>
                     ) : (
