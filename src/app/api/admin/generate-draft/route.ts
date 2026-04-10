@@ -31,21 +31,26 @@ export async function POST(req: NextRequest) {
 Context:
 - Sector: ${p.sector}
 - Website status: ${p.website_status ?? 'unknown'}
+- Has existing website: ${p.has_website ? 'yes' : 'no'}
 - Specific problem observed: ${p.outreach_hook ?? p.why_them}
+- Why they're a good fit: ${p.why_them ?? 'not specified'}
 - Recommended service: ${p.recommended_service}
-- Price range: £${p.price_range_low}–£${p.price_range_high}
+- Score (need/pay/fit/access): ${p.score_need}/${p.score_pay}/${p.score_fit}/${p.score_access}
 
 Rules:
 - 4–6 sentences maximum. No fluff.
-- Open with the specific problem observation (the hook) — make it sound like Akin noticed it casually, not from a data report
+- Open with the specific problem observation (the hook) — make it sound like Akin noticed it casually, not from a data report. Tailor the observation to their sector (e.g. a trades company needs bookings, a food business needs table/order visibility, a service business needs enquiries).
 - Do NOT start with "I hope this email finds you well" or any generic opener
-- Second sentence: briefly introduce Nith Digital as a local D&G web agency
-- Third: one concrete benefit relevant to their business type
+- Second sentence: briefly introduce Nith Digital as a local D&G web agency that builds custom websites — not templates, not WordPress
+- Third: one concrete benefit relevant to their specific business type and sector (e.g. "more enquiries from people searching for [their trade] in [location]")
 - Close with a simple, low-pressure question asking if they'd be open to a quick call
 - Sign off: Akin | Nith Digital | 07949116770 | www.nithdigital.uk
 - Tone: friendly, direct, local — not corporate
 - Do NOT mention price, cost, packages, or any figures — that conversation comes later
 - Do NOT use "customers searching X in [town] can't find you"
+- Do NOT mention WordPress, Wix, Squarespace, or any website builder — we build fully custom sites
+- Do NOT use generic phrases like "strong online presence" or "digital footprint"
+- If they have no website: focus on what they're missing out on. If they have a poor/broken website: focus on the opportunity to fix it.
 - Output the email body only. No subject line. No markdown.`
       }]
     })
@@ -63,18 +68,25 @@ Rules:
 Context:
 - Sector: ${p.sector}
 - Website status: ${p.website_status ?? 'unknown'}
+- Has existing website: ${p.has_website ? 'yes' : 'no'}
 - Specific problem: ${p.outreach_hook ?? p.why_them}
+- Why they're a good fit: ${p.why_them ?? 'not specified'}
 - Recommended service: ${p.recommended_service}
 
 Format it as:
-OPENING (10 seconds): What to say immediately
-HOOK (1 sentence): The specific problem to mention
-IF THEY SAY "we're fine" / "not interested": One response
-IF THEY SHOW INTEREST: What to say next
-CLOSE: How to end the call (aim for a follow-up email or meeting)
+OPENING (10 seconds): What to say immediately — introduce Akin and Nith Digital briefly
+HOOK (1 sentence): The specific problem to mention — tailor to their sector, make it sound like a casual observation not a sales pitch
+IF THEY SAY "we're fine" / "not interested": One response that acknowledges it and plants a seed without being pushy
+IF THEY SHOW INTEREST: What to say next — move toward booking a short call or sending a follow-up email
+CLOSE: How to end the call (aim for a follow-up email or a 15-min call)
 
-Keep each section to 1–2 sentences. Conversational, not scripted-sounding. Local and friendly tone.
-Output the script only. No markdown headers, use plain labels.`
+Rules:
+- Keep each section to 1–2 sentences.
+- Conversational, not scripted-sounding. Local and friendly tone.
+- Do NOT mention price, packages, or any figures
+- Do NOT mention WordPress or website builders — we build fully custom sites
+- Do NOT use generic phrases like "online presence" or "digital footprint"
+- Output the script only. No markdown headers, use plain labels.`
       }]
     })
     draft = (msg.content[0] as any).text.trim()
