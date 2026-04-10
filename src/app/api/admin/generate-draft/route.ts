@@ -88,37 +88,39 @@ export async function POST(req: NextRequest) {
 
     const msg = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 450,
+      max_tokens: 350,
       messages: [{
         role: 'user',
-        content: `Write a short cold email from Akin at Nith Digital (nithdigital.uk) to ${p.business_name} in ${p.location}.
+        content: `You are Akin, a web developer based in Sanquhar, Dumfries & Galloway. You run Nith Digital and build fully custom websites for local businesses across D&G.
 
-Context:
-- Sector: ${p.sector}
-- Website status: ${p.website_status ?? 'unknown'}
-- Has existing website: ${p.has_website ? 'yes' : 'no'}
-- Specific problem observed: ${p.outreach_hook ?? p.why_them}
-- Why they're a good fit: ${p.why_them ?? 'not specified'}
-- Recommended service: ${p.recommended_service}
-- Score (need/pay/fit/access): ${p.score_need}/${p.score_pay}/${p.score_fit}/${p.score_access}
+Write a cold email to ${p.business_name} in ${p.location} (${p.sector}).
 
-Rules:
-- 4–6 sentences maximum. No fluff.
-- Open with the specific problem observation (the hook) — make it sound like Akin noticed it casually, not from a data report. Tailor the observation to their sector (e.g. a trades company needs bookings, a food business needs table/order visibility, a service business needs enquiries).
-- Do NOT start with "I hope this email finds you well" or any generic opener
-- Second sentence: briefly introduce Nith Digital as a local D&G web agency that builds custom websites — not templates, not WordPress
-- Third: one concrete benefit relevant to their specific business type and sector (e.g. "more enquiries from people searching for [their trade] in [location]")
-- ${templateLine}
-- Close with a simple, low-pressure question asking if they'd be open to a quick call
-- Sign off: Akin | Nith Digital | 07404173024 | www.nithdigital.uk
-- When mentioning Nith Digital, always include "based in Sanquhar, in Dumfries & Galloway" or similar local anchor — this is important for building trust with other local businesses
-- Tone: warm but concise, conversational British English — direct but not blunt. Akin's natural voice: personal and active ("I noticed...", "I've built..."), no corporate jargon, no hyperbole, never pushy or salesy
-- Do NOT mention price, cost, packages, or any figures — that conversation comes later
-- Do NOT use "customers searching X in [town] can't find you"
-- Do NOT mention WordPress, Wix, Squarespace, or any website builder — we build fully custom sites
-- Do NOT use generic phrases like "strong online presence" or "digital footprint"
-- If they have no website: focus on what they're missing out on. If they have a poor/broken website: focus on the opportunity to fix it.
+What you noticed about them:
+${p.outreach_hook ?? p.why_them}
+
+${p.has_website ? `They have a website but it has issues: ${p.website_status}` : `They have no website at all.`}
+
+Tone and style — write exactly like this example:
+
+"Hi,
+
+I was passing your garage the other day and noticed you don't have a website — I tried to look you up on my phone and couldn't find anything. I build websites for local businesses here in D&G, based in Sanquhar. Built one recently for a similar outfit if you want to see the kind of thing — ${template?.url ?? BASE_URL}. Worth a quick chat?
+
+Cheers,
+Akin
+07404173024"
+
+Rules for your version:
+- 3–4 sentences max. Sound like a real person, not a marketer.
+- First sentence: what you specifically noticed — casual, like you stumbled across it
+- One sentence about Nith Digital — local, Sanquhar, builds custom sites (not templates)
+- Drop the template link naturally, no fanfare
+- End with one short low-pressure question — "Worth a chat?" or similar
+- Sign off: Cheers, Akin | Nith Digital | 07404173024 | www.nithdigital.uk
+- No buzzwords. No "online presence". No "digital footprint". No prices. No WordPress.
 - Output the email body only. No subject line. No markdown.`
+      }]
+    })
       }]
     })
     draft = (msg.content[0] as any).text.trim()
