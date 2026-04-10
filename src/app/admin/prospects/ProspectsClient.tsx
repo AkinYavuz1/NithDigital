@@ -107,6 +107,9 @@ export default function ProspectsClient() {
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
   const [generatingDraft, setGeneratingDraft] = useState<string | null>(null)
   const [drafts, setDrafts] = useState<Record<string, string>>({})
+  const [replyTexts, setReplyTexts] = useState<Record<string, string>>({})
+  const [analysing, setAnalysing] = useState<string | null>(null)
+  const [analyses, setAnalyses] = useState<Record<string, { label: string; action: string; status: string }>>({})
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -158,6 +161,27 @@ export default function ProspectsClient() {
       showToast('Email draft generated')
     } else {
       showToast('Failed to generate draft', false)
+    }
+  }
+
+  const analyseReply = async (id: string) => {
+    const text = replyTexts[id]?.trim()
+    if (!text) return
+    setAnalysing(id)
+    const p = prospects.find(x => x.id === id)!
+    const res = await fetch('/api/admin/analyse-reply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, replyText: text, prospect: { business_name: p.business_name, sector: p.sector, recommended_service: p.recommended_service } }),
+    })
+    const data = await res.json()
+    setAnalysing(null)
+    if (data.label) {
+      setAnalyses(prev => ({ ...prev, [id]: data }))
+      setProspects(prev => prev.map(x => x.id === id ? { ...x, pipeline_status: data.status } : x))
+      showToast(`Reply analysed — ${data.label}`)
+    } else {
+      showToast('Failed to analyse reply', false)
     }
   }
 
@@ -398,6 +422,33 @@ export default function ProspectsClient() {
                         </pre>
                       )}
                     </div>
+
+                    {/* Reply analysis */}
+                    {(p.pipeline_status === 'contacted' || p.pipeline_status === 'interested') && (
+                      <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid #E5E9EF' }}>
+                        <div style={{ fontSize: 11, fontWeight: 600, color: '#9CA3AF', letterSpacing: '0.5px', marginBottom: 8 }}>LOG REPLY</div>
+                        {analyses[p.id] && (
+                          <div style={{ marginBottom: 10, padding: '10px 14px', borderRadius: 6, background: 'rgba(139,92,246,0.07)', border: '1px solid rgba(139,92,246,0.2)' }}>
+                            <div style={{ fontSize: 12, fontWeight: 700, color: '#6d28d9', marginBottom: 4 }}>{analyses[p.id].label}</div>
+                            <div style={{ fontSize: 13, color: '#374151' }}>{analyses[p.id].action}</div>
+                          </div>
+                        )}
+                        <textarea
+                          value={replyTexts[p.id] || ''}
+                          onChange={e => setReplyTexts(prev => ({ ...prev, [p.id]: e.target.value }))}
+                          placeholder="Paste their reply here..."
+                          rows={4}
+                          style={{ ...inp, width: '100%', resize: 'vertical', boxSizing: 'border-box', fontFamily: 'inherit', fontSize: 13 }}
+                        />
+                        <button
+                          onClick={() => analyseReply(p.id)}
+                          disabled={analysing === p.id || !replyTexts[p.id]?.trim()}
+                          style={{ marginTop: 8, fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, border: '1px solid rgba(139,92,246,0.4)', background: 'transparent', color: '#6d28d9', cursor: 'pointer', opacity: (analysing === p.id || !replyTexts[p.id]?.trim()) ? 0.5 : 1 }}
+                        >
+                          {analysing === p.id ? 'Analysing...' : '✦ Analyse reply'}
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
