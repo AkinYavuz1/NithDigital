@@ -221,17 +221,17 @@ export default function ProspectsClient() {
   const selectedWithEmail = filtered.filter(p => selected.has(p.id) && p.contact_email).length
 
   return (
-    <div style={{ padding: 28, maxWidth: 1100, fontFamily: 'var(--font-sans, system-ui)' }}>
+    <div className="prospects-page" style={{ padding: 28, maxWidth: 1100, fontFamily: 'var(--font-sans, system-ui)' }}>
 
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
-        <div>
+      <div className="prospects-header" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ minWidth: 0 }}>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: '#1B2A4A', margin: 0 }}>Email List</h1>
           <p style={{ fontSize: 13, color: '#5A6A7A', margin: '4px 0 0' }}>
             {filtered.length} prospects · {filtered.filter(p => p.contact_email).length} with email
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button onClick={fetchProspects} style={btn('ghost')}><RefreshCw size={14} /></button>
           <button onClick={() => setShowCompose(!showCompose)} style={btn(showCompose ? 'primary' : 'outline')}>
             <Mail size={14} />{showCompose ? 'Hide Template' : 'Email Template'}
@@ -305,7 +305,7 @@ export default function ProspectsClient() {
                 borderRadius: 8,
                 overflow: 'hidden',
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px' }}>
+                <div className="prospect-row" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', flexWrap: 'wrap' }}>
                   {/* Checkbox */}
                   <button onClick={() => toggleSelect(p.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: isSelected ? '#D4A84B' : '#CBD5E1', flexShrink: 0, padding: 0 }}>
                     {isSelected ? <CheckSquare size={16} /> : <Square size={16} />}
@@ -317,23 +317,30 @@ export default function ProspectsClient() {
                   </div>
 
                   {/* Name + location */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
+                  <div className="prospect-name" style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {p.business_name}
                     </div>
-                    <div style={{ fontSize: 12, color: '#5A6A7A' }}>{p.location} · {p.sector}</div>
+                    <div style={{ fontSize: 12, color: '#5A6A7A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.location} · {p.sector}</div>
                   </div>
 
-                  {/* Contact */}
-                  <div style={{ flexShrink: 0, display: 'flex', gap: 6, alignItems: 'center' }}>
+                  {/* Expand */}
+                  <button onClick={() => setExpanded(isExpanded ? null : p.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF', flexShrink: 0, padding: 0 }}>
+                    {isExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+                  </button>
+
+                  {/* Secondary meta row — wraps under name on mobile */}
+                  <div className="prospect-meta" style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap', minWidth: 0 }}>
+                    {/* Contact */}
                     {p.contact_email ? (
                       <>
-                        <span style={{ fontSize: 11, color: '#15803d', background: 'rgba(22,163,74,0.08)', padding: '2px 7px', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
-                          <Mail size={10} />{p.contact_email}
+                        <span style={{ fontSize: 11, color: '#15803d', background: 'rgba(22,163,74,0.08)', padding: '2px 7px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 3, maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <Mail size={10} style={{ flexShrink: 0 }} />
+                          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.contact_email}</span>
                         </span>
                         <a
                           href={buildMailto(p, subject, body)}
-                          style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 3 }}
+                          style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
                           title="Open in Outlook"
                         >
                           <Send size={10} />Send
@@ -345,44 +352,39 @@ export default function ProspectsClient() {
                     {p.contact_phone && (
                       <span style={{ fontSize: 11, color: '#5A6A7A' }}>{p.contact_phone}</span>
                     )}
+
+                    {/* Status badge */}
+                    <div style={{ ...STATUS_COLORS[p.pipeline_status] || STATUS_COLORS.new, fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0 }}>
+                      {p.pipeline_status}
+                    </div>
+
+                    {/* Call countdown */}
+                    {(() => {
+                      const cd = getCallCountdown(p.call_reminder_at)
+                      return cd ? (
+                        <div style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: cd.urgent ? 'rgba(220,38,38,0.1)' : 'rgba(22,163,74,0.08)', color: cd.urgent ? '#b91c1c' : '#15803d' }}>
+                          📞 {cd.label}
+                        </div>
+                      ) : null
+                    })()}
+
+                    {/* Email Sent button */}
+                    {p.pipeline_status === 'new' && (
+                      <button
+                        onClick={() => markEmailed(p.id)}
+                        style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: 'rgba(139,92,246,0.1)', color: '#6d28d9', border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer' }}
+                        title="Mark as emailed and start 7-day call reminder"
+                      >
+                        ✉ Email Sent
+                      </button>
+                    )}
                   </div>
-
-                  {/* Status badge */}
-                  <div style={{ ...STATUS_COLORS[p.pipeline_status] || STATUS_COLORS.new, fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0 }}>
-                    {p.pipeline_status}
-                  </div>
-
-                  {/* Call countdown */}
-                  {(() => {
-                    const cd = getCallCountdown(p.call_reminder_at)
-                    return cd ? (
-                      <div style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: cd.urgent ? 'rgba(220,38,38,0.1)' : 'rgba(22,163,74,0.08)', color: cd.urgent ? '#b91c1c' : '#15803d' }}>
-                        📞 {cd.label}
-                      </div>
-                    ) : null
-                  })()}
-
-                  {/* Email Sent button */}
-                  {p.pipeline_status === 'new' && (
-                    <button
-                      onClick={() => markEmailed(p.id)}
-                      style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: 'rgba(139,92,246,0.1)', color: '#6d28d9', border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer' }}
-                      title="Mark as emailed and start 7-day call reminder"
-                    >
-                      ✉ Email Sent
-                    </button>
-                  )}
-
-                  {/* Expand */}
-                  <button onClick={() => setExpanded(isExpanded ? null : p.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF', flexShrink: 0, padding: 0 }}>
-                    {isExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-                  </button>
                 </div>
 
                 {/* Expanded detail */}
                 {isExpanded && (
-                  <div style={{ padding: '12px 14px 14px 60px', borderTop: '1px solid #F0F2F5', background: '#FAFBFC' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                  <div className="prospect-expanded" style={{ padding: '12px 14px 14px 60px', borderTop: '1px solid #F0F2F5', background: '#FAFBFC' }}>
+                    <div className="prospect-expanded-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                       <div>
                         <div style={{ fontSize: 11, fontWeight: 600, color: '#9CA3AF', letterSpacing: '0.5px', marginBottom: 4 }}>WHY THEM</div>
                         <div style={{ fontSize: 13, color: '#1B2A4A', lineHeight: 1.6 }}>{p.why_them}</div>
@@ -469,6 +471,29 @@ export default function ProspectsClient() {
           {toast.msg}
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .prospects-page {
+            padding: 20px 14px !important;
+          }
+          .prospect-meta {
+            flex-basis: 100%;
+            padding-left: 46px;
+          }
+          .prospect-expanded {
+            padding: 12px 14px 14px 14px !important;
+          }
+          .prospect-expanded-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .prospects-page select,
+          .prospects-page input[type="text"],
+          .prospects-page input:not([type]) {
+            font-size: 16px !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }
