@@ -95,10 +95,12 @@ export async function POST(req: NextRequest) {
 
 Write a cold email to ${p.business_name} in ${p.location} (${p.sector}).
 
-What you noticed about them:
+What you noticed about them (based on research — frame it as "when I looked", "last time I checked", not as guaranteed current fact):
 ${p.outreach_hook ?? p.why_them}
 
-${p.has_website ? `They have a website but it has issues: ${p.website_status}` : `They have no website at all.`}
+${p.has_website && p.website_status && p.website_status !== 'none'
+  ? `Their website appears to have issues (${p.website_status}) — but don't state technical details as absolute fact, just say what you observed when you looked it up`
+  : `They have no working website`}
 
 Tone and style — write exactly like this example:
 
