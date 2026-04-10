@@ -74,10 +74,15 @@ export default function CallsClient() {
 
   useEffect(() => { fetchProspects() }, [fetchProspects])
 
-  const filtered = prospects.filter(p => {
-    const q = search.toLowerCase()
-    return !q || p.business_name.toLowerCase().includes(q) || p.location.toLowerCase().includes(q)
-  })
+  const filtered = prospects
+    .filter(p => {
+      const q = search.toLowerCase()
+      return !q || p.business_name.toLowerCase().includes(q) || p.location.toLowerCase().includes(q)
+    })
+    .sort((a, b) => {
+      if (sort === 'value') return (b.price_range_high ?? 0) - (a.price_range_high ?? 0)
+      return (b.score_overall ?? 0) - (a.score_overall ?? 0)
+    })
 
   const markCalled = async (id: string) => {
     setActioning(id)

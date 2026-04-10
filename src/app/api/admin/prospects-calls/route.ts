@@ -14,15 +14,13 @@ export async function GET(req: NextRequest) {
   const sort = searchParams.get('sort') || 'score'
   const limit = parseInt(searchParams.get('limit') || '300')
 
-  const sortCol = sort === 'value' ? 'price_range_high' : 'score_overall'
-
   let query = sb
     .from('prospects')
     .select('*')
     .not('contact_phone', 'is', null)
     .is('contact_email', null)
     .in('pipeline_status', ['new', 'prospect'])
-    .order(sortCol, { ascending: false, nullsFirst: false })
+    .order('score_overall', { ascending: false, nullsFirst: false })
     .limit(limit)
 
   if (sector && sector !== 'all') query = query.eq('sector', sector)

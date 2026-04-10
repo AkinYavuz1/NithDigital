@@ -40,7 +40,8 @@ export async function GET(req: NextRequest) {
     .from('prospects')
     .select('*')
     .eq('pipeline_status', status)
-    .order('score_overall', { ascending: false })
+    .not('contact_email', 'is', null)
+    .order('score_overall', { ascending: false, nullsFirst: false })
     .limit(limit)
 
   if (sector && sector !== 'all') query = query.eq('sector', sector)
