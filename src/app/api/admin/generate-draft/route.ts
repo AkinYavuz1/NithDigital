@@ -104,7 +104,7 @@ Tone and style — write exactly like this example:
 
 "Hi,
 
-I was passing your garage the other day and noticed you don't have a website — I tried to look you up on my phone and couldn't find anything. I build websites for local businesses here in D&G, based in Sanquhar. Built one recently for a similar outfit if you want to see the kind of thing — ${template?.url ?? BASE_URL}. Worth a quick chat?
+I was passing your garage the other day and noticed you don't have a website — I tried to look you up on my phone and couldn't find anything. I build websites for local businesses here in D&G, based in Sanquhar. I've put together a demo for a similar type of business if you want a rough idea of what's possible: ${template?.url ?? BASE_URL}. Worth a quick chat?
 
 Cheers,
 Akin
@@ -114,7 +114,8 @@ Rules for your version:
 - 3–4 sentences max. Sound like a real person, not a marketer.
 - First sentence: what you specifically noticed — casual, like you stumbled across it
 - One sentence about Nith Digital — local, Sanquhar, builds custom sites (not templates)
-- Drop the template link naturally, no fanfare
+- When referencing the demo link, be clear it's a demo or example — NOT a real past client. Use phrasing like "put together a demo", "example of the kind of thing", "you can see the style here". Never say "did one for", "built one for", or anything implying it's a real client site.
+- Drop the demo link naturally: ${template?.url ?? BASE_URL}
 - End with one short low-pressure question — "Worth a chat?" or similar
 - Sign off: Cheers, Akin | Nith Digital | 07404173024 | www.nithdigital.uk
 - No buzzwords. No "online presence". No "digital footprint". No prices. No WordPress.
