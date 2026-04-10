@@ -26,7 +26,7 @@ const NAV_ITEMS = [
   { href: '/admin/quote-leads', icon: Calculator, label: 'Quote Leads' },
   { href: '/admin/audits', icon: BarChart2, label: 'Site Audits' },
   { href: '/admin/leads', icon: Target, label: 'Lead Generator' },
-  { href: '/admin/prospects', icon: MapPin, label: 'Prospects Outreach' },
+  { href: '/admin/prospects', icon: MapPin, label: 'Email List' },
   { href: '/admin/calls', icon: Phone, label: 'Call List' },
   { href: '/admin/ads', icon: Megaphone, label: 'Google Ads' },
 ]

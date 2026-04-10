@@ -183,7 +183,7 @@ export default function ProspectsClient() {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: '#1B2A4A', margin: 0 }}>Prospects Outreach</h1>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: '#1B2A4A', margin: 0 }}>Email List</h1>
           <p style={{ fontSize: 13, color: '#5A6A7A', margin: '4px 0 0' }}>
             {filtered.length} prospects · {filtered.filter(p => p.contact_email).length} with email
           </p>
