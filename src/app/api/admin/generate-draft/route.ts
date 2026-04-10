@@ -14,21 +14,55 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 const BASE_URL = 'https://www.nithdigital.uk/templates'
 
 // Maps prospect sector → most relevant template slug + description
+// Covers all real sector values found in the DB
 const TEMPLATE_MAP: Record<string, { slug: string; label: string }> = {
-  'Trades & Construction':    { slug: 'nithsdale-plumbing',              label: 'trades / plumbing' },
-  'Home Services':            { slug: 'nithsdale-plumbing',              label: 'home services' },
-  'Food & Drink':             { slug: 'river-kitchen',                   label: 'restaurant / café' },
-  'Accommodation':            { slug: 'highland-rest',                   label: 'B&B / holiday let' },
-  'Tourism & Attractions':    { slug: 'galloway-adventures',             label: 'tourism & activities' },
-  'Retail':                   { slug: 'high-street-retail',              label: 'independent retail' },
-  'Automotive':               { slug: 'nithsdale-motors',                label: 'garage / MOT centre' },
-  'Beauty & Hair':            { slug: 'galloway-beauty',                 label: 'beauty salon' },
-  'Healthcare':               { slug: 'annandale-health',                label: 'health & wellness' },
-  'Fitness & Leisure':        { slug: 'galloway-fitness',                label: 'gym / personal training' },
-  'Professional Services':    { slug: 'nith-legal',                      label: 'professional services' },
-  'Property':                 { slug: 'nithsdale-properties',            label: 'estate agent' },
-  'Childcare & Education':    { slug: 'stepping-stones',                 label: 'nursery / childcare' },
-  'Wedding & Events':         { slug: 'castle-events',                   label: 'wedding & events' },
+  // Trades
+  'Trades & Construction':        { slug: 'nithsdale-plumbing',          label: 'trades business' },
+  'Home Services':                { slug: 'nithsdale-plumbing',          label: 'home services business' },
+  'Electricians':                 { slug: 'nithsdale-plumbing',          label: 'trades business' },
+  'Joiners':                      { slug: 'nith-valley-joinery',         label: 'joinery / carpentry business' },
+  'Painters & Decorators':        { slug: 'nithsdale-plumbing',          label: 'trades business' },
+  'Landscaping':                  { slug: 'nithsdale-plumbing',          label: 'home services business' },
+  'Waste Removal':                { slug: 'nithsdale-plumbing',          label: 'trades business' },
+  // Food
+  'Food & Drink':                 { slug: 'river-kitchen',               label: 'restaurant / café' },
+  // Accommodation / Tourism
+  'Accommodation':                { slug: 'highland-rest',               label: 'B&B / holiday let' },
+  'Hotels':                       { slug: 'highland-rest',               label: 'accommodation business' },
+  'Self-Catering':                { slug: 'highland-rest',               label: 'self-catering / holiday let' },
+  'Self-Catering / Glamping':     { slug: 'highland-rest',               label: 'self-catering / glamping' },
+  'Tourism & Attractions':        { slug: 'galloway-adventures',         label: 'tourism & activities business' },
+  'Activity / Tourism':           { slug: 'galloway-adventures',         label: 'tourism & activities business' },
+  'Activity/Tourism':             { slug: 'galloway-adventures',         label: 'tourism & activities business' },
+  // Retail
+  'Retail':                       { slug: 'high-street-retail',          label: 'independent retail shop' },
+  'Garden Centres':               { slug: 'high-street-retail',          label: 'retail business' },
+  // Automotive
+  'Automotive':                   { slug: 'nithsdale-motors',            label: 'garage / MOT centre' },
+  // Beauty / Health
+  'Beauty & Hair':                { slug: 'galloway-beauty',             label: 'beauty salon' },
+  'Beauty & Wellness':            { slug: 'galloway-beauty',             label: 'beauty & wellness studio' },
+  'Healthcare':                   { slug: 'annandale-health',            label: 'health & wellness clinic' },
+  'Vets':                         { slug: 'annandale-health',            label: 'health clinic' },
+  'Dentists':                     { slug: 'annandale-health',            label: 'health clinic' },
+  'Opticians':                    { slug: 'annandale-health',            label: 'health clinic' },
+  'Pharmacies':                   { slug: 'annandale-health',            label: 'healthcare business' },
+  'Care Homes':                   { slug: 'annandale-health',            label: 'care / health business' },
+  // Fitness
+  'Fitness & Leisure':            { slug: 'galloway-fitness',            label: 'gym / fitness business' },
+  'Health & Fitness':             { slug: 'galloway-fitness',            label: 'gym / fitness business' },
+  'Sports & Leisure':             { slug: 'galloway-fitness',            label: 'sports & leisure business' },
+  // Professional / Legal
+  'Professional Services':        { slug: 'nith-legal',                  label: 'professional services firm' },
+  'Solicitors':                   { slug: 'nith-legal',                  label: 'solicitors firm' },
+  'Accountants':                  { slug: 'nith-legal',                  label: 'accountancy practice' },
+  'Funeral Directors':            { slug: 'nith-legal',                  label: 'professional services' },
+  // Property
+  'Property':                     { slug: 'nithsdale-properties',        label: 'estate agency' },
+  // Childcare
+  'Childcare & Education':        { slug: 'stepping-stones',             label: 'nursery / childcare setting' },
+  // Events
+  'Wedding & Events':             { slug: 'castle-events',               label: 'wedding & events venue' },
 }
 
 function getTemplate(sector: string): { url: string; label: string } | null {
