@@ -1,5 +1,5 @@
 # Nith Digital — Market Research Context
-*Reference document for Claude. Last updated: 2026-04-10 (rev 4).*
+*Reference document for Claude. Last updated: 2026-04-10 (rev 5).*
 
 ---
 
@@ -19,7 +19,7 @@ Nith Digital (nithdigital.uk) is a web design and digital marketing agency servi
 
 **Project:** `mrdozyxbonbukpmywxqi.supabase.co`  
 **Credentials:** All in `C:/nithdigital/.env.local`  
-**Current row count:** ~621 (as of 2026-04-10 — includes 158 Thornhill DG3 businesses across 16 sectors)
+**Current row count:** ~625 (as of 2026-04-10 — includes 162 Thornhill DG3 businesses across 16 sectors)
 
 ### Full Column Schema
 
@@ -139,7 +139,7 @@ The `outreach_hook` is inserted into cold email templates. See `C:/nithdigital/m
 ### Sanquhar / DG4 — ~84 records
 Mixed sectors. Uses dual-insert pattern (prospects + sanquhar_directory.businesses). See Dual-Database Pattern section below.
 
-### Thornhill / DG3 — 158 records (as of 2026-04-10)
+### Thornhill / DG3 — 162 records (as of 2026-04-10)
 All major sectors covered. Full sector breakdown:
 
 | Sector | Records |
@@ -150,14 +150,14 @@ All major sectors covered. Full sector breakdown:
 | Food & Drink | 15 |
 | Retail | 14 |
 | Professional Services | 12 |
-| Home Services | 9 |
-| Healthcare | 7 |
+| Wedding & Events | 8 |
 | Beauty & Wellness | 8 |
 | Fitness & Leisure | 8 |
+| Home Services | 9 |
+| Healthcare | 7 |
 | Automotive | 6 |
 | Childcare & Education | 6 |
-| Wedding & Events | 5 |
-| Property | 4 |
+| Property | 5 |
 | Hotels | 1 |
 | Garden Centres | 1 |
 
