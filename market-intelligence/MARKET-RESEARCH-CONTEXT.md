@@ -1,5 +1,5 @@
 # Nith Digital — Market Research Context
-*Reference document for Claude. Last updated: 2026-04-10 (rev 5).*
+*Reference document for Claude. Last updated: 2026-04-10 (rev 6).*
 
 ---
 
@@ -51,6 +51,12 @@ Nith Digital (nithdigital.uk) is a web design and digital marketing agency servi
 | `call_reminder_at` | timestamptz | Follow-up reminder |
 | `outreach_hook` | text | **KEY FIELD** — personalised 1-2 sentence observation about their specific website weakness, used in cold outreach emails |
 | `created_at` | timestamptz | Auto |
+| `contact_name` | text | Owner or manager name if findable |
+| `google_review_count` | int | Number of Google reviews |
+| `google_star_rating` | numeric | Google star rating to 1 decimal |
+| `social_presence` | text | `"active_with_site"`, `"facebook_only"`, `"inactive"`, `"none"` |
+| `site_age_signal` | text | e.g. "Copyright 2018 in footer", "Last blog post 2021" |
+| `best_outreach_window` | text | Seasonal window for Tourism / Accommodation / Food & Drink only |
 
 ### Deduplication
 **There is no unique constraint on `business_name` at the DB level.** `ON CONFLICT` on that column will hard-fail with error `42P10`. The correct pattern is to fetch all existing names first, filter the insert batch in code, then do a plain `insert`. See the insert pattern below.
@@ -61,7 +67,9 @@ Nith Digital (nithdigital.uk) is a web design and digital marketing agency servi
 
 ### Before You Start — Read the Schema First
 
-**Always run this before writing any insert script:**
+**Only run the schema query if you have made a schema change since the last run, or if an insert fails with an unexpected column error. The schema in this document is authoritative for normal runs.**
+
+If you do need to verify the live schema:
 
 ```bash
 npx supabase db query --linked "SELECT column_name, data_type, is_nullable FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'prospects' ORDER BY ordinal_position;"
@@ -87,7 +95,7 @@ The business's **primary trading address must be in the target town or a named v
 
 ### Step 1 — Research (find businesses)
 
-An agent searches Google, directories (Checkatrade, ThreeBestRated, Yell, ScaffoldingCentral, etc.) and local listings to find real D&G businesses in a given sector. For each business it records:
+An agent searches Google, directories (Checkatrade, ThreeBestRated, Yell, ScaffoldingCentral, etc.) and local listings to find businesses in a given sector. See **Geographic scope — primary address rule** above for which businesses qualify. For each business it records:
 - Name, location, URL (if any), sector
 - Scores (need, pay, fit, access, overall)
 - Why they're a prospect, recommended service, price estimate
@@ -96,7 +104,7 @@ An agent searches Google, directories (Checkatrade, ThreeBestRated, Yell, Scaffo
 
 **Add `website_status` to every record.** For businesses with `has_website = true`, classify the site as: `"live"` (working), `"broken"` (error/DNS failure), `"parked"` (domain parked or redirects to registrar), or `"placeholder"` (site exists but has almost no content). For `has_website = false` use `"none"`. Broken/parked/placeholder records are the warmest leads — the problem is immediately demonstrable in a cold email.
 
-**Early exit rule for strong websites — do not over-research low-need businesses.** If a business clearly has a well-built, high-ranking website (appears organically on page 1 for its own category search terms, has good UX, strong reviews integration, active blog, etc.), classify it as `website_status: "live"`, set `score_need: 1–3`, leave `outreach_hook: null`, and move on. Do not spend tokens writing detailed `why_them` rationale or a hook for a business that is not a realistic outreach target. These records are still inserted into `prospects` for directory use — they are just marked low-need so Akin does not waste time on them. The test: *"Would I cold-email this business about their website?"* If clearly no, capture the basics and move on.
+**Early exit rule for strong websites — do not over-research low-need businesses.** If a business clearly has a well-built, high-ranking website (appears organically on page 1 for its own category search terms, has good UX, strong reviews integration, active blog, etc.), classify it as `website_status: "live"`, set `score_need: 1–3`, and apply the early exit: Set BOTH `outreach_hook` AND `why_them` to null (or `"Strong established site — directory record only"` for `why_them`). Do not generate detailed rationale for businesses you will never contact. These records are still inserted into `prospects` for directory use — they are just marked low-need so Akin does not waste time on them. The test: *"Would I cold-email this business about their website?"* If clearly no, capture the basics and move on.
 
 **Insert immediately after each agent batch returns — do not accumulate batches.** If the session compacts or is interrupted, any un-inserted data is lost. One agent batch = one insert.
 
@@ -140,52 +148,16 @@ The `outreach_hook` is inserted into cold email templates. See `C:/nithdigital/m
 Mixed sectors. Uses dual-insert pattern (prospects + sanquhar_directory.businesses). See Dual-Database Pattern section below.
 
 ### Thornhill / DG3 — 162 records (as of 2026-04-10)
-All major sectors covered. Full sector breakdown:
+All major sectors covered.
 
-| Sector | Records |
-|--------|---------|
-| Tourism & Attractions | 24 |
-| Accommodation | 19 |
-| Trades & Construction | 19 |
-| Food & Drink | 15 |
-| Retail | 14 |
-| Professional Services | 12 |
-| Wedding & Events | 8 |
-| Beauty & Wellness | 8 |
-| Fitness & Leisure | 8 |
-| Home Services | 9 |
-| Healthcare | 7 |
-| Automotive | 6 |
-| Childcare & Education | 6 |
-| Property | 5 |
-| Hotels | 1 |
-| Garden Centres | 1 |
+**Do not rely on hardcoded counts here — run `SELECT sector, location, COUNT(*) FROM prospects GROUP BY sector, location ORDER BY location, sector` at session start to get live counts.**
 
 Insert scripts: `scripts/insert-thornhill-*.ts` and `scripts/insert-thornhill-missing-sectors.ts`
 
 ### All other D&G towns — ~351 records
 Covering Dumfries town and surrounding area. See prospects-*.json batch files.
 
-| Sector (canonical name) | Batch file | Approx rows |
-|------------------------|-----------|-------------|
-| Trades & Construction | prospects-trades-construction-batch1.json | 18 |
-| Accommodation | prospects-accommodation-tourism-batch2.json | 23 |
-| Food & Drink | prospects-food-drink-batch1.json | 26 |
-| Professional Services | prospects-professional-services-batch1.json | 26 |
-| Automotive | prospects-automotive-batch1.json | 23 |
-| Beauty & Hair | prospects-beauty-hair-batch1.json | 23 |
-| Healthcare | prospects-healthcare-batch1.json | 20 |
-| Retail | prospects-retail-batch1.json | 20 |
-| Fitness & Leisure | prospects-fitness-leisure-batch1.json | 19 |
-| Wedding & Events | prospects-wedding-events-batch1.json | 18 |
-| Property | prospects-property-batch1.json | 16 |
-| Childcare & Education | prospects-childcare-education-batch1.json | 15 |
-| Tourism & Attractions | prospects-tourism-attractions-batch1.json | 15 |
-| Home Services | prospects-home-services-batch1.json | 14 |
-| Trades (early batch) | — (loaded directly, not from JSON) | 12 |
-| Self-Catering / Glamping | — | ~6 |
-
-**Note:** Sector naming is slightly inconsistent in the DB — "Trades" and "Trades & Construction" both exist, as do "Beauty/Hair" and "Beauty & Hair". Canonical names going forward are as listed above.
+**Do not rely on hardcoded counts here — run `SELECT sector, location, COUNT(*) FROM prospects GROUP BY sector, location ORDER BY location, sector` at session start to get live counts.**
 
 ---
 
@@ -367,6 +339,8 @@ Use these sources in addition to Google Maps and Yell for each sector. Including
 
 Old pattern (Haiku, verbose prose): ~1,567 tokens per record — **66% more expensive and lower quality.**
 
+**Efficiency tip:** Where possible, combine hook generation and scoring into a single API call using a JSON response schema that returns both. This halves round-trips for the post-research phase.
+
 ### Pre-research deduplication check (do this FIRST — saves wasted tokens)
 
 **Always fetch the live exclusion list from Supabase immediately before briefing each agent — never rely on memory or context from earlier in the session.** Fetching at agent-brief time prevents agents researching businesses already in the DB, which wastes tokens and produces silent duplicate inserts.
@@ -432,7 +406,7 @@ Correct order:
 
 ### When NOT to generate a hook
 
-If a business has `score_need ≤ 3` (strong, well-ranking website — not a realistic outreach target), set `outreach_hook: null` and do not generate one. Generating hooks for businesses Nith Digital will never contact wastes tokens and adds noise to the dataset. The record is still valuable for directory purposes — just skip the hook.
+If a business has `score_need ≤ 3` (strong, well-ranking website — not a realistic outreach target), set BOTH `outreach_hook` AND `why_them` to null (or `"Strong established site — directory record only"` for `why_them`). Do not generate detailed rationale for businesses you will never contact. Generating hooks and why_them for businesses Nith Digital will never approach wastes tokens and adds noise to the dataset. The record is still valuable for directory purposes — just skip the hook and the rationale.
 
 ### Hook generation system prompt (canonical — use this exactly)
 
