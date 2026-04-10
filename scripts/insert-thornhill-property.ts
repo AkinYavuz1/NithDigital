@@ -7,73 +7,50 @@ const supabase = createClient(
 
 const batch = [
   {
-    business_name: "Pollock and McLean",
+    business_name: "Pollock & McLean Solicitors & Estate Agents",
     url: "https://www.pollockmclean.co.uk",
-    location: "Thornhill, DG3",
+    location: "1 West Morton Street, Thornhill, DG3 5NE",
     sector: "Property",
     has_website: true,
     website_status: "live",
-    contact_phone: "01848 330207",
-    contact_email: "mail@pollockmclean.co.uk",
-    source: "Zoopla agent directory, firm website, Google",
-    score_need: 4,
-    score_pay: 8,
-    score_fit: 6,
-    score_access: 9,
-    score_overall: 6.25,
-    recommended_service: "Dedicated area guide pages for Nithsdale villages, seller journey landing page, SEO-optimised blog content targeting local property searches",
-    price_range_low: 1800,
-    price_range_high: 4500,
-    pipeline_status: "prospect",
-    why_them: "Pollock and McLean already have a functional website with property search and portal integration, but lack dedicated area guide content and village-level landing pages that would help them rank for hyperlocal searches like property for sale Penpont or houses for sale Closeburn, leaving those long-tail queries to national portals.",
-    outreach_hook: "Your listings reach Zoopla but your site has no area guide pages capturing Google traffic for Tynron, Penpont or Closeburn property searches.",
-    notes: "Most property agents serving DG3 are headquartered in Dumfries, Castle Douglas or further afield - sector is genuinely thin for Thornhill-addressed businesses. Pollock and McLean is the dominant local solicitor-estate agent with a Thornhill office.",
-  },
-  {
-    business_name: "AGREN",
-    url: "https://www.agren.co.uk",
-    location: "Thornhill, DG3",
-    sector: "Property",
-    has_website: true,
-    website_status: "live",
-    contact_phone: "01848 600236",
-    contact_email: "info@agren.co.uk",
-    source: "RICS Find a Surveyor directory, firm website",
     score_need: 6,
     score_pay: 7,
-    score_fit: 5,
+    score_fit: 7,
     score_access: 8,
-    score_overall: 6.3,
-    recommended_service: "Website performance and conversion optimisation: replace Elementor bloat with a lean, fast site; add clear service landing pages for agricultural valuation, forestry consultancy and natural capital",
-    price_range_low: 2500,
-    price_range_high: 6000,
+    score_overall: 6.80,
+    why_them: "The dominant estate and letting agent physically based in Thornhill DG3, with offices also in Dumfries and Sanquhar. Their website functions and lists current properties, but the estate agency page is thin on content — no blog, no market insight articles, no team bios for the Thornhill office, and minimal long-tail SEO. In a competitive solicitor-agent market they are the local anchor, but their digital marketing is trailing where it could be building local authority and organic leads.",
+    recommended_service: "Content-led SEO package — blog/market update section, Thornhill office landing page with team bio, long-tail keyword optimisation for DG3 property searches",
+    price_range_low: 800,
+    price_range_high: 1800,
     pipeline_status: "prospect",
-    why_them: "AGREN is a Thornhill-based RICS-regulated rural consultancy whose current WordPress/Elementor website is technically over-engineered, likely slow, and lacks clear service-specific landing pages - meaning landowners searching agricultural valuation Dumfries Galloway or forestry consultant Scotland are unlikely to find them over larger competitors.",
-    outreach_hook: "Your Elementor site likely loads slowly and lacks service-specific pages that would rank for agricultural valuation Dumfries Galloway searches from rural landowners.",
-    notes: "RICS-regulated firm. Operates as consultancy and investment advisory for corporate/institutional clients and rural landowners. Genuinely DG3-addressed RICS firm - rare in this postcode. Sector is thin: only 3 businesses with a primary DG3 address found across all research.",
+    contact_phone: "01848 330207",
+    contact_email: "mail@pollockmclean.co.uk",
+    source: "Zoopla agent search, ESPC, Google, pollockmclean.co.uk",
+    outreach_hook: "The Thornhill office page is doing a lot of heavy lifting with just a phone number and a brief service list — there's no content there that would help you rank when someone searches 'estate agent Thornhill DG3' directly, and a short, regularly updated market commentary section would make a noticeable difference.",
+    notes: "Three-office firm (Thornhill, Sanquhar, Dumfries). Solicitor estate agents regulated by Law Society of Scotland. Listed on ESPC, Zoopla, and Rightmove. Property sector in Thornhill DG3 is genuinely thin — this firm and Robert Wilson & Son (already in DB) are the only two estate/letting agents with a DG3 primary address.",
   },
   {
-    business_name: "Queensberry Estate Property",
-    url: null,
-    location: "Thornhill, DG3",
+    business_name: "Nicola Whannel eXp Estate Agent",
+    url: "https://nicolawhannel.exp.uk.com",
+    location: "Dumfries and Galloway (home-based, covers DG3)",
     sector: "Property",
-    has_website: false,
-    website_status: "none",
-    contact_phone: "01848 600283",
-    contact_email: null,
-    source: "Drumlanrig Castle website, 192.com business listing, Google",
-    score_need: 7,
-    score_pay: 5,
-    score_fit: 4,
-    score_access: 5,
-    score_overall: 5.6,
-    recommended_service: "Standalone property and estate management microsite: dedicated web presence for Queensberry Estate property lettings, land tenancies and grazing tenders",
-    price_range_low: 2000,
-    price_range_high: 5500,
+    has_website: true,
+    website_status: "live",
+    score_need: 3,
+    score_pay: 4,
+    score_fit: 5,
+    score_access: 7,
+    score_overall: 4.30,
+    why_them: "Self-employed estate agent under the eXp UK franchise banner, active in the DG3 residential market including Thornhill-area properties. Her personal agent site is a franchise template — clean but entirely generic, with no local SEO content, no blog, and no area-specific pages for DG3 or Thornhill.",
+    recommended_service: "Personal brand website independent of eXp template with local SEO landing pages",
+    price_range_low: 500,
+    price_range_high: 1200,
     pipeline_status: "prospect",
-    why_them: "The Queensberry Estate manages residential and agricultural properties across a large DG3 landholding but has no standalone web presence - all property enquiries route through a castle tourism site, creating brand confusion and missing prospective tenants searching online for rural lettings in Thornhill.",
-    outreach_hook: "Prospective tenants searching for rural lettings near Thornhill land on a castle tourism page rather than a dedicated property enquiry service.",
-    notes: "Land management arm of the Duke of Buccleuch's Buccleuch Estates. Manages residential lettings, agricultural tenancies, and land/grazing tendering across DG3. Not a commercial agent offering services to third parties - manages the Buccleuch family estate. Score_pay capped at 5 given institutional landed estate unlikely to commission a small web agency. Sector genuinely thin: after exhaustive research, only 3 businesses with a primary DG3 address identified in Property sector.",
+    contact_phone: "07947 210506",
+    contact_email: "nicola.whannel@exp.uk.com",
+    source: "ESPC agent search, Google, nicolawhannel.exp.uk.com",
+    outreach_hook: null,
+    notes: "No fixed DG3 office address — home-based agent covering DG3 as part of wider D&G patch. eXp UK franchise template site — professional but entirely generic, no Thornhill or DG3-specific content. score_need set to 3 (site is functional if thin on local content). Low-priority outreach.",
   },
 ]
 
@@ -93,7 +70,7 @@ async function run() {
     return
   }
 
-  console.log("Inserting " + toInsert.length + " records...")
+  console.log(`Inserting ${toInsert.length} records...`)
 
   const { data, error } = await supabase
     .from("prospects")
@@ -102,7 +79,7 @@ async function run() {
 
   if (error) { console.error(error); process.exit(1) }
   data?.forEach((r: { id: string; business_name: string }) =>
-    console.log("OK: " + r.id + " " + r.business_name)
+    console.log(`✓ [${r.id}] ${r.business_name}`)
   )
 }
 
