@@ -119,7 +119,7 @@ export default function AdminOverviewClient({
   ]
 
   return (
-    <div style={{ padding: '32px 40px', flex: 1, overflowY: 'auto' }}>
+    <div className="admin-overview" style={{ padding: '32px 40px', flex: 1, overflowY: 'auto' }}>
       <div style={{ marginBottom: 32 }}>
         <p style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 4, fontWeight: 600 }}>Admin</p>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400 }}>Overview</h1>
@@ -207,6 +207,9 @@ export default function AdminOverviewClient({
         @media (max-width: 1024px) {
           .kpi-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .charts-row { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 768px) {
+          .admin-overview { padding: 20px 16px !important; }
         }
         @media (max-width: 600px) {
           .kpi-grid { grid-template-columns: 1fr 1fr !important; }
