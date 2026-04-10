@@ -32,6 +32,20 @@ function looksLikePersonName(name: string): boolean {
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
+
+  // Daily sent count — how many marked emailed today
+  if (searchParams.get('countToday') === '1') {
+    const startOfDay = new Date()
+    startOfDay.setHours(0, 0, 0, 0)
+    const { count, error } = await sb
+      .from('prospects')
+      .select('*', { count: 'exact', head: true })
+      .eq('pipeline_status', 'contacted')
+      .gte('last_contacted_at', startOfDay.toISOString())
+    if (error) return NextResponse.json({ sentToday: 0 })
+    return NextResponse.json({ sentToday: count ?? 0 })
+  }
+
   const sector = searchParams.get('sector')
   const status = searchParams.get('status') || 'new'
   const limit = parseInt(searchParams.get('limit') || '50')

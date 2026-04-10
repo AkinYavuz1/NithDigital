@@ -110,6 +110,7 @@ export default function ProspectsClient() {
   const [replyTexts, setReplyTexts] = useState<Record<string, string>>({})
   const [analysing, setAnalysing] = useState<string | null>(null)
   const [analyses, setAnalyses] = useState<Record<string, { label: string; action: string; status: string }>>({})
+  const [sentToday, setSentToday] = useState(0)
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -125,6 +126,13 @@ export default function ProspectsClient() {
     setSelected(new Set())
     setLoading(false)
   }, [sector, status])
+
+  // Fetch how many emails have been marked sent today
+  useEffect(() => {
+    fetch('/api/admin/prospects-outreach?countToday=1')
+      .then(r => r.json())
+      .then(d => { if (typeof d.sentToday === 'number') setSentToday(d.sentToday) })
+  }, [])
 
   useEffect(() => { fetchProspects() }, [fetchProspects])
 
@@ -199,6 +207,7 @@ export default function ProspectsClient() {
         call_reminder_at: data.call_reminder_at,
         last_contacted_at: new Date().toISOString(),
       } : p))
+      setSentToday(prev => prev + 1)
       showToast('Marked as emailed — call reminder set for 7 days')
     }
   }
@@ -229,6 +238,11 @@ export default function ProspectsClient() {
           <h1 style={{ fontSize: 22, fontWeight: 700, color: '#1B2A4A', margin: 0 }}>Email List</h1>
           <p style={{ fontSize: 13, color: '#5A6A7A', margin: '4px 0 0' }}>
             {filtered.length} prospects · {filtered.filter(p => p.contact_email).length} with email
+            {sentToday > 0 && (
+              <span style={{ marginLeft: 10, fontWeight: 700, color: sentToday >= 20 ? '#b91c1c' : sentToday >= 10 ? '#92660a' : '#15803d' }}>
+                · {sentToday} sent today{sentToday >= 20 ? ' — good going!' : ''}
+              </span>
+            )}
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
