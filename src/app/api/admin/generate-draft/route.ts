@@ -11,6 +11,32 @@ const sb = createClient(
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
+const BASE_URL = 'https://www.nithdigital.uk/templates'
+
+// Maps prospect sector → most relevant template slug + description
+const TEMPLATE_MAP: Record<string, { slug: string; label: string }> = {
+  'Trades & Construction':    { slug: 'nithsdale-plumbing',              label: 'trades / plumbing' },
+  'Home Services':            { slug: 'nithsdale-plumbing',              label: 'home services' },
+  'Food & Drink':             { slug: 'river-kitchen',                   label: 'restaurant / café' },
+  'Accommodation':            { slug: 'highland-rest',                   label: 'B&B / holiday let' },
+  'Tourism & Attractions':    { slug: 'galloway-adventures',             label: 'tourism & activities' },
+  'Retail':                   { slug: 'high-street-retail',              label: 'independent retail' },
+  'Automotive':               { slug: 'nithsdale-motors',                label: 'garage / MOT centre' },
+  'Beauty & Hair':            { slug: 'galloway-beauty',                 label: 'beauty salon' },
+  'Healthcare':               { slug: 'annandale-health',                label: 'health & wellness' },
+  'Fitness & Leisure':        { slug: 'galloway-fitness',                label: 'gym / personal training' },
+  'Professional Services':    { slug: 'nith-legal',                      label: 'professional services' },
+  'Property':                 { slug: 'nithsdale-properties',            label: 'estate agent' },
+  'Childcare & Education':    { slug: 'stepping-stones',                 label: 'nursery / childcare' },
+  'Wedding & Events':         { slug: 'castle-events',                   label: 'wedding & events' },
+}
+
+function getTemplate(sector: string): { url: string; label: string } | null {
+  const match = TEMPLATE_MAP[sector]
+  if (!match) return null
+  return { url: `${BASE_URL}/${match.slug}`, label: match.label }
+}
+
 export async function POST(req: NextRequest) {
   const { id, type } = await req.json()
   if (!id || !type) return NextResponse.json({ error: 'Missing id or type' }, { status: 400 })
@@ -19,11 +45,16 @@ export async function POST(req: NextRequest) {
   if (error || !p) return NextResponse.json({ error: 'Prospect not found' }, { status: 404 })
 
   let draft = ''
+  const template = getTemplate(p.sector)
 
   if (type === 'email') {
+    const templateLine = template
+      ? `- We have a live demo site built for a ${template.label} business — link it naturally in the email as a concrete example of our work: ${template.url}`
+      : `- Link to our templates page as a general example: ${BASE_URL}`
+
     const msg = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 400,
+      max_tokens: 450,
       messages: [{
         role: 'user',
         content: `Write a short cold email from Akin at Nith Digital (nithdigital.uk) to ${p.business_name} in ${p.location}.
@@ -43,6 +74,7 @@ Rules:
 - Do NOT start with "I hope this email finds you well" or any generic opener
 - Second sentence: briefly introduce Nith Digital as a local D&G web agency that builds custom websites — not templates, not WordPress
 - Third: one concrete benefit relevant to their specific business type and sector (e.g. "more enquiries from people searching for [their trade] in [location]")
+- ${templateLine}
 - Close with a simple, low-pressure question asking if they'd be open to a quick call
 - Sign off: Akin | Nith Digital | 07404173024 | www.nithdigital.uk
 - When mentioning Nith Digital, always include "based in Sanquhar, in Dumfries & Galloway" or similar local anchor — this is important for building trust with other local businesses
@@ -59,9 +91,13 @@ Rules:
   }
 
   if (type === 'call') {
+    const templateNote = template
+      ? `If they show interest, mention you can send them a link to a live demo site we built for a similar ${template.label} business: ${template.url}`
+      : `If they show interest, mention you can send them a link to our templates page: ${BASE_URL}`
+
     const msg = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 400,
+      max_tokens: 450,
       messages: [{
         role: 'user',
         content: `Write a short cold call script for Akin at Nith Digital calling ${p.business_name} in ${p.location}.
@@ -78,7 +114,7 @@ Format it as:
 OPENING (10 seconds): What to say immediately — introduce Akin and Nith Digital briefly
 HOOK (1 sentence): The specific problem to mention — tailor to their sector, make it sound like a casual observation not a sales pitch
 IF THEY SAY "we're fine" / "not interested": One response that acknowledges it and plants a seed without being pushy
-IF THEY SHOW INTEREST: What to say next — move toward booking a short call or sending a follow-up email
+IF THEY SHOW INTEREST: What to say next — move toward booking a short call or sending a follow-up email. ${templateNote}
 CLOSE: How to end the call (aim for a follow-up email or a 15-min call)
 
 Rules:
