@@ -44,6 +44,7 @@ Rules:
 - Close with a simple, low-pressure question asking if they'd be open to a quick call
 - Sign off: Akin | Nith Digital | 07949116770 | www.nithdigital.uk
 - Tone: friendly, direct, local — not corporate
+- Do NOT mention price, cost, packages, or any figures — that conversation comes later
 - Do NOT use "customers searching X in [town] can't find you"
 - Output the email body only. No subject line. No markdown.`
       }]
