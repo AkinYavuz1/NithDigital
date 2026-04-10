@@ -19,7 +19,7 @@ Nith Digital (nithdigital.uk) is a web design and digital marketing agency servi
 
 **Project:** `mrdozyxbonbukpmywxqi.supabase.co`  
 **Credentials:** All in `C:/nithdigital/.env.local`  
-**Current row count:** ~498 (as of 2026-04-10 — includes 63 new Thornhill DG3 businesses across 8 sectors)
+**Current row count:** ~621 (as of 2026-04-10 — includes 158 Thornhill DG3 businesses across 16 sectors)
 
 ### Full Column Schema
 
@@ -139,19 +139,29 @@ The `outreach_hook` is inserted into cold email templates. See `C:/nithdigital/m
 ### Sanquhar / DG4 — ~84 records
 Mixed sectors. Uses dual-insert pattern (prospects + sanquhar_directory.businesses). See Dual-Database Pattern section below.
 
-### Thornhill / DG3 — ~63 records (added 2026-04-10)
-8 sectors covered in this run. Sectors NOT yet covered for Thornhill: **Tourism & Attractions**, **Accommodation**, **Retail**, **Professional Services**, **Wedding & Events**, **Property**. These are high-priority for the next Thornhill run.
+### Thornhill / DG3 — 158 records (as of 2026-04-10)
+All major sectors covered. Full sector breakdown:
 
-| Sector | Insert script | Records |
-|--------|--------------|---------|
-| Home Services | scripts/insert-thornhill-home-services.ts | 8 |
-| Beauty & Wellness | scripts/insert-thornhill-beauty-wellness.ts | 8 |
-| Fitness & Leisure | scripts/insert-thornhill-fitness-leisure.ts | 8 |
-| Trades & Construction | scripts/insert-thornhill-trades-construction.ts | 8 |
-| Food & Drink | scripts/insert-thornhill-food-drink.ts | 7 |
-| Childcare & Education | scripts/insert-thornhill-childcare-education.ts | 6 |
-| Automotive | scripts/insert-thornhill-automotive.ts | 6 |
-| Healthcare | scripts/insert-thornhill-healthcare.ts | 6 |
+| Sector | Records |
+|--------|---------|
+| Tourism & Attractions | 24 |
+| Accommodation | 19 |
+| Trades & Construction | 19 |
+| Food & Drink | 15 |
+| Retail | 14 |
+| Professional Services | 12 |
+| Home Services | 9 |
+| Healthcare | 7 |
+| Beauty & Wellness | 8 |
+| Fitness & Leisure | 8 |
+| Automotive | 6 |
+| Childcare & Education | 6 |
+| Wedding & Events | 5 |
+| Property | 4 |
+| Hotels | 1 |
+| Garden Centres | 1 |
+
+Insert scripts: `scripts/insert-thornhill-*.ts` and `scripts/insert-thornhill-missing-sectors.ts`
 
 ### All other D&G towns — ~351 records
 Covering Dumfries town and surrounding area. See prospects-*.json batch files.
