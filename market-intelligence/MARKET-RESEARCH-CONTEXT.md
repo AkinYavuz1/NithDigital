@@ -426,6 +426,32 @@ Given research notes about a prospect, write exactly ONE sentence that:
 Reply with ONLY the sentence. No quotes. No explanation. No preamble.
 ```
 
+### Hook accuracy rules — DO NOT hallucinate specific technical details
+
+**This is critical.** Hooks are used verbatim in cold emails sent to real businesses. A hook that states a false specific detail (e.g. "your SSL has expired" when it hasn't, or "your homepage shows Lorem ipsum text" when it doesn't) will immediately destroy credibility with the recipient and reflect badly on Nith Digital.
+
+**Banned hook patterns — never generate these unless you have directly visited the live URL and confirmed the detail:**
+
+| Banned (unless confirmed) | Why |
+|---------------------------|-----|
+| "your SSL certificate has expired" | SSL status changes daily — cannot be inferred from directory listings |
+| "your homepage shows Lorem ipsum / placeholder text" | Could have been fixed since research; easy to disprove |
+| "your site returns a 404 / 500 error" | Transient errors are common; may have been resolved |
+| "your domain is parked" | Registrar placeholder pages can change overnight |
+| Any specific error message verbatim | Technical states change — stating them as fact risks embarrassment |
+
+**Safe hook patterns — these age well and are harder to be wrong about:**
+- Design/UX observations: "Your site looks like it hasn't been updated since [year visible in footer]"
+- Missing features: "There's no way to book online / no contact form / no menu visible"
+- Mobile issues: "The site doesn't resize properly on a phone" (structural, not transient)
+- Missing presence: "I couldn't find you on Google Maps when I searched for [sector] in [town]"
+- Social/site mismatch: "Your Facebook has 200+ followers but the website link goes nowhere"
+
+**If the only strong hook for a business is a specific technical detail you cannot confirm:**
+- Use `why_them` to record the full technical context for Akin's reference
+- Set `outreach_hook` to a safer, more durable observation (design age, missing features, etc.)
+- Do NOT fabricate or assume the technical state is still current
+
 ### Scoring system prompt (canonical)
 
 ```
@@ -438,12 +464,23 @@ User message: `Score this business prospect for a D&G web design agency. Return 
 
 ## Outreach Hook Examples (good vs bad)
 
-**Bad (generic):**
+**Bad — generic:**
 > "Your website could be improved with better SEO and a contact form."
 
-**Good (specific):**
+**Bad — unverifiable technical claim (DO NOT USE):**
+> "Your SSL certificate has expired and visitors are seeing a security warning."
+> "Your homepage is showing Lorem ipsum placeholder text."
+> "Your site is returning a 500 error."
+
+These are dangerous because they state specific technical states as current fact. If the business owner checks and finds it's not true, the email is immediately discredited.
+
+**Good — durable, observable, safe:**
 > "Your Wix site doesn't showcase those 40+ five-star reviews where potential customers actually search for you."
 
 > "Your website's contact form is missing, forcing customers to hunt for a phone number instead of reaching you instantly online."
 
 > "Your site still lists a fax number in 2026 — it's the first thing a potential customer sees and it signals the site hasn't been touched in years."
+
+> "I looked you up on my phone and the site doesn't load properly — text overlaps and the menu disappears on mobile."
+
+> "Your Facebook page has 300 followers but the website link in the bio goes to a blank page."
