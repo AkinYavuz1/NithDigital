@@ -57,6 +57,8 @@ export default function CallsClient() {
   const [expanded, setExpanded] = useState<string | null>(null)
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
   const [actioning, setActioning] = useState<string | null>(null)
+  const [generatingScript, setGeneratingScript] = useState<string | null>(null)
+  const [scripts, setScripts] = useState<Record<string, string>>({})
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -83,6 +85,23 @@ export default function CallsClient() {
       if (sort === 'value') return (b.price_range_high ?? 0) - (a.price_range_high ?? 0)
       return (b.score_overall ?? 0) - (a.score_overall ?? 0)
     })
+
+  const generateScript = async (id: string) => {
+    setGeneratingScript(id)
+    const res = await fetch('/api/admin/generate-draft', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, type: 'call' }),
+    })
+    const data = await res.json()
+    setGeneratingScript(null)
+    if (data.draft) {
+      setScripts(prev => ({ ...prev, [id]: data.draft }))
+      showToast('Call script generated')
+    } else {
+      showToast('Failed to generate script', false)
+    }
+  }
 
   const markCalled = async (id: string) => {
     setActioning(id)
@@ -281,6 +300,21 @@ export default function CallsClient() {
                         <strong>Notes:</strong> {p.notes}
                       </div>
                     )}
+                    {/* Call script */}
+                    <div style={{ marginTop: 14 }}>
+                      <button
+                        onClick={() => generateScript(p.id)}
+                        disabled={generatingScript === p.id}
+                        style={{ fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, border: '1px solid #1B2A4A', background: 'transparent', color: '#1B2A4A', cursor: 'pointer', opacity: generatingScript === p.id ? 0.6 : 1 }}
+                      >
+                        {generatingScript === p.id ? 'Generating...' : (scripts[p.id] || (p as any).call_script) ? 'Regenerate script' : '✦ Generate call script'}
+                      </button>
+                      {(scripts[p.id] || (p as any).call_script) && (
+                        <pre style={{ marginTop: 10, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: '#1B2A4A', fontFamily: 'inherit' }}>
+                          {scripts[p.id] || (p as any).call_script}
+                        </pre>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>

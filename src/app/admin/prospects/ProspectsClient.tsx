@@ -105,6 +105,8 @@ export default function ProspectsClient() {
   const [sending, setSending] = useState(false)
   const [emailOnly, setEmailOnly] = useState(false)
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
+  const [generatingDraft, setGeneratingDraft] = useState<string | null>(null)
+  const [drafts, setDrafts] = useState<Record<string, string>>({})
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -140,6 +142,23 @@ export default function ProspectsClient() {
 
   const selectEmailOnly = () => {
     setSelected(new Set(filtered.filter(p => p.contact_email).map(p => p.id)))
+  }
+
+  const generateDraft = async (id: string) => {
+    setGeneratingDraft(id)
+    const res = await fetch('/api/admin/generate-draft', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, type: 'email' }),
+    })
+    const data = await res.json()
+    setGeneratingDraft(null)
+    if (data.draft) {
+      setDrafts(prev => ({ ...prev, [id]: data.draft }))
+      showToast('Email draft generated')
+    } else {
+      showToast('Failed to generate draft', false)
+    }
   }
 
   const markEmailed = async (id: string) => {
@@ -362,6 +381,21 @@ export default function ProspectsClient() {
                         <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#2563eb', marginLeft: 'auto' }}>
                           Visit site →
                         </a>
+                      )}
+                    </div>
+                    {/* Email draft */}
+                    <div style={{ marginTop: 14 }}>
+                      <button
+                        onClick={() => generateDraft(p.id)}
+                        disabled={generatingDraft === p.id}
+                        style={{ fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, border: '1px solid #D4A84B', background: 'transparent', color: '#92660a', cursor: 'pointer', opacity: generatingDraft === p.id ? 0.6 : 1 }}
+                      >
+                        {generatingDraft === p.id ? 'Generating...' : (drafts[p.id] || (p as any).email_draft) ? 'Regenerate email' : '✦ Generate email draft'}
+                      </button>
+                      {(drafts[p.id] || (p as any).email_draft) && (
+                        <pre style={{ marginTop: 10, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: '#1B2A4A', fontFamily: 'inherit' }}>
+                          {drafts[p.id] || (p as any).email_draft}
+                        </pre>
                       )}
                     </div>
                   </div>
