@@ -121,8 +121,6 @@ Rules for your version:
 - Output the email body only. No subject line. No markdown.`
       }]
     })
-      }]
-    })
     draft = (msg.content[0] as any).text.trim()
   }
 
