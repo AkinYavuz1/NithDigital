@@ -270,7 +270,7 @@ export default function ProspectsClient() {
 
                   {/* Score */}
                   <div style={{ width: 36, textAlign: 'center', fontWeight: 700, fontSize: 14, color: SCORE_COLOR(p.score_overall), flexShrink: 0 }}>
-                    {p.score_overall.toFixed(1)}
+                    {p.score_overall != null ? p.score_overall.toFixed(1) : '—'}
                   </div>
 
                   {/* Name + location */}
