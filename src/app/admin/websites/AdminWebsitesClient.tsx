@@ -612,6 +612,7 @@ function ProjectDetailSheet({
 
   return (
     <div
+      className="websites-detail-sheet"
       style={{
         position: 'fixed', top: 0, right: 0, bottom: 0,
         width: 480, background: 'white',
@@ -1415,6 +1416,7 @@ export default function AdminWebsitesClient() {
           .websites-table-header { display: none !important; }
           .websites-row-desktop { display: none !important; }
           .websites-row-mobile { display: block !important; }
+          .websites-detail-sheet { width: 100% !important; left: 0 !important; }
         }
         @media (min-width: 769px) {
           .websites-row-mobile { display: none !important; }
