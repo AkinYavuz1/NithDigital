@@ -248,7 +248,7 @@ export default async function WebDesignTownPage({
     description: `Web design and digital services for businesses in ${data.name}, ${data.region}`,
     url: `https://nithdigital.uk/web-design/${town}`,
     email: 'hello@nithdigital.uk',
-    telephone: '+447949116770',
+    telephone: '+447404173024',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Sanquhar',

@@ -166,7 +166,10 @@ export default function RootLayout({
                   },
                 ],
               },
-              sameAs: [],
+              sameAs: [
+                'https://www.linkedin.com/company/nith-digital',
+                'https://www.facebook.com/nithdigital',
+              ],
             }),
           }}
         />

@@ -1,6 +1,7 @@
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { createClient } from '@supabase/supabase-js'
 import TestimonialsSection from '@/components/TestimonialsSection'
 
 export const metadata: Metadata = {
@@ -70,7 +71,17 @@ const S: Record<string, React.CSSProperties> = {
   },
 }
 
-export default function HomePage() {
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+export default async function HomePage() {
+  const { data: testimonials } = await supabase
+    .from('testimonials')
+    .select('id, name, company, message, rating')
+    .eq('is_approved', true)
+    .order('id', { ascending: false })
   return (
     <>
       {/* Hero */}
@@ -134,7 +145,10 @@ export default function HomePage() {
                 <Link href="/services" style={S.btnSecondary}>
                   View services &amp; pricing
                 </Link>
-                <Link href="/os/demo" style={{ ...S.btnSecondary, color: '#D4A84B', borderColor: '#D4A84B' }}>
+                <Link href="/tools/website-quote" style={{ ...S.btnSecondary, color: '#D4A84B', borderColor: '#D4A84B' }}>
+                  Get instant quote →
+                </Link>
+                <Link href="/os/demo" style={{ ...S.btnSecondary, color: '#5A6A7A', borderColor: 'rgba(27,42,74,0.1)' }}>
                   See it in action →
                 </Link>
               </div>
@@ -446,7 +460,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <TestimonialsSection testimonials={[]} />
+      <TestimonialsSection testimonials={testimonials ?? []} />
 
       {/* CTA Banner */}
       <section style={S.sectionSm}>

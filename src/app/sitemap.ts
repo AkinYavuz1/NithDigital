@@ -66,6 +66,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/tools/site-audit`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/help`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/os/demo`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/tools/visibility-checker`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/tools/local-seo-scorecard`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/tools/mtd-checker`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/tools/expense-tracker`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/dashboards`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     // Location pages
     { url: `${BASE}/web-design/dumfries`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/web-design/thornhill`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },

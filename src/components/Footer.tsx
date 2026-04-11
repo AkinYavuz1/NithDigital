@@ -165,9 +165,12 @@ export default function Footer() {
           }}
         >
           <span>© 2026 Nith Digital — Sanquhar, Dumfries &amp; Galloway</span>
-          <span>
+          <span style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="mailto:hello@nithdigital.uk" style={{ color: 'inherit' }}>
               hello@nithdigital.uk
+            </a>
+            <a href="tel:+447404173024" style={{ color: 'inherit' }}>
+              +44 7404 173024
             </a>
           </span>
         </div>
