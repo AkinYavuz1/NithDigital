@@ -13,6 +13,8 @@ interface Project {
   github_repo: string | null
   vercel_project: string | null
   staging_url: string | null
+  github_full_name: string | null
+  theme_config: object | null
 }
 
 interface Message {
@@ -296,7 +298,7 @@ export default function BuildSiteModal({
       const scaffoldRes = await fetch('/api/generate-website-scaffold', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ brief, copy, github_full_name }),
+        body: JSON.stringify({ brief, copy, github_full_name, theme_config: project.theme_config }),
       })
       const scaffoldData = await scaffoldRes.json()
       if (scaffoldData.error) throw new Error(scaffoldData.error)
@@ -304,12 +306,13 @@ export default function BuildSiteModal({
       // Step 4 — Save URLs back to project
       await supabase.from('client_projects').update({
         github_repo: github_url,
+        github_full_name,
         vercel_project,
         staging_url,
         notes: `Brief:\n${JSON.stringify(brief, null, 2)}`,
       }).eq('id', project.id)
 
-      onProjectUpdated({ github_repo: github_url, vercel_project, staging_url })
+      onProjectUpdated({ github_repo: github_url, github_full_name, vercel_project, staging_url })
 
       setBuildState({
         step: 'done',

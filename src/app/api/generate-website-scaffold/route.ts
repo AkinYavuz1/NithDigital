@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
+import { pushFileToGithub, getFileSha } from '@/lib/github'
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN
 
 interface Brief {
   client_name: string
@@ -41,57 +40,14 @@ interface GeneratedCopyResult {
   social?: { tagline?: string }
 }
 
-async function pushFileToGithub(
-  repoFullName: string,
-  path: string,
-  content: string,
-  message: string,
-  sha?: string
-) {
-  const body: Record<string, string> = {
-    message,
-    content: Buffer.from(content).toString('base64'),
-  }
-  if (sha) body.sha = sha
-
-  const res = await fetch(
-    `https://api.github.com/repos/${repoFullName}/contents/${path}`,
-    {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/vnd.github+json',
-      },
-      body: JSON.stringify(body),
-    }
-  )
-  return res.ok
-}
-
-async function getFileSha(repoFullName: string, path: string): Promise<string | undefined> {
-  const res = await fetch(
-    `https://api.github.com/repos/${repoFullName}/contents/${path}`,
-    {
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-        Accept: 'application/vnd.github+json',
-      },
-    }
-  )
-  if (!res.ok) return undefined
-  const data = await res.json()
-  return data.sha
-}
-
 export async function POST(req: NextRequest) {
-  const { brief, copy, github_full_name } = await req.json()
+  const { brief, copy, github_full_name, theme_config } = await req.json()
 
   if (!brief || !github_full_name) {
     return NextResponse.json({ error: 'brief and github_full_name required' }, { status: 400 })
   }
 
-  if (!GITHUB_TOKEN) {
+  if (!process.env.GITHUB_TOKEN) {
     return NextResponse.json({ error: 'GITHUB_TOKEN not configured' }, { status: 500 })
   }
 
@@ -130,7 +86,20 @@ REQUIREMENTS:
 - Use next/link for all internal links
 - Mobile-first responsive design
 - Use CSS variables for brand colours defined in globals.css
-- Derive brand colours from: ${b.color_preferences || 'navy and gold professional palette'}
+${theme_config ? `- Use EXACTLY these CSS variables in globals.css (from chosen design theme "${theme_config.name}"):
+  --color-primary: ${theme_config.colors.primary}
+  --color-secondary: ${theme_config.colors.secondary}
+  --color-accent: ${theme_config.colors.accent}
+  --color-background: ${theme_config.colors.background}
+  --color-surface: ${theme_config.colors.surface}
+  --color-text: ${theme_config.colors.text}
+  --color-text-muted: ${theme_config.colors.text_muted}
+  --font-heading: '${theme_config.fonts.heading}'
+  --font-body: '${theme_config.fonts.body}'
+  --radius: ${theme_config.border_radius === 'sharp' ? '2px' : theme_config.border_radius === 'soft' ? '6px' : '14px'}
+- Load both Google Fonts in layout.tsx: ${theme_config.fonts.heading} and ${theme_config.fonts.body}
+- Hero layout style: ${theme_config.hero_layout}
+- All components must reference CSS variables — no hardcoded colour values` : `- Derive brand colours from: ${b.color_preferences || 'navy and gold professional palette'}`}
 - Tone: ${b.tone || 'professional and trustworthy'}
 - All copy must be from the brief — no placeholder "Lorem ipsum" text
 - Each page must have proper generateMetadata() export

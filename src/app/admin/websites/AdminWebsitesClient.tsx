@@ -12,6 +12,10 @@ import {
 import { PIPELINE_STAGES, TOTAL_ESTIMATED_DAYS } from './pipelineStages'
 import type { PipelineStage, ChecklistItem } from './pipelineStages'
 import BuildSiteModal from './BuildSiteModal'
+import ThemePickerPanel, { type ThemeConfig } from './ThemePickerPanel'
+import PreviewTab from './PreviewTab'
+import RefineTab from './RefineTab'
+import LaunchDomainModal from './LaunchDomainModal'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -43,11 +47,14 @@ interface Project {
   staging_url: string | null
   live_url: string | null
   github_repo: string | null
+  github_full_name: string | null
   vercel_project: string | null
   figma_url: string | null
   notion_url: string | null
   stage_logs: StageLog[]
   notes: string | null
+  theme_config: object | null
+  refine_messages: object[] | null
   created_at: string
 }
 
@@ -585,6 +592,7 @@ function ProjectDetailSheet({
   onUpdateNotes,
   onSave,
   onDelete,
+  defaultTab,
 }: {
   project: Project
   onClose: () => void
@@ -592,9 +600,11 @@ function ProjectDetailSheet({
   onUpdateNotes: (projectId: string, stageIndex: number, notes: string) => void
   onSave: (project: Project) => void
   onDelete: (projectId: string) => void
+  defaultTab?: 'pipeline' | 'links' | 'notes' | 'preview' | 'refine'
 }) {
   const [confirmDelete, setConfirmDelete] = useState(false)
-  const [tab, setTab] = useState<'pipeline' | 'links' | 'notes'>('pipeline')
+  const [tab, setTab] = useState<'pipeline' | 'links' | 'notes' | 'preview' | 'refine'>(defaultTab || 'pipeline')
+  const [showLaunchModal, setShowLaunchModal] = useState(false)
   const [expandedStage, setExpandedStage] = useState<number>(project.current_stage)
   const [editingLinks, setEditingLinks] = useState(false)
   const [showCopyGenerator, setShowCopyGenerator] = useState(false)
@@ -693,11 +703,17 @@ function ProjectDetailSheet({
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', borderBottom: '1px solid rgba(27,42,74,0.08)', flexShrink: 0 }}>
-        {(['pipeline', 'links', 'notes'] as const).map(t => (
+      <div style={{ display: 'flex', borderBottom: '1px solid rgba(27,42,74,0.08)', flexShrink: 0, overflowX: 'auto' }}>
+        {([
+          'pipeline',
+          'links',
+          'notes',
+          ...(project.staging_url ? ['preview' as const] : []),
+          ...(project.github_full_name ? ['refine' as const] : []),
+        ]).map(t => (
           <button
             key={t}
-            onClick={() => setTab(t)}
+            onClick={() => setTab(t as 'pipeline' | 'links' | 'notes' | 'preview' | 'refine')}
             style={{
               flex: 1, padding: '10px 0', fontSize: 12, fontWeight: tab === t ? 600 : 400,
               color: tab === t ? '#1B2A4A' : '#5A6A7A',
@@ -787,6 +803,20 @@ function ProjectDetailSheet({
                         onToggleTask={(si, tid) => onToggleTask(project.id, si, tid)}
                         onUpdateNotes={(si, n) => onUpdateNotes(project.id, si, n)}
                       />
+                      {stage.key === 'design' && (
+                        <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid rgba(27,42,74,0.06)' }}>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: '#D4A84B', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 8 }}>Design Themes</p>
+                          <ThemePickerPanel
+                            project={project}
+                            brief={project.notes ? (() => { try { const m = project.notes?.match(/Brief:\n([\s\S]+)/); return m ? JSON.parse(m[1]) : null } catch { return null } })() : null}
+                            existingTheme={project.theme_config as ThemeConfig | null}
+                            onThemeConfirmed={async (theme) => {
+                              const updated = { ...project, theme_config: theme }
+                              onSave(updated)
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -880,11 +910,38 @@ function ProjectDetailSheet({
             />
           </div>
         )}
+
+        {/* Preview Tab */}
+        {tab === 'preview' && project.staging_url && (
+          <PreviewTab
+            stagingUrl={project.staging_url}
+            vercelProjectId={project.vercel_project}
+          />
+        )}
+
+        {/* Refine Tab */}
+        {tab === 'refine' && project.github_full_name && (
+          <RefineTab
+            projectId={project.id}
+            githubFullName={project.github_full_name}
+            onPushComplete={() => setTab('preview')}
+          />
+        )}
       </div>
 
       {/* Automation Panel */}
       <div style={{ padding: '12px 24px', borderTop: '1px solid rgba(27,42,74,0.08)', background: '#fafaf9', flexShrink: 0 }}>
-        <p style={{ fontSize: 10, fontWeight: 700, color: '#D4A84B', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 8 }}>AI Automation</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+          <p style={{ fontSize: 10, fontWeight: 700, color: '#D4A84B', letterSpacing: '1px', textTransform: 'uppercase', margin: 0 }}>AI Automation</p>
+          {project.staging_url && (
+            <button
+              onClick={() => setShowLaunchModal(true)}
+              style={{ padding: '5px 12px', borderRadius: 100, fontSize: 11, fontWeight: 700, background: project.live_url ? 'rgba(34,197,94,0.1)' : '#1B2A4A', color: project.live_url ? '#15803d' : '#D4A84B', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+            >
+              <Globe size={11} /> {project.live_url ? 'Live ✓' : 'Launch Site'}
+            </button>
+          )}
+        </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
           <button
             onClick={() => setShowCopyGenerator(true)}
@@ -929,6 +986,17 @@ function ProjectDetailSheet({
           project={project}
           onClose={() => setShowBuildModal(false)}
           onProjectUpdated={(updates) => onSave({ ...project, ...updates } as Project)}
+        />
+      )}
+
+      {showLaunchModal && (
+        <LaunchDomainModal
+          project={project}
+          onClose={() => setShowLaunchModal(false)}
+          onLaunched={(liveUrl) => {
+            onSave({ ...project, live_url: liveUrl, launched_at: new Date().toISOString() })
+            setShowLaunchModal(false)
+          }}
         />
       )}
     </div>
@@ -1046,6 +1114,7 @@ export default function AdminWebsitesClient() {
   const [stageFilter, setStageFilter] = useState<string>('all')
   const [search, setSearch] = useState('')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [previewDefaultTab, setPreviewDefaultTab] = useState<'pipeline' | 'preview' | undefined>(undefined)
   const [showNewModal, setShowNewModal] = useState(false)
   const supabase = createClient()
 
@@ -1069,13 +1138,16 @@ export default function AdminWebsitesClient() {
       notes: updated.notes,
       staging_url: updated.staging_url,
       live_url: updated.live_url,
+      launched_at: updated.launched_at,
       github_repo: updated.github_repo,
+      github_full_name: updated.github_full_name,
       figma_url: updated.figma_url,
       vercel_project: updated.vercel_project,
       notion_url: updated.notion_url,
       current_stage: updated.current_stage,
       health: updated.health,
       status: updated.status,
+      theme_config: updated.theme_config,
     }).eq('id', updated.id)
   }, [selectedProject])
 
@@ -1369,7 +1441,18 @@ export default function AdminWebsitesClient() {
                         </span>
                       )}
                     </div>
-                    <MiniStepper stageLogs={project.stage_logs} currentStage={project.current_stage} />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}>
+                      <MiniStepper stageLogs={project.stage_logs} currentStage={project.current_stage} />
+                      {project.staging_url && (
+                        <button
+                          onClick={e => { e.stopPropagation(); setSelectedProject(project); setPreviewDefaultTab('preview') }}
+                          style={{ background: 'none', border: '1px solid rgba(27,42,74,0.12)', borderRadius: 6, padding: '3px 7px', cursor: 'pointer', color: '#5A6A7A', display: 'flex', alignItems: 'center', gap: 3, fontSize: 10, flexShrink: 0 }}
+                          title="Preview site"
+                        >
+                          <Eye size={11} /> Preview
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               )
@@ -1419,11 +1502,12 @@ export default function AdminWebsitesClient() {
       {selectedProject && (
         <ProjectDetailSheet
           project={selectedProject}
-          onClose={() => setSelectedProject(null)}
+          onClose={() => { setSelectedProject(null); setPreviewDefaultTab(undefined) }}
           onToggleTask={handleToggleTask}
           onUpdateNotes={handleUpdateNotes}
           onSave={saveProject}
           onDelete={handleDeleteProject}
+          defaultTab={previewDefaultTab}
         />
       )}
 
