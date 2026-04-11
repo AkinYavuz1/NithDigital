@@ -122,6 +122,7 @@ const [emailOnly, setEmailOnly] = useState(false)
   const [analysing, setAnalysing] = useState<string | null>(null)
   const [analyses, setAnalyses] = useState<Record<string, { label: string; action: string; status: string }>>({})
   const [sentToday, setSentToday] = useState(0)
+  const [sentByAccount, setSentByAccount] = useState<Record<string, number>>({})
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -142,7 +143,10 @@ const [emailOnly, setEmailOnly] = useState(false)
   useEffect(() => {
     fetch('/api/admin/prospects-outreach?countToday=1')
       .then(r => r.json())
-      .then(d => { if (typeof d.sentToday === 'number') setSentToday(d.sentToday) })
+      .then(d => {
+        if (typeof d.sentToday === 'number') setSentToday(d.sentToday)
+        if (d.byAccount) setSentByAccount(d.byAccount)
+      })
   }, [])
 
   useEffect(() => { fetchProspects() }, [fetchProspects])
@@ -187,15 +191,15 @@ const [emailOnly, setEmailOnly] = useState(false)
     }
   }
 
-  const markEmailed = (id: string) => {
-    // Remove immediately so the UI updates without waiting for the API
+  const markEmailed = (id: string, sentFrom?: string) => {
     setProspects(prev => prev.filter(p => p.id !== id))
     setSentToday(prev => prev + 1)
+    if (sentFrom) setSentByAccount(prev => ({ ...prev, [sentFrom]: (prev[sentFrom] || 0) + 1 }))
     showToast('Marked as emailed')
     fetch('/api/admin/prospects-outreach', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'mark_emailed', id }),
+      body: JSON.stringify({ action: 'mark_emailed', id, sentFrom }),
     })
   }
 
@@ -228,6 +232,11 @@ const [emailOnly, setEmailOnly] = useState(false)
             {sentToday > 0 && (
               <span style={{ marginLeft: 10, fontWeight: 700, color: sentToday >= 20 ? '#b91c1c' : sentToday >= 10 ? '#92660a' : '#15803d' }}>
                 · {sentToday} sent today{sentToday >= 20 ? ' — good going!' : ''}
+                {Object.keys(sentByAccount).length > 0 && (
+                  <span style={{ fontWeight: 400, color: '#5A6A7A', marginLeft: 6 }}>
+                    ({FROM_ACCOUNTS.filter(a => sentByAccount[a.value]).map(a => `${sentByAccount[a.value]} ${a.label}`).join(' · ')})
+                  </span>
+                )}
               </span>
             )}
           </p>
@@ -345,7 +354,7 @@ const [emailOnly, setEmailOnly] = useState(false)
                             href={buildMailto(p, subject, p.email_draft || body, acc.value)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={() => markEmailed(p.id)}
+                            onClick={() => markEmailed(p.id, acc.value)}
                             style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
                             title={`Send from ${acc.value}`}
                           >

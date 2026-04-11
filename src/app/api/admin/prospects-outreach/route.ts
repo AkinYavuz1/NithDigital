@@ -33,17 +33,22 @@ function looksLikePersonName(name: string): boolean {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
 
-  // Daily sent count — how many marked emailed today
+  // Daily sent count — how many marked emailed today, broken down by account
   if (searchParams.get('countToday') === '1') {
     const startOfDay = new Date()
     startOfDay.setHours(0, 0, 0, 0)
-    const { count, error } = await sb
+    const { data, error } = await sb
       .from('prospects')
-      .select('*', { count: 'exact', head: true })
+      .select('sent_from')
       .eq('pipeline_status', 'contacted')
       .gte('last_contacted_at', startOfDay.toISOString())
-    if (error) return NextResponse.json({ sentToday: 0 })
-    return NextResponse.json({ sentToday: count ?? 0 })
+    if (error) return NextResponse.json({ sentToday: 0, byAccount: {} })
+    const byAccount: Record<string, number> = {}
+    for (const row of data ?? []) {
+      const key = row.sent_from || 'unknown'
+      byAccount[key] = (byAccount[key] || 0) + 1
+    }
+    return NextResponse.json({ sentToday: (data ?? []).length, byAccount })
   }
 
   const sector = searchParams.get('sector')
@@ -66,7 +71,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { action, prospects, subject, body, id, ids, status, notes } = await req.json()
+  const { action, prospects, subject, body, id, ids, status, notes, sentFrom } = await req.json()
 
   if (action === 'send') {
     const results = { sent: 0, failed: 0, skipped: 0, errors: [] as string[] }
@@ -125,6 +130,7 @@ export async function POST(req: NextRequest) {
     const { error } = await sb.from('prospects').update({
       pipeline_status: 'contacted',
       last_contacted_at: new Date().toISOString(),
+      ...(sentFrom ? { sent_from: sentFrom } : {}),
     }).eq('id', id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ ok: true })
