@@ -24,6 +24,7 @@ const TEMPLATES = [
   { slug: 'stepping-stones', name: 'Stepping Stones Nursery', type: 'Childcare / Nursery', accent: '#E8850A' },
   { slug: 'galloway-adventures', name: 'Galloway Adventures', type: 'Tourism & Activities', accent: '#1A6B3E' },
   { slug: 'high-street-retail', name: 'The Galloway Gift Co.', type: 'Independent Retail', accent: '#5B8A5A' },
+  { slug: 'galloway-dental', name: 'Galloway Dental Care', type: 'Dental Practice', accent: '#0891B2' },
 ]
 
 export default function TemplatesPage() {
