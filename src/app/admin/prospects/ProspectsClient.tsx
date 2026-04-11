@@ -122,20 +122,35 @@ function resolveBody(p: Prospect, body: string) {
     .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
 }
 
-const FROM_ACCOUNTS = [
-  { label: 'Outlook', value: 'akinyavuz@outlook.com' },
-  { label: 'Hotmail', value: 'akinyavuz2009@hotmail.co.uk' },
-  { label: 'Gmail',   value: 'akinyavuz7@gmail.com' },
+type Account = { label: string; value: string; buildUrl: (to: string, subject: string, body: string) => string }
+
+const FROM_ACCOUNTS: Account[] = [
+  {
+    label: 'Outlook',
+    value: 'akinyavuz@outlook.com',
+    buildUrl: (to, subject, body) =>
+      `https://outlook.live.com/mail/0/deeplink/compose?to=${encodeURIComponent(to)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+  },
+  {
+    label: 'Hotmail',
+    value: 'akinyavuz2009@hotmail.co.uk',
+    buildUrl: (to, subject, body) =>
+      `https://outlook.live.com/mail/0/deeplink/compose?to=${encodeURIComponent(to)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+  },
+  {
+    label: 'Gmail',
+    value: 'akinyavuz7@gmail.com',
+    buildUrl: (to, subject, body) =>
+      `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+  },
 ]
 
-function buildMailto(p: Prospect, subject: string, templateBody: string, from?: string) {
+function buildComposeUrl(p: Prospect, subject: string, acc: Account) {
   const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
   const personalSubject = subject.replace(/\{\{business_name\}\}/g, displayName)
   const personalBody = resolveBody(p, getDefaultBody(p.sector))
   const to = p.contact_email || ''
-  const fromParam = from ? `&from=${encodeURIComponent(from)}` : ''
-  const bodyWithCRLF = personalBody.replace(/\r?\n/g, '\r\n')
-  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(personalSubject)}&body=${encodeURIComponent(bodyWithCRLF)}${fromParam}`
+  return acc.buildUrl(to, personalSubject, personalBody)
 }
 
 export default function ProspectsClient() {
@@ -386,7 +401,7 @@ const [emailOnly, setEmailOnly] = useState(false)
                         {FROM_ACCOUNTS.map(acc => (
                           <a
                             key={acc.value}
-                            href={buildMailto(p, subject, body, acc.value)}
+                            href={buildComposeUrl(p, subject, acc)}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => markEmailed(p.id, acc.value)}
