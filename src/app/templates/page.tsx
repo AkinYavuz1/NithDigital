@@ -25,6 +25,9 @@ const TEMPLATES = [
   { slug: 'galloway-adventures', name: 'Galloway Adventures', type: 'Tourism & Activities', accent: '#1A6B3E' },
   { slug: 'high-street-retail', name: 'The Galloway Gift Co.', type: 'Independent Retail', accent: '#5B8A5A' },
   { slug: 'galloway-dental', name: 'Galloway Dental Care', type: 'Dental Practice', accent: '#0891B2' },
+  { slug: 'sanquhar-cleaning', name: 'Nithsdale Home Services', type: 'Home Services / Cleaning', accent: '#1B6CA8' },
+  { slug: 'galloway-visitor-centre', name: 'Galloway Visitor Centre', type: 'Tourism & Attractions', accent: '#2A5C3E' },
+  { slug: 'nith-accounting', name: 'Nith Accounting', type: 'Accountant / Bookkeeping', accent: '#1E4D6B' },
 ]
 
 export default function TemplatesPage() {
