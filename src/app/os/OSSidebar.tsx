@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Users, FileText, ClipboardList, Receipt,
   TrendingUp, Car, Calculator, BarChart3, Settings, LogOut,
-  Calendar, Mail, FolderOpen, Gift, HelpCircle, MoreHorizontal,
+  Calendar, Mail, FolderOpen, Gift, HelpCircle, MoreHorizontal, Workflow,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation'
 
 const NAV_ITEMS = [
   { href: '/os', icon: LayoutDashboard, label: 'Dashboard' },
+  { href: '/os/pipeline', icon: Workflow, label: 'Projects' },
   { href: '/os/bookings', icon: Calendar, label: 'Bookings' },
   { href: '/os/clients', icon: Users, label: 'Clients' },
   { href: '/os/files', icon: FolderOpen, label: 'Files' },
