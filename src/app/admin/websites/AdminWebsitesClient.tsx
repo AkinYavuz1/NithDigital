@@ -221,6 +221,360 @@ function StageChecklist({
   )
 }
 
+// ─── Copy Generation Modal ────────────────────────────────────────────────────
+
+interface GeneratedCopy {
+  meta: { title: string; description: string; og_title: string; keywords: string[] }
+  pages: {
+    home: { hero_headline: string; hero_subheading: string; hero_cta: string; intro_paragraph: string; services_intro: string; trust_statement: string; cta_section_headline: string; cta_section_body: string; cta_button: string }
+    about: { headline: string; story_paragraph: string; values_intro: string; values: string[]; team_intro: string }
+    services: { headline: string; intro: string; service_items: { name: string; description: string; cta: string }[] }
+    contact: { headline: string; intro: string; form_cta: string; phone_label: string; email_label: string }
+  }
+  schema: { type: string; name: string; description: string; address_locality: string; service_area: string }
+  social: { tagline: string; twitter_bio: string; google_business_description: string }
+}
+
+function CopyGeneratorModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const [form, setForm] = useState({
+    industry: '',
+    target_audience: '',
+    tone: 'professional, friendly, trustworthy',
+    key_services: '',
+    location: '',
+    usp: '',
+    sitemap: 'Home, About, Services, Contact',
+  })
+  const [loading, setLoading] = useState(false)
+  const [result, setResult] = useState<GeneratedCopy | null>(null)
+  const [rawResult, setRawResult] = useState('')
+  const [error, setError] = useState('')
+  const [copied, setCopied] = useState<string | null>(null)
+  const [activeSection, setActiveSection] = useState<string>('meta')
+
+  const generate = async () => {
+    setLoading(true)
+    setError('')
+    setResult(null)
+    try {
+      const res = await fetch('/api/generate-website-copy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          project_name: project.project_name,
+          client_name: project.client_name,
+          project_type: project.project_type,
+          industry: form.industry,
+          target_audience: form.target_audience,
+          tone: form.tone,
+          key_services: form.key_services,
+          location: form.location,
+          usp: form.usp,
+          sitemap: form.sitemap.split(',').map(s => s.trim()).filter(Boolean),
+        }),
+      })
+      const data = await res.json()
+      if (data.error) { setError(data.error); return }
+      if (data.parsed) setResult(data.parsed)
+      setRawResult(data.raw || '')
+    } catch (e) {
+      setError('Request failed')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const copyText = (text: string, key: string) => {
+    navigator.clipboard.writeText(text)
+    setCopied(key)
+    setTimeout(() => setCopied(null), 1500)
+  }
+
+  const copyAll = () => {
+    if (!result) return
+    const text = JSON.stringify(result, null, 2)
+    navigator.clipboard.writeText(text)
+    setCopied('all')
+    setTimeout(() => setCopied(null), 1500)
+  }
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%', padding: '8px 12px', border: '1px solid rgba(27,42,74,0.15)',
+    borderRadius: 6, fontSize: 12, fontFamily: 'inherit', color: '#1B2A4A',
+    boxSizing: 'border-box', marginTop: 4, background: 'white',
+  }
+  const labelStyle: React.CSSProperties = { fontSize: 10, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }
+
+  const CopyBtn = ({ text, id }: { text: string; id: string }) => (
+    <button
+      onClick={() => copyText(text, id)}
+      title="Copy"
+      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px', color: copied === id ? '#22c55e' : '#5A6A7A', fontSize: 11, flexShrink: 0 }}
+    >
+      {copied === id ? '✓' : '⎘'}
+    </button>
+  )
+
+  const Field = ({ label, value, id }: { label: string; value: string; id: string }) => (
+    <div style={{ marginBottom: 10 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{label}</span>
+        <CopyBtn text={value} id={id} />
+      </div>
+      <p style={{ fontSize: 13, color: '#1B2A4A', background: 'rgba(27,42,74,0.03)', borderRadius: 6, padding: '8px 10px', margin: 0, lineHeight: 1.5, border: '1px solid rgba(27,42,74,0.06)' }}>
+        {value}
+      </p>
+    </div>
+  )
+
+  const SECTIONS = result ? [
+    { key: 'meta', label: 'Meta & SEO' },
+    { key: 'home', label: 'Home Page' },
+    { key: 'about', label: 'About Page' },
+    { key: 'services', label: 'Services' },
+    { key: 'contact', label: 'Contact' },
+    { key: 'schema', label: 'Schema' },
+    { key: 'social', label: 'Social' },
+  ] : []
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 400, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div style={{ background: 'white', borderRadius: 16, width: '100%', maxWidth: 780, maxHeight: '92vh', display: 'flex', flexDirection: 'column', boxShadow: '0 24px 80px rgba(0,0,0,0.25)' }}>
+
+        {/* Header */}
+        <div style={{ padding: '20px 28px', borderBottom: '1px solid rgba(27,42,74,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
+          <div>
+            <p style={{ fontSize: 10, color: '#D4A84B', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 2 }}>AI Generator</p>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#1B2A4A' }}>
+              Generate Website Copy — {project.client_name}
+            </h2>
+          </div>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#5A6A7A' }}>
+            <X size={20} />
+          </button>
+        </div>
+
+        <div style={{ flex: 1, overflowY: 'auto', padding: '20px 28px' }}>
+
+          {/* Brief form — shown when no result yet */}
+          {!result && (
+            <div>
+              <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 20 }}>
+                Fill in what you know about the client. The more detail you give, the better the copy. Everything is optional — Claude will use {project.client_name} and {project.project_type} as the baseline.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div>
+                  <label style={labelStyle}>Industry / Sector</label>
+                  <input style={inputStyle} placeholder="e.g. Plumbing & Heating" value={form.industry} onChange={e => setForm(f => ({ ...f, industry: e.target.value }))} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Location</label>
+                  <input style={inputStyle} placeholder="e.g. Edinburgh, Scotland" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} />
+                </div>
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label style={labelStyle}>Target Audience</label>
+                  <input style={inputStyle} placeholder="e.g. Homeowners aged 30-60 needing emergency plumbing" value={form.target_audience} onChange={e => setForm(f => ({ ...f, target_audience: e.target.value }))} />
+                </div>
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label style={labelStyle}>Key Services / Products</label>
+                  <input style={inputStyle} placeholder="e.g. Boiler installation, emergency callouts, bathroom fitting" value={form.key_services} onChange={e => setForm(f => ({ ...f, key_services: e.target.value }))} />
+                </div>
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label style={labelStyle}>Unique Selling Point</label>
+                  <input style={inputStyle} placeholder="e.g. Family-run, 20 years experience, same-day response" value={form.usp} onChange={e => setForm(f => ({ ...f, usp: e.target.value }))} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Tone of Voice</label>
+                  <input style={inputStyle} placeholder="e.g. professional, friendly, trustworthy" value={form.tone} onChange={e => setForm(f => ({ ...f, tone: e.target.value }))} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Pages (comma-separated)</label>
+                  <input style={inputStyle} placeholder="Home, About, Services, Contact" value={form.sitemap} onChange={e => setForm(f => ({ ...f, sitemap: e.target.value }))} />
+                </div>
+              </div>
+
+              {error && (
+                <p style={{ marginTop: 16, padding: '10px 14px', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 8, fontSize: 12, color: '#dc2626' }}>
+                  {error}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Loading state */}
+          {loading && (
+            <div style={{ textAlign: 'center', padding: '40px 0' }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>✍️</div>
+              <p style={{ fontSize: 14, color: '#5A6A7A' }}>Claude is writing your website copy...</p>
+              <p style={{ fontSize: 12, color: 'rgba(27,42,74,0.35)', marginTop: 4 }}>Usually takes 10–20 seconds</p>
+            </div>
+          )}
+
+          {/* Results */}
+          {result && !loading && (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <p style={{ fontSize: 13, color: '#22c55e', fontWeight: 600 }}>✓ Copy generated — review and copy each section below</p>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    onClick={() => { setResult(null); setRawResult('') }}
+                    style={{ padding: '6px 14px', borderRadius: 100, fontSize: 12, fontWeight: 600, background: '#F5F0E6', border: '1px solid rgba(27,42,74,0.15)', cursor: 'pointer', color: '#1B2A4A' }}
+                  >
+                    Regenerate
+                  </button>
+                  <button
+                    onClick={copyAll}
+                    style={{ padding: '6px 14px', borderRadius: 100, fontSize: 12, fontWeight: 600, background: '#D4A84B', border: 'none', cursor: 'pointer', color: '#1B2A4A' }}
+                  >
+                    {copied === 'all' ? '✓ Copied!' : 'Copy All JSON'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Section tabs */}
+              <div style={{ display: 'flex', gap: 6, marginBottom: 20, flexWrap: 'wrap' }}>
+                {SECTIONS.map(s => (
+                  <button
+                    key={s.key}
+                    onClick={() => setActiveSection(s.key)}
+                    style={{
+                      padding: '5px 14px', borderRadius: 100, fontSize: 11, fontWeight: activeSection === s.key ? 700 : 400,
+                      background: activeSection === s.key ? '#1B2A4A' : 'transparent',
+                      color: activeSection === s.key ? '#F5F0E6' : '#5A6A7A',
+                      border: '1px solid', borderColor: activeSection === s.key ? '#1B2A4A' : 'rgba(27,42,74,0.15)',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+
+              {activeSection === 'meta' && (
+                <div>
+                  <Field label="Page Title" value={result.meta.title} id="meta_title" />
+                  <Field label="Meta Description" value={result.meta.description} id="meta_desc" />
+                  <Field label="OG Title" value={result.meta.og_title} id="og_title" />
+                  <div style={{ marginBottom: 10 }}>
+                    <span style={labelStyle}>Keywords</span>
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 6 }}>
+                      {result.meta.keywords.map((k, i) => (
+                        <span key={i} style={{ fontSize: 12, padding: '3px 10px', borderRadius: 100, background: 'rgba(27,42,74,0.06)', color: '#1B2A4A' }}>{k}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'home' && (
+                <div>
+                  <Field label="Hero Headline" value={result.pages.home.hero_headline} id="h_hero" />
+                  <Field label="Hero Subheading" value={result.pages.home.hero_subheading} id="h_sub" />
+                  <Field label="Hero CTA" value={result.pages.home.hero_cta} id="h_cta" />
+                  <Field label="Intro Paragraph" value={result.pages.home.intro_paragraph} id="h_intro" />
+                  <Field label="Services Intro" value={result.pages.home.services_intro} id="h_si" />
+                  <Field label="Trust Statement" value={result.pages.home.trust_statement} id="h_trust" />
+                  <Field label="Bottom CTA Headline" value={result.pages.home.cta_section_headline} id="h_ctah" />
+                  <Field label="Bottom CTA Body" value={result.pages.home.cta_section_body} id="h_ctab" />
+                  <Field label="CTA Button" value={result.pages.home.cta_button} id="h_ctabtn" />
+                </div>
+              )}
+
+              {activeSection === 'about' && (
+                <div>
+                  <Field label="Headline" value={result.pages.about.headline} id="ab_h" />
+                  <Field label="Brand Story" value={result.pages.about.story_paragraph} id="ab_story" />
+                  <Field label="Values Intro" value={result.pages.about.values_intro} id="ab_vi" />
+                  <div style={{ marginBottom: 10 }}>
+                    <span style={labelStyle}>Values</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 6 }}>
+                      {result.pages.about.values.map((v, i) => (
+                        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(27,42,74,0.03)', borderRadius: 6, padding: '6px 10px', border: '1px solid rgba(27,42,74,0.06)' }}>
+                          <span style={{ fontSize: 13, color: '#1B2A4A' }}>{v}</span>
+                          <CopyBtn text={v} id={`val_${i}`} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <Field label="Team Intro" value={result.pages.about.team_intro} id="ab_team" />
+                </div>
+              )}
+
+              {activeSection === 'services' && (
+                <div>
+                  <Field label="Headline" value={result.pages.services.headline} id="sv_h" />
+                  <Field label="Intro" value={result.pages.services.intro} id="sv_i" />
+                  {result.pages.services.service_items.map((svc, i) => (
+                    <div key={i} style={{ marginBottom: 12, padding: '12px 14px', background: 'rgba(27,42,74,0.02)', borderRadius: 8, border: '1px solid rgba(27,42,74,0.06)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A' }}>{svc.name}</span>
+                        <CopyBtn text={`${svc.name}\n${svc.description}\nCTA: ${svc.cta}`} id={`svc_${i}`} />
+                      </div>
+                      <p style={{ fontSize: 12, color: '#5A6A7A', margin: 0, lineHeight: 1.5 }}>{svc.description}</p>
+                      <span style={{ fontSize: 11, color: '#D4A84B', fontWeight: 600, marginTop: 4, display: 'block' }}>→ {svc.cta}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {activeSection === 'contact' && (
+                <div>
+                  <Field label="Headline" value={result.pages.contact.headline} id="ct_h" />
+                  <Field label="Intro" value={result.pages.contact.intro} id="ct_i" />
+                  <Field label="Form CTA" value={result.pages.contact.form_cta} id="ct_cta" />
+                  <Field label="Phone Label" value={result.pages.contact.phone_label} id="ct_ph" />
+                  <Field label="Email Label" value={result.pages.contact.email_label} id="ct_em" />
+                </div>
+              )}
+
+              {activeSection === 'schema' && (
+                <div>
+                  <Field label="Schema Type" value={result.schema.type} id="sc_type" />
+                  <Field label="Description" value={result.schema.description} id="sc_desc" />
+                  <Field label="Service Area" value={result.schema.service_area} id="sc_area" />
+                  <div style={{ marginBottom: 10 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={labelStyle}>JSON-LD Schema</span>
+                      <CopyBtn text={JSON.stringify({ '@context': 'https://schema.org', '@type': result.schema.type, name: result.schema.name, description: result.schema.description, address: { '@type': 'PostalAddress', addressLocality: result.schema.address_locality }, areaServed: result.schema.service_area }, null, 2)} id="sc_json" />
+                    </div>
+                    <pre style={{ fontSize: 11, background: 'rgba(27,42,74,0.04)', borderRadius: 6, padding: '10px 12px', overflow: 'auto', margin: '4px 0 0', border: '1px solid rgba(27,42,74,0.08)', color: '#1B2A4A', lineHeight: 1.5 }}>
+                      {JSON.stringify({ '@context': 'https://schema.org', '@type': result.schema.type, name: result.schema.name, description: result.schema.description, address: { '@type': 'PostalAddress', addressLocality: result.schema.address_locality }, areaServed: result.schema.service_area }, null, 2)}
+                    </pre>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'social' && (
+                <div>
+                  <Field label="Brand Tagline" value={result.social.tagline} id="so_tag" />
+                  <Field label="Twitter / X Bio" value={result.social.twitter_bio} id="so_tw" />
+                  <Field label="Google Business Description" value={result.social.google_business_description} id="so_gb" />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        {!result && (
+          <div style={{ padding: '16px 28px', borderTop: '1px solid rgba(27,42,74,0.08)', display: 'flex', justifyContent: 'flex-end', gap: 10, flexShrink: 0 }}>
+            <button onClick={onClose} style={{ padding: '10px 20px', borderRadius: 100, fontSize: 13, fontWeight: 600, background: '#F5F0E6', border: '1px solid rgba(27,42,74,0.15)', cursor: 'pointer', color: '#1B2A4A' }}>
+              Cancel
+            </button>
+            <button
+              onClick={generate}
+              disabled={loading}
+              style={{ padding: '10px 24px', borderRadius: 100, fontSize: 13, fontWeight: 600, background: '#D4A84B', color: '#1B2A4A', border: 'none', cursor: 'pointer', opacity: loading ? 0.7 : 1, display: 'flex', alignItems: 'center', gap: 6 }}
+            >
+              <Bot size={14} /> {loading ? 'Generating...' : 'Generate Copy'}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ─── Project Detail Sheet ─────────────────────────────────────────────────────
 
 function ProjectDetailSheet({
@@ -239,6 +593,7 @@ function ProjectDetailSheet({
   const [tab, setTab] = useState<'pipeline' | 'links' | 'notes'>('pipeline')
   const [expandedStage, setExpandedStage] = useState<number>(project.current_stage)
   const [editingLinks, setEditingLinks] = useState(false)
+  const [showCopyGenerator, setShowCopyGenerator] = useState(false)
   const [links, setLinks] = useState({
     staging_url: project.staging_url || '',
     live_url: project.live_url || '',
@@ -500,12 +855,22 @@ function ProjectDetailSheet({
       <div style={{ padding: '12px 24px', borderTop: '1px solid rgba(27,42,74,0.08)', background: '#fafaf9', flexShrink: 0 }}>
         <p style={{ fontSize: 10, fontWeight: 700, color: '#D4A84B', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 8 }}>AI Automation</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+          <button
+            onClick={() => setShowCopyGenerator(true)}
+            style={{
+              padding: '6px 12px', borderRadius: 100, fontSize: 11, fontWeight: 700,
+              background: '#D4A84B', color: '#1B2A4A',
+              border: 'none', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: 4,
+            }}
+          >
+            ✍️ Generate copy
+          </button>
           {[
-            { label: 'Generate copy', icon: '✍️', tip: 'Claude API → all page copy + meta' },
-            { label: 'Run SEO audit', icon: '🔍', tip: 'Lighthouse + meta check' },
-            { label: 'Gen OG images', icon: '🖼️', tip: 'next/og API route' },
-            { label: 'Write schema', icon: '📋', tip: 'JSON-LD via Claude API' },
-            { label: 'Draft handover', icon: '📄', tip: 'Auto-fill handover doc' },
+            { label: 'Run SEO audit', icon: '🔍', tip: 'Coming soon' },
+            { label: 'Gen OG images', icon: '🖼️', tip: 'Coming soon' },
+            { label: 'Write schema', icon: '📋', tip: 'Coming soon' },
+            { label: 'Draft handover', icon: '📄', tip: 'Coming soon' },
           ].map(({ label, icon, tip }) => (
             <button
               key={label}
@@ -515,6 +880,7 @@ function ProjectDetailSheet({
                 background: 'rgba(212,168,75,0.1)', color: '#8B6D2B',
                 border: '1px solid rgba(212,168,75,0.2)', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 4,
+                opacity: 0.6,
               }}
             >
               {icon} {label}
@@ -522,6 +888,10 @@ function ProjectDetailSheet({
           ))}
         </div>
       </div>
+
+      {showCopyGenerator && (
+        <CopyGeneratorModal project={project} onClose={() => setShowCopyGenerator(false)} />
+      )}
     </div>
   )
 }
