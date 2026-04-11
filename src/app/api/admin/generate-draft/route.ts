@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
         role: 'user',
         content: `You are Akin, a web developer based in Sanquhar, Dumfries & Galloway. You run Nith Digital and build fully custom websites for local businesses across D&G.
 
-Write a cold email to ${p.business_name} in ${p.location} (${p.sector}).
+Write a cold email to ${p.business_name} (${p.sector} business in D&G).
 
 What you noticed about them (based on research — frame it as "when I looked", "last time I checked", not as guaranteed current fact):
 ${p.outreach_hook ?? p.why_them}
@@ -114,11 +114,11 @@ Akin
 
 Rules for your version:
 - 3–4 sentences max. Sound like a real person, not a marketer.
-- First sentence: what you specifically noticed — casual, like you stumbled across it
+- First sentence: what you specifically noticed — casual, like you stumbled across it. Do NOT mention their address or street — it reads as creepy. Reference what you saw online, not where they are physically located.
 - One sentence about Nith Digital — local, Sanquhar, builds custom sites (not templates)
 - When referencing the demo link, be clear it's a demo or example — NOT a real past client. Use phrasing like "put together a demo", "example of the kind of thing", "you can see the style here". Never say "did one for", "built one for", or anything implying it's a real client site.
 - Drop the demo link naturally: ${template?.url ?? BASE_URL}
-- End with one short low-pressure question — "Worth a chat?" or similar
+- End with one short low-pressure question — "Worth a chat?" or "Worth a quick call ${new Date().getDay() === 0 || new Date().getDay() === 5 || new Date().getDay() === 6 ? 'next week' : 'this week'}?" or similar
 - Sign off: Cheers, Akin | Nith Digital | 07404173024 | www.nithdigital.uk
 - No buzzwords. No "online presence". No "digital footprint". No prices. No WordPress.
 - Output the email body only. No subject line. No markdown.`

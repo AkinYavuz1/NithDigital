@@ -41,9 +41,14 @@ const SCORE_COLOR = (s: number) => s >= 8 ? '#15803d' : s >= 6.5 ? '#92660a' : '
 
 const DEFAULT_SUBJECT = `Quick question — {{business_name}}`
 
+function getWeekPhrase() {
+  const day = new Date().getDay() // 0=Sun, 5=Fri, 6=Sat
+  return (day === 0 || day === 5 || day === 6) ? 'next week' : 'this week'
+}
+
 const DEFAULT_BODY = `Hi,
 
-I was looking at local businesses in {{location}} and came across {{business_name}} — wanted to drop you a quick note.
+I came across {{business_name}} while looking at local businesses in the area — wanted to drop you a quick note.
 
 {{outreach_hook}}
 
@@ -51,7 +56,7 @@ I'm Akin, founder of Nith Digital. We're a small web design agency based in Dumf
 
 I'd love to have a quick 15-minute chat — no pitch, just a look at what's possible. If it's not a fit, no worries at all.
 
-Would you be open to a call this week?
+Would you be open to a call ${getWeekPhrase()}?
 
 Cheers,
 Akin
@@ -76,6 +81,15 @@ function getCallCountdown(reminderAt: string | null): { label: string; urgent: b
   if (days === 0) return { label: 'Call today!', urgent: true }
   if (days === 1) return { label: 'Call tomorrow', urgent: true }
   return { label: `Call in ${days}d`, urgent: false }
+}
+
+function buildMailtoBody(p: Prospect, body: string) {
+  const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
+  return body
+    .replace(/\{\{business_name\}\}/g, displayName)
+    .replace(/\{\{location\}\}/g, p.location || '')
+    .replace(/\{\{outreach_hook\}\}/g, p.outreach_hook || '')
+    .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
 }
 
 function buildMailto(p: Prospect, subject: string, body: string) {
@@ -336,6 +350,8 @@ export default function ProspectsClient() {
                         </span>
                         <a
                           href={buildMailto(p, subject, p.email_draft || body)}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
                           title={p.email_draft ? 'Open draft in Outlook' : 'Open template in Outlook'}
                         >
@@ -410,12 +426,11 @@ export default function ProspectsClient() {
                           </button>
                         )}
                       </div>
-                      {p.email_draft ? (
-                        <pre style={{ margin: 0, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: '#1B2A4A', fontFamily: 'inherit' }}>
-                          {p.email_draft}
-                        </pre>
-                      ) : (
-                        <div style={{ fontSize: 13, color: '#9CA3AF', fontStyle: 'italic' }}>No draft available</div>
+                      <pre style={{ margin: 0, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: p.email_draft ? '#1B2A4A' : '#6B7280', fontFamily: 'inherit' }}>
+                        {p.email_draft || buildMailtoBody(p, body)}
+                      </pre>
+                      {!p.email_draft && (
+                        <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 4 }}>Showing template preview — generate a draft for a personalised version</div>
                       )}
                     </div>
 
