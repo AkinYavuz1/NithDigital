@@ -1,8 +1,6 @@
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { createClient } from '@supabase/supabase-js'
-import TestimonialsSection from '@/components/TestimonialsSection'
 
 export const metadata: Metadata = {
   title: 'Nith Digital — Web Design & Business Tools in Dumfries & Galloway',
@@ -71,17 +69,7 @@ const S: Record<string, React.CSSProperties> = {
   },
 }
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
-
 export default async function HomePage() {
-  const { data: testimonials } = await supabase
-    .from('testimonials')
-    .select('id, client_name, business_name, quote, rating, location')
-    .eq('published', true)
-    .order('id', { ascending: false })
   return (
     <>
       {/* Hero */}
@@ -458,9 +446,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      <TestimonialsSection testimonials={testimonials ?? []} />
 
       {/* CTA Banner */}
       <section style={S.sectionSm}>
