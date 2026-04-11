@@ -10,7 +10,6 @@ import {
   Cell,
   PieChart,
   Pie,
-  Legend,
 } from 'recharts'
 
 export interface SectorCount {
@@ -119,33 +118,38 @@ const PIE_COLORS = [NAVY, GOLD, AMBER, MUTED]
 
 export function WebsiteDonutChart({ data }: { data: WebsiteStatus[] }) {
   return (
-    <ResponsiveContainer width="100%" height={280}>
-      <PieChart>
-        <Pie
-          data={data}
-          cx="50%"
-          cy="45%"
-          innerRadius={70}
-          outerRadius={110}
-          paddingAngle={2}
-          dataKey="value"
-          label={({ name, value }) => `${value}%`}
-          labelLine={false}
-        >
-          {data.map((_, i) => (
-            <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-          ))}
-        </Pie>
-        <Legend
-          iconType="circle"
-          iconSize={8}
-          formatter={(v) => <span style={{ fontSize: 12, color: '#1B2A4A' }}>{v}</span>}
-        />
-        <Tooltip
-          formatter={(v) => [`${v}%`, '']}
-          contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(27,42,74,0.12)' }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+    <div>
+      <ResponsiveContainer width="100%" height={240}>
+        <PieChart>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={70}
+            outerRadius={110}
+            paddingAngle={2}
+            dataKey="value"
+            label={({ value }) => `${value}%`}
+            labelLine={false}
+          >
+            {data.map((_, i) => (
+              <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(v) => [`${v}%`, '']}
+            contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(27,42,74,0.12)' }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px 20px', marginTop: 8 }}>
+        {data.map((entry, i) => (
+          <div key={entry.name} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ width: 10, height: 10, borderRadius: '50%', background: PIE_COLORS[i % PIE_COLORS.length], flexShrink: 0 }} />
+            <span style={{ fontSize: 12, color: '#1B2A4A' }}>{entry.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
