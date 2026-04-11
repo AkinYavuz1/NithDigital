@@ -34,15 +34,13 @@ export async function POST(req: NextRequest) {
   const { action, id, notes } = await req.json()
 
   if (action === 'mark_called') {
-    const reminderAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
     const { error } = await sb.from('prospects').update({
       pipeline_status: 'contacted',
       last_contacted_at: new Date().toISOString(),
-      call_reminder_at: reminderAt,
       ...(notes ? { notes } : {}),
     }).eq('id', id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-    return NextResponse.json({ ok: true, call_reminder_at: reminderAt })
+    return NextResponse.json({ ok: true })
   }
 
   if (action === 'mark_not_interested') {

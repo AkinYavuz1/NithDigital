@@ -73,15 +73,6 @@ const SECTORS = [
 
 const STATUSES = ['new', 'contacted', 'interested', 'won', 'lost']
 
-function getCallCountdown(reminderAt: string | null): { label: string; urgent: boolean } | null {
-  if (!reminderAt) return null
-  const diff = new Date(reminderAt).getTime() - Date.now()
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
-  if (days < 0) return { label: 'Call overdue!', urgent: true }
-  if (days === 0) return { label: 'Call today!', urgent: true }
-  if (days === 1) return { label: 'Call tomorrow', urgent: true }
-  return { label: `Call in ${days}d`, urgent: false }
-}
 
 function buildMailtoBody(p: Prospect, body: string) {
   const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
@@ -365,16 +356,6 @@ export default function ProspectsClient() {
                     <div style={{ ...STATUS_COLORS[p.pipeline_status] || STATUS_COLORS.new, fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4, flexShrink: 0 }}>
                       {p.pipeline_status}
                     </div>
-
-                    {/* Call countdown */}
-                    {(() => {
-                      const cd = getCallCountdown(p.call_reminder_at)
-                      return cd ? (
-                        <div style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 4, flexShrink: 0, background: cd.urgent ? 'rgba(220,38,38,0.1)' : 'rgba(22,163,74,0.08)', color: cd.urgent ? '#b91c1c' : '#15803d' }}>
-                          📞 {cd.label}
-                        </div>
-                      ) : null
-                    })()}
 
                     {/* Email Sent button — moved to call list */}
                   </div>

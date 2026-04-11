@@ -122,14 +122,12 @@ export async function POST(req: NextRequest) {
   }
 
   if (action === 'mark_emailed') {
-    const reminderAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
     const { error } = await sb.from('prospects').update({
       pipeline_status: 'contacted',
       last_contacted_at: new Date().toISOString(),
-      call_reminder_at: reminderAt,
     }).eq('id', id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-    return NextResponse.json({ ok: true, call_reminder_at: reminderAt })
+    return NextResponse.json({ ok: true })
   }
 
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 })
