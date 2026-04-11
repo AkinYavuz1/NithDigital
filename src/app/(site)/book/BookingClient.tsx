@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
+// createClient used for slot availability queries only (read-only, anon key)
 
 const SERVICES = [
   { id: 'website', label: 'Business website consultation', desc: 'Discuss your website goals, design, and how we can help.', duration: 30 },
@@ -50,7 +51,7 @@ export default function BookingClient() {
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
   const [loading, setLoading] = useState(false)
-  const [confirmed, setConfirmed] = useState<null | { date: string; start_time: string; end_time: string; service: string; name: string }>(null)
+  const [confirmed, setConfirmed] = useState<null | { date: string; start_time: string; end_time: string; service: string; name: string; meetLink?: string | null }>(null)
   const [error, setError] = useState('')
 
   const today = new Date()
@@ -103,22 +104,27 @@ export default function BookingClient() {
     if (!selectedDate || !selectedSlot) return
     setLoading(true)
     setError('')
-    const supabase = createClient()
     const dateStr = selectedDate.toISOString().split('T')[0]
-    const { error: err } = await supabase.from('bookings').insert({
-      name: form.name,
-      email: form.email,
-      phone: form.phone || null,
-      service: SERVICES.find(s => s.id === selectedService)?.label || selectedService,
-      date: dateStr,
-      start_time: selectedSlot.start,
-      end_time: selectedSlot.end,
-      message: form.message || null,
-      status: 'confirmed',
+    const serviceLabel = SERVICES.find(s => s.id === selectedService)?.label || selectedService
+
+    const res = await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || null,
+        service: serviceLabel,
+        date: dateStr,
+        start_time: selectedSlot.start,
+        end_time: selectedSlot.end,
+        message: form.message || null,
+      }),
     })
+    const data = await res.json()
     setLoading(false)
-    if (err) {
-      setError(err.code === '23505' ? 'That slot was just taken. Please choose another time.' : 'Something went wrong. Please try again.')
+    if (!res.ok) {
+      setError(data.code === '23505' ? 'That slot was just taken. Please choose another time.' : 'Something went wrong. Please try again.')
       return
     }
     if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -128,8 +134,9 @@ export default function BookingClient() {
       date: dateStr,
       start_time: selectedSlot.start,
       end_time: selectedSlot.end,
-      service: SERVICES.find(s => s.id === selectedService)?.label || selectedService,
+      service: serviceLabel,
       name: form.name,
+      meetLink: data.meetLink ?? null,
     })
   }
 
@@ -165,6 +172,15 @@ export default function BookingClient() {
             <div><span style={{ fontSize: 11, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '1px' }}>Time</span><div style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginTop: 2 }}>{formatTime(confirmed.start_time)} – {formatTime(confirmed.end_time)}</div></div>
           </div>
         </div>
+        {confirmed.meetLink && (
+          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '20px 24px', marginBottom: 20, textAlign: 'center' }}>
+            <div style={{ fontSize: 11, color: '#8A9AAA', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 8 }}>Your Google Meet link</div>
+            <a href={confirmed.meetLink} target="_blank" rel="noopener noreferrer" style={{ color: '#D4A84B', fontWeight: 700, fontSize: 15, wordBreak: 'break-all' }}>
+              {confirmed.meetLink}
+            </a>
+            <div style={{ fontSize: 12, color: '#8A9AAA', marginTop: 6 }}>This link will also be in your calendar invite</div>
+          </div>
+        )}
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href={gcalUrl} target="_blank" rel="noopener noreferrer" style={{ padding: '10px 20px', background: '#1B2A4A', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600 }}>
             Add to Google Calendar

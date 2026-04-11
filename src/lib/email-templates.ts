@@ -92,6 +92,7 @@ interface TemplateData {
   submission_link?: string
   invoices_count?: number
   expenses_count?: number
+  meet_link?: string | null
 }
 
 export function renderEmailTemplate(
@@ -186,7 +187,8 @@ export function renderEmailTemplate(
             <tr><td style="padding:6px 0;font-size:12px;color:#8A9AAA;text-transform:uppercase;letter-spacing:0.5px;">Duration</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:${BRAND.navy};">30 minutes</td></tr>
           </table>
         </div>
-        ${p('We\'ll send you the call link in a follow-up email. If you need to reschedule, email <a href="mailto:hello@nithdigital.uk" style="color:${BRAND.gold};">hello@nithdigital.uk</a> as soon as possible.')}
+        ${data.meet_link ? `${btn('Join Google Meet', data.meet_link)}` : ''}
+        ${p(`${data.meet_link ? 'Your Google Meet link is above and ' : 'A Google Meet link will be '}sent in your calendar invite. If you need to reschedule, email <a href="mailto:hello@nithdigital.uk" style="color:${BRAND.gold};">hello@nithdigital.uk</a> as soon as possible.`)}
         ${p('See you soon!')}
       `
       return {

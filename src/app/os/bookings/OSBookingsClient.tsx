@@ -49,7 +49,11 @@ export default function OSBookingsClient({ initialBookings }: { initialBookings:
   }, [])
 
   const updateStatus = async (id: string, status: Booking['status']) => {
-    await supabase.from('bookings').update({ status }).eq('id', id)
+    await fetch(`/api/bookings/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    })
     setBookings(b => b.map(bk => bk.id === id ? { ...bk, status } : bk))
   }
 
