@@ -907,7 +907,7 @@ function ProjectDetailSheet({
         <BuildSiteModal
           project={project}
           onClose={() => setShowBuildModal(false)}
-          onProjectUpdated={(updates) => onSave({ ...project, ...updates })}
+          onProjectUpdated={(updates) => onSave({ ...project, ...updates } as Project)}
         />
       )}
     </div>

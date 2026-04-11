@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Inject project context into first user message if this is the start
-  const enrichedMessages = messages.map((m: { role: string; content: string }, i: number) => {
+  const enrichedMessages = messages.map((m: { role: 'user' | 'assistant'; content: string }, i: number) => {
     if (i === 0 && m.role === 'user') {
       return {
         ...m,
