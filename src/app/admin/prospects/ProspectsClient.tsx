@@ -83,7 +83,13 @@ function buildMailtoBody(p: Prospect, body: string) {
     .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
 }
 
-function buildMailto(p: Prospect, subject: string, body: string) {
+const FROM_ACCOUNTS = [
+  { label: 'Outlook', value: 'akinyavuz@outlook.com' },
+  { label: 'Hotmail', value: 'akinyavuz2009@hotmail.co.uk' },
+  { label: 'Gmail',   value: 'akinyavuz7@gmail.com' },
+]
+
+function buildMailto(p: Prospect, subject: string, body: string, from?: string) {
   const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
   const personalSubject = subject
     .replace(/\{\{business_name\}\}/g, displayName)
@@ -94,7 +100,8 @@ function buildMailto(p: Prospect, subject: string, body: string) {
     .replace(/\{\{outreach_hook\}\}/g, p.outreach_hook || '')
     .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
   const to = p.contact_email || ''
-  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(personalSubject)}&body=${encodeURIComponent(personalBody)}`
+  const fromParam = from ? `&from=${encodeURIComponent(from)}` : ''
+  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(personalSubject)}&body=${encodeURIComponent(personalBody)}${fromParam}`
 }
 
 export default function ProspectsClient() {
@@ -109,7 +116,7 @@ export default function ProspectsClient() {
   const [body, setBody] = useState(DEFAULT_BODY)
   const [showCompose, setShowCompose] = useState(false)
   const [sending, setSending] = useState(false)
-  const [emailOnly, setEmailOnly] = useState(false)
+const [emailOnly, setEmailOnly] = useState(false)
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
   const [replyTexts, setReplyTexts] = useState<Record<string, string>>({})
   const [analysing, setAnalysing] = useState<string | null>(null)
@@ -332,16 +339,19 @@ export default function ProspectsClient() {
                           <Mail size={10} style={{ flexShrink: 0 }} />
                           <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.contact_email}</span>
                         </span>
-                        <a
-                          href={buildMailto(p, subject, p.email_draft || body)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => markEmailed(p.id)}
-                          style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
-                          title={p.email_draft ? 'Open draft in Outlook' : 'Open template in Outlook'}
-                        >
-                          <Send size={10} />{p.email_draft ? 'Send draft' : 'Send'}
-                        </a>
+                        {FROM_ACCOUNTS.map(acc => (
+                          <a
+                            key={acc.value}
+                            href={buildMailto(p, subject, p.email_draft || body, acc.value)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => markEmailed(p.id)}
+                            style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
+                            title={`Send from ${acc.value}`}
+                          >
+                            <Send size={10} />{acc.label}
+                          </a>
+                        ))}
                       </>
                     ) : (
                       <span style={{ fontSize: 11, color: '#9CA3AF', background: '#F3F4F6', padding: '2px 7px', borderRadius: 4 }}>no email</span>
