@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { PIPELINE_STAGES, TOTAL_ESTIMATED_DAYS } from './pipelineStages'
 import type { PipelineStage, ChecklistItem } from './pipelineStages'
+import BuildSiteModal from './BuildSiteModal'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -594,6 +595,7 @@ function ProjectDetailSheet({
   const [expandedStage, setExpandedStage] = useState<number>(project.current_stage)
   const [editingLinks, setEditingLinks] = useState(false)
   const [showCopyGenerator, setShowCopyGenerator] = useState(false)
+  const [showBuildModal, setShowBuildModal] = useState(false)
   const [links, setLinks] = useState({
     staging_url: project.staging_url || '',
     live_url: project.live_url || '',
@@ -630,9 +632,17 @@ function ProjectDetailSheet({
             </h2>
             <p style={{ fontSize: 12, color: 'rgba(245,240,230,0.5)', marginTop: 2 }}>{project.client_name}</p>
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'rgba(245,240,230,0.4)', cursor: 'pointer', padding: 4 }}>
-            <X size={20} />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <button
+              onClick={() => setShowBuildModal(true)}
+              style={{ padding: '7px 14px', borderRadius: 100, fontSize: 11, fontWeight: 700, background: '#D4A84B', color: '#1B2A4A', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5 }}
+            >
+              <Rocket size={12} /> Build Site
+            </button>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'rgba(245,240,230,0.4)', cursor: 'pointer', padding: 4 }}>
+              <X size={20} />
+            </button>
+          </div>
         </div>
 
         {/* Progress bar */}
@@ -891,6 +901,14 @@ function ProjectDetailSheet({
 
       {showCopyGenerator && (
         <CopyGeneratorModal project={project} onClose={() => setShowCopyGenerator(false)} />
+      )}
+
+      {showBuildModal && (
+        <BuildSiteModal
+          project={project}
+          onClose={() => setShowBuildModal(false)}
+          onProjectUpdated={(updates) => onSave({ ...project, ...updates })}
+        />
       )}
     </div>
   )
