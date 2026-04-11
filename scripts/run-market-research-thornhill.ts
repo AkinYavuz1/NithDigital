@@ -202,7 +202,10 @@ async function insertProspects(sector: string, prospects: Prospect[]): Promise<n
     (existing ?? []).map((r: { business_name: string }) => r.business_name)
   )
 
-  const toInsert = prospects.filter((p) => !existingNames.has(p.business_name))
+  const toInsert = prospects.filter((p) =>
+    !existingNames.has(p.business_name) &&
+    (p.url || p.contact_phone || p.contact_email) // must have at least one contact signal — no data = likely fabricated
+  )
 
   if (toInsert.length === 0) {
     console.log(`[${sector}] All prospects already exist — nothing to insert.`)
