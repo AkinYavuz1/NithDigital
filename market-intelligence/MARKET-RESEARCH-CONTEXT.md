@@ -268,12 +268,16 @@ Hook rules are in the Hook Generation section of this document. Do not generate 
 
 ### No-website prospects (has_website = false)
 
-For prospects with `has_website = false` and `score_need >= 6`, Claude Code can generate a hook without visiting a URL — but must use only safe, non-technical patterns:
-- Missing presence: "I couldn't find you anywhere online when I searched for [sector] in [town]"
-- Competitor comparison: a named local competitor who does have a site
+**Do not run Phase 2 agents for no-website prospects.** There is no URL to visit, so a browser audit wastes tokens and produces nothing. The hook for these businesses is already obvious: they have no online presence. Write it directly from the DB record — no agent needed.
+
+The hook for a no-website business should be written by Akin (or generated in bulk via a simple script) using only these safe patterns:
+- Missing presence: "I couldn't find [Business Name] anywhere online when I searched for [sector] in [town]"
+- Competitor comparison: name a local competitor in the same sector who does have a site
 - Specific lost customer scenario relevant to their sector and season
 
 Do not use the "customers searching X in [town] can't find you" template — it is banned (see below).
+
+**These are often the highest-value outreach targets** (score_need 8–10, phone number available, cold call or email is straightforward). Handle them separately from the Phase 2 URL audit pipeline — they need no agent time at all.
 
 ---
 
