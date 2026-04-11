@@ -182,7 +182,7 @@ When in doubt, assign to the sector that best describes the primary revenue sour
 ### Batching rules
 
 - **One sector per agent call.** Never ask an agent to find businesses across multiple sectors in one run. Each new sector requires fresh search context and switching between them wastes tokens. A sector-focused agent also produces better `why_them` content because it builds up comparative context within that space.
-- **5–10 businesses per sector batch** is the sweet spot — enough to justify the agent spin-up cost, not so many that context accumulates and quality drifts.
+- **Do not specify a target number of businesses per sector.** Tell the agent to find *all* businesses it can genuinely verify — not a fixed count. Giving a quota (e.g. "find 5–8") causes the model to fabricate records to fill it once real businesses are exhausted. Return whatever is real, even if that is 1 or 2.
 
 ### Hard stop rule — DO NOT run more than 3 passes per town
 
@@ -218,7 +218,7 @@ The existing business name list must appear at the **top** of the agent prompt, 
 
 Correct order:
 1. Do not research businesses in this list: [names]
-2. Your task: find X businesses in [sector]
+2. Your task: find all businesses you can genuinely verify in [sector] — no target number
 3. Output format / JSON schema
 4. Scoring guide
 

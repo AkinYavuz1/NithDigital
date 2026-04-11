@@ -148,7 +148,7 @@ ${existingNames.length > 0 ? existingNames.map((n) => `- ${n}`).join("\n") : "(n
 
 There are already ${existingCount} businesses recorded for ${sector} in ${TARGET_LOCATION}.
 
-Your task: Find 5–8 real businesses in the "${sector}" sector located in ${TARGET_LOCATION}.
+Your task: Find all real businesses in the "${sector}" sector located in ${TARGET_LOCATION} that you can genuinely verify exist. Do not invent or pad results — return only businesses you are confident are real. If you can only find 2, return 2. If you can find 10, return 10.
 
 Geographic rule: The business's primary trading address must be in Thornhill town itself OR in one of these named villages within DG3: Penpont, Closeburn, Carronbridge, Moniaive, Keir, Tynron, Durisdeer, Morton. Do NOT include businesses based in Dumfries, Sanquhar, or other towns that merely serve the area.
 
