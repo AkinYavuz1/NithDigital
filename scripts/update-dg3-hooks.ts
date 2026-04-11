@@ -273,16 +273,16 @@ async function run() {
   let errorCount = 0
 
   for (const { business_name, outreach_hook } of hooks) {
-    const { error, count } = await supabase
+    const { data, error } = await supabase
       .from("prospects")
       .update({ outreach_hook })
       .eq("business_name", business_name)
-      .select("id", { count: "exact", head: true })
+      .select("id")
 
     if (error) {
       console.error(`✗ ERROR [${business_name}]: ${error.message}`)
       errorCount++
-    } else if (count === 0) {
+    } else if (!data || data.length === 0) {
       console.log(`⚠ SKIP [${business_name}] — no matching record found in DB`)
       skipCount++
     } else {
