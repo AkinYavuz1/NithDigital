@@ -1,0 +1,1734 @@
+{
+  "withUrl": [
+    {
+      "id": "9002d260-01e6-40b9-9566-591cd21684ec",
+      "business_name": "Auld Alliance Restaurant",
+      "contact_phone": "01557 330888",
+      "url": "http://www.auldalliancekirkcudbright.co.uk/",
+      "sector": "Food & Drink",
+      "location": "29 St Cuthbert Street, Kirkcudbright DG6",
+      "score_overall": 8.95
+    },
+    {
+      "id": "2053237e-e493-4d24-a56d-441377d9b6cf",
+      "business_name": "Happy Faces Nursery",
+      "contact_phone": "01387 248944",
+      "url": "https://info82223.wixsite.com/happyfaces",
+      "sector": "Childcare & Education",
+      "location": "21-25 Calside Road, Dumfries, DG1 4HA",
+      "score_overall": 8.65
+    },
+    {
+      "id": "1a062603-31a1-41aa-8355-0500b163ccd1",
+      "business_name": "Colourworx",
+      "contact_phone": "01387 750621",
+      "url": "http://www.colourworx.org.uk/",
+      "sector": "Automotive",
+      "location": "Unit 9, Huntingdon Road, Dumfries, DG1 1NF",
+      "score_overall": 8.5
+    },
+    {
+      "id": "9131442b-443b-4327-a7b0-bae158dac7bd",
+      "business_name": "Hi-Line Kitchens & Joinery",
+      "contact_phone": "01387 248339",
+      "url": "https://www.hi-linekitchens.co.uk/",
+      "sector": "Trades & Construction",
+      "location": "Dumfries, DG1",
+      "score_overall": 8.3
+    },
+    {
+      "id": "e7851907-df59-4caa-98b8-bdace4964a3c",
+      "business_name": "Dumfries Osteopathic Clinic",
+      "contact_phone": "01387 270750",
+      "url": "https://dumfries-osteopathic-clinic.co.uk/",
+      "sector": "Healthcare",
+      "location": "Lochvale House, Georgetown, Dumfries (also Dalbeattie)",
+      "score_overall": 8.3
+    },
+    {
+      "id": "782a81f0-ae1c-4f8a-89b2-2e15c40b4b38",
+      "business_name": "Galloway Petfoods",
+      "contact_phone": "01671 402120",
+      "url": "https://gallowaypetfoods.co.uk/",
+      "sector": "Retail",
+      "location": "35 Victoria Street, Newton Stewart, DG8 6NL",
+      "score_overall": 8.25
+    },
+    {
+      "id": "abb5942e-d107-4fad-a5d7-bf556f40f81f",
+      "business_name": "Galloway Chimney Sweeps",
+      "contact_phone": "01387 720695",
+      "url": "http://www.gallowaychimneysweeps.co.uk/",
+      "sector": "Home Services",
+      "location": "Dumfries, DG2 8HZ",
+      "score_overall": 8.25
+    },
+    {
+      "id": "465a5d24-470c-465f-a574-36fe60c22048",
+      "business_name": "JB Graham Rural & Residential Estate Agents",
+      "contact_phone": "01776 889222",
+      "url": "http://www.jb-graham.co.uk",
+      "sector": "Property",
+      "location": "94 George Street, Stranraer, DG9 7JS",
+      "score_overall": 8.2
+    },
+    {
+      "id": "d314cd2e-f658-4ac5-bb5a-5bed08441831",
+      "business_name": "Holmhill Country House",
+      "contact_phone": "01848 332239",
+      "url": "https://www.holmhillthornhill.co.uk",
+      "sector": "Accommodation",
+      "location": "Thornhill, DG3",
+      "score_overall": 8.2
+    },
+    {
+      "id": "d4199769-755a-46e8-a617-88722ca8ed31",
+      "business_name": "DWS Fencing (David Wyllie & Sons)",
+      "contact_phone": "01461 700230",
+      "url": "https://www.dwsfencing.co.uk/",
+      "sector": "Trades & Construction",
+      "location": "Hannah Farm, Cummertrees, Annan, DG12 5QA",
+      "score_overall": 8.15
+    },
+    {
+      "id": "5aaafc56-56b3-4282-9e1e-56357c106b2a",
+      "business_name": "Matt Williamson & Sons (Stoke & Smoke)",
+      "contact_phone": "01848 331344",
+      "url": "https://stokeandsmoke.wordpress.com/",
+      "sector": "Home Services",
+      "location": "Unit 1 Closeburn Industrial Estate, Thornhill, DG3 5HR",
+      "score_overall": 8.1
+    },
+    {
+      "id": "4faf3fc5-3b24-4997-af7f-c88c06458f94",
+      "business_name": "Majenta Health & Beauty",
+      "contact_phone": "01387 255558",
+      "url": "https://www.majentabeauty.co.uk",
+      "sector": "Beauty & Wellness",
+      "location": "33B Buccleuch Street, Dumfries, DG1 2AB",
+      "score_overall": 8.05
+    },
+    {
+      "id": "c296fd17-31cb-42e2-a10d-35325d89e5b3",
+      "business_name": "Gillespie Gifford & Brown LLP",
+      "contact_phone": "01556 509035",
+      "url": "https://www.ggblaw.co.uk",
+      "sector": "Property",
+      "location": "135 King Street, Castle Douglas, DG7 1NA",
+      "score_overall": 8
+    },
+    {
+      "id": "e0119201-5c72-4790-950b-9c728a5704e1",
+      "business_name": "Hazel J L Smith Chartered Architect",
+      "contact_phone": "01988 500287",
+      "url": "http://hazelsmitharchitect.co.uk",
+      "sector": "Professional Services",
+      "location": "Outon Wood Cottage, Whithorn, DG8 8DJ",
+      "score_overall": 8
+    },
+    {
+      "id": "209192c9-e52a-4730-9247-d7fc0c30471f",
+      "business_name": "Sandersons Accident Repair",
+      "contact_phone": "01387 760550",
+      "url": "https://www.sandersonsaccidentrepair.com/",
+      "sector": "Automotive",
+      "location": "Corra Garages, Kirkgunzeon, Dumfries, DG2 8JS",
+      "score_overall": 8
+    },
+    {
+      "id": "fb172472-dd88-4ca7-903b-2c4b34acb610",
+      "business_name": "Mary Jeffrey — MJ Beauty & Skin Clinic",
+      "contact_phone": "01387 269349",
+      "url": "https://maryjeffrey.co.uk",
+      "sector": "Beauty & Wellness",
+      "location": "9 Assembly Street, Dumfries, DG1 2RU",
+      "score_overall": 7.95
+    },
+    {
+      "id": "5f08bada-1b84-486b-8ee3-cf8b3c15d7a2",
+      "business_name": "Allan Smith Fencing",
+      "contact_phone": "01556 690 555",
+      "url": "https://www.allansmithfencing.co.uk/",
+      "sector": "Trades & Construction",
+      "location": "Meikle Culmain, Crocketford, DG2",
+      "score_overall": 7.9
+    },
+    {
+      "id": "371167d2-3242-49e0-9956-11d9cdab6a3e",
+      "business_name": "Gracie Drew Private Nursery",
+      "contact_phone": "01387 320280",
+      "url": "https://www.graciedrewnursery.com",
+      "sector": "Childcare & Education",
+      "location": "5 Robison Drive, Dumfries, DG2 7RR",
+      "score_overall": 7.8
+    },
+    {
+      "id": "eb98b2a7-e4f3-4569-9825-65e8755e20bc",
+      "business_name": "McIntyre's Health and Well-Being Salon",
+      "contact_phone": "01848 331985",
+      "url": "http://mcintyreshealthwellbeing.co.uk/",
+      "sector": "Beauty & Wellness",
+      "location": "Thornhill, DG3 5LY",
+      "score_overall": 7.8
+    },
+    {
+      "id": "b3750bff-1a22-468f-bb75-f5e8de9723a8",
+      "business_name": "South West Smile Care Centre",
+      "contact_phone": "01776 702440",
+      "url": "https://www.swsmile.co.uk/",
+      "sector": "Healthcare",
+      "location": "34 Bridge Street, Stranraer, DG9 7JF",
+      "score_overall": 7.75
+    },
+    {
+      "id": "8ffd86a2-8eff-4a3e-8739-f3cbfad6c924",
+      "business_name": "Kevin Thornhill Motor Engineer",
+      "contact_phone": "01556 610567",
+      "url": "https://kevinthornhillmotorengineer.co.uk/",
+      "sector": "Automotive",
+      "location": "Biggar Mill Business Park, Dalbeattie, DG5 4NA",
+      "score_overall": 7.75
+    },
+    {
+      "id": "a0405416-bafb-49ea-9e31-32d4a5d8c5a1",
+      "business_name": "John Black Vehicle Body Repairs",
+      "contact_phone": "01848 330930",
+      "url": "http://www.johnblackvehiclebodyrepairs.co.uk",
+      "sector": "Automotive",
+      "location": "Thornhill, DG3 5LY",
+      "score_overall": 7.7
+    },
+    {
+      "id": "066d131c-c078-492b-ad7f-bb0883138497",
+      "business_name": "Crawick Multiverse Trust",
+      "contact_phone": "01659 50242",
+      "url": "https://www.crawickmultiverse.co.uk",
+      "sector": "Tourism & Attractions",
+      "location": "32-34 High Street, Sanquhar, DG4 6BL",
+      "score_overall": 7.7
+    },
+    {
+      "id": "0b78f34e-f4eb-4245-8591-0a4d42ac2e05",
+      "business_name": "Nith Place Dental Practice",
+      "contact_phone": "01387 252957",
+      "url": "https://www.nithplacedental.co.uk/",
+      "sector": "Healthcare",
+      "location": "5/7 Nith Place, Dumfries, DG1 2PL",
+      "score_overall": 7.7
+    },
+    {
+      "id": "5a110aeb-8c44-4aee-9579-378ac228aa6a",
+      "business_name": "Kids Ahoy Nursery & After School Care",
+      "contact_phone": "01387 279300",
+      "url": "http://www.kidsahoy.co.uk",
+      "sector": "Childcare & Education",
+      "location": "89-93 St Michael Street, Dumfries, DG1 2PY",
+      "score_overall": 7.7
+    },
+    {
+      "id": "0c6ac007-f18b-4eb9-9abc-6e221e31c703",
+      "business_name": "Bank Street Dental Surgery",
+      "contact_phone": "01387 268739",
+      "url": "https://www.dumfriesdentist.co.uk/",
+      "sector": "Dentists",
+      "location": "Dumfries",
+      "score_overall": 7.7
+    },
+    {
+      "id": "7805b839-3c4f-454d-830c-c0dc30fa08a6",
+      "business_name": "Balmoral Auto Repairs",
+      "contact_phone": "01387 253433",
+      "url": "https://balmoralautos.com/",
+      "sector": "Automotive",
+      "location": "42 Lockerbie Road, Dumfries, DG1 3AX",
+      "score_overall": 7.55
+    },
+    {
+      "id": "26ddb553-9028-4564-bd13-f40fe178be9a",
+      "business_name": "Glen Barr Optometrists",
+      "contact_phone": "01387 254015",
+      "url": "https://www.glen-barr.co.uk/",
+      "sector": "Healthcare",
+      "location": "9 Irving Street, Dumfries, DG1 1EL",
+      "score_overall": 7.55
+    },
+    {
+      "id": "cc704c12-6896-410a-85fa-a260f6b52465",
+      "business_name": "DG Smile",
+      "contact_phone": "01387 267070",
+      "url": "https://dgsmile.co.uk/",
+      "sector": "Dentists",
+      "location": "Dumfries",
+      "score_overall": 7.55
+    },
+    {
+      "id": "04e9d79d-98e9-43ec-a10b-9d0d721d9790",
+      "business_name": "Pure Beauty Kirkcudbright",
+      "contact_phone": "01557 331478",
+      "url": "http://www.purebeautykbt.com",
+      "sector": "Beauty & Wellness",
+      "location": "44 St Mary's Street, Kirkcudbright, DG6 4DN",
+      "score_overall": 7.55
+    },
+    {
+      "id": "fa956027-f44a-4e1e-9adb-e8c957e5b4c5",
+      "business_name": "Galloway Angling Centre",
+      "contact_phone": "01671 401333",
+      "url": "https://gallowayangling.co.uk/",
+      "sector": "Retail",
+      "location": "1 Queen Street, Newton Stewart, DG8 6JR",
+      "score_overall": 7.55
+    },
+    {
+      "id": "9ece66da-c5d0-456e-8e52-61a3e4d1e98e",
+      "business_name": "Grieve Grierson Moodie & Walker",
+      "contact_phone": "01387 266250",
+      "url": "https://www.ggmw.co.uk",
+      "sector": "Professional Services",
+      "location": "14 Castle Street, Dumfries, DG1 1DR",
+      "score_overall": 7.55
+    },
+    {
+      "id": "e72a69b2-9760-44a1-b02b-900f1eb98823",
+      "business_name": "The World's Oldest Post Office",
+      "contact_phone": "01659 50201",
+      "url": "https://theworldsoldestpostoffice.com",
+      "sector": "Tourism & Attractions",
+      "location": "41 High Street, Sanquhar, DG4 6DJ",
+      "score_overall": 7.5
+    },
+    {
+      "id": "51eb54f6-f91c-444f-868b-e9e5fe4a0666",
+      "business_name": "Bonnie Brae",
+      "contact_phone": "03301 332360",
+      "url": "https://www.southwestscotlandhottubretreats.co.uk/cottages/bonnie-brae.html",
+      "sector": "Accommodation",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.45
+    },
+    {
+      "id": "a6412680-9270-45f4-ab30-d36b55896a18",
+      "business_name": "West View Care Home",
+      "contact_phone": "01988 700577",
+      "url": "https://westviewmonreith.co.uk",
+      "sector": "Care Homes",
+      "location": "Monreith, Newton Stewart, Dumfries & Galloway",
+      "score_overall": 7.4
+    },
+    {
+      "id": "51c9beed-49b2-46e9-b5b2-a827f9738f22",
+      "business_name": "Balyett Farmhouse B&B",
+      "contact_phone": "01776 500982",
+      "url": "https://www.balyettfarmhousebb.co.uk",
+      "sector": "Accommodation",
+      "location": "Low Balyett Farm, Stranraer, DG9 8QL",
+      "score_overall": 7.4
+    },
+    {
+      "id": "0467210b-274c-4aa9-8cf7-ce3b6d56adc8",
+      "business_name": "A M Simpson & Son",
+      "contact_phone": "01683 220118",
+      "url": "https://am-simpson.co.uk",
+      "sector": "Professional Services",
+      "location": "14 Well Street, Moffat, DG10 9DP",
+      "score_overall": 7.4
+    },
+    {
+      "id": "939bd37a-95c4-4806-834c-540f25bd89ac",
+      "business_name": "GlenWhisk Cafe & Bistro",
+      "contact_phone": "01848 200656",
+      "url": "http://www.glencairnepm.com/glenwhiskhome/",
+      "sector": "Food & Drink",
+      "location": "Moniaive, Thornhill, DG3",
+      "score_overall": 7.4
+    },
+    {
+      "id": "981961cb-c128-4a52-a306-68516789721e",
+      "business_name": "The Mill on the Fleet",
+      "contact_phone": "01557 814099",
+      "url": "https://millonthefleet.co.uk/",
+      "sector": "Tourism & Attractions",
+      "location": "High Street, Gatehouse of Fleet, Castle Douglas, DG7 2HP",
+      "score_overall": 7.35
+    },
+    {
+      "id": "f77c05ff-fb13-4309-9220-7e447bc40ae3",
+      "business_name": "Laurieknowe Squash & Racketball Club",
+      "contact_phone": "01387252012",
+      "url": "https://www.laurieknowesrc.co.uk/",
+      "sector": "Fitness & Leisure",
+      "location": "School Lane, Laurieknowe, Dumfries, DG2 7AJ",
+      "score_overall": 7.3
+    },
+    {
+      "id": "114d0419-0fc9-4bc7-8ba0-32da1bb04abd",
+      "business_name": "Cara Consultants Ltd",
+      "contact_phone": "01848 331510",
+      "url": "http://www.cara.co.uk",
+      "sector": "Professional Services",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.25
+    },
+    {
+      "id": "44a56895-1f87-4919-b4e3-3d63e0163d25",
+      "business_name": "Psychological Therapies Dumfries",
+      "contact_phone": "01848 200468",
+      "url": "https://www.psychologicaltherapiesdumfries.com/",
+      "sector": "Healthcare",
+      "location": "High Street, Moniaive, Thornhill, DG3 4HN",
+      "score_overall": 7.25
+    },
+    {
+      "id": "d4a70550-0236-4ee7-b7ef-4e4bd8ee091b",
+      "business_name": "Annandale Funeral Directors",
+      "contact_phone": "01576 204600",
+      "url": "https://www.annandalefuneraldirectors.com",
+      "sector": "Funeral Directors",
+      "location": "Lockerbie",
+      "score_overall": 7.2
+    },
+    {
+      "id": "96218b36-cc66-49e9-8433-b4cf7bd7051e",
+      "business_name": "Luke Moloney Architect",
+      "contact_phone": "01387 440096",
+      "url": "https://lukemoloneyarchitect.co.uk",
+      "sector": "Professional Services",
+      "location": "20 English Street (Second Floor), Dumfries, DG1 2BY",
+      "score_overall": 7.2
+    },
+    {
+      "id": "142173da-b560-458a-b66d-2b59071453c5",
+      "business_name": "Pegasus Fitness Ltd",
+      "contact_phone": "01848 332505",
+      "url": "https://www.pegasusfitnessltd.co.uk",
+      "sector": "Fitness & Leisure",
+      "location": "14 Townhead Street, Thornhill, DG3 5NW",
+      "score_overall": 7.2
+    },
+    {
+      "id": "05f73da5-0e7b-4c45-9f05-7988b9266333",
+      "business_name": "Farries Kirk & McVean",
+      "contact_phone": "01848 330850",
+      "url": "https://www.fkmcv.co.uk",
+      "sector": "Professional Services",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.2
+    },
+    {
+      "id": "966f3f82-ce02-444e-8115-6935210aec56",
+      "business_name": "Dinwoodie Lodge Hotel",
+      "contact_phone": "01576 470289",
+      "url": "https://www.dinwoodielodge.co.uk",
+      "sector": "Accommodation",
+      "location": "Johnstonebridge, DG11",
+      "score_overall": 7
+    },
+    {
+      "id": "a66f861e-aef6-48b0-9b19-36ed62a075c8",
+      "business_name": "DG Smile Dental Practice",
+      "contact_phone": "01387 267070",
+      "url": "https://dgsmile.co.uk",
+      "sector": "Healthcare",
+      "location": "48 Whitesands, Dumfries, DG1 2RS",
+      "score_overall": 7
+    }
+  ],
+  "noUrl": [
+    {
+      "id": "4f4c7005-cd21-4531-83ab-e5c334a47a02",
+      "business_name": "Malory Day Nursery",
+      "contact_phone": "01387 269943",
+      "url": null,
+      "sector": "Childcare & Education",
+      "location": "20 Shakespeare Street, Dumfries, DG1 2JE",
+      "score_overall": 8.75
+    },
+    {
+      "id": "e04995c4-3d96-469a-844f-7e2bcf241b53",
+      "business_name": "A & A Harkness Funeral Directors",
+      "contact_phone": "01848 330411",
+      "url": null,
+      "sector": "Funeral Directors",
+      "location": "Penpont, Thornhill",
+      "score_overall": 8.65
+    },
+    {
+      "id": "bbb12ceb-8b2a-4730-b7fd-6ec4b023f8a7",
+      "business_name": "Sanquhar Heating & Plumbing",
+      "contact_phone": "01659 58001",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 8.55
+    },
+    {
+      "id": "f8095be3-ec9d-4559-af60-5720d9558685",
+      "business_name": "Wilson Auto Repairs",
+      "contact_phone": "01776 700018",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Fountain Way, Blackparks Industrial Estate, Stranraer, DG9 7UD",
+      "score_overall": 8.55
+    },
+    {
+      "id": "558ad73f-82c2-40c8-955d-c558f9af441d",
+      "business_name": "Townhead Garage",
+      "contact_phone": "01659 50349",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Buccleuch Road, Sanquhar, DG4 6BX",
+      "score_overall": 8.55
+    },
+    {
+      "id": "e4fcf89c-d215-4882-9864-9d17f6bc38c3",
+      "business_name": "First Steps Nursery Dumfries",
+      "contact_phone": "01387 255345",
+      "url": null,
+      "sector": "Childcare & Education",
+      "location": "Catherinefield School, Heathhall, Dumfries, DG1 3NT",
+      "score_overall": 8.4
+    },
+    {
+      "id": "5b71036a-f673-4e6b-a919-70998cbc4a4f",
+      "business_name": "Soleburn Garden Centre",
+      "contact_phone": "01776 870664",
+      "url": null,
+      "sector": "Garden Centres",
+      "location": "Mill Croft, Leswalt, Stranraer, Dumfries & Galloway, DG9 0PW",
+      "score_overall": 8.4
+    },
+    {
+      "id": "bf3edfb4-193f-443c-b389-40190b7d0c40",
+      "business_name": "The Antique Shop Kirkcudbright",
+      "contact_phone": "01557 332400",
+      "url": null,
+      "sector": "Retail",
+      "location": "Harbour Square, Kirkcudbright, DG6 4HY",
+      "score_overall": 8.35
+    },
+    {
+      "id": "632fe21c-8fa9-4710-8fd3-3a90a77a52da",
+      "business_name": "Paul Murray & Son Electrical Systems",
+      "contact_phone": "01659 50489",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 8.3
+    },
+    {
+      "id": "19bad142-e946-4674-9b22-43e99a0a0b63",
+      "business_name": "Bellymack Hill Farm Red Kite Feeding Station",
+      "contact_phone": "01644 450202",
+      "url": null,
+      "sector": "Tourism & Attractions",
+      "location": "Bellymack Hill Farm, Laurieston, Castle Douglas, DG7 2PJ",
+      "score_overall": 8.25
+    },
+    {
+      "id": "421f9b67-8304-4191-9352-6196770bacd1",
+      "business_name": "MCM Garage Services Ltd",
+      "contact_phone": "01683 300200",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Lochhouse Yard, Beattock, Moffat, DG10 9SG",
+      "score_overall": 8.2
+    },
+    {
+      "id": "c113c592-db6d-4e02-86f2-3253a835c240",
+      "business_name": "R Peacock & Son Plumbing & Heating",
+      "contact_phone": "01848 332343",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Thornhill, DG3",
+      "score_overall": 8.2
+    },
+    {
+      "id": "351f74a7-bda8-4b51-b598-b2e2b87ae87a",
+      "business_name": "IM Autos",
+      "contact_phone": "01671 402987",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Unit 4, Station Industrial Estate, Newton Stewart, DG8 6ND",
+      "score_overall": 8.2
+    },
+    {
+      "id": "b61f7d75-8a12-4faf-9b64-121bd8056ff4",
+      "business_name": "Freckles Bridal Couture",
+      "contact_phone": "01387 265202",
+      "url": null,
+      "sector": "Retail",
+      "location": "13-15 Church Crescent, Dumfries, DG1 1ER",
+      "score_overall": 8.15
+    },
+    {
+      "id": "5c354c8f-7d0d-4db0-b679-7deb5d0a3ac6",
+      "business_name": "Owens Electrical Contracting Ltd",
+      "contact_phone": "01659 50633",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 8.15
+    },
+    {
+      "id": "16ea9027-ea48-474d-a6db-f9c233a43d29",
+      "business_name": "Glenlossie Guest House",
+      "contact_phone": "01387 254305",
+      "url": null,
+      "sector": "Accommodation",
+      "location": "75 Annan Road, Dumfries, DG1 3EG",
+      "score_overall": 8.15
+    },
+    {
+      "id": "24460392-d742-49ae-b860-ddc8f514c5f3",
+      "business_name": "Cowens Jewellers",
+      "contact_phone": "01387 254004",
+      "url": null,
+      "sector": "Retail",
+      "location": "45 Friars Vennel, Dumfries, DG1 2RQ",
+      "score_overall": 8.15
+    },
+    {
+      "id": "ba24dcb3-f138-4120-a879-c6a1d8f588cf",
+      "business_name": "Cafe Ariete",
+      "contact_phone": "01683 220313",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "10 High Street, Moffat DG10 9HD",
+      "score_overall": 8.1
+    },
+    {
+      "id": "2639630b-dd27-4cbd-8900-9aabc1eed07c",
+      "business_name": "Greyfriars Business Services",
+      "contact_phone": "01387 255088",
+      "url": null,
+      "sector": "Accountants",
+      "location": "16 Galloway Street, Dumfries, DG2 7TL",
+      "score_overall": 8.05
+    },
+    {
+      "id": "4c6ed62f-a460-4824-aaa0-f61aee1462cb",
+      "business_name": "T P Reid & Co",
+      "contact_phone": "01387 257277",
+      "url": null,
+      "sector": "Professional Services",
+      "location": "70 Buccleuch Street, Dumfries, DG1 2AA",
+      "score_overall": 8.05
+    },
+    {
+      "id": "58ea2f5c-ea88-412b-a7f9-15426b051d67",
+      "business_name": "D M Campbell & Co",
+      "contact_phone": "01387 263081",
+      "url": null,
+      "sector": "Professional Services",
+      "location": "33 Castle Street, Dumfries, DG1 1DL",
+      "score_overall": 8.05
+    },
+    {
+      "id": "17a966c9-99f5-45fc-b206-ceb5f2e63d8a",
+      "business_name": "Eden of Dumfries",
+      "contact_phone": "01387 951108",
+      "url": null,
+      "sector": "Wedding & Events",
+      "location": "Kilnford Barns, The Glen, Dumfries, DG2 8PT",
+      "score_overall": 8
+    },
+    {
+      "id": "e656212a-c923-4dae-8b06-2d14c164a8d6",
+      "business_name": "Barend Riding Centre",
+      "contact_phone": "01387 780533",
+      "url": null,
+      "sector": "Activity / Tourism",
+      "location": "Sandyhills, Dalbeattie, DG5 4NU",
+      "score_overall": 8
+    },
+    {
+      "id": "e3847aeb-7edc-4382-8b4f-9bed7c5677bc",
+      "business_name": "Nithsdale Garage",
+      "contact_phone": "01659 50838",
+      "url": null,
+      "sector": "Automotive",
+      "location": "95-105 High Street, Sanquhar, DG4 6DX",
+      "score_overall": 8
+    },
+    {
+      "id": "3b9d83b1-1804-4222-844a-70291ad70ccc",
+      "business_name": "D Little Opticians",
+      "contact_phone": "01556 502165",
+      "url": null,
+      "sector": "Opticians",
+      "location": "13 Academy Street, Castle Douglas, DG7 1AP",
+      "score_overall": 8
+    },
+    {
+      "id": "7eca0d3e-3562-4d42-bde9-63023b655aef",
+      "business_name": "Galloway Craft Guild",
+      "contact_phone": "01556 506822",
+      "url": null,
+      "sector": "Retail",
+      "location": "76a King Street, Castle Douglas, DG7 1AD",
+      "score_overall": 8
+    },
+    {
+      "id": "3f804cd9-c7bb-4d1f-accc-7717e4bff562",
+      "business_name": "Lochside Cafe Fish & Chips",
+      "contact_phone": "01387 253714",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "34 Lochside Road, Dumfries DG2 0LW",
+      "score_overall": 7.9
+    },
+    {
+      "id": "360965e0-ffcf-47e5-ba9b-5bf5fb9837fe",
+      "business_name": "K D Muirhead Ltd",
+      "contact_phone": "01848 331716",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Thornhill, DG3 5NA",
+      "score_overall": 7.9
+    },
+    {
+      "id": "f18fe35f-f21d-42ed-a765-3beb9cdd1103",
+      "business_name": "John Brown & Sons",
+      "contact_phone": "01659 50444",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.9
+    },
+    {
+      "id": "2e348531-2bcd-4be3-9e54-62bdde48d005",
+      "business_name": "Clann Cafe",
+      "contact_phone": "01557 337264",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "37 St Mary Street, Kirkcudbright DG6 4AE",
+      "score_overall": 7.85
+    },
+    {
+      "id": "3a249ec7-9322-4280-b983-f0a53ef5076d",
+      "business_name": "Mulberries Coffee Shop",
+      "contact_phone": "01557 330961",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "11 St Cuthbert Street, Kirkcudbright DG6 4AE",
+      "score_overall": 7.85
+    },
+    {
+      "id": "540b1acb-3846-4f40-a21b-8acafa7176cf",
+      "business_name": "Brew Ha Ha",
+      "contact_phone": "01671 404203",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "48 Victoria Street, Newton Stewart DG8 6BT",
+      "score_overall": 7.85
+    },
+    {
+      "id": "8252d0c6-5837-490b-a30e-4c4b24aa5d16",
+      "business_name": "Solway Tide Tearoom",
+      "contact_phone": "01557 330735",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "16 St Cuthbert Street, Kirkcudbright DG6",
+      "score_overall": 7.85
+    },
+    {
+      "id": "da07bf7b-83fc-4495-9914-3c7a8bf88f59",
+      "business_name": "William Duncan Roofing Ltd",
+      "contact_phone": "01659 50321",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.8
+    },
+    {
+      "id": "93f5f1ec-b1da-44b1-b213-d6264f9eec8c",
+      "business_name": "Southwest Electrical Services Dumfries",
+      "contact_phone": "01387 000000",
+      "url": null,
+      "sector": "Home Services",
+      "location": "Dumfries, DG1",
+      "score_overall": 7.8
+    },
+    {
+      "id": "6a8efcbe-9f35-4afd-bd5b-90d7294f8741",
+      "business_name": "The Farmers Arms",
+      "contact_phone": "01848 330190",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.8
+    },
+    {
+      "id": "a8a2bb82-146d-49e2-8117-43365c941fa7",
+      "business_name": "Gordon W Thomson Jeweller",
+      "contact_phone": "01387 255147",
+      "url": null,
+      "sector": "Retail",
+      "location": "43 Bank Street, Dumfries, DG1 2PA",
+      "score_overall": 7.8
+    },
+    {
+      "id": "9d6061cb-74bb-4ea2-8b79-f1e67f197369",
+      "business_name": "Marr Associates",
+      "contact_phone": "01671 403430",
+      "url": null,
+      "sector": "Beauty & Wellness",
+      "location": "20 Victoria Street, Newton Stewart, DG8 6BT",
+      "score_overall": 7.75
+    },
+    {
+      "id": "10a44792-4e4c-4bd2-be45-debac23e6750",
+      "business_name": "Buckland Plants",
+      "contact_phone": "01557 331323",
+      "url": null,
+      "sector": "Garden Centres",
+      "location": "Whinnieliggate, Kirkcudbright, Dumfries and Galloway, DG6 4XP",
+      "score_overall": 7.75
+    },
+    {
+      "id": "7c1dc6e6-4648-4a01-acac-dac280fb1dc7",
+      "business_name": "Claire's Hair Studio",
+      "contact_phone": "01671 404026",
+      "url": null,
+      "sector": "Beauty & Wellness",
+      "location": "20B Victoria Street, Newton Stewart, DG8 6BT",
+      "score_overall": 7.75
+    },
+    {
+      "id": "e20ae850-51d3-45d5-ad5b-ec874c835e6b",
+      "business_name": "Cara Business Services",
+      "contact_phone": "01848 330696",
+      "url": null,
+      "sector": "Professional Services",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.7
+    },
+    {
+      "id": "4d6b4d23-6027-49f1-a8ee-1ece54939ec0",
+      "business_name": "Nith Valley Construction Ltd",
+      "contact_phone": "01848 330839",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.7
+    },
+    {
+      "id": "d3fb4a99-cb52-4684-8f81-2f532d0a5b15",
+      "business_name": "Morton's Tyre Service",
+      "contact_phone": "01659 50627",
+      "url": null,
+      "sector": "Automotive",
+      "location": "54 High Street, Sanquhar, DG4 6BL",
+      "score_overall": 7.7
+    },
+    {
+      "id": "522d6e40-1244-41e8-beea-92663cdc9cb0",
+      "business_name": "McGill Electrical & Building Services",
+      "contact_phone": "01776 700000",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Stranraer, DG9",
+      "score_overall": 7.7
+    },
+    {
+      "id": "3bf5b182-eaf9-4600-aef6-058862e59afa",
+      "business_name": "D.M. Woodfine & Sons",
+      "contact_phone": "01659 50238",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.65
+    },
+    {
+      "id": "a73261a4-29ef-47c0-8625-87210284d1c7",
+      "business_name": "Queensberry Care Home",
+      "contact_phone": "01659 58234",
+      "url": null,
+      "sector": "Care Homes",
+      "location": "Sanquhar, Dumfries & Galloway",
+      "score_overall": 7.65
+    },
+    {
+      "id": "12984f8f-ef67-4e0c-a68a-04bc2cf91310",
+      "business_name": "Sanquhar Health Dental Clinic",
+      "contact_phone": "01659 50411",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.65
+    },
+    {
+      "id": "99492deb-b139-4c61-ba37-d58f3057fc70",
+      "business_name": "J & W Vernon Ltd",
+      "contact_phone": "01848 330479",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.65
+    },
+    {
+      "id": "0d67f33a-94a5-4dc2-9dad-b8317d9615f6",
+      "business_name": "Holm Pharm",
+      "contact_phone": "01387 262244",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "St Michaels Bridge Road, Dumfries, DG1 2PX",
+      "score_overall": 7.6
+    },
+    {
+      "id": "2f479061-665d-4f55-b0f1-16b30fa9849d",
+      "business_name": "Gatehouse Pharmacy",
+      "contact_phone": "01557 814210",
+      "url": null,
+      "sector": "Pharmacies",
+      "location": "20 High Street, Gatehouse of Fleet, DG7 2HP",
+      "score_overall": 7.6
+    },
+    {
+      "id": "737b295d-9c7e-452b-94e7-e1aa0d2fcc96",
+      "business_name": "Cafe Rendezvous",
+      "contact_phone": "01988 402074",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "2 Agnew Crescent, Wigtown DG8 9DS",
+      "score_overall": 7.6
+    },
+    {
+      "id": "873c57aa-2627-4db5-ad17-b748a066b2d4",
+      "business_name": "The Smugglers Inn",
+      "contact_phone": "01387 780340",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Sandyhills, Dalbeattie, DG5",
+      "score_overall": 7.55
+    },
+    {
+      "id": "eac2ab5a-8bb1-40cd-a3ab-a46876429c48",
+      "business_name": "Irvine Plumbing & Heating",
+      "contact_phone": "01387 380XXX",
+      "url": null,
+      "sector": "Home Services",
+      "location": "Langholm, DG13",
+      "score_overall": 7.55
+    },
+    {
+      "id": "af93d327-c614-4389-8b50-4fb71b64bfc5",
+      "business_name": "Peter Foulds Opticians",
+      "contact_phone": "01671 403729",
+      "url": null,
+      "sector": "Opticians",
+      "location": "49 Princess Street, Newton Stewart, DG8 6EU",
+      "score_overall": 7.55
+    },
+    {
+      "id": "24edd307-6391-4e21-84fa-9f1e0922dc82",
+      "business_name": "The Dental Suite Dumfries",
+      "contact_phone": "01387 255234",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Dumfries, DG1",
+      "score_overall": 7.55
+    },
+    {
+      "id": "4431292f-e712-4f36-9f1d-97b25974222c",
+      "business_name": "Locharbriggs Garage",
+      "contact_phone": "01387 710000",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Locharbriggs, Dumfries, DG1",
+      "score_overall": 7.55
+    },
+    {
+      "id": "2056094f-797c-483a-92d2-c5aa65dc9a08",
+      "business_name": "Wigtown Motor Company",
+      "contact_phone": "01988 403287",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Duncan Park, Wigtown, Newton Stewart, DG8 9JD",
+      "score_overall": 7.55
+    },
+    {
+      "id": "caaa69aa-f9b6-49be-9136-877d03f504c7",
+      "business_name": "Cafe 91",
+      "contact_phone": "01576 202379",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "91-93 High Street, Lockerbie DG11 2DA",
+      "score_overall": 7.55
+    },
+    {
+      "id": "ff2b8a56-791a-452a-8b23-7bd7f6ab11e7",
+      "business_name": "The Riverbank Restaurant",
+      "contact_phone": "01671 403330",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Goods Lane, Newton Stewart DG8 6EH",
+      "score_overall": 7.55
+    },
+    {
+      "id": "458afbc4-5b3c-4c2d-bc34-4235c5dd7c4e",
+      "business_name": "St John's Garage",
+      "contact_phone": "01988 500203",
+      "url": null,
+      "sector": "Automotive",
+      "location": "St John Street, Whithorn, Newton Stewart, DG8 8PF",
+      "score_overall": 7.55
+    },
+    {
+      "id": "006104cc-1e07-45ae-b648-50764800ad8b",
+      "business_name": "L & C Mein Painters & Decorators",
+      "contact_phone": "01659 67483",
+      "url": null,
+      "sector": "Painters & Decorators",
+      "location": "Kelloholm, DG4",
+      "score_overall": 7.5
+    },
+    {
+      "id": "5561a10d-513f-489e-b1e9-7b12fe1dcc58",
+      "business_name": "Tower Fish Bar",
+      "contact_phone": "01576 204262",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "1 Station Road, Lockerbie DG11 2HB",
+      "score_overall": 7.5
+    },
+    {
+      "id": "8beee17c-dbb0-4657-8642-1138f0bd1331",
+      "business_name": "JMC Contracts & Supplies",
+      "contact_phone": "01659 50839",
+      "url": null,
+      "sector": "Landscaping",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.5
+    },
+    {
+      "id": "5fda7e2d-c4c9-4b76-b3f0-3907fa728615",
+      "business_name": "A1 Curtain Design",
+      "contact_phone": "01848 331002",
+      "url": null,
+      "sector": "Home Services",
+      "location": "Thornhill, DG3 5LJ",
+      "score_overall": 7.5
+    },
+    {
+      "id": "f28c4f02-653b-44d9-8a9e-ca18c3db2bd1",
+      "business_name": "Mark Vernon Electrical Contractor",
+      "contact_phone": "01848 330520",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.5
+    },
+    {
+      "id": "42b48eeb-b214-4f56-9b64-d41c92c01c18",
+      "business_name": "Hillhouse & Hunter",
+      "contact_phone": "01848 330267",
+      "url": null,
+      "sector": "Retail",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.5
+    },
+    {
+      "id": "76085588-3fd2-4f61-a8c9-5e6db3c86378",
+      "business_name": "Jackie's Hairdressers",
+      "contact_phone": "01659 50531",
+      "url": null,
+      "sector": "Beauty & Wellness",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.5
+    },
+    {
+      "id": "0d08d1b4-d02c-4f74-967a-fdf7a9ec6100",
+      "business_name": "Briery Park Care Home",
+      "contact_phone": "01848 332000",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.45
+    },
+    {
+      "id": "73f0a7e4-d28f-4a11-8b83-c16491d3e928",
+      "business_name": "Jardine & Samson Solicitors",
+      "contact_phone": "01576 202444",
+      "url": null,
+      "sector": "Professional Services",
+      "location": "Lockerbie, DG11",
+      "score_overall": 7.45
+    },
+    {
+      "id": "4ac52011-b689-4666-8f18-1c303e144e58",
+      "business_name": "Annan Garage (R&M Motors)",
+      "contact_phone": "01461 202081",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Annan, DG12",
+      "score_overall": 7.4
+    },
+    {
+      "id": "4957e12e-5d37-49c2-a97d-955da4550457",
+      "business_name": "Power Cuts",
+      "contact_phone": "01556 611300",
+      "url": null,
+      "sector": "Beauty & Wellness",
+      "location": "209A High Street, Dalbeattie, DG5 4DW",
+      "score_overall": 7.4
+    },
+    {
+      "id": "7c257e06-0ff2-4f51-a4bc-0c0b5a0341a7",
+      "business_name": "Galloway Tyres & Exhausts",
+      "contact_phone": "01671 402366",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Newton Stewart, DG8",
+      "score_overall": 7.4
+    },
+    {
+      "id": "6dde5c44-44ae-4c2d-86e2-d064f61f611a",
+      "business_name": "Dalbeattie Books",
+      "contact_phone": "01556 610228",
+      "url": null,
+      "sector": "Retail",
+      "location": "65 High Street, Dalbeattie, DG5 4HA",
+      "score_overall": 7.4
+    },
+    {
+      "id": "e573cf5b-38df-4bd0-88df-21091b0027a8",
+      "business_name": "The Nith Hotel",
+      "contact_phone": "01848 330319",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Penpont, Thornhill, DG3 4BX",
+      "score_overall": 7.4
+    },
+    {
+      "id": "a3ab3e72-f6b9-448b-bcec-612cfcc48e76",
+      "business_name": "Mr Grahams Hairdressers",
+      "contact_phone": "01461 204777",
+      "url": null,
+      "sector": "Beauty & Wellness",
+      "location": "114 High Street, Annan, DG12 6DW",
+      "score_overall": 7.4
+    },
+    {
+      "id": "0e8623d3-7d0e-4e42-8643-57c1876f757e",
+      "business_name": "Guide Pharmacy",
+      "contact_phone": "01461 202804",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "49 Rose Street, Annan, DG12 5AS",
+      "score_overall": 7.35
+    },
+    {
+      "id": "e45c7138-8c8b-41ee-86e7-16021b82f27c",
+      "business_name": "Starfish Takeaway",
+      "contact_phone": "01671 403832",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "3 Dashwood Square, Newton Stewart DG8 6EQ",
+      "score_overall": 7.35
+    },
+    {
+      "id": "ed0ec955-24a5-4946-b498-8a5daf3a2cd3",
+      "business_name": "Norman Furnishings",
+      "contact_phone": "01659 50289",
+      "url": null,
+      "sector": "Retail",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.35
+    },
+    {
+      "id": "2265adeb-eed6-4857-9442-571137753d86",
+      "business_name": "Newton Stewart Dental Practice",
+      "contact_phone": "01671 402503",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Newton Stewart, DG8 6JE",
+      "score_overall": 7.35
+    },
+    {
+      "id": "b23cd7ab-6b92-4b8b-a437-ee03e24f070b",
+      "business_name": "Castle Chemist",
+      "contact_phone": "01556 502003",
+      "url": null,
+      "sector": "Pharmacies",
+      "location": "97 King Street, Castle Douglas, DG7 1LZ",
+      "score_overall": 7.35
+    },
+    {
+      "id": "a3404202-b556-4d30-b793-b02780b0d746",
+      "business_name": "Criffel Street Dental Practice",
+      "contact_phone": "01387 254196",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Dumfries, DG2",
+      "score_overall": 7.3
+    },
+    {
+      "id": "56a4f244-5684-43ab-9c17-01be01154444",
+      "business_name": "Dumfries Dental Surgery (Academy Street)",
+      "contact_phone": "01387 253467",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Dumfries, DG1",
+      "score_overall": 7.3
+    },
+    {
+      "id": "97e7024d-3d7a-4df9-8d91-68c523a3adf2",
+      "business_name": "Crown Inn",
+      "contact_phone": "01659 50239",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "High Street, Sanquhar, DG4",
+      "score_overall": 7.3
+    },
+    {
+      "id": "892d5c5e-6873-455b-a757-d70d672cc5c0",
+      "business_name": "Oakbank & Hyslop Skips",
+      "contact_phone": "01659 67460",
+      "url": null,
+      "sector": "Waste Removal",
+      "location": "Kirkconnel, DG4",
+      "score_overall": 7.3
+    },
+    {
+      "id": "f297fef5-3b51-49f4-a4a6-f627c4e920c7",
+      "business_name": "Calum Muirhead",
+      "contact_phone": "01848 330045",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Penpont, Thornhill, DG3 4BZ",
+      "score_overall": 7.3
+    },
+    {
+      "id": "90ea7999-e5ad-4a6d-b19d-5c3cb40334b6",
+      "business_name": "Irvine's Garage",
+      "contact_phone": "013873 80360",
+      "url": null,
+      "sector": "Automotive",
+      "location": "Langholm, DG13",
+      "score_overall": 7.3
+    },
+    {
+      "id": "62bcbcbd-b2bb-4f1e-9b99-53a89bf000d6",
+      "business_name": "Westlands Guest House",
+      "contact_phone": "01387 252373",
+      "url": null,
+      "sector": "Accommodation",
+      "location": "Newall Terrace, Dumfries, DG1",
+      "score_overall": 7.3
+    },
+    {
+      "id": "b6539aaa-50a3-48ed-b7e6-0dcb950eb988",
+      "business_name": "Lenny Mein & Son Painters & Decorators",
+      "contact_phone": "01659 50712",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.3
+    },
+    {
+      "id": "f2427699-8156-4a17-9d9d-2df3f555c4c7",
+      "business_name": "Fringe Benefits",
+      "contact_phone": "01848 330903",
+      "url": null,
+      "sector": "Beauty & Wellness",
+      "location": "Thornhill, DG3 5ND",
+      "score_overall": 7.3
+    },
+    {
+      "id": "042eca78-b29d-4631-a5ab-65ee16d440e5",
+      "business_name": "Dick Bros",
+      "contact_phone": "01848 330055",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Penpont, Thornhill, DG3 4LX",
+      "score_overall": 7.3
+    },
+    {
+      "id": "26090ff4-da65-403c-8794-dd94df0dc2fc",
+      "business_name": "Harvey's Cafe",
+      "contact_phone": "01659 50208",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.25
+    },
+    {
+      "id": "bec6ce6e-b334-463a-a37e-3b95bab4c73c",
+      "business_name": "Kelton Bed & Breakfast",
+      "contact_phone": "01848 330868",
+      "url": null,
+      "sector": "Accommodation",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.25
+    },
+    {
+      "id": "c9183319-3800-4c35-b1bf-5df033082918",
+      "business_name": "Julies Bookkeeping Ltd",
+      "contact_phone": "01848 330334",
+      "url": null,
+      "sector": "Professional Services",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.25
+    },
+    {
+      "id": "28036024-4b03-45a6-91c8-19631a8a069d",
+      "business_name": "Solway Tile & DIY Centre",
+      "contact_phone": "01387 261171",
+      "url": null,
+      "sector": "Retail",
+      "location": "238 Heathhall Industrial Estate, Dumfries, DG1 3PH",
+      "score_overall": 7.2
+    },
+    {
+      "id": "27781ab0-0330-4ec4-9434-0e747beab154",
+      "business_name": "Carpets & Rugs Direct Dumfries",
+      "contact_phone": "01387 254504",
+      "url": null,
+      "sector": "Retail",
+      "location": "25 Whitesands, Dumfries, DG1 2RR",
+      "score_overall": 7.2
+    },
+    {
+      "id": "650d346e-5c8f-444a-88b8-f08e329e1375",
+      "business_name": "Hiddleston Joiners",
+      "contact_phone": "01387 720555",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "The Old School, Dumfries, DG2 9RY",
+      "score_overall": 7.2
+    },
+    {
+      "id": "9efa0a4f-e484-446e-b37a-d8caebb0b2ac",
+      "business_name": "Johnstone & Clark Heating",
+      "contact_phone": "01387 267211",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "St Mary's Industrial Estate, Dumfries, DG1 1NE",
+      "score_overall": 7.2
+    },
+    {
+      "id": "11018cfd-650a-4bdd-9a3b-3288eb55aae4",
+      "business_name": "Dryfesdale Care Home",
+      "contact_phone": "01576 202806",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Lockerbie, DG11",
+      "score_overall": 7.2
+    },
+    {
+      "id": "b42e6a80-802b-489c-81a0-cc7507d366fb",
+      "business_name": "Atack Plumbing & Heating",
+      "contact_phone": "01387 250444",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Unit 5, St Mary's Industrial Estate, Dumfries, DG1 1NA",
+      "score_overall": 7.2
+    },
+    {
+      "id": "a37b21c1-f54c-4b22-a4c2-dbd51c4abb25",
+      "business_name": "DW Construction & Joinery",
+      "contact_phone": "01387 266973",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Unit 215 Heathhall Industrial Estate, Dumfries, DG1 3PH",
+      "score_overall": 7.2
+    },
+    {
+      "id": "33ebe1af-db84-4d06-a194-5cf9aa4a59a7",
+      "business_name": "Patties of Dumfries",
+      "contact_phone": "01387 252891",
+      "url": null,
+      "sector": "Retail",
+      "location": "109 Queensberry Street, Dumfries, DG1 1BH",
+      "score_overall": 7.2
+    },
+    {
+      "id": "48731fe9-dfd3-4eb6-bde7-c7890e96da14",
+      "business_name": "Maxwelltown Roofing Services",
+      "contact_phone": "01387 405243",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Unit 3 Irongray Road, Dumfries, DG2 0JE",
+      "score_overall": 7.2
+    },
+    {
+      "id": "6e91006d-36e1-426e-a019-d43539537857",
+      "business_name": "JJ's Fitness Centre",
+      "contact_phone": "01387 270172",
+      "url": null,
+      "sector": "Fitness & Leisure",
+      "location": "2-6 Nith Place, Dumfries, DG1 2PL",
+      "score_overall": 7.2
+    },
+    {
+      "id": "c894a624-7e6a-4320-a789-ef07c8aed420",
+      "business_name": "Stanley Wright Ltd",
+      "contact_phone": "01659 50567",
+      "url": null,
+      "sector": "Professional Services",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.2
+    },
+    {
+      "id": "49dce7d1-7489-421b-90eb-971a2dbb84ed",
+      "business_name": "Thomson & Jardine Joiners",
+      "contact_phone": "01387 265032",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Lanefoot, Dumfries, DG2 7SL",
+      "score_overall": 7.2
+    },
+    {
+      "id": "072e6ecf-c1ab-403d-b235-a270818f3b70",
+      "business_name": "Cornerstone Builders Dumfries",
+      "contact_phone": "01387 267254",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "4 Parkhead Drive, Dumfries, DG1 3BY",
+      "score_overall": 7.2
+    },
+    {
+      "id": "c013d550-1932-464f-bf6b-66375d698ef6",
+      "business_name": "Douglas Anderson Menswear",
+      "contact_phone": "01387 250250",
+      "url": null,
+      "sector": "Retail",
+      "location": "5 Church Crescent, Dumfries, DG1 1DF",
+      "score_overall": 7.2
+    },
+    {
+      "id": "cb61c2ec-c237-47bb-8fa0-4781722b85c2",
+      "business_name": "Castleview Pet and Garden",
+      "contact_phone": "01659 50146",
+      "url": null,
+      "sector": "Retail",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.2
+    },
+    {
+      "id": "a2bdf110-aef4-4cf3-a12f-9e82babc9711",
+      "business_name": "Nithsdale Plumbing & Heating",
+      "contact_phone": "01387 267120",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "2 Catherinefield Industrial Estate, Dumfries, DG1 3PQ",
+      "score_overall": 7.2
+    },
+    {
+      "id": "e1d6fe08-e0dc-4b92-921e-a0297f4f8927",
+      "business_name": "Dovetails Building & Joinery",
+      "contact_phone": "01387 731263",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "7E Catherinefield Industrial Estate, Dumfries, DG1 3PQ",
+      "score_overall": 7.2
+    },
+    {
+      "id": "a321fca3-59c7-4ddf-bc62-0fdfc3f78383",
+      "business_name": "DGRC Roofing Contractors",
+      "contact_phone": "01387 279381",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Fairlands, Heathhall Terrace, Dumfries, DG1 1TU",
+      "score_overall": 7.2
+    },
+    {
+      "id": "b405be0f-8e52-4f39-9ee1-fc79ebf5ada1",
+      "business_name": "Burns Clinic (Private Healthcare, Dumfries)",
+      "contact_phone": "01387 263555",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Dumfries, DG1",
+      "score_overall": 7.15
+    },
+    {
+      "id": "2cf4fb33-596f-44b7-b1d1-704edd2feb65",
+      "business_name": "Dumfries Osteopathy & Sports Injury Clinic",
+      "contact_phone": "01387 255844",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Dumfries, DG1",
+      "score_overall": 7.15
+    },
+    {
+      "id": "7f61b30d-96da-4977-ac63-e5fda3c89d79",
+      "business_name": "Dumfries Natural Health Centre",
+      "contact_phone": "01387 265355",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Dumfries, DG1",
+      "score_overall": 7.15
+    },
+    {
+      "id": "8209811e-627b-4b7f-b320-efa1181bf04b",
+      "business_name": "Balance Pilates & Physiotherapy Dumfries",
+      "contact_phone": "01387 270444",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Dumfries, DG1",
+      "score_overall": 7.15
+    },
+    {
+      "id": "53e16c99-3576-4c23-98c4-1b7d61e253e9",
+      "business_name": "Dumfries & Galloway Chiropractic (Heathhall)",
+      "contact_phone": "01387 247999",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Heathhall, Dumfries, DG1",
+      "score_overall": 7.15
+    },
+    {
+      "id": "789e7e91-1dd3-48a1-ae65-3f539c834b52",
+      "business_name": "The George Moniaive",
+      "contact_phone": "01848 200203",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Moniaive, DG3 4HN",
+      "score_overall": 7.1
+    },
+    {
+      "id": "886dfd2e-eca1-41c7-a44d-a26bb653087b",
+      "business_name": "Memories Forever",
+      "contact_phone": "01659 50441",
+      "url": null,
+      "sector": "Retail",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.1
+    },
+    {
+      "id": "ed516036-d22d-48fd-9db7-998209c84430",
+      "business_name": "Moffat Pharmacy",
+      "contact_phone": "01683 220219",
+      "url": null,
+      "sector": "Healthcare",
+      "location": "Moffat, DG10",
+      "score_overall": 7.1
+    },
+    {
+      "id": "051bf657-64a8-4d49-b479-e389e16260d0",
+      "business_name": "Annan Plumbing & Heating",
+      "contact_phone": "01461 202020",
+      "url": null,
+      "sector": "Home Services",
+      "location": "Annan, DG12",
+      "score_overall": 7.1
+    },
+    {
+      "id": "d66d9548-0028-447a-879e-cbacb1abe554",
+      "business_name": "Jade Garden",
+      "contact_phone": "01848 331318",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Thornhill, DG3",
+      "score_overall": 7.1
+    },
+    {
+      "id": "783af22b-7906-41b5-ab57-ce070f116fb8",
+      "business_name": "Spicy Hut",
+      "contact_phone": "01659 50999",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.1
+    },
+    {
+      "id": "a5f1a02a-a33f-4008-a39d-ed97b4009702",
+      "business_name": "Wm Moore Fencing Contractor",
+      "contact_phone": "01659 50156",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.1
+    },
+    {
+      "id": "387ff47f-dd18-4cbb-85e2-ae3030b82f5e",
+      "business_name": "Carsphairn Tearoom",
+      "contact_phone": "01644 460568",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Main Street, Carsphairn DG7",
+      "score_overall": 7.1
+    },
+    {
+      "id": "082e51aa-175c-40eb-b348-4af2e0e296ab",
+      "business_name": "Sanquhar Chinese Takeaway",
+      "contact_phone": "01659 50808",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7.1
+    },
+    {
+      "id": "e33c0e41-ae68-41c4-9101-f166df5e1a96",
+      "business_name": "The Drove Inn",
+      "contact_phone": "013873 71239",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Canonbie, DG14 (DG13 area)",
+      "score_overall": 7.05
+    },
+    {
+      "id": "980ac15a-703b-4dda-b201-64dbd36de41e",
+      "business_name": "Annan Carpet & Flooring Centre",
+      "contact_phone": "01461 202080",
+      "url": null,
+      "sector": "Retail",
+      "location": "Annan, DG12",
+      "score_overall": 7.05
+    },
+    {
+      "id": "76651421-2201-4f5a-98a8-e98bd5603970",
+      "business_name": "B McKie Plumbing and Heating",
+      "contact_phone": "01848 332241",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "Thornhill, DG3 5NF",
+      "score_overall": 7.05
+    },
+    {
+      "id": "f806969e-bcea-4a7c-9864-d2835556c9fa",
+      "business_name": "Merlin Guest House",
+      "contact_phone": "01387 265604",
+      "url": null,
+      "sector": "Accommodation",
+      "location": "Lovers Walk, Dumfries, DG1",
+      "score_overall": 7.05
+    },
+    {
+      "id": "8a5e3202-4d7e-4fff-96f0-f0c751d47feb",
+      "business_name": "Annan Leisure Centre",
+      "contact_phone": "01387 247025",
+      "url": null,
+      "sector": "Fitness & Leisure",
+      "location": "Annan, DG12",
+      "score_overall": 7.05
+    },
+    {
+      "id": "be5c78c9-7873-4f3f-8e95-c0a2dcfbe146",
+      "business_name": "Grierson Dunlop & Co",
+      "contact_phone": "01683 220000",
+      "url": null,
+      "sector": "Professional Services",
+      "location": "Moffat, DG10",
+      "score_overall": 7.05
+    },
+    {
+      "id": "aa170c6a-7701-4811-ae4a-7432c62e49a9",
+      "business_name": "Solway Landscapes",
+      "contact_phone": "01387 254923",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "16 Millview, Dumfries, DG1 4UL",
+      "score_overall": 7
+    },
+    {
+      "id": "15ae7c31-5839-4480-ad0e-02dc8db13f32",
+      "business_name": "DJH Tiling",
+      "contact_phone": "01387 250119",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "5 Yarrow Place, Dumfries, DG2 9HF",
+      "score_overall": 7
+    },
+    {
+      "id": "a262ac3f-f31c-450a-b84f-66b4500e5b85",
+      "business_name": "McKie Painters & Decorators",
+      "contact_phone": "01387 266693",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "23 St Annes Road, Dumfries, DG2 9HZ",
+      "score_overall": 7
+    },
+    {
+      "id": "38d2186c-f3c1-40b1-8893-527421684615",
+      "business_name": "Robin McCorkindale Electrician",
+      "contact_phone": "01387 268458",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "5 Barnton Drive, Dumfries, DG1 4HZ",
+      "score_overall": 7
+    },
+    {
+      "id": "e8736ba0-69b6-43ab-b459-a74d405e8142",
+      "business_name": "Murray Electricians",
+      "contact_phone": "01387 268672",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "The Workshop, Dumfries, DG2 9RW",
+      "score_overall": 7
+    },
+    {
+      "id": "ec3dde6c-0f4d-45b0-83e7-82e88b7a2a95",
+      "business_name": "JB McCormick Electrical Contractor",
+      "contact_phone": "01387 268837",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "27a Galloway Street, Dumfries, DG2 7TN",
+      "score_overall": 7
+    },
+    {
+      "id": "88309386-6b96-4a54-b414-1fa9148865bf",
+      "business_name": "M & C Garden Maintenance",
+      "contact_phone": "01848 600321",
+      "url": null,
+      "sector": "Home Services",
+      "location": "Thornhill, DG3 4AR",
+      "score_overall": 7
+    },
+    {
+      "id": "4a787298-f4a1-402f-8dab-ecc5fac7deee",
+      "business_name": "Dumfries Heating & Plumbing",
+      "contact_phone": "01387 123456",
+      "url": null,
+      "sector": "Home Services",
+      "location": "Dumfries, DG1",
+      "score_overall": 7
+    },
+    {
+      "id": "4caedf58-eb58-446a-8754-cbef66e5983f",
+      "business_name": "Keith Logue & Sons Plasterers",
+      "contact_phone": "01387 253183",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "12 Grieve Walk, Dumfries, DG1 3SY",
+      "score_overall": 7
+    },
+    {
+      "id": "ddb7276a-d8aa-43be-8562-aab4513fc75a",
+      "business_name": "Blooms Florist Dumfries",
+      "contact_phone": "01387 256192",
+      "url": null,
+      "sector": "Retail",
+      "location": "20 Academy Street, Dumfries, DG1 1BY",
+      "score_overall": 7
+    },
+    {
+      "id": "94f59c9c-3603-4108-9b12-07b54d5370f6",
+      "business_name": "East N West",
+      "contact_phone": "01659 50700",
+      "url": null,
+      "sector": "Food & Drink",
+      "location": "Sanquhar, DG4",
+      "score_overall": 7
+    },
+    {
+      "id": "22364ec8-3375-48ca-8910-14f7c257514d",
+      "business_name": "McLean Painters and Decorators",
+      "contact_phone": "01387 256726",
+      "url": null,
+      "sector": "Trades & Construction",
+      "location": "3 Robison Drive, Dumfries, DG2 7RR",
+      "score_overall": 7
+    },
+    {
+      "id": "71d1c312-5daa-4af1-91d7-1ab5f1a3b23a",
+      "business_name": "Burns Gift Shop Dumfries",
+      "contact_phone": "01387 255579",
+      "url": null,
+      "sector": "Retail",
+      "location": "5 Bank Street, Dumfries, DG1 2NX",
+      "score_overall": 7
+    }
+  ]
+}
