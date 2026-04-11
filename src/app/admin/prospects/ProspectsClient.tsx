@@ -232,11 +232,12 @@ const [emailOnly, setEmailOnly] = useState(false)
             {sentToday > 0 && (
               <span style={{ marginLeft: 10, fontWeight: 700, color: sentToday >= 20 ? '#b91c1c' : sentToday >= 10 ? '#92660a' : '#15803d' }}>
                 · {sentToday} sent today{sentToday >= 20 ? ' — good going!' : ''}
-                {Object.keys(sentByAccount).length > 0 && (
-                  <span style={{ fontWeight: 400, color: '#5A6A7A', marginLeft: 6 }}>
-                    ({FROM_ACCOUNTS.filter(a => sentByAccount[a.value]).map(a => `${sentByAccount[a.value]} ${a.label}`).join(' · ')})
-                  </span>
-                )}
+                {(() => {
+                  const parts = FROM_ACCOUNTS.filter(a => sentByAccount[a.value]).map(a => `${sentByAccount[a.value]} ${a.label}`)
+                  return parts.length > 0 ? (
+                    <span style={{ fontWeight: 400, color: '#5A6A7A', marginLeft: 6 }}>({parts.join(' · ')})</span>
+                  ) : null
+                })()}
               </span>
             )}
           </p>
