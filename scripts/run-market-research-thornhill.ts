@@ -162,7 +162,7 @@ ${SCORING_GUIDE}`
 
   const response = await anthropic.messages.create({
     model: "claude-sonnet-4-6",
-    max_tokens: 2048,
+    max_tokens: 3000,
     system: systemPrompt,
     messages: [{ role: "user", content: userPrompt }],
   })
@@ -245,7 +245,7 @@ async function insertProspects(sector: string, prospects: Prospect[]): Promise<n
   return (data ?? []).length
 }
 
-const MAX_PASSES = 3
+const MAX_PASSES = 1
 const STOP_IF_BELOW = 3  // halt if a full pass inserts fewer than this across all sectors
 const BATCH_SIZE = 4
 const BATCH_DELAY_MS = 15000
