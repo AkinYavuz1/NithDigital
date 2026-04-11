@@ -81,16 +81,15 @@ export async function POST(req: NextRequest) {
         ? 'your business'
         : p.business_name
 
-      const outreachHook = p.outreach_hook || ''
-
       const personalSubject = subject
         .replace(/\{\{business_name\}\}/g, displayName)
         .replace(/\{\{location\}\}/g, p.location || '')
 
-      const personalBody = body
+      // Use pre-generated email_draft from DB, fall back to template body
+      const personalBody = p.email_draft || body
         .replace(/\{\{business_name\}\}/g, displayName)
         .replace(/\{\{location\}\}/g, p.location || '')
-        .replace(/\{\{outreach_hook\}\}/g, outreachHook)
+        .replace(/\{\{outreach_hook\}\}/g, p.outreach_hook || '')
         .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
 
       try {

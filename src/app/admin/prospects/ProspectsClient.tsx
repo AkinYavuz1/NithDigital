@@ -24,6 +24,7 @@ interface Prospect {
   pipeline_status: string
   source: string
   outreach_hook: string | null
+  email_draft: string | null
   call_reminder_at: string | null
   last_contacted_at: string | null
 }
@@ -105,8 +106,6 @@ export default function ProspectsClient() {
   const [sending, setSending] = useState(false)
   const [emailOnly, setEmailOnly] = useState(false)
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
-  const [generatingDraft, setGeneratingDraft] = useState<string | null>(null)
-  const [drafts, setDrafts] = useState<Record<string, string>>({})
   const [replyTexts, setReplyTexts] = useState<Record<string, string>>({})
   const [analysing, setAnalysing] = useState<string | null>(null)
   const [analyses, setAnalyses] = useState<Record<string, { label: string; action: string; status: string }>>({})
@@ -153,23 +152,6 @@ export default function ProspectsClient() {
 
   const selectEmailOnly = () => {
     setSelected(new Set(filtered.filter(p => p.contact_email).map(p => p.id)))
-  }
-
-  const generateDraft = async (id: string) => {
-    setGeneratingDraft(id)
-    const res = await fetch('/api/admin/generate-draft', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id, type: 'email' }),
-    })
-    const data = await res.json()
-    setGeneratingDraft(null)
-    if (data.draft) {
-      setDrafts(prev => ({ ...prev, [id]: data.draft }))
-      showToast('Email draft generated')
-    } else {
-      showToast('Failed to generate draft', false)
-    }
   }
 
   const analyseReply = async (id: string) => {
@@ -353,11 +335,11 @@ export default function ProspectsClient() {
                           <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.contact_email}</span>
                         </span>
                         <a
-                          href={buildMailto(p, subject, drafts[p.id] || (p as any).email_draft || body)}
+                          href={buildMailto(p, subject, p.email_draft || body)}
                           style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
-                          title={drafts[p.id] || (p as any).email_draft ? 'Open AI draft in Outlook' : 'Open template in Outlook'}
+                          title={p.email_draft ? 'Open draft in Outlook' : 'Open template in Outlook'}
                         >
-                          <Send size={10} />{drafts[p.id] || (p as any).email_draft ? 'Send draft' : 'Send'}
+                          <Send size={10} />{p.email_draft ? 'Send draft' : 'Send'}
                         </a>
                       </>
                     ) : (
@@ -416,14 +398,8 @@ export default function ProspectsClient() {
                     </div>
                     {/* Email draft */}
                     <div style={{ marginTop: 14 }}>
-                      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-                        <button
-                          onClick={() => generateDraft(p.id)}
-                          disabled={generatingDraft === p.id}
-                          style={{ fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, border: '1px solid #D4A84B', background: 'transparent', color: '#92660a', cursor: 'pointer', opacity: generatingDraft === p.id ? 0.6 : 1 }}
-                        >
-                          {generatingDraft === p.id ? 'Generating...' : (drafts[p.id] || (p as any).email_draft) ? 'Regenerate email' : '✦ Generate email draft'}
-                        </button>
+                      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', marginBottom: p.email_draft ? 8 : 0 }}>
+                        <div style={{ fontSize: 11, fontWeight: 600, color: '#9CA3AF', letterSpacing: '0.5px' }}>EMAIL DRAFT</div>
                         {p.pipeline_status !== 'contacted' && p.pipeline_status !== 'interested' && p.pipeline_status !== 'won' && (
                           <button
                             onClick={() => markEmailed(p.id)}
@@ -434,10 +410,12 @@ export default function ProspectsClient() {
                           </button>
                         )}
                       </div>
-                      {(drafts[p.id] || (p as any).email_draft) && (
-                        <pre style={{ marginTop: 10, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: '#1B2A4A', fontFamily: 'inherit' }}>
-                          {drafts[p.id] || (p as any).email_draft}
+                      {p.email_draft ? (
+                        <pre style={{ margin: 0, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: '#1B2A4A', fontFamily: 'inherit' }}>
+                          {p.email_draft}
                         </pre>
+                      ) : (
+                        <div style={{ fontSize: 13, color: '#9CA3AF', fontStyle: 'italic' }}>No draft available</div>
                       )}
                     </div>
 
