@@ -42,17 +42,55 @@ const SCORE_COLOR = (s: number) => s >= 8 ? '#15803d' : s >= 6.5 ? '#92660a' : '
 const DEFAULT_SUBJECT = `Quick question — {{business_name}}`
 
 function getWeekPhrase() {
-  const day = new Date().getDay() // 0=Sun, 5=Fri, 6=Sat
+  const day = new Date().getDay()
   return (day === 0 || day === 5 || day === 6) ? 'next week' : 'this week'
 }
 
-const DEFAULT_BODY = `Hi,
+const BASE_TEMPLATES_URL = 'https://www.nithdigital.uk/templates'
+
+const SECTOR_TEMPLATE_MAP: Record<string, string> = {
+  'Trades & Construction':    'nithsdale-plumbing',
+  'Home Services':            'nithsdale-plumbing',
+  'Food & Drink':             'river-kitchen',
+  'Accommodation & Tourism':  'highland-rest',
+  'Accommodation':            'highland-rest',
+  'Hotels':                   'highland-rest',
+  'Self-Catering':            'highland-rest',
+  'Self-Catering / Glamping': 'highland-rest',
+  'Tourism & Attractions':    'galloway-adventures',
+  'Activity / Tourism':       'galloway-adventures',
+  'Activity/Tourism':         'galloway-adventures',
+  'Retail':                   'high-street-retail',
+  'Garden Centres':           'high-street-retail',
+  'Automotive':               'nithsdale-motors',
+  'Beauty & Hair':            'galloway-beauty',
+  'Beauty & Wellness':        'galloway-beauty',
+  'Healthcare':               'annandale-health',
+  'Fitness & Leisure':        'galloway-fitness',
+  'Health & Fitness':         'galloway-fitness',
+  'Sports & Leisure':         'galloway-fitness',
+  'Professional Services':    'nith-legal',
+  'Solicitors':               'nith-legal',
+  'Accountants':              'nith-legal',
+  'Property':                 'nithsdale-properties',
+  'Childcare & Education':    'stepping-stones',
+  'Wedding & Events':         'castle-events',
+}
+
+function getTemplateUrl(sector: string): string {
+  const slug = SECTOR_TEMPLATE_MAP[sector]
+  return slug ? `${BASE_TEMPLATES_URL}/${slug}` : BASE_TEMPLATES_URL
+}
+
+function getDefaultBody(sector: string) {
+  const templateUrl = getTemplateUrl(sector)
+  return `Hi,
 
 I came across {{business_name}} while looking at local businesses in the area — wanted to drop you a quick note.
 
 {{outreach_hook}}
 
-I'm Akin, founder of Nith Digital. We're a small web design agency based in Dumfries & Galloway and we specialise in helping local businesses get found online and win more work. You can see some of what we build here: www.nithdigital.uk/templates
+I'm Akin, founder of Nith Digital. We're a small web design agency based in Dumfries & Galloway and we specialise in helping local businesses get found online and win more work. You can see an example of what we build for a similar business here: ${templateUrl}
 
 I'd love to have a quick 15-minute chat — no pitch, just a look at what's possible. If it's not a fit, no worries at all.
 
@@ -63,6 +101,7 @@ Akin
 Nith Digital
 07404173024
 www.nithdigital.uk`
+}
 
 const SECTORS = [
   'all', 'Home Services', 'Healthcare', 'Fitness & Leisure', 'Property',
@@ -74,9 +113,9 @@ const SECTORS = [
 const STATUSES = ['new', 'contacted', 'interested', 'won', 'lost']
 
 
-function buildMailtoBody(p: Prospect, body: string) {
+function resolveBody(p: Prospect, body: string) {
   const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
-  return body
+  return (p.email_draft || body)
     .replace(/\{\{business_name\}\}/g, displayName)
     .replace(/\{\{location\}\}/g, p.location || '')
     .replace(/\{\{outreach_hook\}\}/g, p.outreach_hook || '')
@@ -89,19 +128,12 @@ const FROM_ACCOUNTS = [
   { label: 'Gmail',   value: 'akinyavuz7@gmail.com' },
 ]
 
-function buildMailto(p: Prospect, subject: string, body: string, from?: string) {
+function buildMailto(p: Prospect, subject: string, templateBody: string, from?: string) {
   const displayName = /^[A-Z][a-z]+ [A-Z][a-z]+/.test(p.business_name) ? 'your business' : p.business_name
-  const personalSubject = subject
-    .replace(/\{\{business_name\}\}/g, displayName)
-    .replace(/\{\{location\}\}/g, p.location || '')
-  const personalBody = body
-    .replace(/\{\{business_name\}\}/g, displayName)
-    .replace(/\{\{location\}\}/g, p.location || '')
-    .replace(/\{\{outreach_hook\}\}/g, p.outreach_hook || '')
-    .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
+  const personalSubject = subject.replace(/\{\{business_name\}\}/g, displayName)
+  const personalBody = resolveBody(p, getDefaultBody(p.sector))
   const to = p.contact_email || ''
   const fromParam = from ? `&from=${encodeURIComponent(from)}` : ''
-  // Use CRLF line endings so Outlook and other clients preserve paragraph breaks
   const bodyWithCRLF = personalBody.replace(/\r?\n/g, '\r\n')
   return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(personalSubject)}&body=${encodeURIComponent(bodyWithCRLF)}${fromParam}`
 }
@@ -354,7 +386,7 @@ const [emailOnly, setEmailOnly] = useState(false)
                         {FROM_ACCOUNTS.map(acc => (
                           <a
                             key={acc.value}
-                            href={buildMailto(p, subject, p.email_draft || body, acc.value)}
+                            href={buildMailto(p, subject, body, acc.value)}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => markEmailed(p.id, acc.value)}
@@ -424,7 +456,7 @@ const [emailOnly, setEmailOnly] = useState(false)
                         )}
                       </div>
                       <pre style={{ margin: 0, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: p.email_draft ? '#1B2A4A' : '#6B7280', fontFamily: 'inherit' }}>
-                        {p.email_draft || buildMailtoBody(p, body)}
+                        {resolveBody(p, getDefaultBody(p.sector))}
                       </pre>
                       {!p.email_draft && (
                         <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 4 }}>Showing template preview — generate a draft for a personalised version</div>
