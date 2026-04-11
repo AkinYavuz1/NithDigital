@@ -79,8 +79,8 @@ const supabase = createClient(
 export default async function HomePage() {
   const { data: testimonials } = await supabase
     .from('testimonials')
-    .select('id, name, company, message, rating')
-    .eq('is_approved', true)
+    .select('id, client_name, business_name, quote, rating, location')
+    .eq('published', true)
     .order('id', { ascending: false })
   return (
     <>

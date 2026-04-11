@@ -3,6 +3,7 @@
  * Functions are mirrored here (same pattern as auditScoring.test.ts) because
  * they are not exported from the route file.
  */
+export {}
 
 // ─── Helpers (mirrored from route.ts) ────────────────────────────────────────
 

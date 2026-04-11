@@ -3,6 +3,7 @@
  * We extract the scoring functions by re-implementing them here from the spec,
  * then test edge cases and the weighted overall formula.
  */
+export {}
 
 // ─── Scoring functions (mirrored from /api/audit/route.ts) ───────────────────
 
