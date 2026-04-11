@@ -71,6 +71,17 @@ function getTemplate(sector: string): { url: string; label: string } | null {
   return { url: `${BASE_URL}/${match.slug}`, label: match.label }
 }
 
+// Strip street addresses and postcodes from outreach hooks so the AI doesn't echo them back
+function sanitiseHook(hook: string): string {
+  return hook
+    // UK postcodes e.g. DG1 2AA, EH1 1AA
+    .replace(/\b[A-Z]{1,2}\d{1,2}[A-Z]?\s*\d[A-Z]{2}\b/gi, '')
+    // "in 31 South Main Street" / "at 12 High Street" style phrases
+    .replace(/\b(in|at|on)\s+\d+[\w\s,]*(Street|St|Road|Rd|Avenue|Ave|Lane|Ln|Drive|Dr|Place|Pl|Crescent|Cres|Way|Close|Court|Ct|Terrace|Ter|Row|Square|Sq)\b[^.?!]*/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
 export async function POST(req: NextRequest) {
   const { id, type } = await req.json()
   if (!id || !type) return NextResponse.json({ error: 'Missing id or type' }, { status: 400 })
@@ -86,6 +97,8 @@ export async function POST(req: NextRequest) {
       ? `- We have a live demo site built for a ${template.label} business — link it naturally in the email as a concrete example of our work: ${template.url}`
       : `- Link to our templates page as a general example: ${BASE_URL}`
 
+    const hook = sanitiseHook(p.outreach_hook ?? p.why_them ?? '')
+
     const msg = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 350,
@@ -96,7 +109,7 @@ export async function POST(req: NextRequest) {
 Write a cold email to ${p.business_name} (${p.sector} business in D&G).
 
 What you noticed about them (based on research — frame it as "when I looked", "last time I checked", not as guaranteed current fact):
-${p.outreach_hook ?? p.why_them}
+${hook}
 
 ${p.has_website && p.website_status && p.website_status !== 'none'
   ? `Their website appears to have issues (${p.website_status}) — but don't state technical details as absolute fact, just say what you observed when you looked it up`
@@ -124,7 +137,7 @@ Rules for your version:
 - Output the email body only. No subject line. No markdown.`
       }]
     })
-    draft = (msg.content[0] as any).text.trim()
+    draft = sanitiseHook((msg.content[0] as any).text.trim())
   }
 
   if (type === 'call') {
