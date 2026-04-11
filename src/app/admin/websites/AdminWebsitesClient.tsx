@@ -7,7 +7,7 @@ import {
   ChevronDown, ChevronUp, ExternalLink, CheckCircle2, Circle,
   AlertCircle, CloudUpload, Zap, User, FolderKanban,
   FileSignature, ClipboardList, Server, Eye, MessageSquare,
-  Type, Sigma, Bot, RefreshCw,
+  Type, Sigma, Bot, RefreshCw, Trash2,
 } from 'lucide-react'
 import { PIPELINE_STAGES, TOTAL_ESTIMATED_DAYS } from './pipelineStages'
 import type { PipelineStage, ChecklistItem } from './pipelineStages'
@@ -584,13 +584,16 @@ function ProjectDetailSheet({
   onToggleTask,
   onUpdateNotes,
   onSave,
+  onDelete,
 }: {
   project: Project
   onClose: () => void
   onToggleTask: (projectId: string, stageIndex: number, taskId: string) => void
   onUpdateNotes: (projectId: string, stageIndex: number, notes: string) => void
   onSave: (project: Project) => void
+  onDelete: (projectId: string) => void
 }) {
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const [tab, setTab] = useState<'pipeline' | 'links' | 'notes'>('pipeline')
   const [expandedStage, setExpandedStage] = useState<number>(project.current_stage)
   const [editingLinks, setEditingLinks] = useState(false)
@@ -640,6 +643,23 @@ function ProjectDetailSheet({
             >
               <Rocket size={12} /> Build Site
             </button>
+            {confirmDelete ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: 11, color: '#ff6b6b' }}>Delete?</span>
+                <button
+                  onClick={() => onDelete(project.id)}
+                  style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700, background: '#ff6b6b', color: 'white', border: 'none', cursor: 'pointer' }}
+                >Yes</button>
+                <button
+                  onClick={() => setConfirmDelete(false)}
+                  style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, background: 'rgba(245,240,230,0.15)', color: 'rgba(245,240,230,0.7)', border: 'none', cursor: 'pointer' }}
+                >No</button>
+              </div>
+            ) : (
+              <button onClick={() => setConfirmDelete(true)} style={{ background: 'none', border: 'none', color: 'rgba(245,240,230,0.3)', cursor: 'pointer', padding: 4 }} title="Delete project">
+                <Trash2 size={16} />
+              </button>
+            )}
             <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'rgba(245,240,230,0.4)', cursor: 'pointer', padding: 4 }}>
               <X size={20} />
             </button>
@@ -1104,6 +1124,12 @@ export default function AdminWebsitesClient() {
     }
   }, [selectedProject])
 
+  const handleDeleteProject = useCallback(async (projectId: string) => {
+    await supabase.from('client_projects').delete().eq('id', projectId)
+    setProjects(ps => ps.filter(p => p.id !== projectId))
+    setSelectedProject(null)
+  }, [])
+
   const filtered = projects
     .filter(p => filter === 'all' || p.status === filter)
     .filter(p => stageFilter === 'all' || PIPELINE_STAGES.find(s => s.index === p.current_stage)?.key === stageFilter)
@@ -1397,6 +1423,7 @@ export default function AdminWebsitesClient() {
           onToggleTask={handleToggleTask}
           onUpdateNotes={handleUpdateNotes}
           onSave={saveProject}
+          onDelete={handleDeleteProject}
         />
       )}
 
