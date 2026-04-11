@@ -101,39 +101,39 @@ export async function POST(req: NextRequest) {
 
     const msg = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 350,
+      max_tokens: 500,
       messages: [{
         role: 'user',
         content: `You are Akin, a web developer based in Sanquhar, Dumfries & Galloway. You run Nith Digital and build fully custom websites for local businesses across D&G.
 
 Write a cold email to ${p.business_name} (${p.sector} business in D&G).
 
-What you noticed about them (based on research — frame it as "when I looked", "last time I checked", not as guaranteed current fact):
+Here is what you found out about them. USE these specific details — do not summarise or replace them with generic statements:
 ${hook}
 
 ${p.has_website && p.website_status && p.website_status !== 'none'
-  ? `Their website appears to have issues (${p.website_status}) — but don't state technical details as absolute fact, just say what you observed when you looked it up`
+  ? `Their website appears to have issues (${p.website_status}) — frame as what you observed, not technical fact`
   : `They have no working website`}
 
-Tone and style — write exactly like this example:
+Tone and style — write exactly like this example (note: specific detail, no waffle):
 
 "Hi,
 
-I was passing your garage the other day and noticed you don't have a website — I tried to look you up on my phone and couldn't find anything. I build websites for local businesses here in D&G, based in Sanquhar. I've put together a demo for a similar type of business if you want a rough idea of what's possible: ${template?.url ?? BASE_URL}. Worth a quick chat?
+Looked up Mackenzie Joinery earlier — you've got a great portfolio but I couldn't find you on Google at all, and there's no way to request a quote on the site. I build websites for local trades businesses here in D&G, based in Sanquhar. Put together a demo for a similar joinery business if it's useful: ${template?.url ?? BASE_URL}. Worth a look?
 
 Cheers,
 Akin
 07404173024"
 
-Rules for your version:
-- 3–4 sentences max. Sound like a real person, not a marketer.
-- First sentence: what you specifically noticed — casual, like you stumbled across it. Do NOT mention their address or street — it reads as creepy. Reference what you saw online, not where they are physically located.
-- One sentence about Nith Digital — local, Sanquhar, builds custom sites (not templates)
-- When referencing the demo link, be clear it's a demo or example — NOT a real past client. Use phrasing like "put together a demo", "example of the kind of thing", "you can see the style here". Never say "did one for", "built one for", or anything implying it's a real client site.
-- Drop the demo link naturally: ${template?.url ?? BASE_URL}
-- End with one short low-pressure question — "Worth a chat?" or "Worth a quick call ${new Date().getDay() === 0 || new Date().getDay() === 5 || new Date().getDay() === 6 ? 'next week' : 'this week'}?" or similar
+Rules:
+- Use the SPECIFIC details from the research above — name the actual problems you found (missing testimonials, outdated tech, no lead capture, the heritage angle, whatever is in the notes). Do not swap them for vague generalities like "doesn't match your reputation" or "look trustworthy".
+- 4–6 sentences. Enough to show you actually looked at their business, not so long it becomes a pitch.
+- First sentence: what you specifically noticed when you looked them up. Do NOT mention their street address. Reference what you saw on their site or online.
+- One sentence introducing Nith Digital — local, Sanquhar, builds custom sites.
+- Demo link dropped naturally: ${template?.url ?? BASE_URL} — make clear it's a demo, not a past client site.
+- End with one low-pressure question — "Worth a chat?" / "Worth a call ${new Date().getDay() === 0 || new Date().getDay() === 5 || new Date().getDay() === 6 ? 'next week' : 'this week'}?" or similar.
 - Sign off: Cheers, Akin | Nith Digital | 07404173024 | www.nithdigital.uk
-- No buzzwords. No "online presence". No "digital footprint". No prices. No WordPress.
+- No buzzwords. No "online presence". No "digital footprint". No "look trustworthy". No prices. No WordPress.
 - Output the email body only. No subject line. No markdown.`
       }]
     })
