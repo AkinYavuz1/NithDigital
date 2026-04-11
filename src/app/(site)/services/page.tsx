@@ -74,7 +74,6 @@ const PRICING = [
 ]
 
 export default async function ServicesPage() {
-    .order('id', { ascending: false })
   return (
     <>
       {/* Page header */}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { X, Send, Bot, User, Loader2, Github, Globe, CheckCircle2, AlertCircle, ChevronRight, Rocket } from 'lucide-react'
+import { X, Send, Bot, User, Loader2, Globe, CheckCircle2, AlertCircle, ChevronRight, Rocket, Code } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 
 interface Project {
@@ -472,7 +472,7 @@ export default function BuildSiteModal({
                     rel="noopener noreferrer"
                     style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 18px', borderRadius: 10, background: '#f5f4f0', border: '1px solid rgba(27,42,74,0.1)', color: '#1B2A4A', textDecoration: 'none', fontSize: 13, fontWeight: 600 }}
                   >
-                    <Github size={16} />
+                    <Code size={16} />
                     View GitHub Repo
                     <ChevronRight size={14} style={{ marginLeft: 'auto', color: '#5A6A7A' }} />
                   </a>
