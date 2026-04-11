@@ -1,0 +1,39 @@
+const { createClient } = require('@supabase/supabase-js')
+
+const supabase = createClient(
+  'https://mrdozyxbonbukpmywxqi.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yZG96eXhib25idWtwbXl3eHFpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTIxMzgwNiwiZXhwIjoyMDkwNzg5ODA2fQ.RbS9M0NHEKZmDSGx_OEr9kE_kMAh5PpzJoEwFEimu-k'
+)
+
+function nextWednesday(weeksAhead) {
+  const now = new Date()
+  const day = now.getDay()
+  const daysUntilWed = (3 - day + 7) % 7 || 7
+  const date = new Date(now)
+  date.setDate(now.getDate() + daysUntilWed + (weeksAhead - 1) * 7)
+  date.setHours(9, 0, 0, 0)
+  return date.toISOString()
+}
+
+const posts = [
+  { week_number: 1, post_type: 'Update', topic: 'Intro to Nith Digital', content: "We're a small web design business based in Sanquhar, Dumfries & Galloway. We build websites for local businesses — tradespeople, B&Bs, cafés, shops — people who need something that actually works, not something that looks good in a pitch deck and sits broken for two years.\n\nEvery site we build includes hosting, SSL, mobile design, and ongoing support. No lock-in contracts. No upsells you didn't ask for.\n\nIf you run a business in D&G and your website isn't doing its job, get in touch.\n\nnithdigital.uk\n\n#DumfriesAndGalloway #WebDesign #LocalBusiness" },
+  { week_number: 2, post_type: 'Update', topic: 'Tradesman website rebuild', content: "Before: a single-page website built in 2014, no mobile layout, no contact form, SSL broken. Showing up on page 4 of Google for the business name alone.\n\nAfter: a clean, fast site with a contact form, service pages, Google Maps embed, and a real About section.\n\nSix weeks after launch, the client had three new enquiries directly from Google that month. That doesn't happen by accident.\n\nIf your site looks like the before — we can help.\n\nnithdigital.uk/contact\n\n#WebDesign #DumfriesAndGalloway #SmallBusiness" },
+  { week_number: 3, post_type: 'Update', topic: 'D&G business website stats', content: "We surveyed hundreds of businesses across Dumfries & Galloway earlier this year. The results weren't great.\n\nOver a third have no working website. A large chunk of those that do have sites that are broken, out of date, or not mobile-friendly. And most have zero Google reviews.\n\nEvery time someone searches plumber Castle Douglas or B&B Moffat and gets a bad result — local money goes elsewhere.\n\nWe're trying to fix that, one business at a time.\n\nnithdigital.uk\n\n#DumfriesAndGalloway #LocalBusiness #WebDesign" },
+  { week_number: 4, post_type: 'Update', topic: 'B&Bs and guest houses', content: "There are some brilliant B&Bs and guest houses in Dumfries & Galloway. Places with great rooms, great breakfasts, and owners who've run them for decades.\n\nAnd then there's the website. Either there isn't one, or it was built in 2011 and hasn't been touched since. No booking button. No mobile layout.\n\nA proper website with a working booking enquiry form and real photos makes a genuine difference to how many people actually make contact.\n\nnithdigital.uk/contact\n\n#DumfriesAndGalloway #BBs #Tourism #WebDesign" },
+  { week_number: 5, post_type: 'Offer', topic: 'Quote calculator', content: "Not sure how much a new website costs? We get it — most agencies don't publish prices. We do.\n\nOur quote calculator lets you build out what you need and get an instant price. Takes about 90 seconds. No email required to see the number. No sales call.\n\nTry it: nithdigital.uk/quote\n\n#WebDesign #DumfriesAndGalloway #Transparent" },
+  { week_number: 6, post_type: 'Update', topic: 'Dumfries town centre', content: "Dumfries town centre has had a tough few years. Footfall is down. People shop differently now.\n\nBut most local businesses still treat their website as an afterthought. Meanwhile, people are Googling solicitors Dumfries or electrician near Dumfries every day.\n\nIf your website is slow, broken on mobile, or doesn't show up at all, that's real money walking to someone else.\n\nWe're local. We understand the market.\n\nnithdigital.uk/contact\n\n#Dumfries #LocalBusiness #WebDesign" },
+  { week_number: 7, post_type: 'Update', topic: 'Cafe online bookings', content: "A local cafe in a D&G market town was taking table bookings by phone only and relied entirely on passing trade.\n\nWe built them a simple site with an online booking form, menu page, and Google Maps integration. Within a couple of months, 40% of new bookings came through the site — freeing up time and letting customers book outside opening hours.\n\nIt doesn't take a lot. It just takes a site that actually works.\n\nnithdigital.uk/contact\n\n#DumfriesAndGalloway #Hospitality #WebDesign" },
+  { week_number: 8, post_type: 'Update', topic: 'What local SEO means', content: "SEO gets thrown around a lot. Here's what it actually means for a D&G business:\n\nWhen someone in Annan searches accountant near me — do you appear? When someone in Thornhill searches plasterer Thornhill — does your name come up?\n\nThat's it. Getting found by the right people in the right area.\n\nWe include basic local SEO in every website we build.\n\nnithdigital.uk/services\n\n#LocalSEO #DumfriesAndGalloway #WebDesign" },
+  { week_number: 9, post_type: 'Update', topic: 'Trades and construction', content: "Most plumbers, builders, and electricians in D&G get work through word of mouth. That's great — until it dries up.\n\nA website changes that. Just a clean page that says who you are, what towns you cover, what work you do, and how to get in touch. With a few Google reviews attached.\n\nUsually done in two weeks, from first chat to live site.\n\nnithdigital.uk/contact\n\n#Trades #DumfriesAndGalloway #WebDesign" },
+  { week_number: 10, post_type: 'Update', topic: 'Google reviews gap', content: "From our research across Dumfries & Galloway: a surprisingly high proportion of businesses have no Google reviews at all.\n\nZero. Not ten, not five. None.\n\nGoogle reviews affect where you appear in search results and whether someone calls you or scrolls past. A business with 15 reviews and a 4.7 rating wins — every time.\n\nWe include a simple review request setup in every website we build.\n\nnithdigital.uk\n\n#GoogleReviews #DumfriesAndGalloway #LocalSEO" },
+  { week_number: 11, post_type: 'Update', topic: 'Power BI and data dashboards', content: "If you run a business with a spreadsheet full of data — and you're not sure what it's actually telling you — that's where Power BI comes in.\n\nWe build custom dashboards that turn raw data into something you can look at in five minutes and actually understand. Sales trends, top products, seasonal patterns.\n\nThis isn't just for big companies. We've built dashboards for small D&G businesses that changed how owners made decisions week to week.\n\nnithdigital.uk/services\n\n#PowerBI #DataDashboard #DumfriesAndGalloway" },
+  { week_number: 12, post_type: 'Offer', topic: 'Summer push CTA', content: "If you run a tourism business, cafe, B&B, or seasonal trade in Dumfries & Galloway — summer is your busiest quarter.\n\nRight now is the time to fix your website. Not in June when you're already flat out.\n\nWe can turn around a new site in two to three weeks. Flat-rate pricing, no hidden costs, hosting included for the first year.\n\nGet a quote in 90 seconds: nithdigital.uk/quote\n\n#DumfriesAndGalloway #Tourism #WebDesign #Summer" },
+]
+
+const rows = posts.map((p, i) => ({ ...p, scheduled_for: nextWednesday(i + 1), status: 'scheduled' }))
+
+supabase.from('facebook_posts').insert(rows).then(({ error }) => {
+  if (error) { console.error('FAILED:', error.message); process.exit(1) }
+  console.log('Seeded', rows.length, 'posts:')
+  rows.forEach(r => console.log(' Week', r.week_number, '-', r.scheduled_for.split('T')[0], '-', r.topic))
+})
