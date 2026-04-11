@@ -28,9 +28,22 @@ export async function POST(req: NextRequest) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   if (!pending || pending.length === 0) return NextResponse.json({ processed: 0 })
 
+  // Fetch suppressed emails to skip
+  const { data: suppressedRows } = await supabase
+    .from('suppressed_emails')
+    .select('email')
+    .in('email', pending.map((e: { to_email: string }) => e.to_email))
+  const suppressed = new Set((suppressedRows || []).map((r: { email: string }) => r.email))
+
   let processed = 0
 
   for (const email of pending) {
+    // Skip suppressed addresses (unsubscribed, hard bounced, complained)
+    if (suppressed.has(email.to_email)) {
+      await supabase.from('email_queue').update({ status: 'skipped' }).eq('id', email.id)
+      continue
+    }
+
     // Render the template if body_html is empty
     let bodyHtml = email.body_html
     let bodyText = email.body_text
@@ -54,9 +67,15 @@ export async function POST(req: NextRequest) {
     const { error: sendError } = await resend.emails.send({
       from: 'Nith Digital <hello@nithdigital.uk>',
       to: email.to_email,
+      replyTo: 'hello@nithdigital.uk',
       subject,
       html: bodyHtml,
       ...(bodyText ? { text: bodyText } : {}),
+      headers: {
+        'List-Unsubscribe': `<mailto:hello@nithdigital.uk?subject=unsubscribe>, <https://nithdigital.uk/unsubscribe?email=${encodeURIComponent(email.to_email)}>`,
+        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        'Message-ID': `<${email.id}@nithdigital.uk>`,
+      },
     })
 
     if (sendError) {

@@ -34,8 +34,17 @@ export async function POST(req: NextRequest) {
     .in('id', leadIds)
     .eq('status', 'approved')
 
+
+
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   if (!leads || leads.length === 0) return NextResponse.json({ error: 'No approved leads found' }, { status: 400 })
+
+  // Check suppression list
+  const { data: suppressedRows } = await supabase
+    .from('suppressed_emails')
+    .select('email')
+    .in('email', leads.map((l: { contact_email: string }) => l.contact_email).filter(Boolean))
+  const suppressed = new Set((suppressedRows || []).map((r: { email: string }) => r.email))
 
   let sent = 0
   let failed = 0
@@ -43,6 +52,11 @@ export async function POST(req: NextRequest) {
 
   for (const lead of leads) {
     if (!lead.contact_email || !lead.email_subject || !lead.email_body) {
+      await supabase.from('scraped_leads').update({ status: 'skipped' }).eq('id', lead.id)
+      continue
+    }
+
+    if (suppressed.has(lead.contact_email)) {
       await supabase.from('scraped_leads').update({ status: 'skipped' }).eq('id', lead.id)
       continue
     }
@@ -77,6 +91,11 @@ export async function POST(req: NextRequest) {
       subject: lead.email_subject,
       html,
       replyTo: 'hello@nithdigital.uk',
+      headers: {
+        'List-Unsubscribe': `<mailto:hello@nithdigital.uk?subject=unsubscribe>, <https://nithdigital.uk/unsubscribe?email=${encodeURIComponent(lead.contact_email)}>`,
+        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        'Message-ID': `<${lead.id}@nithdigital.uk>`,
+      },
     })
 
     if (sendError) {
