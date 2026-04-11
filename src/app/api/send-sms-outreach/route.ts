@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import twilio from 'twilio'
 
 const BATCH_SIZE = 10
-const TEST_NUMBER = '07949116770'
+const TEST_NUMBER = '+447949116770'
 const SMS_SECRET = process.env.SMS_PROCESSOR_SECRET || 'nith-sms-secret'
 
 function isMobile(phone: string): boolean {
