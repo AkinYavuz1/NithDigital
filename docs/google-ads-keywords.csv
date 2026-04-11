@@ -1,0 +1,111 @@
+Tier,Service Line,Keyword,Est CPC Low (£),Est CPC High (£),Competition,Notes
+Local D&G,Web Design,web design Sanquhar,0.30,0.70,Extremely Low,Town-level; almost no competing bidders; volume very low
+Local D&G,Web Design,web design Dumfries,0.60,1.20,Very Low,Hyper-local head term; near-zero direct competition in D&G
+Local D&G,Web Design,web designer Dumfries,0.50,1.00,Very Low,Individual/freelancer intent; likely <5 active bidders in region
+Local D&G,Web Design,website design Dumfries and Galloway,0.55,1.10,Very Low,Long-tail geographic; minimal auction competition
+Local D&G,Web Design,website designer near me Dumfries,0.50,1.10,Very Low,Near-me + location = strong local signal; cheap due to geo restriction
+Local D&G,Web Design,web design South Scotland,0.60,1.30,Very Low,Slightly broader; still well below national average
+Local D&G,Web Design,web design for restaurants Dumfries,0.50,1.00,Very Low,Industry + geo combo; almost no competition
+Local D&G,Web Design,web design for hotels Galloway,0.45,0.90,Very Low,Hospitality sector = lower baseline CPC
+Local D&G,Web Design,web design for tradespeople Scotland,0.70,1.40,Low,Niche + geo; strong conversion potential from trades audience
+Local D&G,Web Design,website redesign Dumfries,0.55,1.10,Very Low,Existing business upgrading = high-value lead
+Local D&G,Web Design,new website for small business Dumfries,0.50,1.00,Very Low,Highly specific; clear commercial intent
+Local D&G,Web Design,wix website help Dumfries,0.30,0.70,Extremely Low,People stuck on DIY builders = warm leads
+Local D&G,Web Design,ecommerce website Dumfries,0.80,1.60,Low,E-commerce modifier raises intent and marginally raises CPC
+Local D&G,Web Design,local web designer Galloway,0.45,0.90,Very Low,Galloway is less searched = cheaper auction
+Local D&G,Web Design,wordpress website design Dumfries,0.60,1.20,Very Low,Platform-specific = narrows competition
+Local D&G,Data / Power BI,Power BI dashboard Dumfries,0.80,1.50,Very Low,Almost no local competition; B2B intent; strong lead quality
+Local D&G,Data / Power BI,data analytics consultant Dumfries,0.80,1.50,Very Low,Extremely specific; high-value B2B lead at low cost
+Local D&G,Data / Power BI,Excel dashboard consultant Scotland,0.60,1.20,Very Low,Many SMEs search this before knowing Power BI exists
+Local D&G,Data / Power BI,Excel to Power BI Scotland,0.80,1.50,Very Low,Very niche problem-aware buyer; almost no bids
+Local D&G,Data / Power BI,business reporting Scotland,0.50,1.00,Very Low,Broad-intent but low competition; good awareness play
+Local D&G,Data / Power BI,KPI dashboard for small business Scotland,0.70,1.30,Very Low,Problem-aware query; strong commercial intent
+Local D&G,Data / Power BI,data visualisation consultant Scotland,0.80,1.60,Low,Slightly more technical; educated buyer = better conversion
+Local D&G,Data / Power BI,Power BI for hospitality Scotland,0.65,1.30,Very Low,Sector + tool + geo = very tight audience; cheap but targeted
+Local D&G,Data / Power BI,business data analysis Dumfries,0.55,1.10,Very Low,Generic but local; low competition nearly guaranteed
+Local D&G,Data / Power BI,sales dashboard Power BI Scotland,0.70,1.40,Very Low,Service+tool+geo long-tail = minimal competing bids
+Local D&G,Digital Marketing,digital marketing Dumfries,0.80,1.60,Low,Some local agency competition but still well below national avg
+Local D&G,Digital Marketing,SEO Dumfries,0.70,1.40,Low,Local SEO term; several small agencies may bid
+Local D&G,Digital Marketing,Google Ads management Dumfries,0.90,1.80,Low,Higher-value service = slightly higher bid floor
+Local D&G,Digital Marketing,social media marketing Dumfries and Galloway,0.60,1.20,Very Low,Social marketing lower CPC than paid search help
+Local D&G,Digital Marketing,SEO for small business Dumfries,0.65,1.30,Very Low,Long-tail qualifier reduces competition
+Local D&G,Digital Marketing,Facebook ads management Dumfries,0.55,1.10,Very Low,Platform-specific; most local businesses don't know who to call
+Local D&G,Digital Marketing,digital marketing for restaurants Scotland,0.55,1.10,Very Low,Very few specialist bidders at this granularity
+Local D&G,Digital Marketing,online marketing for hotels Scotland,0.65,1.30,Very Low,Hospitality niche + geo; strong sector fit
+Local D&G,Digital Marketing,digital marketing for tradespeople Scotland,0.60,1.20,Very Low,Trades niche + geo = niche audience; low competition
+Local D&G,Brand,Nith Digital,0.10,0.30,Extremely Low,Branded keyword — always run this to own your brand SERP
+Scotland,Web Design,web designer Inverness,0.80,1.50,Very Low,Near-zero local competition; Highland SMEs often underserved
+Scotland,Web Design,web design Inverness,0.80,1.50,Very Low,Possibly cheapest city-level keyword in Scotland
+Scotland,Web Design,web designer Ayr,0.80,1.50,Very Low,Ayrshire SME market; negligible bidding competition
+Scotland,Web Design,web design Kilmarnock,0.70,1.20,Very Low,Hyper-local; almost no direct competition
+Scotland,Web Design,web designer Dumfries,0.70,1.30,Very Low,Southern Scotland — extremely low competition
+Scotland,Web Design,web designer Dundee,1.20,2.00,Low,Very underserved; minimal agency competition
+Scotland,Web Design,web design Dundee,1.20,2.00,Low,Good opportunity; search volume lower but CPC very cheap
+Scotland,Web Design,web designer Stirling,1.00,1.80,Low,Central Belt location; lower competition than Edinburgh/Glasgow
+Scotland,Web Design,web design Perth Scotland,1.00,1.80,Low,Must include "Scotland" to disambiguate from Perth Australia
+Scotland,Web Design,web designer Aberdeen,1.50,2.50,Low-Medium,Significantly cheaper than Edinburgh; fewer local agencies bidding
+Scotland,Web Design,small business website Scotland,1.20,2.00,Low,High relevance to Nith Digital's SME target
+Scotland,Web Design,affordable website design Scotland,0.90,1.60,Low,Budget-conscious searcher; still commercial intent
+Scotland,Web Design,affordable web design Scotland,1.00,1.80,Low,"Affordable" modifier = lower-funnel; high-intent; below average
+Scotland,Web Design,WordPress website design Scotland,1.20,2.00,Low,Platform-specific = lower competition; clear intent
+Scotland,Web Design,website designer for small business Scotland,1.00,1.80,Low,Highly qualified; filters for SME intent explicitly
+Scotland,Web Design,new website for my business Scotland,0.80,1.50,Very Low,Conversational query; very long tail; low competition
+Scotland,Web Design,website redesign Scotland,1.50,2.50,Low-Medium,Existing businesses = higher budget; ready to buy
+Scotland,Web Design,web design agency near me Scotland,1.20,2.00,Low,"Near me" + Scotland = very specific; low competition
+Scotland,Web Design,responsive web design Scotland,1.00,1.80,Low,Technical qualifier = sophisticated buyer; less competition
+Scotland,Web Design,web design Scotland,2.50,3.50,Medium,High commercial intent; Scotland reduces competition vs UK-wide
+Scotland,Data / Power BI,Power BI consultant Scotland,1.50,2.80,Low-Medium,Very few agencies bid on this; exceptional lead quality
+Scotland,Data / Power BI,Power BI dashboard Scotland,1.20,2.20,Low,Product-specific; very niche; excellent for Nith
+Scotland,Data / Power BI,Excel to Power BI Scotland,0.80,1.50,Very Low,Highly specific problem-aware buyer; almost no bidding
+Scotland,Data / Power BI,data dashboard design Scotland,1.00,1.80,Low,Very specific to Nith's offering; low competition
+Scotland,Data / Power BI,data reporting consultant Scotland,1.20,2.00,Low,Underused phrase; strong commercial intent
+Scotland,Data / Power BI,Power BI for hospitality Scotland,0.65,1.30,Very Low,Sector + tool + geo = very tight audience
+Scotland,Data / Power BI,data analytics consultant Scotland,2.00,3.50,Low-Medium,B2B intent; few Scottish agencies bid on this
+Scotland,Data / Power BI,business intelligence consultant Scotland,2.00,3.50,Low-Medium,BI consulting is under-advertised in Scotland
+Scotland,Data / Power BI,data visualisation Scotland,1.00,2.00,Low,Broader term but low local competition
+Scotland,Data / Power BI,data analyst for hire Scotland,1.00,1.80,Low,Freelance/project intent; very low competition
+Scotland,Digital Marketing,digital marketing for tradespeople Scotland,0.60,1.20,Very Low,Trades niche + geo; strong sector fit
+Scotland,Digital Marketing,online marketing for hotels Scotland,0.65,1.30,Very Low,Hospitality niche + geo; very few specialist bidders
+Scotland,Digital Marketing,digital marketing for restaurants Scotland,0.55,1.10,Very Low,Same — very few specialist bidders at this granularity
+Scotland,Digital Marketing,content marketing Scotland,0.90,1.60,Low,Very low competition; niche enough
+Scotland,Digital Marketing,email marketing Scotland,1.00,1.80,Low,Under-advertised channel; low CPC
+Scotland,Digital Marketing,digital marketing for small business Scotland,1.20,2.20,Low-Medium,Long-tail SME qualifier reduces competition
+Scotland,Digital Marketing,online marketing consultant Scotland,1.20,2.00,Low,Less used phrase; lower competition
+Scotland,Digital Marketing,digital marketing consultant Scotland,1.50,2.80,Low-Medium,Consultant vs agency = slightly different intent; lower CPC
+Scotland,Digital Marketing,social media marketing Scotland,1.50,2.80,Medium,Strong competition from freelancers and agencies
+Scotland,Digital Marketing,Google Ads management Scotland,2.00,3.50,Medium,High intent but meta — you'd be advertising to get PPC clients
+Scotland,Digital Marketing,SEO services Scotland,2.00,3.50,Medium,SEO agencies bid heavily on this
+UK-Wide,Web Design,web design for restaurants,0.70,1.40,Very Low,Hospitality sector CPCs among UK's lowest; extremely underexploited
+UK-Wide,Web Design,website design for tradesmen,0.80,1.50,Very Low,Highly niche; very few agencies run this keyword
+UK-Wide,Web Design,website design for plumbers,0.80,1.50,Very Low,Trades web design is a near-empty niche in Google Ads
+UK-Wide,Web Design,website refresh UK,0.80,1.50,Very Low,Underserved intent; minimal competition
+UK-Wide,Web Design,get a website built UK,0.80,1.60,Very Low,Decision-stage query; almost no direct bidders
+UK-Wide,Web Design,web design for healthcare,1.20,2.00,Low,Healthcare adjacent; avoids premium healthcare CPCs themselves
+UK-Wide,Web Design,freelance web designer UK,1.50,2.20,Low,Lower competition than "agency"; good for trust-building ads
+UK-Wide,Web Design,web design for small business,1.60,2.30,Low,Service + audience combination; cheaper than generic terms
+UK-Wide,Web Design,web design for accountants,1.50,2.50,Low,Professional services niche; accountants seek digital upgrades post-MTD
+UK-Wide,Web Design,affordable web design UK,1.80,2.40,Low-Medium,Price-sensitive searchers; estimated 30-40% below head term CPC
+UK-Wide,Web Design,bespoke website design UK,2.00,2.80,Low-Medium,"Bespoke" signals premium intent; very qualified leads
+UK-Wide,Web Design,small business web design UK,1.80,2.60,Low-Medium,Niche qualifier reduces competition; aligns with Nith's SME positioning
+UK-Wide,Data / Power BI,Power BI consultant for small business,1.20,2.00,Very Low,BEST UK HIDDEN GEM — near-zero advertiser competition; exceptional lead quality
+UK-Wide,Data / Power BI,Power BI for accountants UK,0.80,1.50,Very Low,Sector-specific hidden gem; accountants are heavy BI users
+UK-Wide,Data / Power BI,Excel to Power BI migration,0.80,1.50,Very Low,Very niche problem-aware keyword; searchers have high purchase intent
+UK-Wide,Data / Power BI,data dashboard for small business,1.00,1.80,Very Low,Specific deliverable + audience; almost no direct competition
+UK-Wide,Data / Power BI,data reporting consultant UK,1.20,2.00,Very Low,Widely searched but poorly targeted — most agencies skip it
+UK-Wide,Data / Power BI,data analytics for SMEs,1.20,2.20,Very Low,Near-empty keyword space; SME modifier signals B2B buyers
+UK-Wide,Data / Power BI,freelance data analyst UK,1.40,2.20,Low,"Freelance" modifier depresses CPCs significantly
+UK-Wide,Data / Power BI,Power BI dashboard UK,1.50,2.50,Low,Dashboard deliverable framing; fewer bidders than generic analytics
+UK-Wide,Data / Power BI,business intelligence consultant UK,2.00,3.20,Low-Medium,Long sales cycles — CPC lower than finance/legal but leads are high-value
+UK-Wide,Data / Power BI,data analytics consultant UK,2.50,3.80,Medium,B2B Services bucket; specific consultant framing reduces auction competition
+UK-Wide,Digital Marketing,digital marketing for tradesmen UK,0.70,1.40,Very Low,Sector-specific hidden gem; almost no competition; trades sector lowest CPCs
+UK-Wide,Digital Marketing,digital marketing for restaurants UK,0.80,1.50,Very Low,Hospitality is cheapest sector in UK Ads; very few agencies run sector-specific
+UK-Wide,Digital Marketing,website and marketing package UK,1.20,2.00,Very Low,Bundled service keyword; almost no one bids on "package" combinations
+UK-Wide,Digital Marketing,digital transformation small business UK,1.00,2.00,Low,SMEs searching this are ready for full-service engagement
+UK-Wide,Digital Marketing,website audit UK,1.20,2.20,Low,Lead-magnet keyword; great for generating pipeline through free audits
+UK-Wide,Digital Marketing,freelance digital marketer UK,1.40,2.20,Low,Very few large agencies bid on "freelance" — clears the competitive field
+UK-Wide,Digital Marketing,social media management small business UK,1.50,2.50,Low,Specific service + audience; lower CPC than broad "social media agency"
+UK-Wide,Digital Marketing,email marketing consultant UK,1.50,2.50,Low,Underserved keyword; most agencies don't advertise email marketing standalone
+UK-Wide,Digital Marketing,digital marketing for healthcare UK,1.20,2.00,Low,Niche angle; healthcare-adjacent but avoids premium healthcare CPCs
+UK-Wide,Digital Marketing,digital marketing consultant UK,2.50,3.50,Medium,Consultant framing has lower competition than "agency"
+UK-Wide,Digital Marketing,Google Ads management small business,2.00,3.00,Medium,Specific service term with SME qualifier; good intent signal
+UK-Wide,Digital Marketing,affordable digital marketing UK,1.80,2.60,Low-Medium,Budget-qualifier filters; reduces competition and improves lead quality
