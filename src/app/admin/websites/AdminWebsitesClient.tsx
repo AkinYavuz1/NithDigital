@@ -1114,7 +1114,7 @@ export default function AdminWebsitesClient() {
   const totalValue = projects.filter(p => p.status !== 'cancelled').reduce((s, p) => s + (p.contract_value || 0), 0)
 
   return (
-    <div style={{ padding: '32px 40px', flex: 1, overflowY: 'auto' }}>
+    <div className="websites-outer" style={{ padding: '32px 40px', flex: 1, overflowY: 'auto' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
@@ -1143,7 +1143,7 @@ export default function AdminWebsitesClient() {
       </div>
 
       {/* Stat cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
+      <div className="websites-stat-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
         {[
           { label: 'Active Projects', value: active, color: '#3b82f6' },
           { label: 'Completed', value: complete, color: '#22c55e' },
@@ -1229,8 +1229,8 @@ export default function AdminWebsitesClient() {
         </div>
       ) : (
         <div>
-          {/* Table header */}
-          <div style={{
+          {/* Table header — desktop only */}
+          <div className="websites-table-header" style={{
             display: 'grid', gridTemplateColumns: '2fr 1fr 120px 180px 80px 100px 80px',
             gap: 12, padding: '8px 16px',
             fontSize: 10, fontWeight: 600, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px',
@@ -1256,71 +1256,93 @@ export default function AdminWebsitesClient() {
                 <div
                   key={project.id}
                   onClick={() => setSelectedProject(project)}
+                  className="websites-project-row"
                   style={{
-                    display: 'grid', gridTemplateColumns: '2fr 1fr 120px 180px 80px 100px 80px',
-                    gap: 12, padding: '14px 16px',
                     background: 'white', border: '1px solid rgba(27,42,74,0.08)',
-                    borderRadius: 10, alignItems: 'center', cursor: 'pointer',
-                    transition: 'box-shadow 0.15s ease',
+                    borderRadius: 10, cursor: 'pointer', transition: 'box-shadow 0.15s ease',
                   }}
                   onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 2px 12px rgba(27,42,74,0.08)')}
                   onMouseLeave={e => (e.currentTarget.style.boxShadow = 'none')}
                 >
-                  {/* Project name */}
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: 13, color: '#1B2A4A' }}>{project.project_name}</div>
-                    <div style={{ fontSize: 11, color: '#5A6A7A', marginTop: 1 }}>{project.client_name}</div>
+                  {/* Desktop row */}
+                  <div className="websites-row-desktop" style={{
+                    display: 'grid', gridTemplateColumns: '2fr 1fr 120px 180px 80px 100px 80px',
+                    gap: 12, padding: '14px 16px', alignItems: 'center',
+                  }}>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: 13, color: '#1B2A4A' }}>{project.project_name}</div>
+                      <div style={{ fontSize: 11, color: '#5A6A7A', marginTop: 1 }}>{project.client_name}</div>
+                    </div>
+                    <span style={{ fontSize: 11, padding: '3px 10px', borderRadius: 100, background: 'rgba(27,42,74,0.06)', color: '#5A6A7A', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                      {PROJECT_TYPE_LABELS[project.project_type] || project.project_type}
+                    </span>
+                    <div>
+                      {currentStage && (
+                        <span style={{ fontSize: 11, padding: '3px 10px', borderRadius: 100, fontWeight: 600, whiteSpace: 'nowrap', background: `${currentStage.color}15`, color: currentStage.color }}>
+                          {currentStage.label}
+                        </span>
+                      )}
+                      {daysInStage !== null && (
+                        <div style={{ fontSize: 10, color: isOverdue ? '#ef4444' : '#5A6A7A', marginTop: 3 }}>
+                          {isOverdue && <AlertCircle size={9} style={{ display: 'inline', marginRight: 2 }} />}
+                          {daysInStage}d in stage
+                        </div>
+                      )}
+                    </div>
+                    <MiniStepper stageLogs={project.stage_logs} currentStage={project.current_stage} />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: health.color, flexShrink: 0 }} />
+                      <span style={{ fontSize: 11, color: health.color, fontWeight: 600 }}>{health.label}</span>
+                    </div>
+                    <div style={{ fontSize: 12, color: '#5A6A7A' }}>
+                      {project.launched_at ? (
+                        <span style={{ color: '#22c55e', fontWeight: 600, fontSize: 11 }}>Live ✓</span>
+                      ) : project.target_launch ? (
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 500 }}>{formatDate(project.target_launch)}</div>
+                          <div style={{ fontSize: 10, color: '#5A6A7A' }}>{daysUntil(project.target_launch)}</div>
+                        </div>
+                      ) : <span style={{ color: 'rgba(27,42,74,0.25)' }}>—</span>}
+                    </div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A' }}>
+                      {project.contract_value ? `£${project.contract_value.toLocaleString()}` : <span style={{ color: 'rgba(27,42,74,0.25)', fontWeight: 400 }}>—</span>}
+                    </div>
                   </div>
 
-                  {/* Type */}
-                  <span style={{ fontSize: 11, padding: '3px 10px', borderRadius: 100, background: 'rgba(27,42,74,0.06)', color: '#5A6A7A', fontWeight: 500, whiteSpace: 'nowrap' }}>
-                    {PROJECT_TYPE_LABELS[project.project_type] || project.project_type}
-                  </span>
-
-                  {/* Stage */}
-                  <div>
-                    {currentStage && (
-                      <span style={{
-                        fontSize: 11, padding: '3px 10px', borderRadius: 100, fontWeight: 600, whiteSpace: 'nowrap',
-                        background: `${currentStage.color}15`, color: currentStage.color,
-                      }}>
-                        {currentStage.label}
-                      </span>
-                    )}
-                    {daysInStage !== null && (
-                      <div style={{ fontSize: 10, color: isOverdue ? '#ef4444' : '#5A6A7A', marginTop: 3 }}>
-                        {isOverdue && <AlertCircle size={9} style={{ display: 'inline', marginRight: 2 }} />}
-                        {daysInStage}d in stage
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Mini stepper */}
-                  <MiniStepper stageLogs={project.stage_logs} currentStage={project.current_stage} />
-
-                  {/* Health */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: health.color, flexShrink: 0 }} />
-                    <span style={{ fontSize: 11, color: health.color, fontWeight: 600 }}>{health.label}</span>
-                  </div>
-
-                  {/* Launch date */}
-                  <div style={{ fontSize: 12, color: '#5A6A7A' }}>
-                    {project.launched_at ? (
-                      <span style={{ color: '#22c55e', fontWeight: 600, fontSize: 11 }}>Live ✓</span>
-                    ) : project.target_launch ? (
+                  {/* Mobile card */}
+                  <div className="websites-row-mobile" style={{ padding: '14px 16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                       <div>
-                        <div style={{ fontSize: 11, fontWeight: 500 }}>{formatDate(project.target_launch)}</div>
-                        <div style={{ fontSize: 10, color: '#5A6A7A' }}>{daysUntil(project.target_launch)}</div>
+                        <div style={{ fontWeight: 600, fontSize: 14, color: '#1B2A4A' }}>{project.project_name}</div>
+                        <div style={{ fontSize: 12, color: '#5A6A7A', marginTop: 2 }}>{project.client_name}</div>
                       </div>
-                    ) : (
-                      <span style={{ color: 'rgba(27,42,74,0.25)' }}>—</span>
-                    )}
-                  </div>
-
-                  {/* Value */}
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A' }}>
-                    {project.contract_value ? `£${project.contract_value.toLocaleString()}` : <span style={{ color: 'rgba(27,42,74,0.25)', fontWeight: 400 }}>—</span>}
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                          <div style={{ width: 8, height: 8, borderRadius: '50%', background: health.color }} />
+                          <span style={{ fontSize: 11, color: health.color, fontWeight: 600 }}>{health.label}</span>
+                        </div>
+                        {project.contract_value ? (
+                          <span style={{ fontSize: 12, fontWeight: 700, color: '#1B2A4A' }}>£{project.contract_value.toLocaleString()}</span>
+                        ) : null}
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
+                      <span style={{ fontSize: 11, padding: '2px 8px', borderRadius: 100, background: 'rgba(27,42,74,0.06)', color: '#5A6A7A', fontWeight: 500 }}>
+                        {PROJECT_TYPE_LABELS[project.project_type] || project.project_type}
+                      </span>
+                      {currentStage && (
+                        <span style={{ fontSize: 11, padding: '2px 8px', borderRadius: 100, fontWeight: 600, background: `${currentStage.color}15`, color: currentStage.color }}>
+                          {currentStage.label}{daysInStage !== null ? ` · ${daysInStage}d` : ''}
+                        </span>
+                      )}
+                      {project.launched_at && <span style={{ fontSize: 11, padding: '2px 8px', borderRadius: 100, background: 'rgba(34,197,94,0.1)', color: '#22c55e', fontWeight: 600 }}>Live ✓</span>}
+                      {project.target_launch && !project.launched_at && (
+                        <span style={{ fontSize: 11, padding: '2px 8px', borderRadius: 100, background: 'rgba(27,42,74,0.04)', color: '#5A6A7A' }}>
+                          🎯 {formatDate(project.target_launch)}
+                        </span>
+                      )}
+                    </div>
+                    <MiniStepper stageLogs={project.stage_logs} currentStage={project.current_stage} />
                   </div>
                 </div>
               )
@@ -1388,6 +1410,14 @@ export default function AdminWebsitesClient() {
       <style>{`
         @media (max-width: 768px) {
           .admin-main { padding-top: 52px; }
+          .websites-outer { padding: 20px 16px !important; }
+          .websites-stat-cards { grid-template-columns: repeat(2, 1fr) !important; }
+          .websites-table-header { display: none !important; }
+          .websites-row-desktop { display: none !important; }
+          .websites-row-mobile { display: block !important; }
+        }
+        @media (min-width: 769px) {
+          .websites-row-mobile { display: none !important; }
         }
       `}</style>
     </div>
