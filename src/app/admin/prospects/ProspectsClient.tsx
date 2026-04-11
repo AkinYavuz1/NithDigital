@@ -180,18 +180,16 @@ export default function ProspectsClient() {
     }
   }
 
-  const markEmailed = async (id: string) => {
-    const res = await fetch('/api/admin/prospects-outreach', {
+  const markEmailed = (id: string) => {
+    // Remove immediately so the UI updates without waiting for the API
+    setProspects(prev => prev.filter(p => p.id !== id))
+    setSentToday(prev => prev + 1)
+    showToast('Marked as emailed')
+    fetch('/api/admin/prospects-outreach', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'mark_emailed', id }),
     })
-    const data = await res.json()
-    if (data.ok) {
-      setProspects(prev => prev.filter(p => p.id !== id))
-      setSentToday(prev => prev + 1)
-      showToast('Marked as emailed — call reminder set for 7 days')
-    }
   }
 
   const handleSend = async () => {
