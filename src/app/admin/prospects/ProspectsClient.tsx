@@ -197,12 +197,7 @@ export default function ProspectsClient() {
     })
     const data = await res.json()
     if (data.ok) {
-      setProspects(prev => prev.map(p => p.id === id ? {
-        ...p,
-        pipeline_status: 'contacted',
-        call_reminder_at: data.call_reminder_at,
-        last_contacted_at: new Date().toISOString(),
-      } : p))
+      setProspects(prev => prev.filter(p => p.id !== id))
       setSentToday(prev => prev + 1)
       showToast('Marked as emailed — call reminder set for 7 days')
     }
@@ -352,6 +347,7 @@ export default function ProspectsClient() {
                           href={buildMailto(p, subject, p.email_draft || body)}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() => markEmailed(p.id)}
                           style={{ fontSize: 11, fontWeight: 600, color: '#fff', background: '#1B2A4A', padding: '2px 8px', borderRadius: 4, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
                           title={p.email_draft ? 'Open draft in Outlook' : 'Open template in Outlook'}
                         >
