@@ -225,9 +225,11 @@ Correct order:
 ### Lean prompt rules
 
 1. **System prompt** — state the task and output format only. No examples, no context padding.
-2. **max_tokens** — cap at `4096` for discovery (JSON array of 8 records). Never leave uncapped.
+2. **max_tokens** — cap at `2048`. There is no quota so a large token budget is not needed and a high cap can encourage the model to pad output with invented records to fill it.
 3. **Output instruction** — always end system prompt with: `Return the JSON array only. Do not explain your reasoning, do not summarise what you found, do not add any text before or after the JSON.`
 4. **JSON only — no reasoning aloud.** The research agent must not narrate its thinking before outputting the JSON.
+5. **Explicitly permit an empty result.** The agent prompt must include: "If you have exhausted all real businesses in this sector for this location, return an empty array `[]`. Do not invent records to fill the output."
+6. **Define "genuinely verifiable".** The agent must only include a business if it can cite at least one real source: a Google Maps listing, Yell entry, Facebook page, Companies House record, TripAdvisor listing, or industry directory. A business name that sounds plausible but cannot be traced to a real source must not be included.
 
 ---
 

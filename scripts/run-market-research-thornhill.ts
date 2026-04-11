@@ -134,7 +134,9 @@ async function runSectorAgent(
 ): Promise<{ sector: string; prospects: Prospect[]; inputTokens: number; outputTokens: number }> {
   const sources = SECTOR_SOURCES[sector] || "Google Maps, Facebook, Yell"
 
-  const systemPrompt = `You are a market research agent finding real local businesses for a web design agency in Scotland. Your task is to find businesses in a specific sector and location. You have strong knowledge of local Scottish businesses, directories, and online presence signals.
+  const systemPrompt = `You are a market research agent finding real local businesses for a web design agency in Scotland. Your task is to find businesses in a specific sector and location.
+
+A business is only included if you can cite at least one real source for it: a Google Maps listing, Yell entry, Facebook page, Companies House record, TripAdvisor listing, or sector-specific directory. A business name that sounds plausible but cannot be traced to a real source must not be included. If you have exhausted all real businesses for this sector and location, return an empty array []. Do not invent records to fill the output.
 
 Output format:
 ${OUTPUT_SCHEMA}
@@ -148,7 +150,7 @@ ${existingNames.length > 0 ? existingNames.map((n) => `- ${n}`).join("\n") : "(n
 
 There are already ${existingCount} businesses recorded for ${sector} in ${TARGET_LOCATION}.
 
-Your task: Find all real businesses in the "${sector}" sector located in ${TARGET_LOCATION} that you can genuinely verify exist. Do not invent or pad results — return only businesses you are confident are real. If you can only find 2, return 2. If you can find 10, return 10.
+Your task: Find all real businesses in the "${sector}" sector located in ${TARGET_LOCATION} that you can genuinely verify exist — meaning you can point to a real source (Google Maps, Yell, Facebook, Companies House, TripAdvisor, or sector directory). Do not invent or pad results. If you have found everything real that exists, return [].
 
 Geographic rule: The business's primary trading address must be in Thornhill town itself OR in one of these named villages within DG3: Penpont, Closeburn, Carronbridge, Moniaive, Keir, Tynron, Durisdeer, Morton. Do NOT include businesses based in Dumfries, Sanquhar, or other towns that merely serve the area.
 
@@ -160,7 +162,7 @@ ${SCORING_GUIDE}`
 
   const response = await anthropic.messages.create({
     model: "claude-sonnet-4-6",
-    max_tokens: 4096,
+    max_tokens: 2048,
     system: systemPrompt,
     messages: [{ role: "user", content: userPrompt }],
   })
@@ -243,38 +245,31 @@ async function insertProspects(sector: string, prospects: Prospect[]): Promise<n
   return (data ?? []).length
 }
 
-async function main() {
-  console.log(`\n=== Nith Digital Phase 1 — Thornhill/DG3 Market Research ===`)
-  console.log(`Target: ${TARGET_LOCATION}`)
-  console.log(`Sectors: ${SECTORS.join(", ")}`)
-  console.log(`Model: claude-sonnet-4-6`)
-  console.log(`Started: ${new Date().toISOString()}\n`)
+const MAX_PASSES = 3
+const STOP_IF_BELOW = 3  // halt if a full pass inserts fewer than this across all sectors
+const BATCH_SIZE = 4
+const BATCH_DELAY_MS = 15000
 
-  // Fetch existing names per sector in parallel
-  console.log("Fetching existing records from Supabase for deduplication...")
+async function runPass(passNum: number): Promise<{ totalInserted: number; inputTokens: number; outputTokens: number }> {
+  // Always re-fetch dedupe list from Supabase at the start of each pass
+  console.log(`\nFetching existing records from Supabase for deduplication (pass ${passNum})...`)
   const existingBySector: Record<string, string[]> = {}
   await Promise.all(
     SECTORS.map(async (sector) => {
       existingBySector[sector] = await getExistingNames(sector)
     })
   )
-
   for (const sector of SECTORS) {
-    console.log(`  ${sector}: ${existingBySector[sector].length} existing records`)
+    console.log(`  ${sector}: ${existingBySector[sector].length} existing`)
   }
 
-  console.log("\nRunning sector agents in staggered batches via Anthropic API...\n")
-  const start = Date.now()
-
-  // Stagger agents in batches of 4 with 15s delay between batches to avoid 8k output token/min rate limit
-  const BATCH_SIZE = 4
-  const BATCH_DELAY_MS = 15000
+  console.log(`\nRunning sector agents in staggered batches...\n`)
   const allResults: PromiseSettledResult<Awaited<ReturnType<typeof runSectorAgent>>>[] = []
 
   for (let i = 0; i < SECTORS.length; i += BATCH_SIZE) {
     const batch = SECTORS.slice(i, i + BATCH_SIZE)
     if (i > 0) {
-      console.log(`  Waiting ${BATCH_DELAY_MS / 1000}s before next batch to respect rate limits...`)
+      console.log(`  Waiting ${BATCH_DELAY_MS / 1000}s before next batch (rate limit)...`)
       await new Promise((r) => setTimeout(r, BATCH_DELAY_MS))
     }
     console.log(`  Batch ${Math.floor(i / BATCH_SIZE) + 1}: ${batch.join(", ")}`)
@@ -286,46 +281,66 @@ async function main() {
     allResults.push(...batchResults)
   }
 
-  const results = allResults
-
-  const elapsed = ((Date.now() - start) / 1000).toFixed(1)
-  console.log(`\nAll agents returned in ${elapsed}s. Inserting results...\n`)
-
   let totalInserted = 0
   let totalInputTokens = 0
   let totalOutputTokens = 0
-  let newBySector: Record<string, number> = {}
 
-  for (const result of results) {
-    if (result.status === "rejected") {
-      console.error("Agent error:", result.reason)
-      continue
-    }
+  console.log(`\nInserting results...\n`)
+  for (const result of allResults) {
+    if (result.status === "rejected") { console.error("Agent error:", result.reason); continue }
     const { sector, prospects, inputTokens, outputTokens } = result.value
     totalInputTokens += inputTokens
     totalOutputTokens += outputTokens
-    console.log(`[${sector}] Agent returned ${prospects.length} prospects (${inputTokens} in / ${outputTokens} out tokens)`)
+    console.log(`[${sector}] ${prospects.length} returned (${inputTokens}in/${outputTokens}out tokens)`)
     const inserted = await insertProspects(sector, prospects)
     totalInserted += inserted
-    newBySector[sector] = inserted
   }
 
-  // Cost estimate (Sonnet 4.x: ~$3/M input, ~$15/M output)
-  const inputCost = (totalInputTokens / 1_000_000) * 3.0
-  const outputCost = (totalOutputTokens / 1_000_000) * 15.0
-  const totalCost = inputCost + outputCost
+  return { totalInserted, inputTokens: totalInputTokens, outputTokens: totalOutputTokens }
+}
 
-  console.log(`\n=== Phase 1 Complete ===`)
-  console.log(`Total new records inserted: ${totalInserted}`)
-  console.log(`\nNew by sector:`)
-  for (const [s, n] of Object.entries(newBySector)) {
-    console.log(`  ${s}: ${n}`)
+async function main() {
+  console.log(`\n=== Nith Digital Phase 1 — Thornhill/DG3 Market Research ===`)
+  console.log(`Target: ${TARGET_LOCATION}`)
+  console.log(`Model: claude-sonnet-4-6`)
+  console.log(`Max passes: ${MAX_PASSES} | Stop if pass yield < ${STOP_IF_BELOW}`)
+  console.log(`Started: ${new Date().toISOString()}`)
+
+  let grandTotalInserted = 0
+  let grandInputTokens = 0
+  let grandOutputTokens = 0
+
+  for (let pass = 1; pass <= MAX_PASSES; pass++) {
+    console.log(`\n${"=".repeat(50)}`)
+    console.log(`PASS ${pass} of ${MAX_PASSES}`)
+    console.log(`${"=".repeat(50)}`)
+
+    const { totalInserted, inputTokens, outputTokens } = await runPass(pass)
+    grandTotalInserted += totalInserted
+    grandInputTokens += inputTokens
+    grandOutputTokens += outputTokens
+
+    console.log(`\nPass ${pass} inserted: ${totalInserted} new records`)
+
+    if (totalInserted < STOP_IF_BELOW) {
+      console.log(`\n⚠ Pass yield (${totalInserted}) is below threshold (${STOP_IF_BELOW}). Stopping — sector is exhausted.`)
+      break
+    }
+
+    if (pass < MAX_PASSES) {
+      console.log(`Pass ${pass} complete. Running pass ${pass + 1}...`)
+    }
   }
-  console.log(`\nToken usage:`)
-  console.log(`  Input:  ${totalInputTokens.toLocaleString()} tokens`)
-  console.log(`  Output: ${totalOutputTokens.toLocaleString()} tokens`)
-  console.log(`  Estimated cost: $${totalCost.toFixed(4)}`)
-  console.log(`\nCompleted: ${new Date().toISOString()}`)
+
+  const inputCost = (grandInputTokens / 1_000_000) * 3.0
+  const outputCost = (grandOutputTokens / 1_000_000) * 15.0
+
+  console.log(`\n${"=".repeat(50)}`)
+  console.log(`=== Phase 1 Complete ===`)
+  console.log(`Total new records inserted: ${grandTotalInserted}`)
+  console.log(`Token usage: ${grandInputTokens.toLocaleString()} in / ${grandOutputTokens.toLocaleString()} out`)
+  console.log(`Estimated cost: $${(inputCost + outputCost).toFixed(4)}`)
+  console.log(`Completed: ${new Date().toISOString()}`)
 }
 
 main().catch((e) => { console.error(e); process.exit(1) })
