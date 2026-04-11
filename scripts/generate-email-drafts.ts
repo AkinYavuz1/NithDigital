@@ -48,7 +48,7 @@ function buildEmail(r: {
 I was looking up ${r.sector?.toLowerCase() ?? "businesses"} in ${town} and noticed I couldn't find ${biz} anywhere online — no website, and limited visibility in local searches. I'm Akin from Nith Digital — we build websites for local businesses across Dumfries & Galloway, typically from £700, and we get them found on Google. A simple site with your contact details, services, and a few photos can make a real difference to how many enquiries you get. I can put together a personalised demo for ${biz} in about 10 minutes — would that be worth a look?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
   }
 
   // Has website — use outreach_hook as the opening observation, then sector-specific pitch
@@ -59,7 +59,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build websites for accommodation businesses across Dumfries & Galloway, and I'd love to show you how we've helped similar properties increase direct bookings and cut their OTA commission bills. I can send you a personalised preview of what ${biz} could look like in about 10 minutes. Would that be worth a look?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "restaurant":
       return `Hi ${name},
@@ -67,7 +67,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build restaurant and café websites across D&G with online reservations, proper menu pages, and Google visibility built in. I can show you a personalised demo of what ${biz}'s site could look like — fancy a look?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "trades":
       return `Hi ${name},
@@ -75,7 +75,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital in Dumfries — we build trade websites across D&G, typically for under £1,000, and we get them found on Google. I can personalise a demo for ${biz} with your services and area in minutes — would it be worth me sending you a preview?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "joiner":
       return `Hi ${name},
@@ -83,7 +83,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build joinery and carpentry websites that put your best work front and centre, with a proper enquiry form to capture leads. Would you like to see a personalised demo for ${biz}?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "garage":
       return `Hi ${name},
@@ -91,7 +91,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build garage and mechanic websites that include MOT and service booking, transparent pricing pages, and help you rank higher on Google for searches like "MOT ${town}" and "car service ${town}". Websites start from £500. Worth a quick look at what I'd put together for ${biz}?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "beauty":
       return `Hi ${name},
@@ -99,7 +99,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build salon websites with booking integration, service menus, and stylist profiles that make it easy for new clients to choose you. Can I send you a personalised demo for ${biz}?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "professional":
       return `Hi ${name},
@@ -107,7 +107,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build websites for professional services firms that look trustworthy, rank on Google for local searches, and give new clients the confidence to get in touch. Happy to show you what I'd put together for ${biz} — would a quick call this week work?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "retail":
       return `Hi ${name},
@@ -115,7 +115,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build retail and farm shop websites with product showcases, local delivery information, and e-commerce built in. I can put together a personalised demo in your style for ${biz}. Would that be worth five minutes of your time?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     case "estate":
       return `Hi ${name},
@@ -123,7 +123,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — I build estate agency websites with proper mobile-first property search, instant valuation forms, and area guide content that helps you rank on Google when buyers search "estate agent ${town}". I can show you a demo with your branding if you'd like.
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
 
     default:
       return `Hi ${name},
@@ -131,7 +131,7 @@ Nith Digital | nithdigital.uk | 07XXX XXXXXX`
 ${hook} I'm Akin from Nith Digital — we build websites for local businesses across Dumfries & Galloway that look great, rank on Google, and actually bring in enquiries. I can put together a personalised demo for ${biz} in about 10 minutes. Would that be worth a look?
 
 Cheers, Akin
-Nith Digital | nithdigital.uk | 07XXX XXXXXX`
+Nith Digital | nithdigital.uk | 07404173024`
   }
 }
 
