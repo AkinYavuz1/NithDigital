@@ -162,7 +162,7 @@ export default function ProspectsClient() {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [expanded, setExpanded] = useState<string | null>(null)
   const [subject, setSubject] = useState(DEFAULT_SUBJECT)
-  const [body, setBody] = useState(DEFAULT_BODY)
+  const [body, setBody] = useState('')
   const [showCompose, setShowCompose] = useState(false)
   const [sending, setSending] = useState(false)
 const [emailOnly, setEmailOnly] = useState(false)
