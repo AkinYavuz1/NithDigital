@@ -97,7 +97,11 @@ export async function POST(req: NextRequest) {
       ? `- We have a live demo site built for a ${template.label} business — link it naturally in the email as a concrete example of our work: ${template.url}`
       : `- Link to our templates page as a general example: ${BASE_URL}`
 
-    const hook = sanitiseHook(p.outreach_hook ?? p.why_them ?? '')
+    const hook = [p.outreach_hook, p.why_them]
+      .filter(Boolean)
+      .map(s => sanitiseHook(s!))
+      .filter(Boolean)
+      .join('\n\n')
 
     const msg = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
