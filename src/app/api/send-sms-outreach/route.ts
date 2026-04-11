@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
   for (const item of preview) {
     try {
       const msg = await client.messages.create({
-        from: fromNumber,
+        from: 'NithDigital',
         to: item.to,
         body: item.message,
       })
