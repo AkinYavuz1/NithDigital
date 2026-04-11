@@ -5,13 +5,14 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Inbox, Rocket, Calendar, Ticket,
-  Users, Mail, FileText, Star, LogOut, HelpCircle, Gift, Calculator, FileSignature, Layout, BarChart2, Target, MapPin, Megaphone, Phone, Menu, X,
+  Users, Mail, FileText, Star, LogOut, HelpCircle, Gift, Calculator, FileSignature, Layout, BarChart2, Target, MapPin, Megaphone, Phone, Menu, X, FolderKanban,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
 
 const NAV_ITEMS = [
   { href: '/admin', icon: LayoutDashboard, label: 'Overview' },
+  { href: '/admin/websites', icon: FolderKanban, label: 'Website Projects' },
   { href: '/admin/contacts', icon: Inbox, label: 'Contact Submissions' },
   { href: '/admin/launchpad', icon: Rocket, label: 'Launchpad Analytics' },
   { href: '/admin/bookings', icon: Calendar, label: 'Bookings' },
