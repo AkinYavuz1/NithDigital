@@ -17,7 +17,7 @@ import { createClient } from '@supabase/supabase-js'
 import * as dotenv from 'dotenv'
 import * as path from 'path'
 
-dotenv.config({ path: path.join(__dirname, '..', '.env.local') })
+dotenv.config({ path: path.join(process.cwd(), '.env.local') })
 
 export const SITE_URL = 'https://www.nithdigital.uk/'
 const SCOPE = 'https://www.googleapis.com/auth/webmasters.readonly'
@@ -230,9 +230,7 @@ async function main() {
   console.log('✓ Done:', summary)
 }
 
-if (require.main === module) {
-  main().catch((err) => {
-    console.error(err)
-    process.exit(1)
-  })
-}
+main().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})

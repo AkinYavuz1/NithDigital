@@ -19,7 +19,7 @@ import * as dotenv from 'dotenv'
 import * as path from 'path'
 import * as readline from 'readline'
 
-dotenv.config({ path: path.join(__dirname, '..', '.env.local') })
+dotenv.config({ path: path.join(process.cwd(), '.env.local') })
 
 const CLIENT_ID = process.env.GSC_CLIENT_ID
 const CLIENT_SECRET = process.env.GSC_CLIENT_SECRET
