@@ -61,6 +61,14 @@ function stripBriefTag(text: string): string {
   return text.replace(/<BRIEF>[\s\S]*?<\/BRIEF>/g, '').trim()
 }
 
+interface ScrapeEntry {
+  url: string
+  label: 'client' | 'competitor'
+  status: 'idle' | 'scraping' | 'done' | 'error'
+  summary?: string
+  data?: Record<string, unknown>
+}
+
 export default function BuildSiteModal({
   project,
   onClose,
@@ -70,13 +78,17 @@ export default function BuildSiteModal({
   onClose: () => void
   onProjectUpdated: (updates: Partial<Project>) => void
 }) {
-  const [step, setStep] = useState<'chat' | 'brief_ready' | 'building' | 'done'>('chat')
+  const [step, setStep] = useState<'urls' | 'chat' | 'brief_ready' | 'building' | 'done'>('urls')
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
   const [brief, setBrief] = useState<Brief | null>(null)
   const [buildState, setBuildState] = useState<BuildState>({ step: 'idle', message: '' })
   const [generatedCopy, setGeneratedCopy] = useState<object | null>(null)
+  const [scrapeEntries, setScrapeEntries] = useState<ScrapeEntry[]>([
+    { url: '', label: 'client', status: 'idle' },
+  ])
+  const [scrapedContext, setScrapedContext] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const supabase = createClient()
@@ -86,12 +98,55 @@ export default function BuildSiteModal({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, streaming])
 
-  // Kick off with Claude's opening question
+  // Kick off with Claude's opening question — inject scraped context if available
   useEffect(() => {
-    if (messages.length === 0) {
-      sendMessage("Let's build a website for this client. Start by asking me what you need to know.", true)
+    if (messages.length === 0 && step === 'chat') {
+      const contextMsg = scrapedContext
+        ? `Let's build a website for this client. I've already analysed some reference sites:\n\n${scrapedContext}\n\nUse this as a starting point. Ask me any remaining questions you need.`
+        : "Let's build a website for this client. Start by asking me what you need to know."
+      sendMessage(contextMsg, true)
     }
-  }, [])
+  }, [step])
+
+  const scrapeUrls = async () => {
+    const toScrape = scrapeEntries.filter(e => e.url.trim())
+    if (toScrape.length === 0) {
+      // Skip straight to chat with no context
+      setStep('chat')
+      return
+    }
+
+    // Mark all as scraping
+    setScrapeEntries(prev => prev.map(e => e.url.trim() ? { ...e, status: 'scraping' } : e))
+
+    const results: string[] = []
+
+    for (const entry of toScrape) {
+      try {
+        const res = await fetch('/api/scrape-site', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: entry.url.trim(), label: entry.label }),
+        })
+        const data = await res.json()
+        if (data.parsed) {
+          setScrapeEntries(prev => prev.map(e =>
+            e.url === entry.url
+              ? { ...e, status: 'done', summary: data.parsed.summary, data: data.parsed }
+              : e
+          ))
+          results.push(`[${entry.label === 'client' ? "Client's existing site" : 'Competitor site'}: ${entry.url}]\n${JSON.stringify(data.parsed, null, 2)}`)
+        } else {
+          setScrapeEntries(prev => prev.map(e => e.url === entry.url ? { ...e, status: 'error' } : e))
+        }
+      } catch {
+        setScrapeEntries(prev => prev.map(e => e.url === entry.url ? { ...e, status: 'error' } : e))
+      }
+    }
+
+    setScrapedContext(results.join('\n\n---\n\n'))
+    setStep('chat')
+  }
 
   const sendMessage = async (text: string, silent = false) => {
     const userMessage: Message = { role: 'user', content: text }
@@ -293,7 +348,7 @@ export default function BuildSiteModal({
         <div style={{ padding: '18px 24px', borderBottom: '1px solid rgba(27,42,74,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, background: '#1B2A4A' }}>
           <div>
             <p style={{ fontSize: 10, color: '#D4A84B', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 2 }}>
-              {step === 'chat' ? 'Brief Chat' : step === 'brief_ready' ? 'Brief Ready' : step === 'building' ? 'Building...' : 'Site Built'}
+              {step === 'urls' ? 'Reference Sites' : step === 'chat' ? 'Brief Chat' : step === 'brief_ready' ? 'Brief Ready' : step === 'building' ? 'Building...' : 'Site Built'}
             </p>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: '#F5F0E6', fontWeight: 400, margin: 0 }}>
               {project.client_name} — {project.project_name}
@@ -303,6 +358,92 @@ export default function BuildSiteModal({
             <X size={18} />
           </button>
         </div>
+
+        {/* ── URL STEP ── */}
+        {step === 'urls' && (
+          <div style={{ flex: 1, overflowY: 'auto', padding: '28px 28px' }}>
+            <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 24, lineHeight: 1.6 }}>
+              Paste the client's existing website or a competitor's site. Claude will analyse them and use the findings to skip straight to the right questions — or go straight to chat without any URLs.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
+              {scrapeEntries.map((entry, i) => (
+                <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                  <select
+                    value={entry.label}
+                    onChange={e => setScrapeEntries(prev => prev.map((en, idx) => idx === i ? { ...en, label: e.target.value as 'client' | 'competitor' } : en))}
+                    style={{ padding: '9px 10px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 12, fontFamily: 'inherit', color: '#1B2A4A', background: 'white', flexShrink: 0 }}
+                  >
+                    <option value="client">Client site</option>
+                    <option value="competitor">Competitor</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="https://example.co.uk"
+                    value={entry.url}
+                    onChange={e => setScrapeEntries(prev => prev.map((en, idx) => idx === i ? { ...en, url: e.target.value } : en))}
+                    style={{ flex: 1, padding: '9px 14px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', color: '#1B2A4A' }}
+                  />
+                  {entry.status === 'scraping' && <Loader2 size={16} color="#D4A84B" style={{ flexShrink: 0, animation: 'spin 1s linear infinite' }} />}
+                  {entry.status === 'done' && <CheckCircle2 size={16} color="#22c55e" style={{ flexShrink: 0 }} />}
+                  {entry.status === 'error' && <AlertCircle size={16} color="#ef4444" style={{ flexShrink: 0 }} />}
+                  {scrapeEntries.length > 1 && (
+                    <button onClick={() => setScrapeEntries(prev => prev.filter((_, idx) => idx !== i))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(27,42,74,0.3)', padding: 4, flexShrink: 0 }}>
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Summaries after scraping */}
+            {scrapeEntries.some(e => e.status === 'done' && e.summary) && (
+              <div style={{ marginBottom: 20 }}>
+                {scrapeEntries.filter(e => e.summary).map((e, i) => (
+                  <div key={i} style={{ padding: '10px 14px', background: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.15)', borderRadius: 8, marginBottom: 8 }}>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: '#15803d', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 4 }}>
+                      {e.label === 'client' ? 'Client site' : 'Competitor'} — {e.url}
+                    </p>
+                    <p style={{ fontSize: 12, color: '#5A6A7A', margin: 0 }}>{e.summary}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <button
+              onClick={() => setScrapeEntries(prev => [...prev, { url: '', label: 'competitor', status: 'idle' }])}
+              style={{ fontSize: 12, color: '#5A6A7A', background: 'none', border: '1px dashed rgba(27,42,74,0.2)', borderRadius: 8, padding: '8px 14px', cursor: 'pointer', marginBottom: 8 }}
+            >
+              + Add another URL
+            </button>
+
+            <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
+              <button
+                onClick={() => setStep('chat')}
+                style={{ flex: 1, padding: '11px', borderRadius: 10, fontSize: 13, fontWeight: 600, background: '#F5F0E6', border: '1px solid rgba(27,42,74,0.15)', cursor: 'pointer', color: '#5A6A7A' }}
+              >
+                Skip — go straight to chat
+              </button>
+              <button
+                onClick={scrapeUrls}
+                disabled={scrapeEntries.every(e => !e.url.trim()) || scrapeEntries.some(e => e.status === 'scraping')}
+                style={{
+                  flex: 2, padding: '11px 20px', borderRadius: 10, fontSize: 13, fontWeight: 700,
+                  background: scrapeEntries.some(e => e.url.trim()) ? '#D4A84B' : 'rgba(27,42,74,0.1)',
+                  color: scrapeEntries.some(e => e.url.trim()) ? '#1B2A4A' : '#5A6A7A',
+                  border: 'none', cursor: scrapeEntries.some(e => e.url.trim()) ? 'pointer' : 'default',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                }}
+              >
+                {scrapeEntries.some(e => e.status === 'scraping') ? (
+                  <><Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> Analysing sites...</>
+                ) : (
+                  <><Globe size={14} /> Analyse & Start Brief</>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* ── CHAT STEP ── */}
         {(step === 'chat' || step === 'brief_ready') && (
