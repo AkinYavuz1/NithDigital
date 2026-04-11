@@ -101,7 +101,9 @@ function buildMailto(p: Prospect, subject: string, body: string, from?: string) 
     .replace(/\{\{recommended_service\}\}/g, p.recommended_service || '')
   const to = p.contact_email || ''
   const fromParam = from ? `&from=${encodeURIComponent(from)}` : ''
-  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(personalSubject)}&body=${encodeURIComponent(personalBody)}${fromParam}`
+  // Use CRLF line endings so Outlook and other clients preserve paragraph breaks
+  const bodyWithCRLF = personalBody.replace(/\r?\n/g, '\r\n')
+  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(personalSubject)}&body=${encodeURIComponent(bodyWithCRLF)}${fromParam}`
 }
 
 export default function ProspectsClient() {

@@ -119,23 +119,26 @@ ${p.has_website && p.website_status && p.website_status !== 'none'
   ? `Their website appears to have issues (${p.website_status}) — frame as what you observed, not technical fact`
   : `They have no working website`}
 
-Tone and style — write exactly like this example (note: specific detail, no waffle):
+Tone and style — write exactly like this example (note: specific detail, short paragraphs, no waffle):
 
 "Hi,
 
-Looked up Mackenzie Joinery earlier — you've got a great portfolio but I couldn't find you on Google at all, and there's no way to request a quote on the site. I build websites for local trades businesses here in D&G, based in Sanquhar. Put together a demo for a similar joinery business if it's useful: ${template?.url ?? BASE_URL}. Worth a look?
+Looked up Mackenzie Joinery earlier — you've got a great portfolio but I couldn't find you on Google at all, and there's no way to request a quote on the site.
+
+I build websites for local trades businesses here in D&G, based in Sanquhar. Put together a demo for a similar joinery business if it's useful: ${template?.url ?? BASE_URL} — not a past client, just a demo to give you a rough idea of what's possible.
+
+Worth a look?
 
 Cheers,
 Akin
-07404173024"
+Nith Digital | 07404173024 | www.nithdigital.uk"
 
 Rules:
-- Use the SPECIFIC details from the research above — name the actual problems you found (missing testimonials, outdated tech, no lead capture, the heritage angle, whatever is in the notes). Do not swap them for vague generalities like "doesn't match your reputation" or "look trustworthy".
-- 4–6 sentences. Enough to show you actually looked at their business, not so long it becomes a pitch.
-- First sentence: what you specifically noticed when you looked them up. Do NOT mention their street address. Reference what you saw on their site or online.
-- One sentence introducing Nith Digital — local, Sanquhar, builds custom sites.
-- Demo link dropped naturally: ${template?.url ?? BASE_URL} — make clear it's a demo, not a past client site.
-- End with one low-pressure question — "Worth a chat?" / "Worth a call ${new Date().getDay() === 0 || new Date().getDay() === 5 || new Date().getDay() === 6 ? 'next week' : 'this week'}?" or similar.
+- Use the SPECIFIC details from the research above — name the actual problems you found. Do not swap them for vague generalities.
+- Structure as short paragraphs with a blank line between each — NOT one long block of text.
+- Paragraph 1: what you specifically noticed (2–3 sentences max). Do NOT mention their street address.
+- Paragraph 2: one sentence on Nith Digital, then the demo link. Make clear it's a demo, not a past client site.
+- Paragraph 3: one short low-pressure closing question — "Worth a chat?" / "Worth a call ${new Date().getDay() === 0 || new Date().getDay() === 5 || new Date().getDay() === 6 ? 'next week' : 'this week'}?" or similar.
 - Sign off: Cheers, Akin | Nith Digital | 07404173024 | www.nithdigital.uk
 - No buzzwords. No "online presence". No "digital footprint". No "look trustworthy". No prices. No WordPress.
 - Output the email body only. No subject line. No markdown.`
