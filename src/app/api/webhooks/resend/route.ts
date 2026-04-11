@@ -1,18 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { Webhook } from 'svix'
 
 export async function POST(req: NextRequest) {
+  const body = await req.text()
+
+  // Verify signature if secret is configured
+  const secret = process.env.RESEND_WEBHOOK_SECRET
+  if (secret) {
+    const wh = new Webhook(secret)
+    try {
+      wh.verify(body, {
+        'svix-id': req.headers.get('svix-id') ?? '',
+        'svix-timestamp': req.headers.get('svix-timestamp') ?? '',
+        'svix-signature': req.headers.get('svix-signature') ?? '',
+      })
+    } catch {
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
+    }
+  }
+
+  let payload: { type: string; data: Record<string, unknown> }
+  try {
+    payload = JSON.parse(body)
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+  }
+
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
-
-  let payload: { type: string; data: Record<string, unknown> }
-  try {
-    payload = await req.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
 
   const { type, data } = payload
   const toEmail = Array.isArray(data?.to) ? data.to[0] : data?.to
@@ -30,7 +48,6 @@ export async function POST(req: NextRequest) {
         { onConflict: 'email' }
       )
 
-      // Update email_queue row if Message-ID matches
       const messageId = (data?.headers as Record<string, string> | undefined)?.['Message-ID']
       if (messageId) {
         const queueId = messageId.replace(/^<|@nithdigital\.uk>$/g, '')
