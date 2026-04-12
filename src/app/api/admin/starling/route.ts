@@ -34,6 +34,9 @@ export async function GET() {
   const effectiveBalance = (balanceData.effectiveBalance?.minorUnits ?? 0) / 100
   const pendingOut = (balanceData.pendingTransactions?.minorUnits ?? 0) / 100
 
+  const OWNER_NAMES_RAW = ['a yavuz', 'akin yavuz']
+  const isOwnerTransferName = (name: string) => OWNER_NAMES_RAW.includes(name.toLowerCase().trim())
+
   const transactions = (txData.feedItems ?? []).map((t: {
     feedItemUid: string
     transactionTime: string
@@ -52,15 +55,16 @@ export async function GET() {
     category: t.spendingCategory,
     status: t.status,
     reference: t.reference,
+    ownerTransfer: isOwnerTransferName(t.counterPartyName),
   }))
 
-  // Monthly in/out from transactions
+  // Monthly in/out from transactions — exclude owner transfers from income
   const monthly: Record<string, { in: number; out: number }> = {}
   for (const tx of transactions) {
     const month = tx.date.slice(0, 7)
     if (!monthly[month]) monthly[month] = { in: 0, out: 0 }
-    if (tx.direction === 'IN') monthly[month].in += tx.amount
-    else monthly[month].out += tx.amount
+    if (tx.direction === 'IN' && !tx.ownerTransfer) monthly[month].in += tx.amount
+    else if (tx.direction === 'OUT') monthly[month].out += tx.amount
   }
 
   return NextResponse.json({

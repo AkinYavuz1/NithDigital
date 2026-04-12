@@ -21,6 +21,7 @@ interface StarlingData {
     category: string
     status: string
     reference: string
+    ownerTransfer?: boolean
   }[]
   monthly: Record<string, { in: number; out: number }>
 }
@@ -283,25 +284,38 @@ export default function AdminFinanceClient({
                 <p style={{ fontSize: 13, color: '#5A6A7A' }}>No transactions found</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                  {starling.transactions.map((tx, i) => (
-                    <div key={tx.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: i < starling.transactions.length - 1 ? '1px solid rgba(27,42,74,0.05)' : 'none' }}>
-                      <div style={{
-                        width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-                        background: tx.direction === 'IN' ? 'rgba(39,174,96,0.12)' : 'rgba(231,76,60,0.10)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 13, color: tx.direction === 'IN' ? '#27ae60' : '#e74c3c',
-                      }}>
-                        {tx.direction === 'IN' ? '↓' : '↑'}
+                  {starling.transactions.map((tx, i) => {
+                    const isTransfer = tx.ownerTransfer && tx.direction === 'IN'
+                    const dotBg = isTransfer ? 'rgba(90,106,122,0.12)' : tx.direction === 'IN' ? 'rgba(39,174,96,0.12)' : 'rgba(231,76,60,0.10)'
+                    const dotColor = isTransfer ? '#5A6A7A' : tx.direction === 'IN' ? '#27ae60' : '#e74c3c'
+                    const amountColor = isTransfer ? '#5A6A7A' : tx.direction === 'IN' ? '#27ae60' : '#e74c3c'
+                    return (
+                      <div key={tx.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: i < starling.transactions.length - 1 ? '1px solid rgba(27,42,74,0.05)' : 'none' }}>
+                        <div style={{
+                          width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
+                          background: dotBg,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontSize: 13, color: dotColor,
+                        }}>
+                          {tx.direction === 'IN' ? '↓' : '↑'}
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: 13, color: '#1B2A4A', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tx.name}</div>
+                          <div style={{ fontSize: 11, color: '#5A6A7A' }}>
+                            {new Date(tx.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} · {isTransfer ? 'owner transfer' : tx.category.replace(/_/g, ' ').toLowerCase()}
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+                          {isTransfer && (
+                            <span style={{ fontSize: 10, fontWeight: 600, color: '#5A6A7A', background: 'rgba(90,106,122,0.1)', borderRadius: 4, padding: '2px 6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Transfer</span>
+                          )}
+                          <div style={{ fontSize: 13, fontWeight: 700, color: amountColor }}>
+                            {tx.direction === 'IN' ? '+' : '−'}{fmt(tx.amount)}
+                          </div>
+                        </div>
                       </div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: 13, color: '#1B2A4A', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tx.name}</div>
-                        <div style={{ fontSize: 11, color: '#5A6A7A' }}>{new Date(tx.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} · {tx.category.replace(/_/g, ' ').toLowerCase()}</div>
-                      </div>
-                      <div style={{ fontSize: 13, fontWeight: 700, color: tx.direction === 'IN' ? '#27ae60' : '#e74c3c', flexShrink: 0 }}>
-                        {tx.direction === 'IN' ? '+' : '−'}{fmt(tx.amount)}
-                      </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
             </div>
