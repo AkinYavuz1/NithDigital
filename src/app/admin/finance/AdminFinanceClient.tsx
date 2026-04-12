@@ -113,8 +113,8 @@ export default function AdminFinanceClient({
     })
 
     fetch('/api/admin/starling')
-      .then(r => r.json())
-      .then((d: StarlingData) => { setStarling(d); setStarlingLoading(false) })
+      .then(r => r.ok ? r.json() : null)
+      .then((d: StarlingData | null) => { if (d?.transactions) setStarling(d); setStarlingLoading(false) })
       .catch(() => setStarlingLoading(false))
   }, [])
 
