@@ -141,24 +141,36 @@ async function handleQA(userId: string, phone: string, question: string) {
   let reply = 'Sorry, I could not generate a response right now. Please try again.'
 
   try {
-    // Fetch recent conversation history for context
+    // Fetch recent conversation history (excluding the current inbound
+    // message which was already logged before handleQA is called)
     const { data: history } = await sb
       .from('tradedesk_messages')
-      .select('direction, message_body')
+      .select('direction, message_body, created_at')
       .eq('user_id', userId)
       .not('message_body', 'is', null)
       .order('created_at', { ascending: false })
-      .limit(20)
+      .limit(21)
 
+    // Build alternating user/assistant messages for the API
     const historyMessages: { role: 'user' | 'assistant'; content: string }[] = []
     if (history) {
-      for (const row of history.reverse()) {
+      // Skip the first row (most recent) as it's the current inbound message
+      const rows = history.slice(1).reverse()
+      for (const row of rows) {
         if (!row.message_body) continue
-        historyMessages.push({
-          role: row.direction === 'in' ? 'user' : 'assistant',
-          content: row.message_body,
-        })
+        const role = row.direction === 'in' ? 'user' as const : 'assistant' as const
+        const prev = historyMessages[historyMessages.length - 1]
+        if (prev && prev.role === role) {
+          // Merge consecutive same-role messages
+          prev.content += '\n' + row.message_body
+        } else {
+          historyMessages.push({ role, content: row.message_body })
+        }
       }
+    }
+    // Ensure history starts with a user message (Claude API requirement)
+    while (historyMessages.length > 0 && historyMessages[0].role !== 'user') {
+      historyMessages.shift()
     }
     historyMessages.push({ role: 'user', content: question })
 
