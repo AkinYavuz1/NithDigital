@@ -5,8 +5,25 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   LineChart, Line, CartesianGrid,
 } from 'recharts'
-import { PoundSterling, TrendingUp, TrendingDown, AlertCircle, CreditCard } from 'lucide-react'
+import { PoundSterling, TrendingUp, TrendingDown, AlertCircle, CreditCard, Building2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
+
+interface StarlingData {
+  clearedBalance: number
+  effectiveBalance: number
+  pendingOut: number
+  transactions: {
+    id: string
+    date: string
+    direction: 'IN' | 'OUT'
+    amount: number
+    name: string
+    category: string
+    status: string
+    reference: string
+  }[]
+  monthly: Record<string, { in: number; out: number }>
+}
 
 interface Invoice {
   id: string
@@ -78,6 +95,8 @@ export default function AdminFinanceClient({
   const [invoices, setInvoices] = useState<Invoice[]>(initialInvoices)
   const [expenses, setExpenses] = useState<Expense[]>(initialExpenses)
   const [income, setIncome] = useState<Income[]>(initialIncome)
+  const [starling, setStarling] = useState<StarlingData | null>(null)
+  const [starlingLoading, setStarlingLoading] = useState(true)
   const [tab, setTab] = useState<Tab>('cashflow')
   const [invoiceFilter, setInvoiceFilter] = useState<string>('all')
   const supabase = createClient()
@@ -92,6 +111,11 @@ export default function AdminFinanceClient({
       if (exp.data) setExpenses(exp.data as Expense[])
       if (inc.data) setIncome(inc.data as Income[])
     })
+
+    fetch('/api/admin/starling')
+      .then(r => r.json())
+      .then((d: StarlingData) => { setStarling(d); setStarlingLoading(false) })
+      .catch(() => setStarlingLoading(false))
   }, [])
 
   // ── derived numbers ──────────────────────────────────────────────
@@ -148,9 +172,10 @@ export default function AdminFinanceClient({
     : invoices.filter(i => i.status === invoiceFilter)
 
   const KPI = [
+    { label: 'Bank Balance', value: starlingLoading ? '…' : starling ? fmt(starling.clearedBalance) : '—', color: '#1B2A4A', icon: Building2 },
     { label: 'Total Income', value: fmt(totalIncome), color: '#27ae60', icon: TrendingUp },
     { label: 'Total Expenses', value: fmt(totalExpenses), color: '#e74c3c', icon: TrendingDown },
-    { label: 'Net Profit', value: fmt(netProfit), color: netProfit >= 0 ? '#1B2A4A' : '#e74c3c', icon: PoundSterling },
+    { label: 'Net Profit', value: fmt(netProfit), color: netProfit >= 0 ? '#2D4A7A' : '#e74c3c', icon: PoundSterling },
     { label: 'Outstanding', value: fmt(outstanding), color: '#D4A84B', icon: CreditCard },
     { label: 'Overdue', value: fmt(overdueTotal), color: '#e74c3c', icon: AlertCircle },
   ]
@@ -164,7 +189,7 @@ export default function AdminFinanceClient({
       </div>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16, marginBottom: 32 }} className="fin-kpi-grid">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 16, marginBottom: 32 }} className="fin-kpi-grid">
         {KPI.map(k => (
           <div key={k.label} style={{ background: '#F5F0E6', borderRadius: 10, padding: '20px', borderTop: `3px solid ${k.color}` }}>
             <div style={{ fontSize: 22, fontWeight: 700, color: k.color }}>{k.value}</div>
@@ -200,6 +225,20 @@ export default function AdminFinanceClient({
       {/* ── CASHFLOW TAB ── */}
       {tab === 'cashflow' && (
         <div>
+          {/* Starling balance cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }} className="starling-grid">
+            {[
+              { label: 'Cleared Balance', value: starling ? fmt(starling.clearedBalance) : starlingLoading ? '…' : '—', color: '#1B2A4A' },
+              { label: 'Effective Balance', value: starling ? fmt(starling.effectiveBalance) : starlingLoading ? '…' : '—', color: '#2D4A7A' },
+              { label: 'Pending Out', value: starling ? fmt(starling.pendingOut) : starlingLoading ? '…' : '—', color: '#D4A84B' },
+            ].map(c => (
+              <div key={c.label} style={{ background: '#1B2A4A', borderRadius: 10, padding: '20px', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ fontSize: 10, letterSpacing: '1px', textTransform: 'uppercase', color: 'rgba(212,168,75,0.8)', marginBottom: 8, fontWeight: 600 }}>Starling · {c.label}</div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: '#F5F0E6' }}>{c.value}</div>
+              </div>
+            ))}
+          </div>
+
           <div style={{ background: 'white', border: '1px solid rgba(27,42,74,0.08)', borderRadius: 12, padding: 24, marginBottom: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 20, fontWeight: 400 }}>Monthly cashflow (last 12 months)</h3>
             <ResponsiveContainer width="100%" height={240}>
@@ -213,17 +252,50 @@ export default function AdminFinanceClient({
             </ResponsiveContainer>
           </div>
 
-          <div style={{ background: 'white', border: '1px solid rgba(27,42,74,0.08)', borderRadius: 12, padding: 24 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 20, fontWeight: 400 }}>Net profit trend</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={cashflowData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                <CartesianGrid stroke="rgba(27,42,74,0.06)" strokeDasharray="3 3" />
-                <XAxis dataKey="month" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
-                <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `£${(v/1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: unknown) => fmt(Number(v))} contentStyle={{ fontSize: 12, borderRadius: 6 }} />
-                <Line type="monotone" dataKey="net" name="Net" stroke="#D4A84B" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 0 }} className="cashflow-bottom-grid">
+            <div style={{ background: 'white', border: '1px solid rgba(27,42,74,0.08)', borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 20, fontWeight: 400 }}>Net profit trend</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <LineChart data={cashflowData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                  <CartesianGrid stroke="rgba(27,42,74,0.06)" strokeDasharray="3 3" />
+                  <XAxis dataKey="month" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
+                  <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `£${(v/1000).toFixed(0)}k`} />
+                  <Tooltip formatter={(v: unknown) => fmt(Number(v))} contentStyle={{ fontSize: 12, borderRadius: 6 }} />
+                  <Line type="monotone" dataKey="net" name="Net" stroke="#D4A84B" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div style={{ background: 'white', border: '1px solid rgba(27,42,74,0.08)', borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 20, fontWeight: 400 }}>Recent Starling transactions</h3>
+              {starlingLoading ? (
+                <p style={{ fontSize: 13, color: '#5A6A7A' }}>Loading…</p>
+              ) : !starling || starling.transactions.length === 0 ? (
+                <p style={{ fontSize: 13, color: '#5A6A7A' }}>No transactions found</p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                  {starling.transactions.map((tx, i) => (
+                    <div key={tx.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: i < starling.transactions.length - 1 ? '1px solid rgba(27,42,74,0.05)' : 'none' }}>
+                      <div style={{
+                        width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
+                        background: tx.direction === 'IN' ? 'rgba(39,174,96,0.12)' : 'rgba(231,76,60,0.10)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 13, color: tx.direction === 'IN' ? '#27ae60' : '#e74c3c',
+                      }}>
+                        {tx.direction === 'IN' ? '↓' : '↑'}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 13, color: '#1B2A4A', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tx.name}</div>
+                        <div style={{ fontSize: 11, color: '#5A6A7A' }}>{new Date(tx.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} · {tx.category.replace(/_/g, ' ').toLowerCase()}</div>
+                      </div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: tx.direction === 'IN' ? '#27ae60' : '#e74c3c', flexShrink: 0 }}>
+                        {tx.direction === 'IN' ? '+' : '−'}{fmt(tx.amount)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -430,11 +502,15 @@ export default function AdminFinanceClient({
 
       <style>{`
         .fin-kpi-grid {}
+        .starling-grid {}
+        .cashflow-bottom-grid {}
         .aged-grid {}
         .exp-grid {}
         .tax-grid {}
         @media (max-width: 1024px) {
           .fin-kpi-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          .starling-grid { grid-template-columns: 1fr 1fr !important; }
+          .cashflow-bottom-grid { grid-template-columns: 1fr !important; }
           .aged-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .exp-grid { grid-template-columns: 1fr !important; }
           .tax-grid { grid-template-columns: 1fr 1fr !important; }
@@ -442,6 +518,7 @@ export default function AdminFinanceClient({
         @media (max-width: 768px) {
           .finance-wrap { padding: 20px 16px !important; }
           .fin-kpi-grid { grid-template-columns: 1fr 1fr !important; }
+          .starling-grid { grid-template-columns: 1fr !important; }
           .aged-grid { grid-template-columns: 1fr 1fr !important; }
           .tax-grid { grid-template-columns: 1fr !important; }
         }
