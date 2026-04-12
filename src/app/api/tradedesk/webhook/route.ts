@@ -190,6 +190,47 @@ HOW TO ANSWER EVERYTHING ELSE:
   await logMessage(userId, 'out', reply, null, 'qa')
 }
 
+// ── Google Business Profile helper ───────────────────────────────────────
+
+async function postPhotoToGBP(
+  refreshToken: string,
+  locationName: string,
+  imageUrl: string,
+  caption: string
+): Promise<void> {
+  // Exchange refresh token for access token
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id: process.env.GOOGLE_GBP_CLIENT_ID!,
+      client_secret: process.env.GOOGLE_GBP_CLIENT_SECRET!,
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token',
+    }),
+  })
+  const { access_token } = await tokenRes.json()
+  if (!access_token) throw new Error('Failed to refresh GBP access token')
+
+  // POST photo to GBP media endpoint
+  await fetch(
+    `https://mybusiness.googleapis.com/v4/${locationName}/media`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        mediaFormat: 'PHOTO',
+        locationAssociation: { category: 'ADDITIONAL' },
+        sourceUrl: imageUrl,
+        description: caption,
+      }),
+    }
+  )
+}
+
 // ── Flow: Portfolio photo ─────────────────────────────────────────────────
 
 async function handlePortfolioFromBuffer(
@@ -254,7 +295,34 @@ Respond in this exact JSON format:
     published: true,
   })
 
-  const reply = `✅ Added to your portfolio!\n\n*Caption:*\n${aiCaption}\n\n*Ready to share:*\n${socialPost}`
+  // Fetch user's Google tokens
+  const { data: userData } = await sb
+    .from('tradedesk_users')
+    .select('google_refresh_token, google_location_name')
+    .eq('id', userId)
+    .single()
+
+  let gbpPosted = false
+  if (userData?.google_refresh_token && userData?.google_location_name) {
+    try {
+      await postPhotoToGBP(
+        userData.google_refresh_token,
+        userData.google_location_name,
+        imageUrl,
+        aiCaption
+      )
+      gbpPosted = true
+    } catch {
+      // Non-fatal — portfolio saved regardless
+    }
+  }
+
+  const gbpLine = gbpPosted ? '\n📍 Also posted to your Google Business listing.' : ''
+  const connectLine = !userData?.google_refresh_token
+    ? `\n\n💡 *Want this on Google too?* Connect your Google Business in 10 seconds:\n${BASE_URL}/tradedesk/${userId}/connect`
+    : ''
+
+  const reply = `✅ Added to your portfolio!${gbpLine}\n\n*Caption:*\n${aiCaption}\n\n*Ready to share:*\n${socialPost}${connectLine}`
   await sendWhatsApp(phone, reply)
   await logMessage(userId, 'out', reply, null, 'portfolio')
 }
