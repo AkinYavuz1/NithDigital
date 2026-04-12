@@ -435,7 +435,7 @@ function analyseHtml(
   // Gzip — CDNs (Vercel, Cloudflare) decompress before forwarding so content-encoding
   // is often absent even when compression is active. Treat HTTPS sites as compressed.
   const encoding = responseHeaders.get('content-encoding') ?? ''
-  const usesGzip = /gzip|br|deflate/i.test(encoding) || parsedUrl.protocol === 'https:'
+  const usesGzip = /gzip|br|deflate/i.test(encoding) || baseUrl.protocol === 'https:'
 
   // ----- Mobile -----
   const viewportTag = metas.find((t) => /name\s*=\s*["']viewport["']/i.test(t))
