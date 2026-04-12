@@ -641,17 +641,15 @@ export async function POST(req: NextRequest) {
   const params = new URLSearchParams(rawBody)
   const paramObj = Object.fromEntries(params.entries())
 
-  // Validate Twilio signature
+  // Validate Twilio signature — try both www and non-www
   const signature = req.headers.get('X-Twilio-Signature') || ''
-  const webhookUrl = `https://www.nithdigital.uk/api/tradedesk/webhook`
-  const isValid = twilio.validateRequest(
-    process.env.TWILIO_AUTH_TOKEN!,
-    signature,
-    webhookUrl,
-    paramObj
-  )
+  const urlWww = 'https://www.nithdigital.uk/api/tradedesk/webhook'
+  const urlBare = 'https://nithdigital.uk/api/tradedesk/webhook'
+  const validWww = twilio.validateRequest(process.env.TWILIO_AUTH_TOKEN!, signature, urlWww, paramObj)
+  const validBare = twilio.validateRequest(process.env.TWILIO_AUTH_TOKEN!, signature, urlBare, paramObj)
+  console.log('[TradeDesk] sig check — www:', validWww, 'bare:', validBare, 'sig:', signature.slice(0, 20))
 
-  if (!isValid) {
+  if (!validWww && !validBare) {
     console.warn('[TradeDesk] invalid signature — ignoring')
     return new NextResponse('<Response></Response>', {
       status: 200,
