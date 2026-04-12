@@ -89,6 +89,52 @@ function isValidEmail(s: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim())
 }
 
+// ── AI photo type detection ───────────────────────────────────────────────
+
+async function detectPhotoType(
+  buffer: Buffer,
+  contentType: string,
+  caption: string | null
+): Promise<'portfolio' | 'expense' | 'unknown'> {
+  try {
+    const base64 = buffer.toString('base64')
+    const mediaType = contentType as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
+
+    const msg = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 50,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: { type: 'base64', media_type: mediaType, data: base64 },
+            },
+            {
+              type: 'text',
+              text: `Look at this image${caption ? ` (the sender added: "${caption}")` : ''}.
+
+Is this:
+A) An invoice, receipt, delivery note, or financial document
+B) A photo of a completed trade job, work in progress, or site photo
+
+Reply with only the letter A or B.`,
+            },
+          ],
+        },
+      ],
+    })
+
+    const answer = (msg.content[0] as any).text.trim().toUpperCase()
+    if (answer.startsWith('A')) return 'expense'
+    if (answer.startsWith('B')) return 'portfolio'
+    return 'unknown'
+  } catch {
+    return 'unknown'
+  }
+}
+
 // ── Flow: Groq Q&A ────────────────────────────────────────────────────────
 
 async function handleQA(userId: string, phone: string, question: string) {
@@ -146,13 +192,13 @@ HOW TO ANSWER EVERYTHING ELSE:
 
 // ── Flow: Portfolio photo ─────────────────────────────────────────────────
 
-async function handlePortfolio(
+async function handlePortfolioFromBuffer(
   userId: string,
   phone: string,
-  mediaUrl: string,
+  buffer: Buffer,
+  contentType: string,
   rawCaption: string | null
 ) {
-  const { buffer, contentType } = await downloadTwilioMedia(mediaUrl)
   const ext = getExt(contentType)
   const path = `${userId}/portfolio/${Date.now()}-${shortId()}.${ext}`
   const imageUrl = await uploadToStorage(buffer, contentType, path)
@@ -215,15 +261,15 @@ Respond in this exact JSON format:
 
 // ── Flow: Expense extraction ──────────────────────────────────────────────
 
-async function handleExpense(
+async function handleExpenseFromBuffer(
   userId: string,
   phone: string,
-  mediaUrl: string,
+  buffer: Buffer,
+  contentType: string,
   messageBody: string,
   userEmail: string | null,
   userName: string | null
 ) {
-  const { buffer, contentType } = await downloadTwilioMedia(mediaUrl)
   const ext = getExt(contentType)
   const path = `${userId}/expenses/${Date.now()}-${shortId()}.${ext}`
   const imageUrl = await uploadToStorage(buffer, contentType, path)
@@ -397,7 +443,7 @@ async function processMessage(
           pending_action: null,
         }).eq('id', userId)
 
-        const reply = `Got it ✅\n\nYou're all set. Here's what I can do:\n\n• Text me a *question* — I'll answer it\n• Send a *job photo* — I'll ask what it's for\n• Send an *invoice or receipt photo* (say "invoice" or "receipt") — I'll log it and email you a copy\n\nFire away.`
+        const reply = `Got it ✅\n\nYou're all set. Here's what I can do:\n\n• Text me a *question* — I'll answer it\n• Send a *job photo* — I'll add it to your portfolio automatically\n• Send an *invoice or receipt photo* — I'll extract the details, log it, and email you a copy\n\nFire away.`
         await sendWhatsApp(phone, reply)
         await logMessage(userId, 'out', reply, null, null)
       } else {
@@ -425,9 +471,11 @@ async function processMessage(
       }).eq('id', userId)
 
       if (choice.includes('1') || choice.includes('portfolio')) {
-        await handlePortfolio(userId, phone, storedMediaUrl, null)
+        const { buffer, contentType } = await downloadTwilioMedia(storedMediaUrl)
+        await handlePortfolioFromBuffer(userId, phone, buffer, contentType, null)
       } else if (choice.includes('2') || choice.includes('invoice') || choice.includes('receipt') || choice.includes('expense')) {
-        await handleExpense(userId, phone, storedMediaUrl, body, user.email, user.name || user.business_name)
+        const { buffer, contentType } = await downloadTwilioMedia(storedMediaUrl)
+        await handleExpenseFromBuffer(userId, phone, buffer, contentType, body, user.email, user.name || user.business_name)
       } else {
         const reply = `No problem — just reply *1* for portfolio or *2* for invoice/expense and I'll sort it.`
         await sendWhatsApp(phone, reply)
@@ -450,18 +498,31 @@ async function processMessage(
     const bodyLower = body.toLowerCase()
 
     if (numMedia > 0 && mediaUrl) {
-      if (/invoice|receipt/.test(bodyLower)) {
-        // Explicit invoice/receipt keyword — go straight to expense flow
-        await handleExpense(userId, phone, mediaUrl, body, user.email, user.name || user.business_name)
+      // Download once — used for detection and then passed to the flow
+      const { buffer, contentType } = await downloadTwilioMedia(mediaUrl)
+      const detected = await detectPhotoType(buffer, contentType, body || null)
+
+      if (detected === 'expense') {
+        // AI confident it's an invoice/receipt — confirm and process
+        const confirmMsg = `That looks like an invoice or receipt — logging it as an expense now...`
+        await sendWhatsApp(phone, confirmMsg)
+        await logMessage(userId, 'out', confirmMsg, null, null)
+        await handleExpenseFromBuffer(userId, phone, buffer, contentType, body, user.email, user.name || user.business_name)
+      } else if (detected === 'portfolio') {
+        // AI confident it's a job photo — confirm and process
+        const confirmMsg = `Nice work! Adding that to your portfolio...`
+        await sendWhatsApp(phone, confirmMsg)
+        await logMessage(userId, 'out', confirmMsg, null, null)
+        await handlePortfolioFromBuffer(userId, phone, buffer, contentType, body || null)
       } else {
-        // Photo with no keyword — ask what it's for
+        // AI unsure — fall back to asking
         await sb.from('tradedesk_users').update({
           pending_action: 'awaiting_photo_type',
           pending_media_url: mediaUrl,
-          pending_media_type: mediaContentType,
+          pending_media_type: contentType,
         }).eq('id', userId)
 
-        const reply = `Got your photo — what's this for?\n\n1️⃣ *Portfolio* — I'll write a caption and add it to your profile\n2️⃣ *Invoice / expense* — I'll extract the details and log it`
+        const reply = `Got your photo — just to be sure, what's this for?\n\n1️⃣ *Portfolio* — I'll write a caption and add it to your profile\n2️⃣ *Invoice / expense* — I'll extract the details and log it`
         await sendWhatsApp(phone, reply)
         await logMessage(userId, 'out', reply, null, null)
       }
