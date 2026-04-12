@@ -40,6 +40,7 @@ const LINKS = [
       { label: 'Launchpad', href: '/launchpad' },
       { label: 'Help Centre', href: '/help' },
       { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms & Conditions', href: '/terms' },
     ],
   },
 ]
