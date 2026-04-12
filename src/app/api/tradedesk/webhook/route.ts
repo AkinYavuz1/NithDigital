@@ -141,6 +141,27 @@ async function handleQA(userId: string, phone: string, question: string) {
   let reply = 'Sorry, I could not generate a response right now. Please try again.'
 
   try {
+    // Fetch recent conversation history for context
+    const { data: history } = await sb
+      .from('tradedesk_messages')
+      .select('direction, message_body')
+      .eq('user_id', userId)
+      .not('message_body', 'is', null)
+      .order('created_at', { ascending: false })
+      .limit(20)
+
+    const historyMessages: { role: 'user' | 'assistant'; content: string }[] = []
+    if (history) {
+      for (const row of history.reverse()) {
+        if (!row.message_body) continue
+        historyMessages.push({
+          role: row.direction === 'in' ? 'user' : 'assistant',
+          content: row.message_body,
+        })
+      }
+    }
+    historyMessages.push({ role: 'user', content: question })
+
     const msg = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 500,
@@ -165,7 +186,7 @@ HOW TO ANSWER EVERYTHING ELSE:
 - Keep answers under 200 words unless the question genuinely needs more.
 - No bullet points with headers — just plain conversational text with line breaks if needed.
 - Never say "it depends" without immediately saying what it depends on and giving numbers for each scenario.`,
-      messages: [{ role: 'user', content: question }],
+      messages: historyMessages,
     })
     reply = (msg.content[0] as any).text || reply
   } catch {
