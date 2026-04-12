@@ -145,7 +145,7 @@ export default function AdminFinanceClient({
   }
 
   const cashflowData = last12.map(month => {
-    if (starlingMonthlyEntries.length > 0) {
+    if (starling && starlingMonthlyEntries.length > 0) {
       const m = starling.monthly[month] ?? { in: 0, out: 0 }
       return { month: month.slice(5), inflow: m.in, outflow: m.out, net: m.in - m.out }
     }
