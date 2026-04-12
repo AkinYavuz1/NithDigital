@@ -565,7 +565,34 @@ async function processMessage(
     // ── Normal routing ─────────────────────────────────────────────────────
     const bodyLower = body.toLowerCase()
 
+    // Detect location share (Twilio sends lat/long as text with no media)
+    const isLocationShare = body.startsWith('https://maps.google.com') ||
+      body.startsWith('https://www.google.com/maps') ||
+      /^-?\d+\.\d+,-?\d+\.\d+$/.test(body.trim())
+
+    if (isLocationShare) {
+      const reply = `Got your location — thanks! If you need a price for a job at that address just ask me and I'll factor in travel.`
+      await sendWhatsApp(phone, reply)
+      await logMessage(userId, 'out', reply, null, 'qa')
+      return new NextResponse('<Response></Response>', {
+        status: 200,
+        headers: { 'Content-Type': 'text/xml' },
+      })
+    }
+
     if (numMedia > 0 && mediaUrl) {
+      // Skip non-image media (voice notes, video, location attachments)
+      const isImage = mediaContentType.startsWith('image/')
+      if (!isImage) {
+        const reply = `I can only handle photos right now — voice notes and videos aren't supported yet. Send me a photo or just type your question!`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, 'qa')
+        return new NextResponse('<Response></Response>', {
+          status: 200,
+          headers: { 'Content-Type': 'text/xml' },
+        })
+      }
+
       // Download once — used for detection and then passed to the flow
       const { buffer, contentType } = await downloadTwilioMedia(mediaUrl)
       const detected = await detectPhotoType(buffer, contentType, body || null)
