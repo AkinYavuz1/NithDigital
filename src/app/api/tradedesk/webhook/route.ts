@@ -16,7 +16,7 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
 const WHATSAPP_FROM = `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`
-const BASE_URL = 'https://nithdigital.uk'
+const BASE_URL = 'https://www.nithdigital.uk'
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -643,7 +643,7 @@ export async function POST(req: NextRequest) {
 
   // Validate Twilio signature
   const signature = req.headers.get('X-Twilio-Signature') || ''
-  const webhookUrl = `https://nithdigital.uk/api/tradedesk/webhook`
+  const webhookUrl = `https://www.nithdigital.uk/api/tradedesk/webhook`
   const isValid = twilio.validateRequest(
     process.env.TWILIO_AUTH_TOKEN!,
     signature,
