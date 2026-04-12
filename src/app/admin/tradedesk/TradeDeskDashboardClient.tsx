@@ -1,7 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { createClient } from '@/lib/supabase'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { Users, MessageSquare, Image, Receipt } from 'lucide-react'
 
@@ -28,6 +26,13 @@ interface CategoryTotal {
   total: number
 }
 
+interface Props {
+  users: User[]
+  messages: Message[]
+  portfolioCount: number
+  categoryTotals: CategoryTotal[]
+}
+
 const KPI_CARD = {
   background: '#fff',
   borderRadius: 8,
@@ -35,55 +40,14 @@ const KPI_CARD = {
   border: '1px solid rgba(27,42,74,0.08)',
 }
 
-export default function TradeDeskDashboardClient() {
-  const [users, setUsers] = useState<User[]>([])
-  const [messages, setMessages] = useState<Message[]>([])
-  const [categoryTotals, setCategoryTotals] = useState<CategoryTotal[]>([])
-  const [portfolioCount, setPortfolioCount] = useState(0)
-  const [loading, setLoading] = useState(true)
-
-  const supabase = createClient()
-
-  useEffect(() => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-
-    Promise.all([
-      supabase.from('tradedesk_users').select('*').order('created_at', { ascending: false }),
-      supabase
-        .from('tradedesk_messages')
-        .select('id, user_id, direction, message_body, flow, created_at')
-        .order('created_at', { ascending: false })
-        .limit(50),
-      supabase.from('tradedesk_portfolio_posts').select('id', { count: 'exact', head: true }),
-      supabase
-        .from('tradedesk_expenses')
-        .select('category, amount'),
-    ]).then(([usersRes, msgsRes, portfolioRes, expensesRes]) => {
-      setUsers(usersRes.data || [])
-      setMessages(msgsRes.data || [])
-      setPortfolioCount(portfolioRes.count || 0)
-
-      // Aggregate expenses by category
-      const totals: Record<string, number> = {}
-      for (const e of expensesRes.data || []) {
-        const cat = e.category || 'Other'
-        totals[cat] = (totals[cat] || 0) + (e.amount || 0)
-      }
-      setCategoryTotals(Object.entries(totals).map(([category, total]) => ({ category, total })))
-      setLoading(false)
-    })
-  }, [])
-
+export default function TradeDeskDashboardClient({ users, messages, portfolioCount, categoryTotals }: Props) {
+  const now = new Date()
   const todayMsgs = messages.filter((m) => {
     const d = new Date(m.created_at)
-    const now = new Date()
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate()
   })
 
-  if (loading) {
-    return <div style={{ padding: 32, color: '#5A6A7A', fontSize: 14 }}>Loading...</div>
-  }
+  const totalExpenses = categoryTotals.reduce((sum, c) => sum + c.total, 0)
 
   return (
     <div style={{ padding: 32, maxWidth: 1080 }}>
@@ -125,7 +89,7 @@ export default function TradeDeskDashboardClient() {
             <span style={{ fontSize: 11, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 600 }}>Expenses</span>
           </div>
           <div style={{ fontSize: 28, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1B2A4A' }}>
-            £{categoryTotals.reduce((sum, c) => sum + c.total, 0).toFixed(0)}
+            £{totalExpenses.toFixed(0)}
           </div>
           <div style={{ fontSize: 11, color: '#5A6A7A' }}>total logged</div>
         </div>
@@ -237,7 +201,7 @@ export default function TradeDeskDashboardClient() {
                   </span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 11, color: '#5A6A7A', marginBottom: 2 }}>
-                      {user?.business_name || user?.name || user?.phone_number || 'Unknown user'}
+                      {user?.business_name || user?.name || user?.phone_number || 'Unknown'}
                       {m.flow && <span style={{ marginLeft: 8, color: '#D4A84B', fontWeight: 500 }}>{m.flow}</span>}
                     </div>
                     <div style={{ fontSize: 12, color: '#1B2A4A', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
