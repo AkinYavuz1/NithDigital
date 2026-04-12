@@ -119,8 +119,11 @@ export default function AdminFinanceClient({
   }, [])
 
   // ── derived numbers ──────────────────────────────────────────────
-  const totalIncome = income.reduce((s, i) => s + i.amount, 0)
-  const totalExpenses = expenses.reduce((s, e) => s + e.amount, 0)
+  const starlingTotals = starling
+    ? Object.values(starling.monthly).reduce((acc, m) => ({ in: acc.in + m.in, out: acc.out + m.out }), { in: 0, out: 0 })
+    : null
+  const totalIncome = starlingTotals ? starlingTotals.in : income.reduce((s, i) => s + i.amount, 0)
+  const totalExpenses = starlingTotals ? starlingTotals.out : expenses.reduce((s, e) => s + e.amount, 0)
   const netProfit = totalIncome - totalExpenses
 
   const outstanding = invoices
@@ -131,6 +134,7 @@ export default function AdminFinanceClient({
   const overdueTotal = overdueInvoices.reduce((s, i) => s + i.total, 0)
 
   // Monthly cashflow (last 12 months)
+  // Source: Starling transactions when available, else Supabase income/expenses
   const last12: string[] = []
   for (let i = 11; i >= 0; i--) {
     const d = new Date()
@@ -140,6 +144,10 @@ export default function AdminFinanceClient({
   }
 
   const cashflowData = last12.map(month => {
+    if (starling && Object.keys(starling.monthly).length > 0) {
+      const m = starling.monthly[month] ?? { in: 0, out: 0 }
+      return { month: month.slice(5), inflow: m.in, outflow: m.out, net: m.in - m.out }
+    }
     const inflow = income.filter(i => monthKey(i.date) === month).reduce((s, i) => s + i.amount, 0)
     const outflow = expenses.filter(e => monthKey(e.date) === month).reduce((s, e) => s + e.amount, 0)
     return { month: month.slice(5), inflow, outflow, net: inflow - outflow }
