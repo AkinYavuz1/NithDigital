@@ -52,20 +52,23 @@ function ScoreBar({ score }: { score: number }) {
   )
 }
 
+interface BatchItem {
+  file: File
+  businessName: string
+  phone: string
+  outcome: string
+  status: 'pending' | 'uploading' | 'done' | 'error'
+}
+
 export default function RecordingsClient() {
   const [recordings, setRecordings] = useState<Recording[]>([])
   const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState<string | null>(null)
-  const [uploading, setUploading] = useState(false)
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
   const [showUpload, setShowUpload] = useState(false)
+  const [batch, setBatch] = useState<BatchItem[]>([])
+  const [uploading, setUploading] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
-
-  // Upload form state
-  const [formBusiness, setFormBusiness] = useState('')
-  const [formPhone, setFormPhone] = useState('')
-  const [formOutcome, setFormOutcome] = useState('interested')
-  const [formFile, setFormFile] = useState<File | null>(null)
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -90,32 +93,70 @@ export default function RecordingsClient() {
     return () => clearTimeout(timer)
   }, [recordings])
 
-  const handleUpload = async () => {
-    if (!formFile || !formBusiness) {
-      showToast('Add a business name and select a file', false)
+  const handleFilePick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    if (!files.length) return
+    const newItems: BatchItem[] = files.map(f => ({
+      file: f,
+      // Try to parse business name from Samsung filename e.g. "Record_20260412_123456_07700123456.m4a"
+      businessName: '',
+      phone: extractPhone(f.name),
+      outcome: 'interested',
+      status: 'pending',
+    }))
+    setBatch(prev => [...prev, ...newItems])
+    e.target.value = ''
+  }
+
+  function extractPhone(filename: string): string {
+    // Samsung call recorder format: Record_YYYYMMDD_HHMMSS_phonenumber.m4a
+    const match = filename.match(/(\+?[\d]{7,15})/)
+    return match ? match[1] : ''
+  }
+
+  const updateItem = (idx: number, patch: Partial<BatchItem>) => {
+    setBatch(prev => prev.map((item, i) => i === idx ? { ...item, ...patch } : item))
+  }
+
+  const removeItem = (idx: number) => {
+    setBatch(prev => prev.filter((_, i) => i !== idx))
+  }
+
+  const handleBatchUpload = async () => {
+    const ready = batch.filter(b => b.status === 'pending')
+    if (!ready.length) return
+    const missing = batch.findIndex(b => b.status === 'pending' && !b.businessName.trim())
+    if (missing !== -1) {
+      showToast('Add a business name for each recording', false)
       return
     }
+
     setUploading(true)
-    const form = new FormData()
-    form.append('file', formFile)
-    form.append('business_name', formBusiness)
-    form.append('contact_phone', formPhone)
-    form.append('outcome', formOutcome)
 
-    const res = await fetch('/api/admin/call-recordings', { method: 'POST', body: form })
-    const data = await res.json()
-    setUploading(false)
+    for (let i = 0; i < batch.length; i++) {
+      if (batch[i].status !== 'pending') continue
+      updateItem(i, { status: 'uploading' })
 
-    if (data.ok) {
-      showToast('Uploaded — transcribing now, usually takes 30–60 seconds')
-      setFormBusiness('')
-      setFormPhone('')
-      setFormFile(null)
-      setShowUpload(false)
-      fetchRecordings()
-    } else {
-      showToast(data.error || 'Upload failed', false)
+      const form = new FormData()
+      form.append('file', batch[i].file)
+      form.append('business_name', batch[i].businessName.trim())
+      form.append('contact_phone', batch[i].phone.trim())
+      form.append('outcome', batch[i].outcome)
+
+      try {
+        const res = await fetch('/api/admin/call-recordings', { method: 'POST', body: form })
+        const data = await res.json()
+        updateItem(i, { status: data.ok ? 'done' : 'error' })
+      } catch {
+        updateItem(i, { status: 'error' })
+      }
     }
+
+    setUploading(false)
+    fetchRecordings()
+    showToast('All files uploaded — transcribing in the background')
+    // Clear done items after a moment
+    setTimeout(() => setBatch(prev => prev.filter(b => b.status !== 'done')), 2000)
   }
 
   // Stats
@@ -150,7 +191,7 @@ export default function RecordingsClient() {
             <RefreshCw size={14} />
           </button>
           <button onClick={() => setShowUpload(v => !v)} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', border: 'none', background: '#1B2A4A', color: '#fff' }}>
-            <Upload size={14} /> Upload recording
+            <Upload size={14} /> Upload recordings
           </button>
         </div>
       </div>
@@ -158,62 +199,91 @@ export default function RecordingsClient() {
       {/* Upload panel */}
       {showUpload && (
         <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 10, padding: '20px 24px', marginBottom: 24 }}>
-          <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1B2A4A', margin: '0 0 16px' }}>New recording</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-            <div>
-              <label style={{ fontSize: 12, fontWeight: 600, color: '#5A6A7A', display: 'block', marginBottom: 4 }}>Business name *</label>
-              <input
-                value={formBusiness}
-                onChange={e => setFormBusiness(e.target.value)}
-                placeholder="e.g. McDonald's Plumbing"
-                style={{ width: '100%', padding: '9px 12px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 7, fontSize: 13, outline: 'none', boxSizing: 'border-box' }}
-              />
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1B2A4A', margin: '0 0 4px' }}>Upload recordings</h2>
+          <p style={{ fontSize: 12, color: '#5A6A7A', margin: '0 0 16px' }}>Select multiple files at once — fill in the business name and outcome for each, then upload all.</p>
+
+          {/* File picker */}
+          <div
+            onClick={() => fileRef.current?.click()}
+            style={{ border: '2px dashed rgba(27,42,74,0.15)', borderRadius: 8, padding: '20px', textAlign: 'center', cursor: 'pointer', marginBottom: 16, background: 'rgba(27,42,74,0.02)' }}
+          >
+            <Upload size={20} color="#5A6A7A" style={{ marginBottom: 6 }} />
+            <div style={{ fontSize: 13, color: '#5A6A7A' }}>Click to select audio files</div>
+            <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 4 }}>m4a, mp3, wav, ogg, aac — multiple files supported</div>
+          </div>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="audio/*,.m4a,.mp3,.wav,.ogg,.aac,.amr"
+            multiple
+            onChange={handleFilePick}
+            style={{ display: 'none' }}
+          />
+
+          {/* Batch list */}
+          {batch.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+              {batch.map((item, idx) => (
+                <div key={idx} style={{
+                  display: 'grid', gridTemplateColumns: '1fr 120px 140px auto',
+                  gap: 8, alignItems: 'center',
+                  padding: '10px 12px', borderRadius: 8,
+                  background: item.status === 'done' ? 'rgba(34,197,94,0.06)' : item.status === 'error' ? 'rgba(239,68,68,0.06)' : 'rgba(27,42,74,0.03)',
+                  border: `1px solid ${item.status === 'done' ? 'rgba(34,197,94,0.2)' : item.status === 'error' ? 'rgba(239,68,68,0.2)' : 'rgba(27,42,74,0.08)'}`,
+                }}>
+                  <div>
+                    <div style={{ fontSize: 11, color: '#5A6A7A', marginBottom: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {item.file.name} <span style={{ color: '#9ca3af' }}>({(item.file.size / 1024 / 1024).toFixed(1)} MB)</span>
+                    </div>
+                    <input
+                      value={item.businessName}
+                      onChange={e => updateItem(idx, { businessName: e.target.value })}
+                      placeholder="Business name *"
+                      disabled={item.status !== 'pending'}
+                      style={{ width: '100%', padding: '6px 10px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, fontSize: 12, outline: 'none', boxSizing: 'border-box', background: item.status !== 'pending' ? '#f9f9f9' : '#fff' }}
+                    />
+                  </div>
+                  <input
+                    value={item.phone}
+                    onChange={e => updateItem(idx, { phone: e.target.value })}
+                    placeholder="Phone"
+                    disabled={item.status !== 'pending'}
+                    style={{ padding: '6px 10px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, fontSize: 12, outline: 'none', background: item.status !== 'pending' ? '#f9f9f9' : '#fff' }}
+                  />
+                  <select
+                    value={item.outcome}
+                    onChange={e => updateItem(idx, { outcome: e.target.value })}
+                    disabled={item.status !== 'pending'}
+                    style={{ padding: '6px 10px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, fontSize: 12, background: item.status !== 'pending' ? '#f9f9f9' : '#fff', cursor: 'pointer' }}
+                  >
+                    <option value="interested">Interested</option>
+                    <option value="callback">Callback</option>
+                    <option value="not_interested">Not interested</option>
+                    <option value="no_answer">No answer</option>
+                    <option value="voicemail">Voicemail</option>
+                  </select>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600 }}>
+                    {item.status === 'pending' && (
+                      <button onClick={() => removeItem(idx)} style={{ padding: '4px 8px', borderRadius: 5, border: 'none', background: 'transparent', color: '#b91c1c', cursor: 'pointer', fontSize: 16, lineHeight: 1 }}>×</button>
+                    )}
+                    {item.status === 'uploading' && <span style={{ color: '#92621a' }}>Uploading…</span>}
+                    {item.status === 'done' && <span style={{ color: '#15803d' }}>✓ Done</span>}
+                    {item.status === 'error' && <span style={{ color: '#b91c1c' }}>Failed</span>}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div>
-              <label style={{ fontSize: 12, fontWeight: 600, color: '#5A6A7A', display: 'block', marginBottom: 4 }}>Phone number</label>
-              <input
-                value={formPhone}
-                onChange={e => setFormPhone(e.target.value)}
-                placeholder="e.g. 07700 123456"
-                style={{ width: '100%', padding: '9px 12px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 7, fontSize: 13, outline: 'none', boxSizing: 'border-box' }}
-              />
-            </div>
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ fontSize: 12, fontWeight: 600, color: '#5A6A7A', display: 'block', marginBottom: 4 }}>Outcome</label>
-            <select value={formOutcome} onChange={e => setFormOutcome(e.target.value)}
-              style={{ padding: '9px 12px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 7, fontSize: 13, background: '#fff', cursor: 'pointer' }}>
-              <option value="interested">Interested</option>
-              <option value="callback">Callback requested</option>
-              <option value="not_interested">Not interested</option>
-              <option value="no_answer">No answer</option>
-              <option value="voicemail">Voicemail</option>
-            </select>
-          </div>
-          <div style={{ marginBottom: 16 }}>
-            <label style={{ fontSize: 12, fontWeight: 600, color: '#5A6A7A', display: 'block', marginBottom: 4 }}>Recording file *</label>
-            <input
-              ref={fileRef}
-              type="file"
-              accept="audio/*,.m4a,.mp3,.wav,.ogg,.aac,.amr"
-              onChange={e => setFormFile(e.target.files?.[0] || null)}
-              style={{ fontSize: 13, color: '#1B2A4A' }}
-            />
-            {formFile && (
-              <div style={{ fontSize: 12, color: '#5A6A7A', marginTop: 4 }}>
-                {formFile.name} ({(formFile.size / 1024 / 1024).toFixed(1)} MB)
-              </div>
-            )}
-          </div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          )}
+
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <button
-              onClick={handleUpload}
-              disabled={uploading}
-              style={{ padding: '9px 20px', borderRadius: 7, fontSize: 13, fontWeight: 600, cursor: uploading ? 'not-allowed' : 'pointer', border: 'none', background: '#D4A84B', color: '#1B2A4A', opacity: uploading ? 0.7 : 1 }}
+              onClick={handleBatchUpload}
+              disabled={uploading || batch.filter(b => b.status === 'pending').length === 0}
+              style={{ padding: '9px 20px', borderRadius: 7, fontSize: 13, fontWeight: 600, cursor: 'pointer', border: 'none', background: '#D4A84B', color: '#1B2A4A', opacity: (uploading || !batch.filter(b => b.status === 'pending').length) ? 0.6 : 1 }}
             >
-              {uploading ? 'Uploading...' : 'Upload & transcribe'}
+              {uploading ? 'Uploading…' : `Upload ${batch.filter(b => b.status === 'pending').length} file${batch.filter(b => b.status === 'pending').length !== 1 ? 's' : ''}`}
             </button>
-            <button onClick={() => setShowUpload(false)} style={{ padding: '9px 16px', borderRadius: 7, fontSize: 13, fontWeight: 600, cursor: 'pointer', border: '1px solid rgba(27,42,74,0.15)', background: 'transparent', color: '#5A6A7A' }}>
+            <button onClick={() => { setShowUpload(false); setBatch([]) }} style={{ padding: '9px 16px', borderRadius: 7, fontSize: 13, fontWeight: 600, cursor: 'pointer', border: '1px solid rgba(27,42,74,0.15)', background: 'transparent', color: '#5A6A7A' }}>
               Cancel
             </button>
           </div>
