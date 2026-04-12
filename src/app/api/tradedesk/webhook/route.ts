@@ -141,19 +141,10 @@ async function handleQA(userId: string, phone: string, question: string) {
   let reply = 'Sorry, I could not generate a response right now. Please try again.'
 
   try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 500,
-        messages: [
-          {
-            role: 'system',
-            content: `You are TradeDesk, a no-nonsense trade assistant built for Scottish tradespeople — plumbers, electricians, builders, joiners, plasterers, roofers, landscapers, gas engineers, painters, and all other trades. You're powered by Nith Digital.
+    const msg = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 500,
+      system: `You are TradeDesk, a no-nonsense trade assistant built for Scottish tradespeople — plumbers, electricians, builders, joiners, plasterers, roofers, landscapers, gas engineers, painters, and all other trades. You're powered by Nith Digital.
 
 You know Scotland inside out: Scottish Building Standards (not English Building Regs), SNIPEF for plumbing, SELECT for electricians, local pricing in Dumfries & Galloway, the Borders, Ayrshire, and the Central Belt. You know that D&G is rural and remote — travel time, fuel, and access matter more here than in cities.
 
@@ -174,14 +165,9 @@ HOW TO ANSWER EVERYTHING ELSE:
 - Keep answers under 200 words unless the question genuinely needs more.
 - No bullet points with headers — just plain conversational text with line breaks if needed.
 - Never say "it depends" without immediately saying what it depends on and giving numbers for each scenario.`,
-          },
-          { role: 'user', content: question },
-        ],
-      }),
+      messages: [{ role: 'user', content: question }],
     })
-
-    const data = await res.json()
-    reply = data.choices?.[0]?.message?.content || reply
+    reply = (msg.content[0] as any).text || reply
   } catch {
     // fall through to default reply
   }
