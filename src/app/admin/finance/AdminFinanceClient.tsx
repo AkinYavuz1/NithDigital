@@ -206,7 +206,7 @@ export default function AdminFinanceClient({
               <BarChart data={cashflowData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                 <XAxis dataKey="month" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
                 <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `£${(v/1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: number) => fmt(v)} contentStyle={{ fontSize: 12, borderRadius: 6 }} />
+                <Tooltip formatter={(v: unknown) => fmt(Number(v))} contentStyle={{ fontSize: 12, borderRadius: 6 }} />
                 <Bar dataKey="inflow" name="Income" fill="#27ae60" radius={[3, 3, 0, 0]} />
                 <Bar dataKey="outflow" name="Expenses" fill="#e74c3c" radius={[3, 3, 0, 0]} />
               </BarChart>
@@ -220,7 +220,7 @@ export default function AdminFinanceClient({
                 <CartesianGrid stroke="rgba(27,42,74,0.06)" strokeDasharray="3 3" />
                 <XAxis dataKey="month" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
                 <YAxis tick={{ fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `£${(v/1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: number) => fmt(v)} contentStyle={{ fontSize: 12, borderRadius: 6 }} />
+                <Tooltip formatter={(v: unknown) => fmt(Number(v))} contentStyle={{ fontSize: 12, borderRadius: 6 }} />
                 <Line type="monotone" dataKey="net" name="Net" stroke="#D4A84B" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
