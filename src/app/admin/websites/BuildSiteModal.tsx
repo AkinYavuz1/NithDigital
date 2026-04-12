@@ -45,6 +45,7 @@ interface BuildState {
   message: string
   github_url?: string
   staging_url?: string
+  vercel_project_id?: string
   file_count?: number
   error?: string
 }
@@ -91,9 +92,47 @@ export default function BuildSiteModal({
     { url: '', label: 'client', status: 'idle' },
   ])
   const [scrapedContext, setScrapedContext] = useState('')
+  const [deployStatus, setDeployStatus] = useState<'polling' | 'ready' | 'failed' | null>(null)
+  const [liveUrl, setLiveUrl] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const supabase = createClient()
+
+  // Poll Vercel deployment status after build completes
+  useEffect(() => {
+    if (step !== 'done' || !buildState.vercel_project_id) return
+    setDeployStatus('polling')
+    let attempts = 0
+    const maxAttempts = 18 // 3 minutes max
+
+    const poll = async () => {
+      attempts++
+      try {
+        const res = await fetch(`/api/vercel-deploy-status?projectId=${buildState.vercel_project_id}`)
+        const data = await res.json()
+        const state: string = data.state || ''
+        if (state === 'READY') {
+          setDeployStatus('ready')
+          if (data.url) setLiveUrl(data.url)
+          return
+        }
+        if (state === 'ERROR' || state === 'CANCELED') {
+          setDeployStatus('failed')
+          return
+        }
+      } catch {
+        // Network error — keep polling
+      }
+      if (attempts < maxAttempts) {
+        setTimeout(poll, 10000)
+      } else {
+        setDeployStatus('failed')
+      }
+    }
+
+    const timer = setTimeout(poll, 10000) // first check after 10s
+    return () => clearTimeout(timer)
+  }, [step, buildState.vercel_project_id])
 
   // Auto-scroll
   useEffect(() => {
@@ -303,13 +342,14 @@ export default function BuildSiteModal({
       const scaffoldData = await scaffoldRes.json()
       if (scaffoldData.error) throw new Error(scaffoldData.error)
 
-      // Step 4 — Save URLs back to project
+      // Step 4 — Save URLs + generated copy back to project
       await supabase.from('client_projects').update({
         github_repo: github_url,
         github_full_name,
         vercel_project,
         staging_url,
         notes: `Brief:\n${JSON.stringify(brief, null, 2)}`,
+        generated_copy: copy,
       }).eq('id', project.id)
 
       onProjectUpdated({ github_repo: github_url, github_full_name, vercel_project, staging_url })
@@ -319,6 +359,7 @@ export default function BuildSiteModal({
         message: 'Site built and pushed to GitHub',
         github_url,
         staging_url,
+        vercel_project_id: vercel_project,
         file_count: scaffoldData.files_pushed,
       })
       setStep('done')
@@ -604,11 +645,28 @@ export default function BuildSiteModal({
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
                 Site is live on staging
               </h3>
-              <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 32 }}>
-                {buildState.file_count} files pushed to GitHub. Vercel is deploying now — usually ready in 30–60 seconds.
+              <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 24 }}>
+                {buildState.file_count} files pushed to GitHub.
               </p>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 32 }}>
+              {/* Vercel deploy status */}
+              <div style={{
+                marginBottom: 24, padding: '12px 16px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 10,
+                background: deployStatus === 'ready' ? 'rgba(34,197,94,0.08)' : deployStatus === 'failed' ? 'rgba(239,68,68,0.08)' : 'rgba(212,168,75,0.08)',
+                border: `1px solid ${deployStatus === 'ready' ? 'rgba(34,197,94,0.25)' : deployStatus === 'failed' ? 'rgba(239,68,68,0.2)' : 'rgba(212,168,75,0.25)'}`,
+              }}>
+                {deployStatus === 'polling' && <Loader2 size={15} color="#D4A84B" style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }} />}
+                {deployStatus === 'ready' && <CheckCircle2 size={15} color="#22c55e" style={{ flexShrink: 0 }} />}
+                {deployStatus === 'failed' && <AlertCircle size={15} color="#ef4444" style={{ flexShrink: 0 }} />}
+                <span style={{ fontSize: 12, color: '#1B2A4A' }}>
+                  {deployStatus === 'polling' && 'Vercel is deploying — checking every 10s...'}
+                  {deployStatus === 'ready' && 'Deployment ready ✓'}
+                  {deployStatus === 'failed' && 'Deployment check timed out — check Vercel dashboard'}
+                  {!deployStatus && 'Waiting for Vercel...'}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
                 {buildState.github_url && (
                   <a
                     href={buildState.github_url}
@@ -621,22 +679,22 @@ export default function BuildSiteModal({
                     <ChevronRight size={14} style={{ marginLeft: 'auto', color: '#5A6A7A' }} />
                   </a>
                 )}
-                {buildState.staging_url && (
+                {(liveUrl || buildState.staging_url) && (
                   <a
-                    href={buildState.staging_url}
+                    href={liveUrl || buildState.staging_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 18px', borderRadius: 10, background: '#D4A84B', color: '#1B2A4A', textDecoration: 'none', fontSize: 13, fontWeight: 700 }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 18px', borderRadius: 10, background: deployStatus === 'ready' ? '#22c55e' : '#D4A84B', color: '#fff', textDecoration: 'none', fontSize: 13, fontWeight: 700 }}
                   >
                     <Globe size={16} />
-                    Open Staging Site
+                    {deployStatus === 'ready' ? 'Open Live Staging Site' : 'Open Staging Site'}
                     <ChevronRight size={14} style={{ marginLeft: 'auto' }} />
                   </a>
                 )}
               </div>
 
               <p style={{ fontSize: 12, color: 'rgba(27,42,74,0.4)' }}>
-                GitHub repo and Vercel URLs have been saved to the project automatically.
+                GitHub repo, Vercel URL, and generated copy have been saved to the project.
               </p>
 
               <button

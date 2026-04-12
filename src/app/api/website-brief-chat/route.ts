@@ -3,6 +3,27 @@ import Anthropic from '@anthropic-ai/sdk'
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
+const INDUSTRY_SITEMAPS: Record<string, string[]> = {
+  construction: ['Home', 'Services', 'Projects', 'About', 'Contact'],
+  plumbing: ['Home', 'Services', 'Emergency', 'About', 'Contact'],
+  electrical: ['Home', 'Services', 'Emergency', 'About', 'Contact'],
+  restaurant: ['Home', 'Menu', 'About', 'Reservations', 'Contact'],
+  hospitality: ['Home', 'Rooms', 'Dining', 'About', 'Contact'],
+  legal: ['Home', 'Practice Areas', 'Our Team', 'About', 'Contact'],
+  accountancy: ['Home', 'Services', 'About', 'Resources', 'Contact'],
+  healthcare: ['Home', 'Services', 'Our Team', 'Patient Info', 'Contact'],
+  beauty: ['Home', 'Services', 'Gallery', 'About', 'Book Now', 'Contact'],
+  fitness: ['Home', 'Classes', 'Memberships', 'About', 'Contact'],
+  technology: ['Home', 'Services', 'Case Studies', 'About', 'Contact'],
+  estate_agency: ['Home', 'Buy', 'Rent', 'Sell', 'About', 'Contact'],
+}
+
+function getSitemapHint(industry: string): string {
+  const key = industry.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z_]/g, '')
+  const pages = INDUSTRY_SITEMAPS[key]
+  return pages ? `Suggested sitemap for ${industry}: ${pages.join(', ')}. Confirm or adjust with the client.` : 'Suggest a sensible sitemap based on the business type.'
+}
+
 const SYSTEM_PROMPT = `You are a senior web strategist helping a web developer (Akin at Nith Digital) extract a complete client brief through conversation.
 
 Your job is to ask questions and gather everything needed to build a world-class website. Be conversational, friendly, and concise. Ask one or two questions at a time — never dump a long list.
@@ -11,13 +32,15 @@ You need to collect (but don't ask in this exact order — let the conversation 
 1. What the business does and their main services/products
 2. Who their target customers are (demographics, location, needs)
 3. Their main competitors or sites they admire (for style/tone reference)
-4. The pages they need (home, about, services, contact, blog, etc.)
+4. The pages they need — use industry-appropriate defaults (e.g. a plumber needs an Emergency page, a restaurant needs Menu + Reservations)
 5. Their tone of voice (professional, friendly, casual, premium, technical)
 6. Their unique selling point — what makes them different
 7. Any specific features needed (booking form, gallery, e-commerce, live chat, etc.)
 8. Their brand colours or style preferences if they have any
 9. Their location and service area
 10. Any existing content (logo, photos, copy) they can provide
+
+When you identify the industry early in the conversation, proactively suggest an appropriate sitemap and confirm it rather than asking from scratch.
 
 When you have enough information (at least 6-7 of the above covered), output a special JSON block wrapped in <BRIEF> tags like this:
 
