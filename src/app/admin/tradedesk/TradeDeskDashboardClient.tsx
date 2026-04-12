@@ -192,7 +192,7 @@ export default function TradeDeskDashboardClient() {
                 <BarChart data={categoryTotals} margin={{ left: 8, right: 8, bottom: 0, top: 0 }}>
                   <XAxis dataKey="category" tick={{ fontSize: 10, fill: '#5A6A7A' }} />
                   <YAxis tick={{ fontSize: 10, fill: '#5A6A7A' }} tickFormatter={(v) => `£${v}`} />
-                  <Tooltip formatter={(v: number) => [`£${v.toFixed(2)}`, 'Total']} />
+                  <Tooltip formatter={(v) => [`£${Number(v).toFixed(2)}`, 'Total']} />
                   <Bar dataKey="total" fill="#D4A84B" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
