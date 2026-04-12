@@ -172,7 +172,15 @@ async function handleQA(userId: string, phone: string, question: string) {
     while (historyMessages.length > 0 && historyMessages[0].role !== 'user') {
       historyMessages.shift()
     }
-    historyMessages.push({ role: 'user', content: question })
+    // Append current question, merging if last message is also from user
+    const lastMsg = historyMessages[historyMessages.length - 1]
+    if (lastMsg && lastMsg.role === 'user') {
+      lastMsg.content += '\n' + question
+    } else {
+      historyMessages.push({ role: 'user', content: question })
+    }
+
+    console.log('[TradeDesk QA] history messages:', historyMessages.length, JSON.stringify(historyMessages.map(m => ({ r: m.role, c: m.content.slice(0, 30) }))))
 
     const msg = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
@@ -201,8 +209,8 @@ HOW TO ANSWER EVERYTHING ELSE:
       messages: historyMessages,
     })
     reply = (msg.content[0] as any).text || reply
-  } catch {
-    // fall through to default reply
+  } catch (err) {
+    console.error('[TradeDesk QA] error:', err)
   }
 
   await sendWhatsApp(phone, reply)
