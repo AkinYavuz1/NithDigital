@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import twilio from 'twilio'
 import Anthropic from '@anthropic-ai/sdk'
+import { Resend } from 'resend'
 
 const sb = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,8 +13,10 @@ const sb = createClient(
 
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
+const resend = new Resend(process.env.RESEND_API_KEY!)
 
 const WHATSAPP_FROM = `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`
+const BASE_URL = 'https://nithdigital.uk'
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -67,7 +70,6 @@ async function uploadToStorage(
     upsert: false,
   })
   if (error) throw new Error(`Storage upload failed: ${error.message}`)
-
   const { data } = sb.storage.from('tradedesk').getPublicUrl(path)
   return data.publicUrl
 }
@@ -81,6 +83,10 @@ function getExt(contentType: string): string {
 
 function shortId(): string {
   return Math.random().toString(36).slice(2, 8)
+}
+
+function isValidEmail(s: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim())
 }
 
 // ── Flow: Groq Q&A ────────────────────────────────────────────────────────
@@ -109,7 +115,7 @@ GREETING BEHAVIOUR:
 If the message is a greeting (hi, hello, hey, morning, etc.) or very short with no clear question, respond with a friendly but brief intro. Example: "Morning! TradeDesk here — your trade assistant from Nith Digital. Got a job to price, a regs question, or need supplier info? Fire away."
 
 PRICING/COSTING QUESTIONS:
-When someone asks what to charge or how to price a job, do NOT give a number straight away. First ask 2-3 short clarifying questions to give an accurate estimate. For example, for a bathroom refit ask: what's the scope (full refit or partial?), supply and fit or labour only, and rough location (affects travel). Keep the questions short — one message, numbered, no fluff. Once they answer, give a detailed breakdown.
+When someone asks what to charge or how to price a job, do NOT give a number straight away. First ask 2-3 short clarifying questions to give an accurate estimate. Keep the questions short — one message, numbered, no fluff. Once they answer, give a detailed breakdown.
 
 HOW TO ANSWER EVERYTHING ELSE:
 - Be direct and practical. No waffle, no corporate speak.
@@ -213,7 +219,9 @@ async function handleExpense(
   userId: string,
   phone: string,
   mediaUrl: string,
-  messageBody: string
+  messageBody: string,
+  userEmail: string | null,
+  userName: string | null
 ) {
   const { buffer, contentType } = await downloadTwilioMedia(mediaUrl)
   const ext = getExt(contentType)
@@ -291,12 +299,63 @@ Only return the JSON, nothing else.`,
   const reply = `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}`
   await sendWhatsApp(phone, reply)
   await logMessage(userId, 'out', reply, null, 'expense')
+
+  // Send email receipt if we have an address
+  if (userEmail) {
+    try {
+      const greeting = userName ? `Hi ${userName.split(' ')[0]},` : 'Hi,'
+      await resend.emails.send({
+        from: 'TradeDesk <hello@mail.nithdigital.uk>',
+        to: userEmail,
+        subject: `Expense logged — ${supplier} ${amountStr} | ${dateStr}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; color: #1B2A4A;">
+            <div style="background: #1B2A4A; padding: 24px 32px; border-radius: 8px 8px 0 0;">
+              <h1 style="color: #D4A84B; font-size: 20px; margin: 0;">TradeDesk</h1>
+              <p style="color: rgba(245,240,230,0.6); font-size: 13px; margin: 4px 0 0;">by Nith Digital</p>
+            </div>
+            <div style="background: #fff; padding: 28px 32px; border: 1px solid #e5e7eb; border-top: none;">
+              <p style="margin: 0 0 20px;">${greeting}</p>
+              <p style="margin: 0 0 20px;">I've logged the following expense from your WhatsApp photo:</p>
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 0; color: #5A6A7A; width: 120px;">Supplier</td>
+                  <td style="padding: 10px 0; font-weight: 600;">${supplier}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 0; color: #5A6A7A;">Date</td>
+                  <td style="padding: 10px 0;">${dateStr}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 0; color: #5A6A7A;">Amount</td>
+                  <td style="padding: 10px 0; font-weight: 600;">${amountStr}</td>
+                </tr>
+                ${vat !== null ? `<tr style="border-bottom: 1px solid #f0f0f0;"><td style="padding: 10px 0; color: #5A6A7A;">VAT</td><td style="padding: 10px 0;">£${vat.toFixed(2)}</td></tr>` : ''}
+                <tr>
+                  <td style="padding: 10px 0; color: #5A6A7A;">Category</td>
+                  <td style="padding: 10px 0;">${category}</td>
+                </tr>
+              </table>
+              <div style="margin-top: 28px; display: flex; gap: 12px;">
+                <a href="${BASE_URL}/tradedesk/${userId}/expenses" style="display: inline-block; background: #1B2A4A; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">View all expenses</a>
+                <a href="${BASE_URL}/api/tradedesk/${userId}/expenses/export" style="display: inline-block; background: #D4A84B; color: #1B2A4A; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">Download CSV</a>
+              </div>
+            </div>
+            <div style="background: #f9f8f5; padding: 16px 32px; border-radius: 0 0 8px 8px; border: 1px solid #e5e7eb; border-top: none;">
+              <p style="font-size: 11px; color: #5A6A7A; margin: 0;">TradeDesk by Nith Digital · <a href="https://nithdigital.uk/tradedesk" style="color: #D4A84B;">nithdigital.uk/tradedesk</a></p>
+            </div>
+          </div>
+        `,
+      })
+    } catch {
+      // Email failure shouldn't break the flow
+    }
+  }
 }
 
 // ── Main handler ─────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
-  // Twilio sends form-encoded data
   const rawBody = await req.text()
   const params = new URLSearchParams(rawBody)
   const paramObj = Object.fromEntries(params.entries())
@@ -311,11 +370,9 @@ export async function POST(req: NextRequest) {
     paramObj
   )
 
-  // Log validation result for debugging — remove after confirmed working
   console.log('[TradeDesk] signature valid:', isValid, '| from:', params.get('From'))
 
   if (!isValid && process.env.NODE_ENV === 'production') {
-    // Temporarily log and pass through to diagnose — re-enable strict block after testing
     console.warn('[TradeDesk] signature mismatch — proceeding anyway for debug')
   }
 
@@ -325,29 +382,31 @@ export async function POST(req: NextRequest) {
   const mediaUrl = params.get('MediaUrl0') || null
   const mediaContentType = params.get('MediaContentType0') || 'image/jpeg'
 
-  // Strip "whatsapp:" prefix
   const phone = rawFrom.replace(/^whatsapp:/, '')
 
   // Lookup or create user
   let { data: user } = await sb
     .from('tradedesk_users')
-    .select('id')
+    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type')
     .eq('phone_number', phone)
     .single()
 
   if (!user) {
     const { data: newUser } = await sb
       .from('tradedesk_users')
-      .insert({ phone_number: phone })
-      .select('id')
+      .insert({ phone_number: phone, pending_action: 'awaiting_email' })
+      .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type')
       .single()
     user = newUser
 
-    // Welcome message
-    const welcome =
-      'Welcome to *TradeDesk* by Nith Digital! 👋\n\nSend me:\n• A *question* — I\'ll answer it\n• A *job photo* — I\'ll write a portfolio caption and social post\n• An *invoice or receipt photo* (say "invoice" or "receipt") — I\'ll log the expense\n\nType anything to get started.'
+    const welcome = `Welcome to *TradeDesk* by Nith Digital! 👋\n\nI'm your trade assistant — ask me anything, send job photos, or photograph invoices and I'll log them for you.\n\nFirst things first — what's your email address? I'll use it to send you a receipt every time I log an expense.`
     await sendWhatsApp(phone, welcome)
     await logMessage(user!.id, 'out', welcome, null, null)
+
+    return new NextResponse('<Response></Response>', {
+      status: 200,
+      headers: { 'Content-Type': 'text/xml' },
+    })
   }
 
   const userId = user!.id
@@ -355,15 +414,82 @@ export async function POST(req: NextRequest) {
   // Log inbound message
   await logMessage(userId, 'in', body || null, mediaUrl, null)
 
-  // Route
   try {
+    // ── State: awaiting email ──────────────────────────────────────────────
+    if (user.pending_action === 'awaiting_email') {
+      if (isValidEmail(body)) {
+        await sb.from('tradedesk_users').update({
+          email: body.trim().toLowerCase(),
+          pending_action: null,
+        }).eq('id', userId)
+
+        const reply = `Got it ✅\n\nYou're all set. Here's what I can do:\n\n• Text me a *question* — I'll answer it\n• Send a *job photo* — I'll ask what it's for\n• Send an *invoice or receipt photo* (say "invoice" or "receipt") — I'll log it and email you a copy\n\nFire away.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+      } else {
+        const reply = `That doesn't look like a valid email — can you double-check and send it again?`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+      }
+      return new NextResponse('<Response></Response>', {
+        status: 200,
+        headers: { 'Content-Type': 'text/xml' },
+      })
+    }
+
+    // ── State: awaiting photo type ─────────────────────────────────────────
+    if (user.pending_action === 'awaiting_photo_type' && user.pending_media_url) {
+      const choice = body.toLowerCase()
+      const storedMediaUrl = user.pending_media_url
+      const storedMediaType = user.pending_media_type || 'image/jpeg'
+
+      // Clear pending state immediately
+      await sb.from('tradedesk_users').update({
+        pending_action: null,
+        pending_media_url: null,
+        pending_media_type: null,
+      }).eq('id', userId)
+
+      if (choice.includes('1') || choice.includes('portfolio')) {
+        await handlePortfolio(userId, phone, storedMediaUrl, null)
+      } else if (choice.includes('2') || choice.includes('invoice') || choice.includes('receipt') || choice.includes('expense')) {
+        await handleExpense(userId, phone, storedMediaUrl, body, user.email, user.name || user.business_name)
+      } else {
+        const reply = `No problem — just reply *1* for portfolio or *2* for invoice/expense and I'll sort it.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        // Restore pending state
+        await sb.from('tradedesk_users').update({
+          pending_action: 'awaiting_photo_type',
+          pending_media_url: storedMediaUrl,
+          pending_media_type: storedMediaType,
+        }).eq('id', userId)
+      }
+
+      return new NextResponse('<Response></Response>', {
+        status: 200,
+        headers: { 'Content-Type': 'text/xml' },
+      })
+    }
+
+    // ── Normal routing ─────────────────────────────────────────────────────
     const bodyLower = body.toLowerCase()
 
     if (numMedia > 0 && mediaUrl) {
       if (/invoice|receipt/.test(bodyLower)) {
-        await handleExpense(userId, phone, mediaUrl, body)
+        // Explicit invoice/receipt keyword — go straight to expense flow
+        await handleExpense(userId, phone, mediaUrl, body, user.email, user.name || user.business_name)
       } else {
-        await handlePortfolio(userId, phone, mediaUrl, body || null)
+        // Photo with no keyword — ask what it's for
+        await sb.from('tradedesk_users').update({
+          pending_action: 'awaiting_photo_type',
+          pending_media_url: mediaUrl,
+          pending_media_type: mediaContentType,
+        }).eq('id', userId)
+
+        const reply = `Got your photo — what's this for?\n\n1️⃣ *Portfolio* — I'll write a caption and add it to your profile\n2️⃣ *Invoice / expense* — I'll extract the details and log it`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
       }
     } else if (body) {
       await handleQA(userId, phone, body)
@@ -375,11 +501,10 @@ export async function POST(req: NextRequest) {
     try {
       await sendWhatsApp(phone, 'Something went wrong on my end. Please try again in a moment.')
     } catch {
-      // ignore send failure
+      // ignore
     }
   }
 
-  // Always return empty TwiML 200 to Twilio
   return new NextResponse('<Response></Response>', {
     status: 200,
     headers: { 'Content-Type': 'text/xml' },

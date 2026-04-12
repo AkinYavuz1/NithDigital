@@ -8,6 +8,7 @@ interface User {
   phone_number: string
   name: string | null
   business_name: string | null
+  email: string | null
   created_at: string
   active: boolean
 }
@@ -108,7 +109,7 @@ export default function TradeDeskDashboardClient({ users, messages, portfolioCou
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(27,42,74,0.08)' }}>
-                    {['Business', 'Phone', 'Joined', 'Active'].map((h) => (
+                    {['Business', 'Phone', 'Email', 'Joined', 'Active'].map((h) => (
                       <th key={h} style={{ textAlign: 'left', padding: '8px 12px', color: '#5A6A7A', fontWeight: 600, whiteSpace: 'nowrap' }}>{h}</th>
                     ))}
                   </tr>
@@ -120,6 +121,7 @@ export default function TradeDeskDashboardClient({ users, messages, portfolioCou
                         {u.business_name || u.name || '—'}
                       </td>
                       <td style={{ padding: '10px 12px', color: '#5A6A7A' }}>{u.phone_number}</td>
+                      <td style={{ padding: '10px 12px', color: '#5A6A7A' }}>{u.email || '—'}</td>
                       <td style={{ padding: '10px 12px', color: '#5A6A7A', whiteSpace: 'nowrap' }}>
                         {new Date(u.created_at).toLocaleDateString('en-GB')}
                       </td>
