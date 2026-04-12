@@ -87,7 +87,7 @@ async function transcribeAndAnalyse(
   try {
     // Groq Whisper transcription
     const formData = new FormData()
-    const blob = new Blob([buffer], { type: mimeType })
+    const blob = new Blob([buffer as BlobPart], { type: mimeType })
     formData.append('file', blob, `recording.${mimeType.split('/')[1] || 'm4a'}`)
     formData.append('model', 'whisper-large-v3')
     formData.append('language', 'en')
