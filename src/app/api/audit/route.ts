@@ -184,9 +184,19 @@ function getMetaContent(metas: string[], ...names: string[]): string | null {
   return null
 }
 
+function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+}
+
 function extractTitle(html: string): string | null {
   const m = html.match(/<title[^>]*>([^<]*)<\/title>/i)
-  return m ? m[1].trim() : null
+  return m ? decodeHtmlEntities(m[1].trim()) : null
 }
 
 function extractH1s(html: string): string[] {
