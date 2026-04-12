@@ -92,6 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/microsoft-fabric/scotland`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/freelance-data-analyst/scotland`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/web-apps/dumfries-galloway`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/tradedesk`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
   ]
 
   const [blogPosts, helpArticles] = await Promise.all([
