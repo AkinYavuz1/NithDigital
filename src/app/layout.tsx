@@ -62,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${libreBaskerville.variable} ${dmSans.variable}`}>
       <head>
+        <meta name="facebook-domain-verification" content="e8q8w5dp4ssnscsk1wsjqnfepv9plf" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link
