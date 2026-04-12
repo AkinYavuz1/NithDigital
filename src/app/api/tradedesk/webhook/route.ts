@@ -355,35 +355,13 @@ Only return the JSON, nothing else.`,
 
 // ── Main handler ─────────────────────────────────────────────────────────
 
-export async function POST(req: NextRequest) {
-  const rawBody = await req.text()
-  const params = new URLSearchParams(rawBody)
-  const paramObj = Object.fromEntries(params.entries())
-
-  // Validate Twilio signature
-  const signature = req.headers.get('X-Twilio-Signature') || ''
-  const webhookUrl = `https://nithdigital.uk/api/tradedesk/webhook`
-  const isValid = twilio.validateRequest(
-    process.env.TWILIO_AUTH_TOKEN!,
-    signature,
-    webhookUrl,
-    paramObj
-  )
-
-  console.log('[TradeDesk] signature valid:', isValid, '| from:', params.get('From'))
-
-  if (!isValid && process.env.NODE_ENV === 'production') {
-    console.warn('[TradeDesk] signature mismatch — proceeding anyway for debug')
-  }
-
-  const rawFrom = params.get('From') || ''
-  const body = (params.get('Body') || '').trim()
-  const numMedia = parseInt(params.get('NumMedia') || '0', 10)
-  const mediaUrl = params.get('MediaUrl0') || null
-  const mediaContentType = params.get('MediaContentType0') || 'image/jpeg'
-
-  const phone = rawFrom.replace(/^whatsapp:/, '')
-
+async function processMessage(
+  phone: string,
+  body: string,
+  numMedia: number,
+  mediaUrl: string | null,
+  mediaContentType: string,
+) {
   // Lookup or create user
   let { data: user } = await sb
     .from('tradedesk_users')
@@ -402,11 +380,7 @@ export async function POST(req: NextRequest) {
     const welcome = `Welcome to *TradeDesk* by Nith Digital! 👋\n\nI'm your trade assistant — ask me anything, send job photos, or photograph invoices and I'll log them for you.\n\nFirst things first — what's your email address? I'll use it to send you a receipt every time I log an expense.`
     await sendWhatsApp(phone, welcome)
     await logMessage(user!.id, 'out', welcome, null, null)
-
-    return new NextResponse('<Response></Response>', {
-      status: 200,
-      headers: { 'Content-Type': 'text/xml' },
-    })
+    return
   }
 
   const userId = user!.id
@@ -504,9 +478,50 @@ export async function POST(req: NextRequest) {
       // ignore
     }
   }
+}
 
-  return new NextResponse('<Response></Response>', {
+export async function POST(req: NextRequest) {
+  const rawBody = await req.text()
+  const params = new URLSearchParams(rawBody)
+  const paramObj = Object.fromEntries(params.entries())
+
+  // Validate Twilio signature
+  const signature = req.headers.get('X-Twilio-Signature') || ''
+  const webhookUrl = `https://nithdigital.uk/api/tradedesk/webhook`
+  const isValid = twilio.validateRequest(
+    process.env.TWILIO_AUTH_TOKEN!,
+    signature,
+    webhookUrl,
+    paramObj
+  )
+
+  if (!isValid) {
+    console.warn('[TradeDesk] invalid signature — ignoring')
+    return new NextResponse('<Response></Response>', {
+      status: 200,
+      headers: { 'Content-Type': 'text/xml' },
+    })
+  }
+
+  const rawFrom = params.get('From') || ''
+  const body = (params.get('Body') || '').trim()
+  const numMedia = parseInt(params.get('NumMedia') || '0', 10)
+  const mediaUrl = params.get('MediaUrl0') || null
+  const mediaContentType = params.get('MediaContentType0') || 'image/jpeg'
+  const phone = rawFrom.replace(/^whatsapp:/, '')
+
+  // Return 200 to Twilio immediately to prevent retries,
+  // then process the message asynchronously
+  const twimlResponse = new NextResponse('<Response></Response>', {
     status: 200,
     headers: { 'Content-Type': 'text/xml' },
   })
+
+  // Fire and forget — Vercel nodejs runtime keeps the process alive until the response is sent
+  // and continues executing microtasks after
+  processMessage(phone, body, numMedia, mediaUrl, mediaContentType).catch((err) => {
+    console.error('[TradeDesk] processMessage error:', err)
+  })
+
+  return twimlResponse
 }
