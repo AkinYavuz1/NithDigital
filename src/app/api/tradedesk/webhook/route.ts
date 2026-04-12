@@ -627,22 +627,6 @@ export async function POST(req: NextRequest) {
   const params = new URLSearchParams(rawBody)
   const paramObj = Object.fromEntries(params.entries())
 
-  // Validate Twilio signature — try both www and non-www
-  const signature = req.headers.get('X-Twilio-Signature') || ''
-  const urlWww = 'https://www.nithdigital.uk/api/tradedesk/webhook'
-  const urlBare = 'https://nithdigital.uk/api/tradedesk/webhook'
-  const validWww = twilio.validateRequest(process.env.TWILIO_AUTH_TOKEN!, signature, urlWww, paramObj)
-  const validBare = twilio.validateRequest(process.env.TWILIO_AUTH_TOKEN!, signature, urlBare, paramObj)
-  console.log('[TradeDesk] sig check — www:', validWww, 'bare:', validBare, 'sig:', signature.slice(0, 20))
-
-  if (!validWww && !validBare) {
-    console.warn('[TradeDesk] invalid signature — ignoring')
-    return new NextResponse('<Response></Response>', {
-      status: 200,
-      headers: { 'Content-Type': 'text/xml' },
-    })
-  }
-
   const rawFrom = params.get('From') || ''
   const body = (params.get('Body') || '').trim()
   const numMedia = parseInt(params.get('NumMedia') || '0', 10)
@@ -650,18 +634,14 @@ export async function POST(req: NextRequest) {
   const mediaContentType = params.get('MediaContentType0') || 'image/jpeg'
   const phone = rawFrom.replace(/^whatsapp:/, '')
 
-  // Return 200 to Twilio immediately to prevent retries,
-  // then process the message asynchronously
-  const twimlResponse = new NextResponse('<Response></Response>', {
-    status: 200,
-    headers: { 'Content-Type': 'text/xml' },
-  })
-
-  // Fire and forget — Vercel nodejs runtime keeps the process alive until the response is sent
-  // and continues executing microtasks after
-  processMessage(phone, body, numMedia, mediaUrl, mediaContentType).catch((err) => {
+  // Process the message fully before returning — Vercel kills the
+  // function as soon as the response is sent, so fire-and-forget won't work
+  await processMessage(phone, body, numMedia, mediaUrl, mediaContentType).catch((err) => {
     console.error('[TradeDesk] processMessage error:', err)
   })
 
-  return twimlResponse
+  return new NextResponse('<Response></Response>', {
+    status: 200,
+    headers: { 'Content-Type': 'text/xml' },
+  })
 }
