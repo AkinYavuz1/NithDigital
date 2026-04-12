@@ -16,7 +16,7 @@ interface Invoice {
   issue_date: string
   due_date: string
   total: number
-  clients: { name: string } | null
+  clients: { name: string } | { name: string }[] | null
 }
 
 interface Expense {
@@ -88,7 +88,7 @@ export default function AdminFinanceClient({
       supabase.from('expenses').select('id, category, description, amount, date').order('date', { ascending: false }),
       supabase.from('income').select('id, source, description, amount, date, category').order('date', { ascending: false }),
     ]).then(([inv, exp, inc]) => {
-      if (inv.data) setInvoices(inv.data as Invoice[])
+      if (inv.data) setInvoices(inv.data as unknown as Invoice[])
       if (exp.data) setExpenses(exp.data as Expense[])
       if (inc.data) setIncome(inc.data as Income[])
     })
@@ -269,7 +269,7 @@ export default function AdminFinanceClient({
                 ) : filteredInvoices.map((inv, i) => (
                   <tr key={inv.id} style={{ borderBottom: i < filteredInvoices.length - 1 ? '1px solid rgba(27,42,74,0.06)' : 'none' }}>
                     <td style={{ padding: '14px 16px', fontWeight: 600, color: '#1B2A4A' }}>{inv.invoice_number}</td>
-                    <td style={{ padding: '14px 16px', color: '#1B2A4A' }}>{inv.clients?.name || '—'}</td>
+                    <td style={{ padding: '14px 16px', color: '#1B2A4A' }}>{(Array.isArray(inv.clients) ? inv.clients[0]?.name : inv.clients?.name) || '—'}</td>
                     <td style={{ padding: '14px 16px', color: '#5A6A7A' }}>{new Date(inv.issue_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                     <td style={{ padding: '14px 16px', color: inv.status === 'overdue' ? '#e74c3c' : '#5A6A7A' }}>{new Date(inv.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                     <td style={{ padding: '14px 16px', fontWeight: 600 }}>{fmt(inv.total)}</td>
@@ -324,7 +324,7 @@ export default function AdminFinanceClient({
                   {bucket.invoices.map((inv, i) => (
                     <tr key={inv.id} style={{ borderBottom: i < bucket.invoices.length - 1 ? '1px solid rgba(27,42,74,0.05)' : 'none' }}>
                       <td style={{ padding: '12px 20px', fontWeight: 600 }}>{inv.invoice_number}</td>
-                      <td style={{ padding: '12px 20px', color: '#1B2A4A' }}>{inv.clients?.name || '—'}</td>
+                      <td style={{ padding: '12px 20px', color: '#1B2A4A' }}>{(Array.isArray(inv.clients) ? inv.clients[0]?.name : inv.clients?.name) || '—'}</td>
                       <td style={{ padding: '12px 20px', color: '#5A6A7A' }}>Due {new Date(inv.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</td>
                       <td style={{ padding: '12px 20px', fontWeight: 700, textAlign: 'right' }}>{fmt(inv.total)}</td>
                     </tr>
