@@ -3,14 +3,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Web Design & Digital Tools | Nith Digital' },
+  title: { absolute: 'Web Design & Digital Tools for Small Businesses | Nith Digital' },
   description:
-    'Affordable websites, Power BI dashboards, and custom web apps for small businesses in Dumfries & Galloway. Based in Sanquhar, serving all of D&G. From £500.',
+    'Affordable websites, Power BI dashboards, and custom web apps for small businesses in Dumfries & Galloway. Based in Sanquhar. From £500.',
   alternates: {
     canonical: 'https://nithdigital.uk',
   },
   openGraph: {
-    title: 'Web Design & Digital Tools | Nith Digital',
+    title: 'Web Design & Digital Tools for Small Businesses | Nith Digital',
     description:
       'Affordable websites, Power BI dashboards, and custom web apps for small businesses in Dumfries & Galloway. From £500.',
     url: 'https://nithdigital.uk',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Web Design & Digital Tools | Nith Digital',
+    title: 'Web Design & Digital Tools for Small Businesses | Nith Digital',
     description:
       'Affordable websites, Power BI dashboards, and custom web apps for small businesses in Dumfries & Galloway. From £500.',
   },

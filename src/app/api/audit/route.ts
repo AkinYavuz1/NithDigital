@@ -204,8 +204,7 @@ function extractH1s(html: string): string[] {
   const results: string[] = []
   let m: RegExpExecArray | null
   while ((m = re.exec(html)) !== null) {
-    // strip inner tags
-    results.push(m[1].replace(/<[^>]+>/g, '').trim())
+    results.push(decodeHtmlEntities(m[1].replace(/<[^>]+>/g, '').trim()))
   }
   return results
 }
@@ -460,11 +459,12 @@ function analyseHtml(
   const emailRe = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
   const hasEmail = emailRe.test(plainText)
 
-  // Address heuristic: common UK address patterns or address/location keywords
+  // Address heuristic: street types, UK postcodes, or location/address structured data
   const hasAddress =
-    /\b(street|road|avenue|lane|drive|close|way|place|square|gardens|crescent)\b/i.test(
-      plainText,
-    ) || /\b[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}\b/.test(plainText)
+    /\b(street|road|avenue|lane|drive|close|way|place|square|gardens|crescent)\b/i.test(plainText) ||
+    /\b[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}\b/.test(plainText) ||
+    /\b[A-Z]{1,2}[0-9]{1,2}\b/.test(plainText) ||
+    /addressLocality|addressRegion|postalCode|itemprop="address"/i.test(html)
 
   const socialDomains = [
     'facebook.com',

@@ -1,5 +1,10 @@
 import Link from 'next/link'
 
+const SOCIAL_LINKS = [
+  { label: 'Facebook', href: 'https://www.facebook.com/nithdigital' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/nith-digital' },
+]
+
 const LINKS = [
   {
     heading: 'Services',
@@ -165,7 +170,17 @@ export default function Footer() {
             gap: 12,
           }}
         >
-          <span>© 2026 Nith Digital — Sanquhar, Dumfries &amp; Galloway</span>
+          <span>
+            © 2026 Nith Digital —{' '}
+            <span itemScope itemType="https://schema.org/LocalBusiness">
+              <span itemProp="name" style={{ display: 'none' }}>Nith Digital</span>
+              <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+                <span itemProp="addressLocality">Sanquhar</span>,{' '}
+                <span itemProp="addressRegion">Dumfries &amp; Galloway</span>,{' '}
+                <span itemProp="postalCode">DG4</span>
+              </span>
+            </span>
+          </span>
           <span style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="mailto:hello@nithdigital.uk" style={{ color: 'inherit' }}>
               hello@nithdigital.uk
@@ -173,6 +188,11 @@ export default function Footer() {
             <a href="tel:+447404173024" style={{ color: 'inherit' }}>
               +44 7404 173024
             </a>
+            {SOCIAL_LINKS.map(s => (
+              <a key={s.label} href={s.href} rel="noopener noreferrer" aria-label={s.label} style={{ color: 'inherit' }}>
+                {s.label}
+              </a>
+            ))}
           </span>
         </div>
       </div>

@@ -86,7 +86,7 @@ function ToolsMegaDropdown({ onClose }: { onClose: () => void }) {
         onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,240,230,0.5)')}
       >
         Tools
-        <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
+        <span style={{ fontSize: 10, opacity: 0.6 }}>▼</span>
       </button>
       {open && (
         <div style={{
@@ -159,7 +159,7 @@ function Dropdown({ label, items, onClose }: { label: string; items: { href: str
         onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,240,230,0.5)')}
       >
         {label}
-        <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
+        <span style={{ fontSize: 10, opacity: 0.6 }}>▼</span>
       </button>
       {open && (
         <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', zIndex: 200, paddingTop: 8 }}>
