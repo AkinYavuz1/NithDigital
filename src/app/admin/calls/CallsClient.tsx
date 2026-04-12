@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { Phone, RefreshCw, ChevronDown, ChevronUp, CheckCircle, XCircle, MessageSquare, Clock } from 'lucide-react'
+import { Phone, RefreshCw, ChevronDown, ChevronUp, CheckCircle, XCircle, MessageSquare } from 'lucide-react'
 
 interface Prospect {
   id: string
@@ -57,7 +57,6 @@ export default function CallsClient() {
   const [prospects, setProspects] = useState<Prospect[]>([])
   const [loading, setLoading] = useState(true)
   const [tab, setTab] = useState<'mobiles' | 'landlines'>('mobiles')
-  const [smsFilter, setSmsFilter] = useState<'all' | 'sent' | 'pending'>('all')
   const [sector, setSector] = useState('all')
   const [sort, setSort] = useState<'score' | 'value'>('score')
   const [search, setSearch] = useState('')
@@ -94,11 +93,7 @@ export default function CallsClient() {
     )
   }
 
-  const filteredMobiles = applySearch(
-    smsFilter === 'sent' ? mobiles.filter(p => p.last_contacted_at) :
-    smsFilter === 'pending' ? mobiles.filter(p => !p.last_contacted_at) :
-    mobiles
-  ).sort((a, b) =>
+  const filteredMobiles = applySearch(mobiles).sort((a, b) =>
     sort === 'value'
       ? (b.price_range_high ?? 0) - (a.price_range_high ?? 0)
       : (b.score_overall ?? 0) - (a.score_overall ?? 0)
@@ -180,9 +175,6 @@ export default function CallsClient() {
     }
   }
 
-  const smsSent = mobiles.filter(p => p.last_contacted_at).length
-  const smsPending = mobiles.filter(p => !p.last_contacted_at).length
-
   return (
     <div style={{ padding: 28, maxWidth: 1100, fontFamily: 'var(--font-sans, system-ui)' }}>
 
@@ -215,33 +207,6 @@ export default function CallsClient() {
           </button>
         ))}
       </div>
-
-      {/* SMS status bar — mobiles only */}
-      {tab === 'mobiles' && !loading && (
-        <div style={{ display: 'flex', gap: 10, marginBottom: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', gap: 6, background: 'rgba(27,42,74,0.06)', borderRadius: 8, padding: 3 }}>
-            {([
-              { key: 'all', label: `All (${mobiles.length})` },
-              { key: 'sent', label: `SMS sent (${smsSent})` },
-              { key: 'pending', label: `Not yet sent (${smsPending})` },
-            ] as const).map(f => (
-              <button key={f.key} onClick={() => setSmsFilter(f.key)} style={{
-                padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 600,
-                border: 'none', cursor: 'pointer',
-                background: smsFilter === f.key ? '#1B2A4A' : 'transparent',
-                color: smsFilter === f.key ? '#fff' : '#5A6A7A',
-              }}>
-                {f.label}
-              </button>
-            ))}
-          </div>
-          {smsSent > 0 && (
-            <div style={{ fontSize: 12, color: '#15803d', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <MessageSquare size={12} /> {smsSent} texts sent via Twilio
-            </div>
-          )}
-        </div>
-      )}
 
       {/* Landlines info bar */}
       {tab === 'landlines' && !loading && (
@@ -288,14 +253,11 @@ export default function CallsClient() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {activeList.map((p, i) => {
             const isExpanded = expanded === p.id
-            const smsSentAt = tab === 'mobiles' && p.last_contacted_at
-              ? new Date(p.last_contacted_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-              : null
 
             return (
               <div key={p.id} style={{
                 background: '#fff',
-                border: `1px solid ${smsSentAt ? 'rgba(21,128,61,0.2)' : 'rgba(27,42,74,0.1)'}`,
+                border: '1px solid rgba(27,42,74,0.1)',
                 borderRadius: 10, overflow: 'hidden',
               }}>
                 {/* Row */}
@@ -320,19 +282,6 @@ export default function CallsClient() {
                       {p.location} · {p.sector}
                     </div>
                   </div>
-
-                  {/* SMS badge for mobiles */}
-                  {tab === 'mobiles' && (
-                    smsSentAt ? (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: '#15803d', fontWeight: 600, flexShrink: 0, background: 'rgba(21,128,61,0.08)', padding: '3px 8px', borderRadius: 20 }}>
-                        <MessageSquare size={11} /> SMS {smsSentAt}
-                      </div>
-                    ) : (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: '#92660a', fontWeight: 600, flexShrink: 0, background: 'rgba(146,102,10,0.08)', padding: '3px 8px', borderRadius: 20 }}>
-                        <Clock size={11} /> Not sent
-                      </div>
-                    )
-                  )}
 
                   {/* Value range */}
                   {p.price_range_low && p.price_range_high && (
