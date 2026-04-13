@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { MessageSquare, Image, Receipt, CheckCircle, ArrowRight } from 'lucide-react'
+import { ArrowRight, CheckCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'TradeDesk — WhatsApp Trade Assistant for UK Tradespeople | Nith Digital',
@@ -26,73 +26,131 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: 'TradeDesk by Nith Digital',
-  description: 'WhatsApp-powered back-office assistant for UK tradespeople. Ask trade questions, build a portfolio from job photos, and log expenses by photographing invoices — via a single WhatsApp number.',
+  description: 'WhatsApp-powered back-office assistant for UK tradespeople.',
   url: 'https://nithdigital.uk/tradedesk',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'WhatsApp',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'GBP',
-    description: 'Free during beta',
-  },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP', description: 'Free during beta' },
 }
 
-const FEATURES = [
-  {
-    icon: MessageSquare,
-    title: 'Ask anything, get a trade-specific answer',
-    desc: 'Scottish Building Standards, VAT rules, CIS, material quantities, day rates — text any question and get a direct, practical answer in seconds. No Google rabbit holes, no generic advice. TradeDesk knows the difference between English Building Regs and Scottish Building Standards, and knows D&G is rural.',
-  },
-  {
-    icon: Image,
-    title: 'Job photos become portfolio posts automatically',
-    desc: 'Send a photo of a finished job. TradeDesk writes a professional caption describing the work, plus a ready-to-copy social media post for Facebook or Instagram. Every photo is published to your own portfolio page at nithdigital.uk/tradedesk/you/portfolio — live and shareable with customers.',
-  },
-  {
-    icon: Receipt,
-    title: 'Photograph an invoice, it\'s logged instantly',
-    desc: 'Point your camera at an invoice or receipt and say "receipt". TradeDesk reads it, pulls out the supplier, date, amount, and VAT, categorises it (Materials, Fuel, Tools, Subcontractor, etc.), and emails you a receipt. At year end, download everything as a CSV for your accountant.',
-  },
+const STATS = [
+  { num: '3 min', label: 'Average question answered' },
+  { num: '0', label: 'Apps to download' },
+  { num: '100%', label: 'UK trade knowledge' },
+  { num: 'Free', label: 'During beta' },
 ]
 
-const STEPS = [
-  { num: '01', title: 'Save the number', desc: 'Save your dedicated TradeDesk WhatsApp number. Send "Hi" to get started — TradeDesk asks for your email so it can send expense receipts.' },
-  { num: '02', title: 'Text a question', desc: 'Ask anything: "What\'s the going rate for a new consumer unit in D&G?" or "Do I need building warrant for a garage conversion in Scotland?" You\'ll get a direct answer, not a list of websites.' },
-  { num: '03', title: 'Send a job photo', desc: 'Photograph a finished job. TradeDesk asks if it\'s for your portfolio or an expense log — tap 1 or 2. Within seconds, your portfolio caption is written and your post is ready to share.' },
-  { num: '04', title: 'Photograph an invoice', desc: 'Take a photo of any invoice or receipt and type "receipt". TradeDesk extracts the details, logs the expense, emails you a copy, and it\'s ready for your accountant.' },
+// Feature sections: alternating phone mockup + copy
+const FEATURES = [
+  {
+    tag: 'Trade Q&A',
+    headline: 'Ask anything. Get a trade-specific answer.',
+    body: 'Scottish Building Standards, VAT rules, CIS, material quantities, day rates — text any question and get a direct, practical answer in seconds. No Google rabbit holes, no generic advice.',
+    bullets: [
+      'Scottish Building Standards (not English regs)',
+      'SNIPEF, SELECT, Gas Safe, NICEIC guidance',
+      'VAT threshold, flat rate scheme, CIS rules',
+      'D&G, Borders, Ayrshire, Central Belt pricing',
+    ],
+    messages: [
+      { from: 'you', text: 'What\'s the going rate for a new consumer unit in D&G?' },
+      { from: 'td', text: 'For a consumer unit swap in D&G, expect £300–£450 all-in for a standard 18-way board. Add £50–£80 for EICR if required. SELECT registered sparks are charging £45–£60/hr in the area — job usually takes 3–4 hours including testing.' },
+      { from: 'you', text: 'Do I need building warrant for a garage conversion in Scotland?' },
+      { from: 'td', text: 'Yes — in Scotland a garage conversion requires a building warrant under BSD regulations. You\'ll need structural, insulation, ventilation, and fire safety sign-off. Contact your local council building standards department to submit.' },
+    ],
+  },
+  {
+    tag: 'Portfolio Builder',
+    headline: 'Job photos become portfolio posts automatically.',
+    body: 'Send a photo of a finished job. TradeDesk writes a professional caption and a ready-to-copy social post. Every photo is published to your own portfolio page — live and shareable with customers.',
+    bullets: [
+      'AI-written caption for every job photo',
+      'Ready-to-copy Facebook & Instagram post',
+      'Public portfolio page at your own URL',
+      'No login needed for customers to view',
+    ],
+    messages: [
+      { from: 'you', text: '📷 [photo of completed bathroom refit]' },
+      { from: 'td', text: 'Got your photo — what\'s this for?\n\n1️⃣ Portfolio — I\'ll write a caption\n2️⃣ Invoice / expense — I\'ll log it' },
+      { from: 'you', text: '1' },
+      { from: 'td', text: '✅ Added to your portfolio!\n\nCaption: Full bathroom refit completed in a residential property — new suite, tiled walls and floor, chrome fittings throughout. Clean, high-spec finish.\n\nSocial post ready to copy 👆' },
+    ],
+  },
+  {
+    tag: 'Expense Logging',
+    headline: 'Photograph an invoice, it\'s logged instantly.',
+    body: 'Point your camera at a receipt and say "receipt". TradeDesk reads it, pulls out supplier, date, amount and VAT, categorises it, and emails you a copy. At year end, download everything as CSV for your accountant.',
+    bullets: [
+      'OCR reads any invoice or receipt',
+      'Auto-categorised: Materials, Fuel, Tools, Subcontractor',
+      'VAT tracked separately for easy returns',
+      'CSV export for your accountant',
+    ],
+    messages: [
+      { from: 'you', text: '📷 [photo of Screwfix receipt] receipt' },
+      { from: 'td', text: '✅ Expense logged!\n\nSupplier: Screwfix\nDate: 13 Apr 2026\nNet: £84.17\nVAT: £16.83\nCategory: Materials\n\nReceipt emailed to you.' },
+      { from: 'you', text: 'How many expenses this month?' },
+      { from: 'td', text: 'April so far: 7 expenses, £612.40 net, £89.20 VAT. Download your CSV any time at your expenses page.' },
+    ],
+  },
 ]
 
 const TRADES = [
   'Plumbers & heating engineers', 'Electricians', 'Builders & contractors',
   'Joiners & carpenters', 'Roofers', 'Landscapers & groundworkers',
   'Painters & decorators', 'Plasterers', 'Tilers',
-  'Kitchen & bathroom fitters', 'Damp proofing', 'Gas engineers',
-  'Cleaning contractors', 'Scaffolders', 'Groundworkers',
+  'Kitchen & bathroom fitters', 'Gas engineers', 'Cleaning contractors',
 ]
 
 const FAQS = [
-  {
-    q: 'Do my customers need to use WhatsApp?',
-    a: 'No. TradeDesk is a tool for you, not your customers. You message a TradeDesk WhatsApp number — it\'s your private assistant. Your customers never see it.',
-  },
-  {
-    q: 'What kinds of questions can I ask?',
-    a: 'Anything trade-related. Building regs (Scottish Building Standards), pricing guidance, material quantities, VAT and CIS rules, Gas Safe and NICEIC requirements, planning permission questions, SNIPEF plumbing standards, SELECT electrical standards. The more specific your question, the better the answer.',
-  },
-  {
-    q: 'How does the portfolio work?',
-    a: 'Every job photo you send creates a portfolio post with an AI-written caption. Your posts appear at nithdigital.uk/tradedesk/[yourname]/portfolio — a clean, public page you can share with customers or link from your website. No login needed for visitors.',
-  },
-  {
-    q: 'Is it really free?',
-    a: 'Yes, free during beta. TradeDesk is in early access — we\'re building it with real tradespeople and keeping it free while we do. When paid plans launch, early users get priority pricing.',
-  },
-  {
-    q: 'Do I need to download an app?',
-    a: 'No. TradeDesk runs through WhatsApp — the app you already have on your phone. Nothing to download, no account to create, no login. Save the number, start messaging.',
-  },
+  { q: 'Do my customers need to use WhatsApp?', a: 'No. TradeDesk is a private tool for you. You message a dedicated TradeDesk number — your customers never see it.' },
+  { q: 'What kinds of questions can I ask?', a: 'Anything trade-related. Building regs, pricing guidance, material quantities, VAT and CIS rules, Gas Safe, NICEIC, SNIPEF, SELECT requirements. The more specific, the better the answer.' },
+  { q: 'How does the portfolio work?', a: 'Every job photo you send creates a portfolio post with an AI caption. Posts appear at nithdigital.uk/tradedesk/[you]/portfolio — a clean, public page you can share with customers.' },
+  { q: 'Is it really free?', a: 'Yes, free during beta. We\'re building it with real tradespeople and keeping it free while we do. Paid plans follow — early users get priority pricing.' },
+  { q: 'Do I need to download an app?', a: 'No. TradeDesk runs through WhatsApp — the app you already have. Nothing to download, no account to create. Save the number, start messaging.' },
 ]
+
+function PhoneMockup({ messages }: { messages: { from: string; text: string }[] }) {
+  return (
+    <div style={{
+      width: 280,
+      background: '#E5DDD5',
+      borderRadius: 32,
+      boxShadow: '0 24px 64px rgba(0,0,0,0.25)',
+      overflow: 'hidden',
+      flexShrink: 0,
+    }}>
+      {/* Status bar */}
+      <div style={{ background: '#075E54', padding: '12px 16px 8px', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#D4A84B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#1B2A4A', flexShrink: 0 }}>TD</div>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>TradeDesk</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>online</div>
+        </div>
+      </div>
+      {/* Chat area */}
+      <div style={{ padding: '12px 10px', display: 'flex', flexDirection: 'column', gap: 6, minHeight: 280 }}>
+        {messages.map((m, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: m.from === 'you' ? 'flex-end' : 'flex-start' }}>
+            <div style={{
+              background: m.from === 'you' ? '#DCF8C6' : '#fff',
+              borderRadius: m.from === 'you' ? '12px 4px 12px 12px' : '4px 12px 12px 12px',
+              padding: '7px 10px',
+              maxWidth: '85%',
+              fontSize: 11.5,
+              color: '#111',
+              lineHeight: 1.5,
+              whiteSpace: 'pre-line',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+            }}>
+              {m.text}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function TradeDeskPage() {
   return (
@@ -100,411 +158,250 @@ export default function TradeDeskPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '72px 0 56px' }}>
+      <section style={{ background: '#1B2A4A', padding: '80px 0 72px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
-            TradeDesk · WhatsApp-powered admin · UK Tradespeople
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            background: 'rgba(212,168,75,0.15)',
+            border: '1px solid rgba(212,168,75,0.3)',
+            borderRadius: 100,
+            padding: '5px 14px',
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: '0.5px',
+            color: '#D4A84B',
+            marginBottom: 24,
+          }}>
+            Free during beta · UK tradespeople only
           </div>
-          <h1 style={{
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 40, alignItems: 'center' }} className="td-hero-grid">
+            <div>
+              <h1 style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(32px, 4.5vw, 52px)',
+                fontWeight: 700,
+                color: '#F5F0E6',
+                marginBottom: 20,
+                lineHeight: 1.15,
+              }}>
+                Better answers, faster admin — all on WhatsApp
+              </h1>
+              <p style={{ fontSize: 17, color: 'rgba(245,240,230,0.7)', lineHeight: 1.75, maxWidth: 520, marginBottom: 32 }}>
+                One WhatsApp number. Ask trade questions, build your portfolio from job photos, and log expenses by photographing invoices. No app. No login.
+              </p>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 40 }}>
+                <Link href="/contact" style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  background: '#D4A84B', color: '#1B2A4A',
+                  padding: '14px 30px', borderRadius: 100, fontWeight: 700, fontSize: 15, textDecoration: 'none',
+                }}>
+                  Get early access <ArrowRight size={16} />
+                </Link>
+                <Link href="#features" style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  border: '1.5px solid rgba(245,240,230,0.25)', color: 'rgba(245,240,230,0.8)',
+                  padding: '14px 30px', borderRadius: 100, fontWeight: 500, fontSize: 15, textDecoration: 'none',
+                }}>
+                  See how it works
+                </Link>
+              </div>
+              <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+                {['No app to download', 'Works on any phone', 'Scottish trade knowledge'].map(t => (
+                  <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'rgba(245,240,230,0.6)' }}>
+                    <CheckCircle size={13} color="#D4A84B" />
+                    {t}
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Hero phone mockup */}
+            <div className="td-hero-phone" style={{ display: 'flex', justifyContent: 'center' }}>
+              <PhoneMockup messages={[
+                { from: 'you', text: 'Hi' },
+                { from: 'td', text: 'Hi! I\'m TradeDesk 👷 — your WhatsApp trade assistant.\n\nAsk me anything: building regs, pricing, CIS, VAT. Send a job photo to add to your portfolio. Photo a receipt and say "receipt" to log an expense.\n\nWhat\'s your email so I can send expense receipts?' },
+                { from: 'you', text: 'What\'s the building warrant process for a loft conversion in Scotland?' },
+                { from: 'td', text: 'In Scotland, loft conversions require a building warrant. You\'ll need to submit plans to your local council building standards team covering structural, fire safety, insulation, and staircase. Typical approval: 3–6 weeks. LABC approved certifier can speed this up.' },
+              ]} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats bar */}
+      <section style={{ background: '#D4A84B', padding: '32px 0' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, textAlign: 'center' }} className="td-stats-grid">
+            {STATS.map(s => (
+              <div key={s.num}>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: '#1B2A4A', lineHeight: 1 }}>{s.num}</div>
+                <div style={{ fontSize: 13, color: 'rgba(27,42,74,0.65)', marginTop: 4, fontWeight: 500 }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Feature sections */}
+      <div id="features">
+        {FEATURES.map((f, i) => {
+          const isOdd = i % 2 !== 0
+          return (
+            <section key={f.tag} style={{ background: isOdd ? '#F5F0E6' : '#fff', padding: '80px 0' }}>
+              <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
+                <div
+                  style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}
+                  className={`td-feature-grid ${isOdd ? 'td-reverse' : ''}`}
+                >
+                  {/* Phone side */}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    order: isOdd ? 2 : 1,
+                  }} className="td-phone-col">
+                    <PhoneMockup messages={f.messages} />
+                  </div>
+                  {/* Copy side */}
+                  <div style={{ order: isOdd ? 1 : 2 }} className="td-copy-col">
+                    <div style={{
+                      display: 'inline-block',
+                      background: 'rgba(212,168,75,0.15)',
+                      color: '#B8860B',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      letterSpacing: '1px',
+                      textTransform: 'uppercase',
+                      padding: '4px 12px',
+                      borderRadius: 100,
+                      marginBottom: 16,
+                    }}>
+                      {f.tag}
+                    </div>
+                    <h2 style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(22px, 2.5vw, 32px)',
+                      fontWeight: 700,
+                      color: '#1B2A4A',
+                      marginBottom: 16,
+                      lineHeight: 1.25,
+                    }}>
+                      {f.headline}
+                    </h2>
+                    <p style={{ fontSize: 15, color: '#5A6A7A', lineHeight: 1.8, marginBottom: 24 }}>
+                      {f.body}
+                    </p>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      {f.bullets.map(b => (
+                        <li key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: '#1B2A4A' }}>
+                          <CheckCircle size={16} color="#D4A84B" style={{ flexShrink: 0, marginTop: 2 }} />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )
+        })}
+      </div>
+
+      {/* Trades */}
+      <section style={{ background: '#1B2A4A', padding: '64px 0' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+            Built for every trade
+          </div>
+          <h2 style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(28px, 4vw, 42px)',
+            fontSize: 'clamp(20px, 2.5vw, 28px)',
             fontWeight: 700,
             color: '#F5F0E6',
-            marginBottom: 20,
-            lineHeight: 1.2,
-            maxWidth: 620,
+            marginBottom: 32,
           }}>
-            Your back office, on WhatsApp
-          </h1>
-          <p style={{
-            fontSize: 17,
-            color: 'rgba(245,240,230,0.75)',
-            lineHeight: 1.7,
-            maxWidth: 560,
-            marginBottom: 16,
-          }}>
-            One WhatsApp number. Ask trade questions, get AI-written portfolio captions from job photos, and log expenses by photographing invoices.
-          </p>
-          <p style={{
-            fontSize: 15,
-            color: 'rgba(245,240,230,0.55)',
-            lineHeight: 1.7,
-            maxWidth: 540,
-            marginBottom: 36,
-          }}>
-            No app to download. No login. If you can use WhatsApp, you can use TradeDesk.
-          </p>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link
-              href="/contact"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                background: '#D4A84B',
-                color: '#1B2A4A',
-                padding: '13px 28px',
+            Works for every trade in the UK
+          </h2>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+            {TRADES.map(t => (
+              <span key={t} style={{
+                padding: '8px 18px',
+                background: 'rgba(245,240,230,0.08)',
+                border: '1px solid rgba(245,240,230,0.15)',
                 borderRadius: 100,
-                fontWeight: 700,
-                fontSize: 15,
-                textDecoration: 'none',
-              }}
-            >
-              Get early access <ArrowRight size={16} />
-            </Link>
-            <Link
-              href="#how-it-works"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                border: '1.5px solid rgba(245,240,230,0.3)',
+                fontSize: 13,
                 color: 'rgba(245,240,230,0.85)',
-                padding: '13px 28px',
-                borderRadius: 100,
                 fontWeight: 500,
-                fontSize: 15,
-                textDecoration: 'none',
-              }}
-            >
-              See how it works
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section style={{ background: '#fff', padding: '64px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
-            Three tools, one number
-          </div>
-          <h2 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(20px, 2.5vw, 28px)',
-            fontWeight: 400,
-            color: '#1B2A4A',
-            marginBottom: 12,
-          }}>
-            Everything you need between jobs
-          </h2>
-          <p style={{ fontSize: 15, color: '#5A6A7A', lineHeight: 1.8, maxWidth: 640, marginBottom: 40 }}>
-            Most tradespeople lose hours every week to admin that could be handled in seconds. TradeDesk handles three of the biggest time drains — all from WhatsApp.
-          </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 20,
-          }}>
-            {FEATURES.map((f) => (
-              <div
-                key={f.title}
-                style={{
-                  border: '1px solid rgba(27,42,74,0.1)',
-                  borderLeft: '3px solid #D4A84B',
-                  borderRadius: '0 8px 8px 0',
-                  padding: 24,
-                }}
-              >
-                <f.icon size={24} color="#D4A84B" style={{ marginBottom: 16 }} />
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: '#1B2A4A', marginBottom: 8 }}>
-                  {f.title}
-                </h3>
-                <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.7 }}>
-                  {f.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Built for Scottish tradespeople */}
-      <section style={{ background: '#F5F0E6', padding: '64px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }} className="td-two-col">
-            <div>
-              <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
-                Built for UK & Scottish trades
-              </div>
-              <h2 style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(20px, 2.5vw, 26px)',
-                fontWeight: 400,
-                color: '#1B2A4A',
-                marginBottom: 16,
               }}>
-                Knows Scotland. Knows the trade.
-              </h2>
-              <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.8, marginBottom: 16 }}>
-                Generic AI tools give generic answers. TradeDesk is built with Scottish trade knowledge — the Q&amp;A engine knows Scottish Building Standards (not English Building Regs), SNIPEF plumbing standards, SELECT electrical requirements, and local market rates across Dumfries &amp; Galloway, the Borders, Ayrshire, and the Central Belt.
-              </p>
-              <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.8 }}>
-                When you ask about pricing, it factors in rural D&amp;G realities: travel time, fuel, remote access. When you ask about regulations, it cites the right body — Gas Safe, NICEIC, SNIPEF, SELECT, or Building Standards depending on your trade.
-              </p>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {[
-                { label: 'Scottish Building Standards', desc: 'BSD compliance guidance, not English Building Regs' },
-                { label: 'SNIPEF & SELECT aware', desc: 'Plumbing and electrical standards for Scotland' },
-                { label: 'VAT & CIS rules', desc: 'VAT threshold, flat rate scheme, Construction Industry Scheme' },
-                { label: 'Gas Safe & NICEIC', desc: 'Registration requirements and compliance guidance' },
-                { label: 'Scottish local pricing', desc: 'D&G, Borders, Ayrshire, Central Belt day rates and material costs' },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: 12,
-                    padding: '14px 16px',
-                    background: '#fff',
-                    borderRadius: 8,
-                    border: '1px solid rgba(27,42,74,0.08)',
-                  }}
-                >
-                  <CheckCircle size={16} color="#D4A84B" style={{ flexShrink: 0, marginTop: 2 }} />
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 2 }}>{item.label}</div>
-                    <div style={{ fontSize: 12, color: '#5A6A7A' }}>{item.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Trades it works for */}
-          <div style={{ marginTop: 48 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: '#1B2A4A', marginBottom: 16 }}>
-              Works for every trade
-            </h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {TRADES.map((t) => (
-                <span
-                  key={t}
-                  style={{
-                    padding: '6px 14px',
-                    background: '#fff',
-                    border: '1px solid rgba(27,42,74,0.1)',
-                    borderRadius: 100,
-                    fontSize: 13,
-                    color: '#1B2A4A',
-                    fontWeight: 500,
-                  }}
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section id="how-it-works" style={{ background: '#fff', padding: '64px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
-            Simple by design
-          </div>
-          <h2 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(20px, 2.5vw, 28px)',
-            fontWeight: 400,
-            color: '#1B2A4A',
-            marginBottom: 8,
-          }}>
-            How it works
-          </h2>
-          <p style={{ fontSize: 15, color: '#5A6A7A', lineHeight: 1.8, maxWidth: 580, marginBottom: 40 }}>
-            No onboarding process. No training. Just save a number and start messaging.
-          </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: 32,
-          }}>
-            {STEPS.map((s) => (
-              <div key={s.num} style={{ display: 'flex', gap: 20 }}>
-                <div style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 32,
-                  fontWeight: 700,
-                  color: '#D4A84B',
-                  lineHeight: 1,
-                  flexShrink: 0,
-                  minWidth: 48,
-                }}>
-                  {s.num}
-                </div>
-                <div>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: '#1B2A4A', marginBottom: 6 }}>
-                    {s.title}
-                  </h3>
-                  <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.7 }}>
-                    {s.desc}
-                  </p>
-                </div>
-              </div>
+                {t}
+              </span>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What you get */}
-      <section style={{ background: '#F5F0E6', padding: '64px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }} className="td-two-col">
-            <div>
-              <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
-                What you get
-              </div>
-              <h2 style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(20px, 2.5vw, 26px)',
-                fontWeight: 400,
-                color: '#1B2A4A',
-                marginBottom: 24,
-              }}>
-                A public portfolio and expense records — without any extra work
-              </h2>
-              <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.8, marginBottom: 20 }}>
-                Every job photo you send builds your online portfolio automatically. Every invoice you photograph goes into your expense log. At year end, download everything as a CSV for your accountant.
-              </p>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {[
-                  'Public portfolio page for your business',
-                  'AI-written captions and social posts, ready to share',
-                  'Categorised expense log with VAT tracking',
-                  'Email receipt every time an expense is logged',
-                  'CSV export for your accountant at year end',
-                  'Works on any phone — no app required',
-                ].map((item) => (
-                  <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: '#1B2A4A' }}>
-                    <CheckCircle size={16} color="#D4A84B" style={{ flexShrink: 0, marginTop: 2 }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div style={{
-              background: '#1B2A4A',
-              borderRadius: 12,
-              padding: 32,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 16,
-            }}>
-              {[
-                { from: 'You', msg: 'How much should I charge for a bathroom refit in D&G?' },
-                { from: 'TradeDesk', msg: 'For a full bathroom refit in Dumfries & Galloway, expect £150–£250/day labour depending on experience. Full rip-out and refit typically runs 4–6 days. Add materials (suite, tiles, fittings) on top — usually £800–£2,000 depending on spec...' },
-                { from: 'You', msg: '[photo of a finished plastering job]' },
-                { from: 'TradeDesk', msg: 'Got your photo — what\'s this for?\n\n1️⃣ Portfolio — I\'ll write a caption\n2️⃣ Invoice / expense — I\'ll log it' },
-                { from: 'You', msg: '1' },
-                { from: 'TradeDesk', msg: '✅ Added to your portfolio!\n\nCaption: Smooth multi-finish skim completed in a residential living room. Clean, even coat throughout...' },
-              ].map((m, i) => (
-                <div key={i} style={{
-                  alignSelf: m.from === 'You' ? 'flex-end' : 'flex-start',
-                  maxWidth: '80%',
-                }}>
-                  <div style={{ fontSize: 10, color: 'rgba(245,240,230,0.4)', marginBottom: 4, textAlign: m.from === 'You' ? 'right' : 'left' }}>
-                    {m.from}
-                  </div>
-                  <div style={{
-                    background: m.from === 'You' ? '#D4A84B' : 'rgba(245,240,230,0.1)',
-                    color: m.from === 'You' ? '#1B2A4A' : 'rgba(245,240,230,0.9)',
-                    padding: '10px 14px',
-                    borderRadius: m.from === 'You' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
-                    fontSize: 12,
-                    lineHeight: 1.5,
-                    whiteSpace: 'pre-line',
-                  }}>
-                    {m.msg}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section style={{ background: '#fff', padding: '64px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
+      <section style={{ background: '#fff', padding: '80px 0' }}>
+        <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
             Common questions
           </div>
           <h2 style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(20px, 2.5vw, 28px)',
-            fontWeight: 400,
+            fontWeight: 700,
             color: '#1B2A4A',
             marginBottom: 40,
           }}>
             Frequently asked questions
           </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0, maxWidth: 780 }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {FAQS.map((faq, i) => (
-              <div
-                key={faq.q}
-                style={{
-                  borderTop: i === 0 ? '1px solid rgba(27,42,74,0.1)' : 'none',
-                  borderBottom: '1px solid rgba(27,42,74,0.1)',
-                  padding: '20px 0',
-                }}
-              >
-                <h3 style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginBottom: 8 }}>
-                  {faq.q}
-                </h3>
-                <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.7, margin: 0 }}>
-                  {faq.a}
-                </p>
+              <div key={faq.q} style={{
+                borderTop: i === 0 ? '1px solid rgba(27,42,74,0.1)' : 'none',
+                borderBottom: '1px solid rgba(27,42,74,0.1)',
+                padding: '24px 0',
+              }}>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1B2A4A', marginBottom: 10 }}>{faq.q}</h3>
+                <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.75, margin: 0 }}>{faq.a}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing teaser */}
-      <section style={{ background: '#1B2A4A', padding: '56px 0' }}>
+      {/* Bottom CTA */}
+      <section style={{ background: '#1B2A4A', padding: '80px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
-            Pricing
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 16, fontWeight: 600 }}>
+            Free during beta
           </div>
           <h2 style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(22px, 3vw, 32px)',
-            fontWeight: 400,
+            fontSize: 'clamp(24px, 3.5vw, 40px)',
+            fontWeight: 700,
             color: '#F5F0E6',
-            marginBottom: 12,
+            marginBottom: 16,
+            lineHeight: 1.2,
           }}>
-            Free during beta
+            Start using TradeDesk today
           </h2>
-          <p style={{ fontSize: 15, color: 'rgba(245,240,230,0.65)', lineHeight: 1.7, maxWidth: 480, margin: '0 auto 32px' }}>
-            TradeDesk is in early access. Get in now and lock in free usage while we build. Paid plans will follow — early users get priority pricing.
+          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.65)', lineHeight: 1.75, maxWidth: 480, margin: '0 auto 36px' }}>
+            Free during beta. Get in now and lock in free usage while we build. Early users get priority pricing when paid plans launch.
           </p>
-          <Link
-            href="/contact"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              background: '#D4A84B',
-              color: '#1B2A4A',
-              padding: '13px 32px',
-              borderRadius: 100,
-              fontWeight: 700,
-              fontSize: 15,
-              textDecoration: 'none',
-            }}
-          >
+          <Link href="/contact" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: '#D4A84B', color: '#1B2A4A',
+            padding: '15px 36px', borderRadius: 100, fontWeight: 700, fontSize: 16, textDecoration: 'none',
+          }}>
             Get early access <ArrowRight size={16} />
           </Link>
         </div>
       </section>
 
-      {/* Related pages */}
+      {/* Related */}
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '48px 24px' }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: '#1B2A4A', marginBottom: 16 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 600, color: '#1B2A4A', marginBottom: 16 }}>
           Related services
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="td-grid">
@@ -513,18 +410,11 @@ export default function TradeDeskPage() {
             { href: '/web-design/tradespeople', label: 'Web Design for Tradespeople', desc: 'A professional website that converts visitors into booked jobs.' },
             { href: '/tools/invoice-generator', label: 'Free Invoice Generator', desc: 'Create and download a professional invoice as a PDF — free, no account needed.' },
             { href: '/services', label: 'All Services', desc: 'Full overview of everything Nith Digital offers for trades businesses.' },
-          ].map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              style={{
-                display: 'block',
-                padding: '16px 20px',
-                border: '1px solid rgba(27,42,74,0.1)',
-                borderRadius: 8,
-                textDecoration: 'none',
-              }}
-            >
+          ].map(l => (
+            <Link key={l.href} href={l.href} style={{
+              display: 'block', padding: '16px 20px',
+              border: '1px solid rgba(27,42,74,0.1)', borderRadius: 8, textDecoration: 'none',
+            }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{l.label}</div>
               <div style={{ fontSize: 12, color: '#5A6A7A' }}>{l.desc}</div>
             </Link>
@@ -534,7 +424,12 @@ export default function TradeDeskPage() {
 
       <style>{`
         @media (max-width: 768px) {
-          .td-two-col { grid-template-columns: 1fr !important; }
+          .td-hero-grid { grid-template-columns: 1fr !important; }
+          .td-hero-phone { display: none !important; }
+          .td-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .td-feature-grid { grid-template-columns: 1fr !important; }
+          .td-phone-col { order: 1 !important; }
+          .td-copy-col { order: 2 !important; }
           .td-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
