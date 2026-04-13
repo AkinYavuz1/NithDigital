@@ -142,6 +142,77 @@ const COLOUR_MAP: Record<string, string> = {
   '5': '#0F1729',
 }
 
+// ── Price detection & Perplexity lookup ──────────────────────────────────
+
+const PRICE_KEYWORDS = [
+  'how much', 'price', 'cost', 'pricing', 'charge', 'rate', 'quote',
+  'per metre', 'per m', 'per length', 'per sheet', 'per bag', 'per roll',
+  'jewson', 'travis perkins', 'graham', 'bss', 'screwfix', 'toolstation',
+  'tf solutions', 'builders merchant', 'timber', 'pipe', 'cable', 'plasterboard',
+  'insulation', 'cement', 'render', 'aggregate', 'sand', 'gravel',
+]
+
+function isPriceQuestion(text: string): boolean {
+  const lower = text.toLowerCase()
+  return PRICE_KEYWORDS.some((kw) => lower.includes(kw))
+}
+
+async function perplexityPriceLookup(
+  question: string,
+  merchants: string | null,
+  tradeDiscount: number | null
+): Promise<string | null> {
+  const key = process.env.PERPLEXITY_API_KEY
+  if (!key) return null
+
+  const merchantContext = merchants
+    ? `The tradesperson uses these merchants: ${merchants}.`
+    : 'The tradesperson is based in Scotland (Dumfries & Galloway area).'
+
+  const discountContext = tradeDiscount
+    ? `They get approximately ${tradeDiscount}% trade discount off retail prices.`
+    : 'Their trade discount is unknown — note any prices are likely retail and trade prices will be lower.'
+
+  try {
+    const res = await fetch('https://api.perplexity.ai/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'sonar',
+        messages: [
+          {
+            role: 'system',
+            content: `You are a UK building materials price assistant. ${merchantContext} ${discountContext}
+
+When giving prices:
+- Give specific current UK retail prices from named suppliers (Jewson, Travis Perkins, Screwfix, Toolstation, BSS, Graham, etc.)
+- If trade discount is known, calculate and show the trade price too
+- Be specific — give a single price or a tight range (no more than 20% spread)
+- State which supplier the price is from and that prices vary by branch
+- Keep the answer under 100 words
+- If you cannot find a current price, say so clearly rather than guessing`,
+          },
+          {
+            role: 'user',
+            content: question,
+          },
+        ],
+        max_tokens: 200,
+        temperature: 0.1,
+      }),
+    })
+
+    if (!res.ok) return null
+    const data = await res.json()
+    return data?.choices?.[0]?.message?.content?.trim() || null
+  } catch {
+    return null
+  }
+}
+
 // ── AI photo type detection ───────────────────────────────────────────────
 
 async function detectPhotoType(
@@ -190,8 +261,25 @@ Reply with only the letter A or B.`,
 
 // ── Flow: Groq Q&A ────────────────────────────────────────────────────────
 
-async function handleQA(userId: string, phone: string, question: string) {
+async function handleQA(
+  userId: string,
+  phone: string,
+  question: string,
+  merchants: string | null = null,
+  tradeDiscount: number | null = null
+) {
   let reply = 'Sorry, I could not generate a response right now. Please try again.'
+
+  // ── Price question: try Perplexity first ────────────────────────────────
+  if (isPriceQuestion(question)) {
+    const priceAnswer = await perplexityPriceLookup(question, merchants, tradeDiscount)
+    if (priceAnswer) {
+      await sendWhatsApp(phone, priceAnswer)
+      await logMessage(userId, 'out', priceAnswer, null, 'qa')
+      return
+    }
+    // Fall through to Claude if Perplexity fails
+  }
 
   try {
     // Fetch recent conversation history (excluding the current inbound
@@ -561,10 +649,10 @@ async function processMessage(
   mediaUrl: string | null,
   mediaContentType: string,
 ) {
-  // Lookup or create user
+  // Lookup or create user + profile (for merchants/discount)
   let { data: user } = await sb
     .from('tradedesk_users')
-    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan, pending_onboarding_data')
+    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan, pending_onboarding_data, merchants')
     .eq('phone_number', phone)
     .single()
 
@@ -617,6 +705,15 @@ async function processMessage(
   }
 
   const userId = user!.id
+
+  // Fetch profile for trade_discount (non-blocking — null if not found)
+  const { data: profile } = await sb
+    .from('tradedesk_profiles')
+    .select('trade_discount')
+    .eq('user_id', userId)
+    .maybeSingle()
+  const tradeDiscount: number | null = profile?.trade_discount ?? null
+  const merchants: string | null = user!.merchants ?? null
 
   // Log inbound message
   await logMessage(userId, 'in', body || null, mediaUrl, null)
@@ -710,6 +807,8 @@ async function processMessage(
       'onboarding_areas',
       'onboarding_phone',
       'onboarding_social',
+      'onboarding_merchants',
+      'onboarding_discount',
       'onboarding_colour',
       'onboarding_logo',
     ]
@@ -778,10 +877,33 @@ async function processMessage(
       } else if (user.pending_action === 'onboarding_social') {
         const socialData = skip ? null : { raw: input }
         await sb.from('tradedesk_users').update({
-          pending_action: 'onboarding_colour',
+          pending_action: 'onboarding_merchants',
           pending_onboarding_data: { ...od, social_links: socialData },
         }).eq('id', userId)
-        const reply = `Pick an accent colour for your website:\n\n1️⃣ Navy blue\n2️⃣ Forest green\n3️⃣ Deep red\n4️⃣ Burnt orange\n5️⃣ Charcoal\n\nReply with a number (1–5)`
+        const reply = `Which builders merchants do you use most? (e.g. Jewson Dumfries, Travis Perkins, Graham, BSS, local independent)\n\nI'll use this to give you accurate material prices.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_merchants') {
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_discount',
+          pending_onboarding_data: { ...od, merchants: skip ? null : input },
+        }).eq('id', userId)
+        const reply = `Do you know roughly what trade discount you get at your merchants? (e.g. "20%" or "about 15-20%")\n\nReply *skip* if you're not sure — I'll note the retail price and flag it.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_discount') {
+        // Extract a number from their answer e.g. "about 20%" → 20
+        const discountMatch = input.match(/\d+/)
+        const discount = skip || !discountMatch ? null : parseInt(discountMatch[0])
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_colour',
+          pending_onboarding_data: { ...od, trade_discount: discount },
+        }).eq('id', userId)
+        const reply = `Got it${discount ? ` — ${discount}% trade discount noted` : ''}.\n\nPick an accent colour for your website:\n\n1️⃣ Navy blue\n2️⃣ Forest green\n3️⃣ Deep red\n4️⃣ Burnt orange\n5️⃣ Charcoal\n\nReply with a number (1–5)`
         await sendWhatsApp(phone, reply)
         await logMessage(userId, 'out', reply, null, null)
         return
@@ -833,6 +955,7 @@ async function processMessage(
           logo_url,
           accent_colour: finalData.accent_colour || '#1B2A4A',
           bio,
+          trade_discount: finalData.trade_discount ?? null,
           published: true,
         })
 
@@ -840,6 +963,7 @@ async function processMessage(
           pending_action: null,
           pending_onboarding_data: {},
           business_name: businessName,
+          merchants: finalData.merchants || null,
         }).eq('id', userId)
 
         const siteUrl = `https://${slug}.nithdigital.uk`
@@ -910,7 +1034,7 @@ async function processMessage(
         await logMessage(userId, 'out', reply, null, null)
       }
     } else if (body) {
-      await handleQA(userId, phone, body)
+      await handleQA(userId, phone, body, merchants, tradeDiscount)
     } else {
       await sendWhatsApp(phone, "I didn't catch that — try sending a question or a photo!")
     }
