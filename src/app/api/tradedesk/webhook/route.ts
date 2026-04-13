@@ -89,6 +89,59 @@ function isValidEmail(s: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim())
 }
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .slice(0, 50)
+}
+
+async function generateUniqueSlug(businessName: string): Promise<string> {
+  const base = slugify(businessName) || 'tradesperson'
+  let candidate = base
+  let i = 2
+  while (true) {
+    const { data } = await sb
+      .from('tradedesk_profiles')
+      .select('id')
+      .eq('slug', candidate)
+      .maybeSingle()
+    if (!data) return candidate
+    candidate = `${base}-${i++}`
+  }
+}
+
+async function generateBio(businessName: string, trade: string, areas: string): Promise<string> {
+  try {
+    const msg = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 150,
+      messages: [{
+        role: 'user',
+        content: `Write a short 2-sentence professional bio for a UK tradesperson.
+Business: ${businessName}
+Trade: ${trade}
+Areas covered: ${areas}
+Keep it factual and natural — no buzzwords. Do not include a greeting.
+Return only the bio text, nothing else.`,
+      }],
+    })
+    return (msg.content[0] as any).text.trim()
+  } catch {
+    return `${businessName} are experienced ${trade.toLowerCase()} professionals serving ${areas}.`
+  }
+}
+
+const COLOUR_MAP: Record<string, string> = {
+  '1': '#1B2A4A',
+  '2': '#2D6A4F',
+  '3': '#C1121F',
+  '4': '#E76F51',
+  '5': '#0F1729',
+}
+
 // ── AI photo type detection ───────────────────────────────────────────────
 
 async function detectPhotoType(
@@ -511,7 +564,7 @@ async function processMessage(
   // Lookup or create user
   let { data: user } = await sb
     .from('tradedesk_users')
-    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan')
+    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan, pending_onboarding_data')
     .eq('phone_number', phone)
     .single()
 
@@ -572,14 +625,36 @@ async function processMessage(
     // ── State: awaiting email ──────────────────────────────────────────────
     if (user.pending_action === 'awaiting_email') {
       if (isValidEmail(body)) {
-        await sb.from('tradedesk_users').update({
-          email: body.trim().toLowerCase(),
-          pending_action: null,
-        }).eq('id', userId)
+        const isPro = user.stripe_plan === 'pro'
 
-        const reply = `Got it ✅\n\nYou're all set. Here's what I can do:\n\n• Text me a *question* — I'll answer it\n• Send a *job photo* — I'll add it to your portfolio automatically\n• Send an *invoice or receipt photo* — I'll extract the details, log it, and email you a copy\n\nFire away.`
-        await sendWhatsApp(phone, reply)
-        await logMessage(userId, 'out', reply, null, null)
+        // Check if Pro user already has a profile (don't re-onboard)
+        const { data: existingProfile } = isPro
+          ? await sb.from('tradedesk_profiles').select('id, slug').eq('user_id', userId).single()
+          : { data: null }
+
+        if (isPro && !existingProfile) {
+          await sb.from('tradedesk_users').update({
+            email: body.trim().toLowerCase(),
+            pending_action: 'onboarding_business_name',
+            pending_onboarding_data: {},
+          }).eq('id', userId)
+
+          const reply = `Got it ✅\n\nBefore we get started, let's build your free TradeDesk website — takes 2 minutes.\n\nWhat's your *business name*?`
+          await sendWhatsApp(phone, reply)
+          await logMessage(userId, 'out', reply, null, null)
+        } else {
+          await sb.from('tradedesk_users').update({
+            email: body.trim().toLowerCase(),
+            pending_action: null,
+          }).eq('id', userId)
+
+          const planNote = isPro && existingProfile
+            ? `\n\n🌐 Your website: https://${existingProfile.slug}.nithdigital.uk`
+            : ''
+          const reply = `Got it ✅\n\nYou're all set. Here's what I can do:\n\n• Text me a *question* — I'll answer it\n• Send a *job photo* — I'll add it to your portfolio automatically\n• Send an *invoice or receipt photo* — I'll extract the details, log it, and email you a copy${planNote}\n\nFire away.`
+          await sendWhatsApp(phone, reply)
+          await logMessage(userId, 'out', reply, null, null)
+        }
       } else {
         const reply = `That doesn't look like a valid email — can you double-check and send it again?`
         await sendWhatsApp(phone, reply)
@@ -626,6 +701,153 @@ async function processMessage(
         status: 200,
         headers: { 'Content-Type': 'text/xml' },
       })
+    }
+
+    // ── Onboarding states (Pro users) ─────────────────────────────────────
+    const onboardingStates = [
+      'onboarding_business_name',
+      'onboarding_trade',
+      'onboarding_areas',
+      'onboarding_phone',
+      'onboarding_social',
+      'onboarding_colour',
+      'onboarding_logo',
+    ]
+
+    if (onboardingStates.includes(user.pending_action || '')) {
+      const od: Record<string, any> = user.pending_onboarding_data || {}
+      const input = body.trim()
+      const skip = input.toLowerCase() === 'skip'
+
+      if (user.pending_action === 'onboarding_business_name') {
+        if (!input) {
+          await sendWhatsApp(phone, `What's your business name?`)
+          return
+        }
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_trade',
+          pending_onboarding_data: { ...od, business_name: input },
+        }).eq('id', userId)
+        const reply = `*${input}* — got it.\n\nWhat trade are you in? (e.g. Plumber, Electrician, Builder, Joiner, Roofer...)`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_trade') {
+        if (!input) {
+          await sendWhatsApp(phone, `What trade are you in?`)
+          return
+        }
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_areas',
+          pending_onboarding_data: { ...od, trade: input },
+        }).eq('id', userId)
+        const reply = `Which areas do you cover? (e.g. Dumfries, Thornhill, Castle Douglas, or just "Dumfries & Galloway")`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_areas') {
+        if (!input) {
+          await sendWhatsApp(phone, `Which areas do you cover?`)
+          return
+        }
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_phone',
+          pending_onboarding_data: { ...od, areas: input },
+        }).eq('id', userId)
+        const reply = `What's the best phone number for customers to call?\n(This will appear on your website)`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_phone') {
+        if (!input) {
+          await sendWhatsApp(phone, `What phone number should we show on your website?`)
+          return
+        }
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_social',
+          pending_onboarding_data: { ...od, phone: input },
+        }).eq('id', userId)
+        const reply = `Got any social media links? Send them now (Facebook, Instagram, etc.) or reply *skip* to leave blank.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_social') {
+        const socialData = skip ? null : { raw: input }
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_colour',
+          pending_onboarding_data: { ...od, social_links: socialData },
+        }).eq('id', userId)
+        const reply = `Pick an accent colour for your website:\n\n1️⃣ Navy blue\n2️⃣ Forest green\n3️⃣ Deep red\n4️⃣ Burnt orange\n5️⃣ Charcoal\n\nReply with a number (1–5)`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_colour') {
+        const colour = COLOUR_MAP[input] || COLOUR_MAP['1']
+        await sb.from('tradedesk_users').update({
+          pending_action: 'onboarding_logo',
+          pending_onboarding_data: { ...od, accent_colour: colour },
+        }).eq('id', userId)
+        const reply = `Almost done! Send your *logo* as a photo, or reply *skip* to use a text header instead.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+
+      } else if (user.pending_action === 'onboarding_logo') {
+        let logo_url: string | null = null
+
+        if (!skip && numMedia > 0 && mediaUrl) {
+          try {
+            const { buffer, contentType } = await downloadTwilioMedia(mediaUrl)
+            const ext = getExt(contentType)
+            const path = `${userId}/logos/${Date.now()}.${ext}`
+            logo_url = await uploadToStorage(buffer, contentType, path)
+          } catch {
+            // Non-fatal — proceed without logo
+          }
+        }
+
+        // Complete onboarding
+        const finalData = { ...od, logo_url }
+        const businessName = finalData.business_name || 'My Business'
+        const trade = finalData.trade || 'Tradesperson'
+        const areas = finalData.areas || 'Local area'
+
+        const [bio, slug] = await Promise.all([
+          generateBio(businessName, trade, areas),
+          generateUniqueSlug(businessName),
+        ])
+
+        await sb.from('tradedesk_profiles').insert({
+          user_id: userId,
+          slug,
+          business_name: businessName,
+          trade,
+          areas,
+          phone: finalData.phone || null,
+          social_links: finalData.social_links || {},
+          logo_url,
+          accent_colour: finalData.accent_colour || '#1B2A4A',
+          bio,
+          published: true,
+        })
+
+        await sb.from('tradedesk_users').update({
+          pending_action: null,
+          pending_onboarding_data: {},
+          business_name: businessName,
+        }).eq('id', userId)
+
+        const siteUrl = `https://${slug}.nithdigital.uk`
+        const reply = `🎉 Your website is live!\n\n${siteUrl}\n\nEvery job photo you send me will appear on it automatically.\n\nNow — ask me anything, send job photos, or photograph invoices and I'll log them.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+        return
+      }
     }
 
     // ── Normal routing ─────────────────────────────────────────────────────

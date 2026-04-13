@@ -6,6 +6,9 @@ import type { NextRequest } from 'next/server'
 
 const PROJECT_REF = 'mrdozyxbonbukpmywxqi'
 const SESSION_COOKIE = `sb-${PROJECT_REF}-auth-token`
+const ROOT_DOMAIN = 'nithdigital.uk'
+// Subdomains reserved for the main app — never rewritten to /trades
+const RESERVED_SUBDOMAINS = new Set(['www', 'admin', 'mail', 'api'])
 
 function getEmailFromToken(token: string): string | null {
   try {
@@ -19,6 +22,18 @@ function getEmailFromToken(token: string): string | null {
 }
 
 export function middleware(request: NextRequest) {
+  // ── Subdomain rewrite for [slug].nithdigital.uk ────────────────────────
+  // Note: subdomains don't work on localhost — test /trades/[slug] directly in dev
+  const hostname = request.headers.get('host') || ''
+  if (hostname.endsWith(`.${ROOT_DOMAIN}`)) {
+    const slug = hostname.slice(0, -(ROOT_DOMAIN.length + 1))
+    if (slug && !RESERVED_SUBDOMAINS.has(slug)) {
+      const url = request.nextUrl.clone()
+      url.pathname = `/trades/${slug}`
+      return NextResponse.rewrite(url)
+    }
+  }
+
   const path = request.nextUrl.pathname
 
   // Check for session cookie (may be chunked as .0, .1, etc.)
@@ -74,5 +89,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/os/:path*', '/admin/:path*'],
+  matcher: [
+    // Run on all paths except static assets and Next internals
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)',
+  ],
 }
