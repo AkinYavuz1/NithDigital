@@ -142,6 +142,120 @@ const COLOUR_MAP: Record<string, string> = {
   '5': '#0F1729',
 }
 
+// ── Price book ───────────────────────────────────────────────────────────
+
+async function normalisedProductName(raw: string): Promise<string> {
+  try {
+    const msg = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 30,
+      messages: [{
+        role: 'user',
+        content: `Normalise this building material description to a short canonical form for storage (e.g. "47x47mm regularised softwood timber 4.8m"). Remove merchant names, prices, and filler words. Return only the normalised name, nothing else.\n\nInput: ${raw}`,
+      }],
+    })
+    return (msg.content[0] as any).text.trim().toLowerCase()
+  } catch {
+    return raw.toLowerCase().slice(0, 100)
+  }
+}
+
+async function priceBookLookup(
+  userId: string,
+  question: string
+): Promise<{ product: string; price: number; merchant: string | null; recorded_at: string } | null> {
+  // Fetch the user's recent price book entries and let Claude match them
+  const { data: entries } = await sb
+    .from('tradedesk_price_book')
+    .select('product, price, merchant, recorded_at')
+    .eq('user_id', userId)
+    .order('recorded_at', { ascending: false })
+    .limit(50)
+
+  if (!entries || entries.length === 0) return null
+
+  try {
+    const list = entries.map((e, i) => `${i + 1}. ${e.product} — £${e.price}${e.merchant ? ` (${e.merchant})` : ''} — ${new Date(e.recorded_at).toLocaleDateString('en-GB')}`).join('\n')
+    const msg = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 10,
+      messages: [{
+        role: 'user',
+        content: `Does any item in this price book match the product being asked about in the question below? Reply with just the number of the matching item, or "none" if no match.\n\nQuestion: ${question}\n\nPrice book:\n${list}`,
+      }],
+    })
+    const answer = (msg.content[0] as any).text.trim()
+    const idx = parseInt(answer) - 1
+    if (!isNaN(idx) && entries[idx]) return entries[idx]
+  } catch {
+    // fall through
+  }
+  return null
+}
+
+const CORRECTION_PATTERNS = [
+  /i (got|paid|get|pay|bought|buy).{0,30}£[\d.]+/i,
+  /£[\d.]+ (last time|previously|before|usually|normally|always)/i,
+  /that'?s (wrong|not right|off|too high|incorrect)/i,
+  /actually.{0,20}£[\d.]+/i,
+  /no[,.]?.{0,20}£[\d.]+/i,
+  /it'?s.{0,10}£[\d.]+/i,
+]
+
+function isPriceCorrection(text: string): boolean {
+  return CORRECTION_PATTERNS.some((p) => p.test(text))
+}
+
+function extractPriceFromCorrection(text: string): number | null {
+  const match = text.match(/£([\d.]+)/)
+  if (!match) return null
+  const val = parseFloat(match[1])
+  return isNaN(val) ? null : val
+}
+
+function extractMerchantFromCorrection(text: string, knownMerchants: string | null): string | null {
+  if (!knownMerchants) return null
+  const lower = text.toLowerCase()
+  for (const m of knownMerchants.split(/[,;]+/).map((s) => s.trim())) {
+    if (lower.includes(m.toLowerCase())) return m
+  }
+  return null
+}
+
+async function savePriceCorrection(
+  userId: string,
+  correctionText: string,
+  lastBotMessage: string,
+  knownMerchants: string | null
+): Promise<void> {
+  const price = extractPriceFromCorrection(correctionText)
+  if (!price) return
+
+  // Derive the product from the last bot price message
+  const productRaw = lastBotMessage.slice(0, 200)
+  const product = await normalisedProductName(productRaw)
+  const merchant = extractMerchantFromCorrection(correctionText, knownMerchants)
+
+  // Upsert: update if same product already exists for this user
+  const { data: existing } = await sb
+    .from('tradedesk_price_book')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('product', product)
+    .maybeSingle()
+
+  if (existing) {
+    await sb
+      .from('tradedesk_price_book')
+      .update({ price, merchant, product_raw: productRaw, recorded_at: new Date().toISOString() })
+      .eq('id', existing.id)
+  } else {
+    await sb
+      .from('tradedesk_price_book')
+      .insert({ user_id: userId, product, product_raw: productRaw, price, merchant })
+  }
+}
+
 // ── Price detection & Perplexity lookup ──────────────────────────────────
 
 const PRICE_KEYWORDS = [
@@ -270,15 +384,25 @@ async function handleQA(
 ) {
   let reply = 'Sorry, I could not generate a response right now. Please try again.'
 
-  // ── Price question: try Perplexity first ────────────────────────────────
+  // ── Price question: check price book first, then Perplexity ────────────
   if (isPriceQuestion(question)) {
+    const bookEntry = await priceBookLookup(userId, question)
+    if (bookEntry) {
+      const dateStr = new Date(bookEntry.recorded_at).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+      const merchantStr = bookEntry.merchant ? ` at ${bookEntry.merchant}` : ''
+      const priceAnswer = `From your price book: £${bookEntry.price.toFixed(2)}${merchantStr} (recorded ${dateStr}). Prices shift — worth a quick check if it's been a while.`
+      await sendWhatsApp(phone, priceAnswer)
+      await logMessage(userId, 'out', priceAnswer, null, 'qa')
+      return
+    }
+
     const priceAnswer = await perplexityPriceLookup(question, merchants, tradeDiscount)
     if (priceAnswer) {
       await sendWhatsApp(phone, priceAnswer)
       await logMessage(userId, 'out', priceAnswer, null, 'qa')
       return
     }
-    // Fall through to Claude if Perplexity fails
+    // Fall through to Claude if both fail
   }
 
   try {
@@ -1034,6 +1158,29 @@ async function processMessage(
         await logMessage(userId, 'out', reply, null, null)
       }
     } else if (body) {
+      // ── Price correction detection ───────────────────────────────────────
+      if (isPriceCorrection(body)) {
+        // Fetch the last outbound message to derive the product
+        const { data: lastOut } = await sb
+          .from('tradedesk_messages')
+          .select('message_body')
+          .eq('user_id', userId)
+          .eq('direction', 'out')
+          .eq('flow', 'qa')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single()
+
+        if (lastOut?.message_body) {
+          await savePriceCorrection(userId, body, lastOut.message_body, merchants)
+          const price = extractPriceFromCorrection(body)
+          const ackReply = `Got it — I'll use £${price?.toFixed(2)} for that next time. Noted in your price book. 👍`
+          await sendWhatsApp(phone, ackReply)
+          await logMessage(userId, 'out', ackReply, null, 'qa')
+          return
+        }
+      }
+
       await handleQA(userId, phone, body, merchants, tradeDiscount)
     } else {
       await sendWhatsApp(phone, "I didn't catch that — try sending a question or a photo!")
