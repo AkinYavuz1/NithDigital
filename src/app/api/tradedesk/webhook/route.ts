@@ -265,7 +265,8 @@ async function handlePortfolioFromBuffer(
   phone: string,
   buffer: Buffer,
   contentType: string,
-  rawCaption: string | null
+  rawCaption: string | null,
+  isPro = false
 ) {
   const ext = getExt(contentType)
   const path = `${userId}/portfolio/${Date.now()}-${shortId()}.${ext}`
@@ -349,7 +350,11 @@ Respond in this exact JSON format:
     ? `\n\n💡 *Want this on Google too?* Connect your Google Business in 10 seconds:\n${BASE_URL}/tradedesk/${userId}/connect`
     : ''
 
-  const reply = `✅ Added to your portfolio!${gbpLine}\n\n*Caption:*\n${aiCaption}\n\n*Ready to share:*\n${socialPost}${connectLine}`
+  const reviewLine = isPro
+    ? `\n\n⭐ *Happy with the job? Send this to your customer:*\n_"Hi, I've just completed some work at your property. If you're happy with the result, I'd really appreciate a quick Google review — it only takes a minute and helps my business a lot. Here's the link: https://g.page/r/review"_`
+    : ''
+
+  const reply = `✅ Added to your portfolio!${gbpLine}\n\n*Caption:*\n${aiCaption}\n\n*Ready to share:*\n${socialPost}${connectLine}${reviewLine}`
   await sendWhatsApp(phone, reply)
   await logMessage(userId, 'out', reply, null, 'portfolio')
 }
@@ -506,7 +511,7 @@ async function processMessage(
   // Lookup or create user
   let { data: user } = await sb
     .from('tradedesk_users')
-    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type')
+    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan')
     .eq('phone_number', phone)
     .single()
 
@@ -551,7 +556,8 @@ async function processMessage(
       .update({ used_by: user!.id, used_at: new Date().toISOString() })
       .eq('id', codeRow.id)
 
-    const welcome = `Welcome to *TradeDesk* by Nith Digital! 👋\n\nI'm your trade assistant — ask me anything, send job photos, or photograph invoices and I'll log them for you.\n\nFirst things first — what's your email address? I'll use it to send you a receipt every time I log an expense.`
+    const planLabel = codeRow.notes?.includes('pro') ? 'Pro' : 'Starter'
+    const welcome = `Welcome to *TradeDesk ${planLabel}* by Nith Digital! 👋\n\nI'm your trade assistant — ask me anything, send job photos, or photograph invoices and I'll log them for you.\n\nFirst things first — what's your email address? I'll use it to send you a receipt every time I log an expense.`
     await sendWhatsApp(phone, welcome)
     await logMessage(user!.id, 'out', welcome, null, null)
     return
@@ -600,7 +606,7 @@ async function processMessage(
 
       if (choice.includes('1') || choice.includes('portfolio')) {
         const { buffer, contentType } = await downloadTwilioMedia(storedMediaUrl)
-        await handlePortfolioFromBuffer(userId, phone, buffer, contentType, null)
+        await handlePortfolioFromBuffer(userId, phone, buffer, contentType, null, user.stripe_plan === 'pro')
       } else if (choice.includes('2') || choice.includes('invoice') || choice.includes('receipt') || choice.includes('expense')) {
         const { buffer, contentType } = await downloadTwilioMedia(storedMediaUrl)
         await handleExpenseFromBuffer(userId, phone, buffer, contentType, body, user.email, user.name || user.business_name)
@@ -668,7 +674,7 @@ async function processMessage(
         const confirmMsg = `Nice work! Adding that to your portfolio...`
         await sendWhatsApp(phone, confirmMsg)
         await logMessage(userId, 'out', confirmMsg, null, null)
-        await handlePortfolioFromBuffer(userId, phone, buffer, contentType, body || null)
+        await handlePortfolioFromBuffer(userId, phone, buffer, contentType, body || null, user.stripe_plan === 'pro')
       } else {
         // AI unsure — fall back to asking
         await sb.from('tradedesk_users').update({
