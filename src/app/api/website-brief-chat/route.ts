@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+function getAnthropic() { return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }) }
 
 const INDUSTRY_SITEMAPS: Record<string, string[]> = {
   construction: ['Home', 'Services', 'Projects', 'About', 'Contact'],
@@ -71,6 +71,7 @@ Include this JSON block at the END of your final message, after a natural conver
 Keep each response under 100 words unless elaborating on something specific. Be encouraging and make it feel fast and easy for the developer.`
 
 export async function POST(req: NextRequest) {
+  const anthropic = getAnthropic()
   const { messages, project_name, client_name } = await req.json()
 
   if (!messages || !Array.isArray(messages)) {

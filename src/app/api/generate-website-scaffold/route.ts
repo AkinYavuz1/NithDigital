@@ -3,7 +3,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { pushFileToGithub, getFileSha } from '@/lib/github'
 import { getIndustryPreset, NAVBAR_TEMPLATE, FOOTER_TEMPLATE, HERO_SPLIT_TEMPLATE, HERO_CENTERED_TEMPLATE, HERO_FULLWIDTH_TEMPLATE, SERVICES_GRID_TEMPLATE, TRUST_BADGES_TEMPLATE, CTA_SECTION_TEMPLATE, CONTACT_FORM_TEMPLATE } from '@/lib/site-templates'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+function getAnthropic() { return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }) }
 
 interface Brief {
   client_name: string
@@ -84,6 +84,7 @@ RULES:
 // ─── Batch 1: config + layout files ──────────────────────────────────────────
 
 async function generateBatch1(b: Brief, theme_config: Record<string, unknown> | null, preset: ReturnType<typeof getIndustryPreset>): Promise<Record<string, string>> {
+  const anthropic = getAnthropic()
   const headingFont = theme_config ? (theme_config.fonts as Record<string,string>)?.heading : 'Inter'
   const bodyFont = theme_config ? (theme_config.fonts as Record<string,string>)?.body : 'Inter'
   const primary = theme_config ? (theme_config.colors as Record<string,string>)?.primary : '#1B2A4A'
@@ -134,6 +135,7 @@ Return ONLY a JSON object. Keys = file paths, values = complete file content str
 // ─── Batch 2: homepage + about ────────────────────────────────────────────────
 
 async function generateBatch2(b: Brief, c: GeneratedCopyResult, theme_config: Record<string, unknown> | null, preset: ReturnType<typeof getIndustryPreset>): Promise<Record<string, string>> {
+  const anthropic = getAnthropic()
   const home = c.pages?.home || {}
   const about = c.pages?.about || {}
 
@@ -197,6 +199,7 @@ Return ONLY a JSON object. Keys = file paths, values = complete file content str
 // ─── Batch 3: services, contact, navbar, footer ───────────────────────────────
 
 async function generateBatch3(b: Brief, c: GeneratedCopyResult, theme_config: Record<string, unknown> | null, preset: ReturnType<typeof getIndustryPreset>): Promise<Record<string, string>> {
+  const anthropic = getAnthropic()
   const services = c.pages?.services || {}
   const contact = c.pages?.contact || {}
 

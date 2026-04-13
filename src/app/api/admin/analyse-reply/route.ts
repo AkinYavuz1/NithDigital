@@ -9,7 +9,7 @@ const sb = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
+function getAnthropic() { return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! }) }
 
 const STATUS_MAP: Record<string, string> = {
   'Interested': 'interested',
@@ -19,6 +19,7 @@ const STATUS_MAP: Record<string, string> = {
 }
 
 export async function POST(req: NextRequest) {
+  const anthropic = getAnthropic()
   const { id, replyText, prospect } = await req.json()
   if (!id || !replyText) return NextResponse.json({ error: 'Missing id or replyText' }, { status: 400 })
 

@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { getRepoFiles, getFileSha, pushFileToGithub } from '@/lib/github'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+function getAnthropic() { return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }) }
 
 export async function POST(req: NextRequest) {
+  const anthropic = getAnthropic()
   const { github_full_name, instruction } = await req.json()
 
   if (!github_full_name || !instruction) {

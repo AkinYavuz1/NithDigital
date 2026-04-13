@@ -9,7 +9,7 @@ const sb = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
+function getAnthropic() { return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! }) }
 
 const BASE_URL = 'https://www.nithdigital.uk/templates'
 
@@ -83,6 +83,7 @@ function sanitiseHook(hook: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  const anthropic = getAnthropic()
   const { id, type } = await req.json()
   if (!id || !type) return NextResponse.json({ error: 'Missing id or type' }, { status: 400 })
 

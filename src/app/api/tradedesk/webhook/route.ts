@@ -12,7 +12,7 @@ const sb = createClient(
 )
 
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
+function getAnthropic() { return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! }) }
 const resend = new Resend(process.env.RESEND_API_KEY!)
 
 const WHATSAPP_FROM = `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`
@@ -114,6 +114,7 @@ async function generateUniqueSlug(businessName: string): Promise<string> {
 }
 
 async function generateBio(businessName: string, trade: string, areas: string): Promise<string> {
+  const anthropic = getAnthropic()
   try {
     const msg = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
@@ -145,6 +146,7 @@ const COLOUR_MAP: Record<string, string> = {
 // ── Price book ───────────────────────────────────────────────────────────
 
 async function normalisedProductName(raw: string): Promise<string> {
+  const anthropic = getAnthropic()
   try {
     const msg = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
@@ -164,6 +166,7 @@ async function priceBookLookup(
   userId: string,
   question: string
 ): Promise<{ product: string; price: number; merchant: string | null; recorded_at: string } | null> {
+  const anthropic = getAnthropic()
   // Fetch the user's recent price book entries and let Claude match them
   const { data: entries } = await sb
     .from('tradedesk_price_book')
@@ -334,6 +337,7 @@ async function detectPhotoType(
   contentType: string,
   caption: string | null
 ): Promise<'portfolio' | 'expense' | 'unknown'> {
+  const anthropic = getAnthropic()
   try {
     const base64 = buffer.toString('base64')
     const mediaType = contentType as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
@@ -382,6 +386,7 @@ async function handleQA(
   merchants: string | null = null,
   tradeDiscount: number | null = null
 ) {
+  const anthropic = getAnthropic()
   let reply = 'Sorry, I could not generate a response right now. Please try again.'
 
   // ── Price question: check price book first, then Perplexity ────────────
@@ -533,6 +538,7 @@ async function handlePortfolioFromBuffer(
   rawCaption: string | null,
   isPro = false
 ) {
+  const anthropic = getAnthropic()
   const ext = getExt(contentType)
   const path = `${userId}/portfolio/${Date.now()}-${shortId()}.${ext}`
   const imageUrl = await uploadToStorage(buffer, contentType, path)
@@ -745,6 +751,7 @@ async function handleExpenseFromBuffer(
   userName: string | null,
   merchants: string | null = null
 ) {
+  const anthropic = getAnthropic()
   const ext = getExt(contentType)
   const path = `${userId}/expenses/${Date.now()}-${shortId()}.${ext}`
   const imageUrl = await uploadToStorage(buffer, contentType, path)
