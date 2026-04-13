@@ -5,12 +5,12 @@ import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+function getStripe() { return new Stripe(process.env.STRIPE_SECRET_KEY!) }
 const sb = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
-const resend = new Resend(process.env.RESEND_API_KEY!)
+function getResend() { return new Resend(process.env.RESEND_API_KEY!) }
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://nithdigital.uk'
 const WHATSAPP_NUMBER = process.env.TWILIO_WHATSAPP_NUMBER || '+447404173024'
@@ -41,7 +41,7 @@ async function sendWelcomeEmail(email: string, code: string, plan: string) {
   const planLabel = plan === 'pro' ? 'Pro' : 'Starter'
   const planColour = plan === 'pro' ? '#D4A84B' : '#1B2A4A'
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: 'TradeDesk <hello@mail.nithdigital.uk>',
     to: email,
     subject: `Your TradeDesk access code — ${code}`,
@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
 
   let event: Stripe.Event
   try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+    event = getStripe().webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
   } catch (err: any) {
     console.error('[Stripe webhook] signature verification failed:', err.message)
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })

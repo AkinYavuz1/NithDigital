@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+function getStripe() { return new Stripe(process.env.STRIPE_SECRET_KEY!) }
 const sb = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -30,6 +30,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(`${BASE_URL}/tradedesk/signup`)
   }
 
+  const stripe = getStripe()
   const session = await stripe.billingPortal.sessions.create({
     customer: user.stripe_customer_id,
     return_url: `${BASE_URL}/tradedesk/${userId}/connect`,
