@@ -511,12 +511,45 @@ async function processMessage(
     .single()
 
   if (!user) {
+    // Unknown number — check if they're submitting an access code
+    const trimmed = body.trim().toUpperCase()
+    const { data: codeRow } = await sb
+      .from('tradedesk_access_codes')
+      .select('id, code, expires_at, used_by')
+      .eq('code', trimmed)
+      .single()
+
+    if (!codeRow) {
+      // Not a valid code — invite-only rejection
+      await sendWhatsApp(
+        phone,
+        `Hi! TradeDesk is currently invite-only.\n\nIf you've been given an access code, reply with it now. Otherwise, contact Nith Digital at nithdigital.uk to request access.`
+      )
+      return
+    }
+
+    if (codeRow.used_by) {
+      await sendWhatsApp(phone, `That access code has already been used. Contact Nith Digital at nithdigital.uk if you need help.`)
+      return
+    }
+
+    if (codeRow.expires_at && new Date(codeRow.expires_at) < new Date()) {
+      await sendWhatsApp(phone, `That access code has expired. Contact Nith Digital at nithdigital.uk for a new one.`)
+      return
+    }
+
+    // Valid code — create user and mark code as used
     const { data: newUser } = await sb
       .from('tradedesk_users')
       .insert({ phone_number: phone, pending_action: 'awaiting_email' })
       .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type')
       .single()
     user = newUser
+
+    await sb
+      .from('tradedesk_access_codes')
+      .update({ used_by: user!.id, used_at: new Date().toISOString() })
+      .eq('id', codeRow.id)
 
     const welcome = `Welcome to *TradeDesk* by Nith Digital! 👋\n\nI'm your trade assistant — ask me anything, send job photos, or photograph invoices and I'll log them for you.\n\nFirst things first — what's your email address? I'll use it to send you a receipt every time I log an expense.`
     await sendWhatsApp(phone, welcome)

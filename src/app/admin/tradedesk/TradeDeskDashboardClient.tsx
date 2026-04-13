@@ -1,7 +1,9 @@
 'use client'
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
-import { Users, MessageSquare, Image, Receipt } from 'lucide-react'
+import { Users, MessageSquare, Image, Receipt, Key } from 'lucide-react'
+import { useState } from 'react'
+import { createAccessCode } from './actions'
 
 interface User {
   id: string
@@ -27,11 +29,23 @@ interface CategoryTotal {
   total: number
 }
 
+interface AccessCode {
+  id: string
+  code: string
+  notes: string | null
+  expires_at: string | null
+  used_by: string | null
+  used_at: string | null
+  created_at: string
+  user: User | null
+}
+
 interface Props {
   users: User[]
   messages: Message[]
   portfolioCount: number
   categoryTotals: CategoryTotal[]
+  codes: AccessCode[]
 }
 
 const KPI_CARD = {
@@ -41,8 +55,38 @@ const KPI_CARD = {
   border: '1px solid rgba(27,42,74,0.08)',
 }
 
-export default function TradeDeskDashboardClient({ users, messages, portfolioCount, categoryTotals }: Props) {
+export default function TradeDeskDashboardClient({ users, messages, portfolioCount, categoryTotals, codes: initialCodes }: Props) {
+  const [codes, setCodes] = useState<AccessCode[]>(initialCodes)
+  const [generating, setGenerating] = useState(false)
+  const [newCodeNotes, setNewCodeNotes] = useState('')
+  const [newCodeExpiry, setNewCodeExpiry] = useState('')
+  const [generatedCode, setGeneratedCode] = useState<string | null>(null)
   const now = new Date()
+
+  async function handleGenerateCode() {
+    setGenerating(true)
+    setGeneratedCode(null)
+    const result = await createAccessCode(
+      newCodeNotes || null,
+      newCodeExpiry ? parseInt(newCodeExpiry) : null
+    )
+    if (result.success) {
+      setGeneratedCode(result.code.code)
+      setCodes((prev) => [{
+        id: result.code.id,
+        code: result.code.code,
+        notes: result.code.notes || null,
+        expires_at: result.code.expires_at || null,
+        used_by: null,
+        used_at: null,
+        created_at: result.code.created_at,
+        user: null,
+      }, ...prev])
+      setNewCodeNotes('')
+      setNewCodeExpiry('')
+    }
+    setGenerating(false)
+  }
   const todayMsgs = messages.filter((m) => {
     const d = new Date(m.created_at)
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate()
@@ -165,6 +209,98 @@ export default function TradeDeskDashboardClient({ users, messages, portfolioCou
             )}
           </div>
         </div>
+      </div>
+
+      {/* Access codes */}
+      <div style={{ background: '#fff', borderRadius: 8, border: '1px solid rgba(27,42,74,0.08)', overflow: 'hidden', marginBottom: 24 }}>
+        <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(27,42,74,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <Key size={14} color="#D4A84B" />
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 700, color: '#1B2A4A', margin: 0 }}>Access codes</h2>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <input
+              type="text"
+              placeholder="Notes (e.g. John the plumber)"
+              value={newCodeNotes}
+              onChange={(e) => setNewCodeNotes(e.target.value)}
+              style={{ fontSize: 12, padding: '6px 10px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, color: '#1B2A4A', outline: 'none', width: 200 }}
+            />
+            <input
+              type="number"
+              placeholder="Expires in days (optional)"
+              value={newCodeExpiry}
+              onChange={(e) => setNewCodeExpiry(e.target.value)}
+              style={{ fontSize: 12, padding: '6px 10px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, color: '#1B2A4A', outline: 'none', width: 180 }}
+            />
+            <button
+              onClick={handleGenerateCode}
+              disabled={generating}
+              style={{ fontSize: 12, padding: '6px 14px', background: '#1B2A4A', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 600, opacity: generating ? 0.6 : 1 }}
+            >
+              {generating ? 'Generating…' : 'Generate code'}
+            </button>
+          </div>
+        </div>
+        {generatedCode && (
+          <div style={{ padding: '12px 20px', background: 'rgba(212,168,75,0.08)', borderBottom: '1px solid rgba(27,42,74,0.08)', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 12, color: '#5A6A7A' }}>New code generated:</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 16, fontWeight: 700, color: '#1B2A4A', letterSpacing: 2 }}>{generatedCode}</span>
+            <button
+              onClick={() => { navigator.clipboard.writeText(generatedCode); }}
+              style={{ fontSize: 11, padding: '4px 10px', background: '#D4A84B', color: '#1B2A4A', border: 'none', borderRadius: 4, cursor: 'pointer', fontWeight: 600 }}
+            >
+              Copy
+            </button>
+          </div>
+        )}
+        {codes.length === 0 ? (
+          <p style={{ padding: '16px 20px', fontSize: 13, color: '#5A6A7A' }}>No codes generated yet.</p>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid rgba(27,42,74,0.08)' }}>
+                  {['Code', 'Notes', 'Status', 'Used by', 'Expires', 'Created'].map((h) => (
+                    <th key={h} style={{ textAlign: 'left', padding: '8px 12px', color: '#5A6A7A', fontWeight: 600, whiteSpace: 'nowrap' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {codes.map((c) => {
+                  const isUsed = !!c.used_by
+                  const isExpired = !isUsed && c.expires_at && new Date(c.expires_at) < new Date()
+                  const status = isUsed ? 'used' : isExpired ? 'expired' : 'active'
+                  const statusColour = status === 'active'
+                    ? { bg: 'rgba(34,197,94,0.1)', text: '#15803d' }
+                    : status === 'used'
+                    ? { bg: 'rgba(27,42,74,0.08)', text: '#5A6A7A' }
+                    : { bg: 'rgba(239,68,68,0.1)', text: '#b91c1c' }
+                  return (
+                    <tr key={c.id} style={{ borderBottom: '1px solid rgba(27,42,74,0.05)' }}>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontWeight: 700, color: '#1B2A4A', letterSpacing: 1 }}>{c.code}</td>
+                      <td style={{ padding: '10px 12px', color: '#5A6A7A' }}>{c.notes || '—'}</td>
+                      <td style={{ padding: '10px 12px' }}>
+                        <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 100, background: statusColour.bg, color: statusColour.text, fontWeight: 600 }}>
+                          {status}
+                        </span>
+                      </td>
+                      <td style={{ padding: '10px 12px', color: '#5A6A7A' }}>
+                        {c.user ? (c.user.business_name || c.user.name || c.user.phone_number) : '—'}
+                      </td>
+                      <td style={{ padding: '10px 12px', color: '#5A6A7A', whiteSpace: 'nowrap' }}>
+                        {c.expires_at ? new Date(c.expires_at).toLocaleDateString('en-GB') : '—'}
+                      </td>
+                      <td style={{ padding: '10px 12px', color: '#5A6A7A', whiteSpace: 'nowrap' }}>
+                        {new Date(c.created_at).toLocaleDateString('en-GB')}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* Recent messages */}

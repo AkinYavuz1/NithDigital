@@ -17,7 +17,7 @@ export default async function TradeDeskAdminPage() {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const [usersRes, msgsRes, portfolioRes, expensesRes] = await Promise.all([
+  const [usersRes, msgsRes, portfolioRes, expensesRes, codesRes] = await Promise.all([
     sb.from('tradedesk_users').select('*').order('created_at', { ascending: false }),
     sb.from('tradedesk_messages')
       .select('id, user_id, direction, message_body, flow, created_at')
@@ -25,11 +25,21 @@ export default async function TradeDeskAdminPage() {
       .limit(50),
     sb.from('tradedesk_portfolio_posts').select('id', { count: 'exact', head: true }),
     sb.from('tradedesk_expenses').select('category, amount'),
+    sb.from('tradedesk_access_codes')
+      .select('id, code, notes, expires_at, used_by, used_at, created_at')
+      .order('created_at', { ascending: false }),
   ])
 
   const users = usersRes.data || []
   const messages = msgsRes.data || []
   const portfolioCount = portfolioRes.count || 0
+  const codes = codesRes.data || []
+
+  // Annotate codes with user info
+  const codesWithUser = codes.map((c) => {
+    const user = users.find((u) => u.id === c.used_by) || null
+    return { ...c, user }
+  })
 
   // Aggregate expenses by category
   const totalsMap: Record<string, number> = {}
@@ -45,6 +55,7 @@ export default async function TradeDeskAdminPage() {
       messages={messages}
       portfolioCount={portfolioCount}
       categoryTotals={categoryTotals}
+      codes={codesWithUser}
     />
   )
 }
