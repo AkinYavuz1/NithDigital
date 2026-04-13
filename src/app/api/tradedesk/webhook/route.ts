@@ -626,6 +626,115 @@ Respond in this exact JSON format:
 
 // ── Flow: Expense extraction ──────────────────────────────────────────────
 
+async function sendExpenseEmail(
+  userId: string,
+  userEmail: string,
+  userName: string | null,
+  supplier: string,
+  amountStr: string,
+  dateStr: string,
+  vat: number | null,
+  category: string,
+  invoiceNumber: string | null,
+  jobTag: string | null,
+  lineItems: Array<{ description: string; quantity?: number; unit_price?: number; total?: number }> | null
+) {
+  const greeting = userName ? `Hi ${userName.split(' ')[0]},` : 'Hi,'
+  const lineItemsHtml = lineItems && lineItems.length > 0
+    ? `<tr style="border-bottom: 1px solid #f0f0f0;">
+        <td style="padding: 10px 0; color: #5A6A7A; vertical-align: top;">Line items</td>
+        <td style="padding: 10px 0; font-size: 12px;">
+          ${lineItems.map(i => `${i.description}${i.quantity ? ` × ${i.quantity}` : ''}${i.total ? ` — £${i.total.toFixed(2)}` : ''}`).join('<br>')}
+        </td>
+      </tr>`
+    : ''
+
+  await resend.emails.send({
+    from: 'TradeDesk <hello@mail.nithdigital.uk>',
+    to: userEmail,
+    subject: `Expense logged — ${supplier} ${amountStr} | ${dateStr}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; color: #1B2A4A;">
+        <div style="background: #1B2A4A; padding: 24px 32px; border-radius: 8px 8px 0 0;">
+          <h1 style="color: #D4A84B; font-size: 20px; margin: 0;">TradeDesk</h1>
+          <p style="color: rgba(245,240,230,0.6); font-size: 13px; margin: 4px 0 0;">by Nith Digital</p>
+        </div>
+        <div style="background: #fff; padding: 28px 32px; border: 1px solid #e5e7eb; border-top: none;">
+          <p style="margin: 0 0 20px;">${greeting}</p>
+          <p style="margin: 0 0 20px;">I've logged the following expense from your WhatsApp photo:</p>
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; color: #5A6A7A; width: 130px;">Supplier</td>
+              <td style="padding: 10px 0; font-weight: 600;">${supplier}</td>
+            </tr>
+            ${invoiceNumber ? `<tr style="border-bottom: 1px solid #f0f0f0;"><td style="padding: 10px 0; color: #5A6A7A;">Invoice #</td><td style="padding: 10px 0;">${invoiceNumber}</td></tr>` : ''}
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; color: #5A6A7A;">Date</td>
+              <td style="padding: 10px 0;">${dateStr}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; color: #5A6A7A;">Amount</td>
+              <td style="padding: 10px 0; font-weight: 600;">${amountStr}</td>
+            </tr>
+            ${vat !== null ? `<tr style="border-bottom: 1px solid #f0f0f0;"><td style="padding: 10px 0; color: #5A6A7A;">VAT</td><td style="padding: 10px 0;">£${vat.toFixed(2)}</td></tr>` : ''}
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; color: #5A6A7A;">Category</td>
+              <td style="padding: 10px 0;">${category}</td>
+            </tr>
+            ${jobTag ? `<tr style="border-bottom: 1px solid #f0f0f0;"><td style="padding: 10px 0; color: #5A6A7A;">Job</td><td style="padding: 10px 0;">${jobTag}</td></tr>` : ''}
+            ${lineItemsHtml}
+          </table>
+          <div style="margin-top: 28px; display: flex; gap: 12px;">
+            <a href="${BASE_URL}/tradedesk/${userId}/expenses" style="display: inline-block; background: #1B2A4A; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">View all expenses</a>
+            <a href="${BASE_URL}/api/tradedesk/${userId}/expenses/export" style="display: inline-block; background: #D4A84B; color: #1B2A4A; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">Download CSV</a>
+          </div>
+        </div>
+        <div style="background: #f9f8f5; padding: 16px 32px; border-radius: 0 0 8px 8px; border: 1px solid #e5e7eb; border-top: none;">
+          <p style="font-size: 11px; color: #5A6A7A; margin: 0;">TradeDesk by Nith Digital · <a href="https://nithdigital.uk/tradedesk" style="color: #D4A84B;">nithdigital.uk/tradedesk</a></p>
+        </div>
+      </div>
+    `,
+  })
+}
+
+async function autoPriceBookFromLineItems(
+  userId: string,
+  supplier: string,
+  merchants: string | null,
+  lineItems: Array<{ description: string; quantity?: number; unit_price?: number; total?: number }>
+) {
+  if (!merchants) return
+  // Only update price book if this supplier matches a known merchant
+  const supplierLower = supplier.toLowerCase()
+  const isKnownMerchant = merchants.split(/[,;]+/).some((m) =>
+    supplierLower.includes(m.trim().toLowerCase()) || m.trim().toLowerCase().includes(supplierLower)
+  )
+  if (!isKnownMerchant) return
+
+  for (const item of lineItems) {
+    if (!item.description || (!item.unit_price && !item.total)) continue
+    const price = item.unit_price ?? (item.total && item.quantity ? item.total / item.quantity : item.total)
+    if (!price) continue
+
+    const product = await normalisedProductName(item.description)
+    const { data: existing } = await sb
+      .from('tradedesk_price_book')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('product', product)
+      .maybeSingle()
+
+    if (existing) {
+      await sb.from('tradedesk_price_book')
+        .update({ price, merchant: supplier, product_raw: item.description, recorded_at: new Date().toISOString() })
+        .eq('id', existing.id)
+    } else {
+      await sb.from('tradedesk_price_book')
+        .insert({ user_id: userId, product, product_raw: item.description, price, merchant: supplier })
+    }
+  }
+}
+
 async function handleExpenseFromBuffer(
   userId: string,
   phone: string,
@@ -633,7 +742,8 @@ async function handleExpenseFromBuffer(
   contentType: string,
   messageBody: string,
   userEmail: string | null,
-  userName: string | null
+  userName: string | null,
+  merchants: string | null = null
 ) {
   const ext = getExt(contentType)
   const path = `${userId}/expenses/${Date.now()}-${shortId()}.${ext}`
@@ -644,6 +754,9 @@ async function handleExpenseFromBuffer(
   let amount: number | null = null
   let vat: number | null = null
   let category = 'Other'
+  let invoiceNumber: string | null = null
+  let lineItems: Array<{ description: string; quantity?: number; unit_price?: number; total?: number }> | null = null
+  let confidence: 'high' | 'low' = 'high'
   let rawText = ''
 
   try {
@@ -652,7 +765,7 @@ async function handleExpenseFromBuffer(
 
     const msg = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 400,
+      max_tokens: 800,
       messages: [
         {
           role: 'user',
@@ -663,15 +776,20 @@ async function handleExpenseFromBuffer(
             },
             {
               type: 'text',
-              text: `This is an invoice or receipt from a UK tradesperson.
+              text: `This is an invoice, receipt, or delivery note from a UK tradesperson.
 
-Extract the following and respond in this exact JSON format:
+Extract ALL of the following and respond in this exact JSON format:
 {
   "supplier": "company name or person who issued this",
+  "invoice_number": "invoice or receipt number, or null if not found",
   "date": "YYYY-MM-DD or null if not found",
-  "amount": numeric total amount in GBP (excluding VAT) or null,
-  "vat": numeric VAT amount in GBP or null,
-  "category": one of: Materials, Tools, Fuel, Insurance, Subcontractor, Office, Vehicle, Other
+  "amount": numeric total amount in GBP excluding VAT, or null,
+  "vat": numeric VAT amount in GBP, or null,
+  "category": one of: Materials, Tools, Fuel, Insurance, Subcontractor, Office, Vehicle, Other,
+  "line_items": [
+    { "description": "item name", "quantity": numeric or null, "unit_price": numeric or null, "total": numeric or null }
+  ],
+  "confidence": "high" if you can clearly read the key fields, "low" if the image is unclear, partial, or key fields are missing
 }
 
 Only return the JSON, nothing else.`,
@@ -684,15 +802,38 @@ Only return the JSON, nothing else.`,
     rawText = (msg.content[0] as any).text.trim()
     const parsed = JSON.parse(rawText)
     supplier = parsed.supplier || supplier
+    invoiceNumber = parsed.invoice_number || null
     date = parsed.date || null
     amount = typeof parsed.amount === 'number' ? parsed.amount : null
     vat = typeof parsed.vat === 'number' ? parsed.vat : null
     category = parsed.category || category
+    lineItems = Array.isArray(parsed.line_items) && parsed.line_items.length > 0 ? parsed.line_items : null
+    confidence = parsed.confidence === 'low' ? 'low' : 'high'
   } catch {
-    // fall through to defaults
+    confidence = 'low'
   }
 
-  await sb.from('tradedesk_expenses').insert({
+  // ── Duplicate detection ──────────────────────────────────────────────────
+  if (supplier !== 'Unknown' && date && amount !== null) {
+    const { data: duplicate } = await sb
+      .from('tradedesk_expenses')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('supplier', supplier)
+      .eq('date', date)
+      .eq('amount', amount)
+      .maybeSingle()
+
+    if (duplicate) {
+      const reply = `⚠️ Looks like I've already logged this one — *${supplier}* £${amount.toFixed(2)} on ${date}. Send it again if it's a different invoice.`
+      await sendWhatsApp(phone, reply)
+      await logMessage(userId, 'out', reply, null, 'expense')
+      return
+    }
+  }
+
+  // ── Insert expense ───────────────────────────────────────────────────────
+  const { data: expenseRow } = await sb.from('tradedesk_expenses').insert({
     user_id: userId,
     image_url: imageUrl,
     supplier,
@@ -701,65 +842,71 @@ Only return the JSON, nothing else.`,
     vat,
     category,
     raw_text: rawText,
-  })
+    invoice_number: invoiceNumber,
+    line_items: lineItems,
+    confidence,
+  }).select('id').single()
 
+  const expenseId = expenseRow?.id || null
   const amountStr = amount !== null ? `£${amount.toFixed(2)}` : '(amount not found)'
   const vatStr = vat !== null ? ` + £${vat.toFixed(2)} VAT` : ''
   const dateStr = date || 'date not found'
 
-  const reply = `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}`
+  // ── Auto price book from line items ─────────────────────────────────────
+  if (lineItems && lineItems.length > 0) {
+    autoPriceBookFromLineItems(userId, supplier, merchants, lineItems).catch(() => {})
+  }
+
+  // ── Low confidence: ask for missing fields ───────────────────────────────
+  if (confidence === 'low') {
+    const missing: string[] = []
+    if (amount === null) missing.push('total amount')
+    if (!date) missing.push('date')
+    if (supplier === 'Unknown') missing.push('supplier name')
+
+    const lowConfReply = missing.length > 0
+      ? `I logged it but couldn't read the ${missing.join(' and ')} clearly — can you type ${missing.length > 1 ? 'them' : 'it'}? I'll update the record.\n\n*(${supplier !== 'Unknown' ? supplier : 'Unknown supplier'} — ${dateStr})*`
+      : `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}${invoiceNumber ? `\nInvoice: ${invoiceNumber}` : ''}\n\n_(Image was a bit unclear — double check this looks right)_`
+
+    await sendWhatsApp(phone, lowConfReply)
+    await logMessage(userId, 'out', lowConfReply, null, 'expense')
+
+    // Ask for job tag after low confidence notice
+    if (expenseId) {
+      await sb.from('tradedesk_users').update({
+        pending_action: 'awaiting_job_tag',
+        pending_expense_id: expenseId,
+      }).eq('id', userId)
+    }
+    return
+  }
+
+  // ── Normal confirmation ──────────────────────────────────────────────────
+  const lineItemSummary = lineItems && lineItems.length > 0
+    ? `\n_${lineItems.length} line item${lineItems.length > 1 ? 's' : ''} logged_`
+    : ''
+
+  const reply = `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}${invoiceNumber ? `\nInvoice: ${invoiceNumber}` : ''}${lineItemSummary}`
   await sendWhatsApp(phone, reply)
   await logMessage(userId, 'out', reply, null, 'expense')
 
-  // Send email receipt if we have an address
+  // Ask for job tag
+  if (expenseId) {
+    const jobPrompt = `Which job is this for? Reply with a job name (e.g. "Smith bathroom") or *skip*.`
+    await sendWhatsApp(phone, jobPrompt)
+    await logMessage(userId, 'out', jobPrompt, null, 'expense')
+    await sb.from('tradedesk_users').update({
+      pending_action: 'awaiting_job_tag',
+      pending_expense_id: expenseId,
+    }).eq('id', userId)
+  }
+
+  // Send email receipt
   if (userEmail) {
     try {
-      const greeting = userName ? `Hi ${userName.split(' ')[0]},` : 'Hi,'
-      await resend.emails.send({
-        from: 'TradeDesk <hello@mail.nithdigital.uk>',
-        to: userEmail,
-        subject: `Expense logged — ${supplier} ${amountStr} | ${dateStr}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; color: #1B2A4A;">
-            <div style="background: #1B2A4A; padding: 24px 32px; border-radius: 8px 8px 0 0;">
-              <h1 style="color: #D4A84B; font-size: 20px; margin: 0;">TradeDesk</h1>
-              <p style="color: rgba(245,240,230,0.6); font-size: 13px; margin: 4px 0 0;">by Nith Digital</p>
-            </div>
-            <div style="background: #fff; padding: 28px 32px; border: 1px solid #e5e7eb; border-top: none;">
-              <p style="margin: 0 0 20px;">${greeting}</p>
-              <p style="margin: 0 0 20px;">I've logged the following expense from your WhatsApp photo:</p>
-              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                <tr style="border-bottom: 1px solid #f0f0f0;">
-                  <td style="padding: 10px 0; color: #5A6A7A; width: 120px;">Supplier</td>
-                  <td style="padding: 10px 0; font-weight: 600;">${supplier}</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f0f0f0;">
-                  <td style="padding: 10px 0; color: #5A6A7A;">Date</td>
-                  <td style="padding: 10px 0;">${dateStr}</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #f0f0f0;">
-                  <td style="padding: 10px 0; color: #5A6A7A;">Amount</td>
-                  <td style="padding: 10px 0; font-weight: 600;">${amountStr}</td>
-                </tr>
-                ${vat !== null ? `<tr style="border-bottom: 1px solid #f0f0f0;"><td style="padding: 10px 0; color: #5A6A7A;">VAT</td><td style="padding: 10px 0;">£${vat.toFixed(2)}</td></tr>` : ''}
-                <tr>
-                  <td style="padding: 10px 0; color: #5A6A7A;">Category</td>
-                  <td style="padding: 10px 0;">${category}</td>
-                </tr>
-              </table>
-              <div style="margin-top: 28px; display: flex; gap: 12px;">
-                <a href="${BASE_URL}/tradedesk/${userId}/expenses" style="display: inline-block; background: #1B2A4A; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">View all expenses</a>
-                <a href="${BASE_URL}/api/tradedesk/${userId}/expenses/export" style="display: inline-block; background: #D4A84B; color: #1B2A4A; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">Download CSV</a>
-              </div>
-            </div>
-            <div style="background: #f9f8f5; padding: 16px 32px; border-radius: 0 0 8px 8px; border: 1px solid #e5e7eb; border-top: none;">
-              <p style="font-size: 11px; color: #5A6A7A; margin: 0;">TradeDesk by Nith Digital · <a href="https://nithdigital.uk/tradedesk" style="color: #D4A84B;">nithdigital.uk/tradedesk</a></p>
-            </div>
-          </div>
-        `,
-      })
+      await sendExpenseEmail(userId, userEmail, userName, supplier, amountStr, dateStr, vat, category, invoiceNumber, null, lineItems)
     } catch {
-      // Email failure shouldn't break the flow
+      // Email failure non-fatal
     }
   }
 }
@@ -776,7 +923,7 @@ async function processMessage(
   // Lookup or create user + profile (for merchants/discount)
   let { data: user } = await sb
     .from('tradedesk_users')
-    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan, pending_onboarding_data, merchants')
+    .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan, pending_onboarding_data, merchants, pending_expense_id')
     .eq('phone_number', phone)
     .single()
 
@@ -905,7 +1052,7 @@ async function processMessage(
         await handlePortfolioFromBuffer(userId, phone, buffer, contentType, null, user.stripe_plan === 'pro')
       } else if (choice.includes('2') || choice.includes('invoice') || choice.includes('receipt') || choice.includes('expense')) {
         const { buffer, contentType } = await downloadTwilioMedia(storedMediaUrl)
-        await handleExpenseFromBuffer(userId, phone, buffer, contentType, body, user.email, user.name || user.business_name)
+        await handleExpenseFromBuffer(userId, phone, buffer, contentType, body, user.email, user.name || user.business_name, merchants)
       } else {
         const reply = `No problem — just reply *1* for portfolio or *2* for invoice/expense and I'll sort it.`
         await sendWhatsApp(phone, reply)
@@ -922,6 +1069,57 @@ async function processMessage(
         status: 200,
         headers: { 'Content-Type': 'text/xml' },
       })
+    }
+
+    // ── State: awaiting job tag ───────────────────────────────────────────
+    if (user.pending_action === 'awaiting_job_tag' && user.pending_expense_id) {
+      const expenseId = user.pending_expense_id
+      const skip = body.trim().toLowerCase() === 'skip'
+
+      await sb.from('tradedesk_users').update({
+        pending_action: null,
+        pending_expense_id: null,
+      }).eq('id', userId)
+
+      if (!skip) {
+        const jobTag = body.trim()
+        await sb.from('tradedesk_expenses').update({ job_tag: jobTag }).eq('id', expenseId)
+
+        // Now send the email with job tag included
+        const { data: exp } = await sb
+          .from('tradedesk_expenses')
+          .select('supplier, amount, vat, date, category, invoice_number, line_items')
+          .eq('id', expenseId)
+          .single()
+
+        if (exp && user.email) {
+          const amountStr = exp.amount !== null ? `£${Number(exp.amount).toFixed(2)}` : '(amount not found)'
+          const dateStr = exp.date || 'date not found'
+          try {
+            await sendExpenseEmail(userId, user.email, user.name, exp.supplier, amountStr, dateStr, exp.vat, exp.category, exp.invoice_number, jobTag, exp.line_items)
+          } catch { /* non-fatal */ }
+        }
+
+        const reply = `Got it — tagged to *${jobTag}*. 👍`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, 'expense')
+      } else {
+        // Skipped — send email without job tag
+        const { data: exp } = await sb
+          .from('tradedesk_expenses')
+          .select('supplier, amount, vat, date, category, invoice_number, line_items')
+          .eq('id', expenseId)
+          .single()
+
+        if (exp && user.email) {
+          const amountStr = exp.amount !== null ? `£${Number(exp.amount).toFixed(2)}` : '(amount not found)'
+          const dateStr = exp.date || 'date not found'
+          try {
+            await sendExpenseEmail(userId, user.email, user.name, exp.supplier, amountStr, dateStr, exp.vat, exp.category, exp.invoice_number, null, exp.line_items)
+          } catch { /* non-fatal */ }
+        }
+      }
+      return
     }
 
     // ── Onboarding states (Pro users) ─────────────────────────────────────
@@ -1138,7 +1336,7 @@ async function processMessage(
         const confirmMsg = `That looks like an invoice or receipt — logging it as an expense now...`
         await sendWhatsApp(phone, confirmMsg)
         await logMessage(userId, 'out', confirmMsg, null, null)
-        await handleExpenseFromBuffer(userId, phone, buffer, contentType, body, user.email, user.name || user.business_name)
+        await handleExpenseFromBuffer(userId, phone, buffer, contentType, body, user.email, user.name || user.business_name, merchants)
       } else if (detected === 'portfolio') {
         // AI confident it's a job photo — confirm and process
         const confirmMsg = `Nice work! Adding that to your portfolio...`
