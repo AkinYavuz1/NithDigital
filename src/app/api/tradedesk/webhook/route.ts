@@ -937,7 +937,7 @@ async function processMessage(
     const trimmed = body.trim().toUpperCase()
     const { data: codeRow } = await sb
       .from('tradedesk_access_codes')
-      .select('id, code, expires_at, used_by')
+      .select('id, code, expires_at, used_by, notes')
       .eq('code', trimmed)
       .single()
 
@@ -964,7 +964,7 @@ async function processMessage(
     const { data: newUser } = await sb
       .from('tradedesk_users')
       .insert({ phone_number: phone, pending_action: 'awaiting_email' })
-      .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type')
+      .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan, pending_onboarding_data, merchants, pending_expense_id')
       .single()
     user = newUser
 
@@ -1261,10 +1261,10 @@ async function processMessage(
         }
 
         // Complete onboarding
-        const finalData = { ...od, logo_url }
-        const businessName = finalData.business_name || 'My Business'
-        const trade = finalData.trade || 'Tradesperson'
-        const areas = finalData.areas || 'Local area'
+        const finalData = { ...od, logo_url } as Record<string, unknown> & { logo_url: string | null }
+        const businessName = (finalData.business_name as string) || 'My Business'
+        const trade = (finalData.trade as string) || 'Tradesperson'
+        const areas = (finalData.areas as string) || 'Local area'
 
         const [bio, slug] = await Promise.all([
           generateBio(businessName, trade, areas),
