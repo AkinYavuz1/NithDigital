@@ -809,6 +809,8 @@ Only return the JSON, nothing else.`,
     category = parsed.category || category
     lineItems = Array.isArray(parsed.line_items) && parsed.line_items.length > 0 ? parsed.line_items : null
     confidence = parsed.confidence === 'low' ? 'low' : 'high'
+    // Force low confidence if critical fields are missing regardless of what the model says
+    if (supplier === 'Unknown' || amount === null || !date) confidence = 'low'
   } catch {
     confidence = 'low'
   }
@@ -864,9 +866,12 @@ Only return the JSON, nothing else.`,
     if (!date) missing.push('date')
     if (supplier === 'Unknown') missing.push('supplier name')
 
-    const lowConfReply = missing.length > 0
-      ? `I logged it but couldn't read the ${missing.join(' and ')} clearly — can you type ${missing.length > 1 ? 'them' : 'it'}? I'll update the record.\n\n*(${supplier !== 'Unknown' ? supplier : 'Unknown supplier'} — ${dateStr})*`
-      : `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}${invoiceNumber ? `\nInvoice: ${invoiceNumber}` : ''}\n\n_(Image was a bit unclear — double check this looks right)_`
+    const allMissing = supplier === 'Unknown' && amount === null && !date
+    const lowConfReply = allMissing
+      ? `I couldn't read that image clearly — the supplier, amount, and date weren't legible. Try sending a clearer photo, or type the details and I'll log it manually.\n\nFormat: _Screwfix £84.17 13 Apr Materials_`
+      : missing.length > 0
+        ? `I logged it but couldn't read the ${missing.join(' and ')} clearly — can you type ${missing.length > 1 ? 'them' : 'it'}? I'll update the record.\n\n*(${supplier !== 'Unknown' ? supplier : 'Unknown supplier'} — ${dateStr})*`
+        : `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}${invoiceNumber ? `\nInvoice: ${invoiceNumber}` : ''}\n\n_(Image was a bit unclear — double check this looks right)_`
 
     await sendWhatsApp(phone, lowConfReply)
     await logMessage(userId, 'out', lowConfReply, null, 'expense')
