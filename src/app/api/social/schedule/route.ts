@@ -7,11 +7,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { platform, content, image_url, scheduled_at } = body
+  const { client_id, platform, content, image_url, scheduled_at } = body
 
-  if (!platform || !content || !scheduled_at) {
+  if (!client_id || !platform || !content || !scheduled_at) {
     return NextResponse.json(
-      { error: 'Missing required fields: platform, content, scheduled_at' },
+      { error: 'Missing required fields: client_id, platform, content, scheduled_at' },
       { status: 400 }
     )
   }
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
   const { data, error } = await supabase
     .from('social_posts')
     .insert({
+      client_id,
       platform,
       content,
       image_url: image_url ?? null,

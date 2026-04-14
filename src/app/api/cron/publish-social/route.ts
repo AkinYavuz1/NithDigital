@@ -2,13 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
 // ---------------------------------------------------------------------------
-// Required environment variables when a real client connects:
-//
-//   FB_PAGE_ACCESS_TOKEN          — long-lived Page access token (Meta Business
-//                                   Suite → System Users, or user token exchange)
-//   FB_PAGE_ID                    — numeric Facebook Page ID
-//   INSTAGRAM_BUSINESS_ACCOUNT_ID — Instagram Business Account ID linked to the Page
-//
+// Credentials are stored per-client in the social_clients table.
+// Cron picks up all due posts across all active clients in one pass.
 // Graph API base: https://graph.facebook.com/v19.0
 // ---------------------------------------------------------------------------
 
@@ -19,29 +14,29 @@ function isAuthorized(req: NextRequest): boolean {
   return req.headers.get('Authorization') === `Bearer ${CRON_SECRET}`
 }
 
+type ClientCredentials = {
+  fb_page_id: string
+  fb_page_access_token: string
+  instagram_business_account_id: string | null
+  active: boolean
+}
+
 type SocialPost = {
   id: string
   platform: 'facebook' | 'instagram' | 'both'
   content: string
   image_url: string | null
+  social_clients: ClientCredentials
 }
 
-async function publishToFacebook(post: SocialPost): Promise<string> {
-  const pageId = process.env.FB_PAGE_ID
-  const pageToken = process.env.FB_PAGE_ACCESS_TOKEN
-
-  if (!pageId || !pageToken) {
-    console.log('[cron/publish-social] FB tokens not set — mock publish for post', post.id)
-    return `mock-fb-${post.id}`
-  }
-
+async function publishToFacebook(post: SocialPost, creds: ClientCredentials): Promise<string> {
   const body: Record<string, string> = {
     message: post.content,
-    access_token: pageToken,
+    access_token: creds.fb_page_access_token,
   }
   if (post.image_url) body.link = post.image_url
 
-  const res = await fetch(`${GRAPH_API}/${pageId}/feed`, {
+  const res = await fetch(`${GRAPH_API}/${creds.fb_page_id}/feed`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -53,23 +48,18 @@ async function publishToFacebook(post: SocialPost): Promise<string> {
   return data.id as string
 }
 
-async function publishToInstagram(post: SocialPost): Promise<string> {
-  const igAccountId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID
-  const pageToken = process.env.FB_PAGE_ACCESS_TOKEN
-
-  if (!igAccountId || !pageToken) {
-    console.log('[cron/publish-social] Instagram tokens not set — mock publish for post', post.id)
-    return `mock-ig-${post.id}`
+async function publishToInstagram(post: SocialPost, creds: ClientCredentials): Promise<string> {
+  if (!creds.instagram_business_account_id) {
+    throw new Error('No Instagram Business Account ID configured for this client')
   }
 
-  // Step 1: create media container
-  const containerRes = await fetch(`${GRAPH_API}/${igAccountId}/media`, {
+  const containerRes = await fetch(`${GRAPH_API}/${creds.instagram_business_account_id}/media`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       caption: post.content,
       image_url: post.image_url,
-      access_token: pageToken,
+      access_token: creds.fb_page_access_token,
     }),
   })
   const containerData = await containerRes.json()
@@ -77,13 +67,12 @@ async function publishToInstagram(post: SocialPost): Promise<string> {
     throw new Error(containerData.error?.message ?? `Instagram container error ${containerRes.status}`)
   }
 
-  // Step 2: publish the container
-  const publishRes = await fetch(`${GRAPH_API}/${igAccountId}/media_publish`, {
+  const publishRes = await fetch(`${GRAPH_API}/${creds.instagram_business_account_id}/media_publish`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       creation_id: containerData.id,
-      access_token: pageToken,
+      access_token: creds.fb_page_access_token,
     }),
   })
   const publishData = await publishRes.json()
@@ -101,9 +90,10 @@ async function runPublish() {
 
   const now = new Date().toISOString()
 
+  // Fetch all due posts with their client credentials in one query
   const { data: duePosts, error } = await supabase
     .from('social_posts')
-    .select('id, platform, content, image_url')
+    .select('id, platform, content, image_url, social_clients(fb_page_id, fb_page_access_token, instagram_business_account_id, active)')
     .eq('status', 'scheduled')
     .lte('scheduled_at', now)
     .order('scheduled_at', { ascending: true })
@@ -113,15 +103,26 @@ async function runPublish() {
 
   const results = []
   for (const post of duePosts as SocialPost[]) {
+    const creds = post.social_clients
+
+    if (!creds?.active) {
+      await supabase
+        .from('social_posts')
+        .update({ status: 'failed', error_message: 'Client inactive or missing credentials' })
+        .eq('id', post.id)
+      results.push({ id: post.id, status: 'failed', error: 'Client inactive' })
+      continue
+    }
+
     const errors: string[] = []
     const ids: string[] = []
 
     if (post.platform === 'facebook' || post.platform === 'both') {
-      try { ids.push(await publishToFacebook(post)) }
+      try { ids.push(await publishToFacebook(post, creds)) }
       catch (err) { errors.push(`Facebook: ${err instanceof Error ? err.message : String(err)}`) }
     }
     if (post.platform === 'instagram' || post.platform === 'both') {
-      try { ids.push(await publishToInstagram(post)) }
+      try { ids.push(await publishToInstagram(post, creds)) }
       catch (err) { errors.push(`Instagram: ${err instanceof Error ? err.message : String(err)}`) }
     }
 
@@ -130,8 +131,8 @@ async function runPublish() {
     const metaPostId = ids.join(',') || null
     const errorMessage = errors.length > 0 ? errors.join(' | ') : null
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase.from('social_posts') as any)
+    await supabase
+      .from('social_posts')
       .update({
         status,
         published_at: succeeded ? new Date().toISOString() : null,

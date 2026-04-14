@@ -2,53 +2,31 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
 // ---------------------------------------------------------------------------
-// Required environment variables when a real client connects:
-//
-//   FB_PAGE_ACCESS_TOKEN          — long-lived Page access token obtained via
-//                                   Meta Business Suite → System Users, or by
-//                                   exchanging a user token for a page token.
-//                                   Refresh annually (or use a never-expiring
-//                                   system user token).
-//
-//   FB_PAGE_ID                    — the numeric Page ID, e.g. "123456789012345"
-//
-//   INSTAGRAM_BUSINESS_ACCOUNT_ID — the Instagram Business Account ID linked
-//                                   to the Facebook Page (find it in
-//                                   GET /{page-id}?fields=instagram_business_account)
-//
+// Credentials are stored per-client in the social_clients table, not env vars.
 // Graph API base: https://graph.facebook.com/v19.0
-// Facebook post endpoint:   POST /{FB_PAGE_ID}/feed
-// Instagram post endpoints: POST /{INSTAGRAM_BUSINESS_ACCOUNT_ID}/media  (create container)
-//                           POST /{INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish (publish)
+// Facebook:  POST /{fb_page_id}/feed
+// Instagram: POST /{instagram_business_account_id}/media  → media_publish
 // ---------------------------------------------------------------------------
 
 const GRAPH_API = 'https://graph.facebook.com/v19.0'
 
-async function publishToFacebook(post: {
-  id: string
-  content: string
-  image_url: string | null
-}): Promise<string> {
-  const pageId = process.env.FB_PAGE_ID
-  const pageToken = process.env.FB_PAGE_ACCESS_TOKEN
+type ClientCredentials = {
+  fb_page_id: string
+  fb_page_access_token: string
+  instagram_business_account_id: string | null
+}
 
-  // Placeholder: tokens not yet configured for this client
-  if (!pageId || !pageToken) {
-    console.log('[social/publish] FB_PAGE_ID / FB_PAGE_ACCESS_TOKEN not set — mock publish', {
-      postId: post.id,
-      endpoint: `${GRAPH_API}/${pageId ?? '<FB_PAGE_ID>'}/feed`,
-      payload: { message: post.content, ...(post.image_url ? { link: post.image_url } : {}) },
-    })
-    return `mock-fb-${Date.now()}`
-  }
-
+async function publishToFacebook(
+  post: { id: string; content: string; image_url: string | null },
+  creds: ClientCredentials
+): Promise<string> {
   const body: Record<string, string> = {
     message: post.content,
-    access_token: pageToken,
+    access_token: creds.fb_page_access_token,
   }
   if (post.image_url) body.link = post.image_url
 
-  const res = await fetch(`${GRAPH_API}/${pageId}/feed`, {
+  const res = await fetch(`${GRAPH_API}/${creds.fb_page_id}/feed`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -60,33 +38,22 @@ async function publishToFacebook(post: {
   return data.id as string
 }
 
-async function publishToInstagram(post: {
-  id: string
-  content: string
-  image_url: string | null
-}): Promise<string> {
-  const igAccountId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID
-  const pageToken = process.env.FB_PAGE_ACCESS_TOKEN
-
-  // Placeholder: tokens not yet configured for this client
-  if (!igAccountId || !pageToken) {
-    console.log('[social/publish] INSTAGRAM_BUSINESS_ACCOUNT_ID / FB_PAGE_ACCESS_TOKEN not set — mock publish', {
-      postId: post.id,
-      step1: `POST ${GRAPH_API}/${igAccountId ?? '<INSTAGRAM_BUSINESS_ACCOUNT_ID>'}/media`,
-      step2: `POST ${GRAPH_API}/${igAccountId ?? '<INSTAGRAM_BUSINESS_ACCOUNT_ID>'}/media_publish`,
-      payload: { caption: post.content, image_url: post.image_url ?? '<required>' },
-    })
-    return `mock-ig-${Date.now()}`
+async function publishToInstagram(
+  post: { id: string; content: string; image_url: string | null },
+  creds: ClientCredentials
+): Promise<string> {
+  if (!creds.instagram_business_account_id) {
+    throw new Error('No Instagram Business Account ID configured for this client')
   }
 
-  // Step 1: create media container (image required for Instagram)
-  const containerRes = await fetch(`${GRAPH_API}/${igAccountId}/media`, {
+  // Step 1: create media container (image required)
+  const containerRes = await fetch(`${GRAPH_API}/${creds.instagram_business_account_id}/media`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       caption: post.content,
       image_url: post.image_url,
-      access_token: pageToken,
+      access_token: creds.fb_page_access_token,
     }),
   })
   const containerData = await containerRes.json()
@@ -95,12 +62,12 @@ async function publishToInstagram(post: {
   }
 
   // Step 2: publish the container
-  const publishRes = await fetch(`${GRAPH_API}/${igAccountId}/media_publish`, {
+  const publishRes = await fetch(`${GRAPH_API}/${creds.instagram_business_account_id}/media_publish`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       creation_id: containerData.id,
-      access_token: pageToken,
+      access_token: creds.fb_page_access_token,
     }),
   })
   const publishData = await publishRes.json()
@@ -126,18 +93,23 @@ export async function POST(req: NextRequest) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
 
+  // Fetch post + client credentials in one join
   const { data: post, error: fetchError } = await supabase
     .from('social_posts')
-    .select('*')
+    .select('*, social_clients(fb_page_id, fb_page_access_token, instagram_business_account_id, active)')
     .eq('id', id)
     .single()
 
   if (fetchError || !post) {
     return NextResponse.json({ error: 'Post not found' }, { status: 404 })
   }
-
   if (post.status === 'published') {
     return NextResponse.json({ error: 'Post already published' }, { status: 409 })
+  }
+
+  const creds = post.social_clients as ClientCredentials & { active: boolean }
+  if (!creds?.active) {
+    return NextResponse.json({ error: 'Client is inactive or credentials not found' }, { status: 422 })
   }
 
   const results: Record<string, string> = {}
@@ -145,7 +117,7 @@ export async function POST(req: NextRequest) {
 
   if (post.platform === 'facebook' || post.platform === 'both') {
     try {
-      results.facebook_id = await publishToFacebook(post)
+      results.facebook_id = await publishToFacebook(post, creds)
     } catch (err) {
       errors.push(`Facebook: ${err instanceof Error ? err.message : String(err)}`)
     }
@@ -153,7 +125,7 @@ export async function POST(req: NextRequest) {
 
   if (post.platform === 'instagram' || post.platform === 'both') {
     try {
-      results.instagram_id = await publishToInstagram(post)
+      results.instagram_id = await publishToInstagram(post, creds)
     } catch (err) {
       errors.push(`Instagram: ${err instanceof Error ? err.message : String(err)}`)
     }
