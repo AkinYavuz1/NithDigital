@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     siteName: 'Nith Digital',
     locale: 'en_GB',
     type: 'website',
+    images: [{ url: 'https://nithdigital.uk/dg40-preview.PNG', width: 1200, height: 630, alt: 'Nith Digital — exclusive D&G website offer' }],
   },
 }
 
