@@ -878,10 +878,10 @@ Only return the JSON, nothing else.`,
 
     const allMissing = supplier === 'Unknown' && amount === null && !date
     const lowConfReply = allMissing
-      ? `I couldn't read that image clearly — the supplier, amount, and date weren't legible. Try sending a clearer photo, or type the details and I'll log it manually.\n\nFormat: _Screwfix £84.17 13 Apr Materials_`
+      ? `I couldn't find a supplier, amount, or date on that document. Type the details and I'll log it for you.\n\nFormat: _Screwfix £84.17 13 Apr Materials_`
       : missing.length > 0
-        ? `I logged it but couldn't read the ${missing.join(' and ')} clearly — can you type ${missing.length > 1 ? 'them' : 'it'}? I'll update the record.\n\n*(${supplier !== 'Unknown' ? supplier : 'Unknown supplier'} — ${dateStr})*`
-        : `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}${invoiceNumber ? `\nInvoice: ${invoiceNumber}` : ''}\n\n_(Image was a bit unclear — double check this looks right)_`
+        ? `I logged it but couldn't find the ${missing.join(' or ')} on the document — can you type ${missing.length > 1 ? 'them' : 'it'}?\n\n*(${supplier !== 'Unknown' ? supplier : 'Unknown supplier'} — ${dateStr})*`
+        : `✅ Expense logged!\n\n*${supplier}*\n${amountStr}${vatStr}\n${dateStr}\nCategory: ${category}${invoiceNumber ? `\nInvoice: ${invoiceNumber}` : ''}\n\n_(Some details were unclear — double check this looks right)_`
 
     await sendWhatsApp(phone, lowConfReply)
     await logMessage(userId, 'out', lowConfReply, null, 'expense')
@@ -1088,6 +1088,25 @@ async function processMessage(
 
     // ── State: awaiting job tag ───────────────────────────────────────────
     if (user.pending_action === 'awaiting_job_tag' && user.pending_expense_id) {
+      // If user sent a new image/document instead of a job tag, clear state and fall through to normal media handling
+      if (numMedia > 0 && mediaUrl) {
+        await sb.from('tradedesk_users').update({
+          pending_action: null,
+          pending_expense_id: null,
+        }).eq('id', userId)
+        // Send email for the previous expense without a job tag
+        const { data: prevExp } = await sb
+          .from('tradedesk_expenses')
+          .select('supplier, amount, vat, date, category, invoice_number, line_items')
+          .eq('id', user.pending_expense_id)
+          .single()
+        if (prevExp && user.email) {
+          const amt = prevExp.amount !== null ? `£${Number(prevExp.amount).toFixed(2)}` : '(amount not found)'
+          const dt = prevExp.date || 'date not found'
+          sendExpenseEmail(userId, user.email, user.name, prevExp.supplier, amt, dt, prevExp.vat, prevExp.category, prevExp.invoice_number, null, prevExp.line_items).catch(() => {})
+        }
+        // Fall through to normal media handling below
+      } else {
       const expenseId = user.pending_expense_id
       const skip = body.trim().toLowerCase() === 'skip'
 
@@ -1135,6 +1154,7 @@ async function processMessage(
         }
       }
       return
+      } // end else (text reply, not media)
     }
 
     // ── Onboarding states (Pro users) ─────────────────────────────────────
