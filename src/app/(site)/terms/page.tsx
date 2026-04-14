@@ -20,7 +20,7 @@ const SECTIONS = [
     body: [
       'These terms and conditions govern the provision of web design, web development, digital marketing, and related services by Nith Digital ("we", "us", "our"), a business operated by Akin Yavuz, based in Sanquhar, Dumfries & Galloway, Scotland.',
       'By engaging our services — whether by accepting a proposal, making a payment, or instructing us to begin work — you agree to these terms.',
-      'These terms were last updated on 1 April 2026.',
+      'These terms were last updated on 14 April 2026.',
     ],
   },
   {
@@ -100,13 +100,24 @@ const SECTIONS = [
     ],
   },
   {
-    heading: '12. Governing law',
+    heading: '12. TradeDesk',
+    body: [
+      'TradeDesk is an AI-powered record-keeping and productivity tool for tradespeople. It is provided as a convenience tool only and does not constitute financial, tax, legal, or professional advice.',
+      'Expense data extracted from photographs of invoices or receipts is generated using optical character recognition and artificial intelligence. While we strive for accuracy, we cannot guarantee that extracted figures — including amounts, VAT, dates, supplier names, or expense categories — are correct. You are solely responsible for verifying all data before relying on it for accounting, tax returns, or business decisions.',
+      'Material prices, supplier information, and any other information provided through TradeDesk are for reference only and may be incomplete, outdated, or inaccurate. You should always confirm prices directly with suppliers before quoting customers or placing orders.',
+      'TradeDesk does not replace your accountant, bookkeeper, or any other professional adviser. We strongly recommend that you have all financial records reviewed by a qualified professional before submitting tax returns or making financial decisions based on TradeDesk data.',
+      'We are not liable for any loss, damage, or expense arising from reliance on information provided by TradeDesk, including but not limited to incorrect expense records, inaccurate price information, or miscategorised transactions.',
+      'By using TradeDesk you acknowledge and accept these limitations.',
+    ],
+  },
+  {
+    heading: '13. Governing law',
     body: [
       'These terms are governed by the laws of Scotland. Any disputes will be subject to the exclusive jurisdiction of the Scottish courts.',
     ],
   },
   {
-    heading: '13. Contact',
+    heading: '14. Contact',
     body: [
       'If you have any questions about these terms, please contact us at hello@nithdigital.uk or by post to: Nith Digital, Sanquhar, Dumfries & Galloway, Scotland.',
     ],

@@ -697,7 +697,8 @@ async function sendExpenseEmail(
           </div>
         </div>
         <div style="background: #f9f8f5; padding: 16px 32px; border-radius: 0 0 8px 8px; border: 1px solid #e5e7eb; border-top: none;">
-          <p style="font-size: 11px; color: #5A6A7A; margin: 0;">TradeDesk by Nith Digital · <a href="https://nithdigital.uk/tradedesk" style="color: #D4A84B;">nithdigital.uk/tradedesk</a></p>
+          <p style="font-size: 11px; color: #5A6A7A; margin: 0 0 6px;">TradeDesk by Nith Digital · <a href="https://nithdigital.uk/tradedesk" style="color: #D4A84B;">nithdigital.uk/tradedesk</a></p>
+          <p style="font-size: 10px; color: #9CA3AF; margin: 0;">This is an AI-generated record for reference only — not financial advice. Please verify all figures with your accountant.</p>
         </div>
       </div>
     `,
@@ -973,7 +974,7 @@ async function processMessage(
     // Valid code — create user and mark code as used
     const { data: newUser } = await sb
       .from('tradedesk_users')
-      .insert({ phone_number: phone, pending_action: 'awaiting_email' })
+      .insert({ phone_number: phone, pending_action: 'awaiting_terms' })
       .select('id, email, name, business_name, pending_action, pending_media_url, pending_media_type, stripe_plan, pending_onboarding_data, merchants, pending_expense_id')
       .single()
     user = newUser
@@ -984,7 +985,7 @@ async function processMessage(
       .eq('id', codeRow.id)
 
     const planLabel = codeRow.notes?.includes('pro') ? 'Pro' : 'Starter'
-    const welcome = `Welcome to *TradeDesk ${planLabel}* by Nith Digital! 👋\n\nI'm your trade assistant — ask me anything, send job photos, or photograph invoices and I'll log them for you.\n\nFirst things first — what's your email address? I'll use it to send you a receipt every time I log an expense.`
+    const welcome = `Welcome to *TradeDesk ${planLabel}* by Nith Digital! 👋\n\nI'm your trade assistant — ask me anything, send job photos, or photograph invoices and I'll log them for you.\n\nBefore we get started, please review our terms of use:\n\n📋 nithdigital.uk/terms (section 12)\n\nTradeDesk is a record-keeping tool — not financial or tax advice. Always verify figures with your accountant.\n\nReply *agree* to accept and continue.`
     await sendWhatsApp(phone, welcome)
     await logMessage(user!.id, 'out', welcome, null, null)
     return
@@ -1005,6 +1006,28 @@ async function processMessage(
   await logMessage(userId, 'in', body || null, mediaUrl, null)
 
   try {
+    // ── State: awaiting terms acceptance ──────────────────────────────────
+    if (user.pending_action === 'awaiting_terms') {
+      const agreed = body.trim().toLowerCase()
+      if (agreed === 'agree' || agreed === 'i agree' || agreed === 'yes' || agreed === 'accept') {
+        await sb.from('tradedesk_users').update({
+          pending_action: 'awaiting_email',
+        }).eq('id', userId)
+
+        const reply = `Thanks! You've accepted the terms. ✅\n\nNow — what's your email address? I'll use it to send you a receipt every time I log an expense.`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+      } else {
+        const reply = `Please reply *agree* to accept the terms of use, or read them here first: nithdigital.uk/terms (section 12)`
+        await sendWhatsApp(phone, reply)
+        await logMessage(userId, 'out', reply, null, null)
+      }
+      return new NextResponse('<Response></Response>', {
+        status: 200,
+        headers: { 'Content-Type': 'text/xml' },
+      })
+    }
+
     // ── State: awaiting email ──────────────────────────────────────────────
     if (user.pending_action === 'awaiting_email') {
       if (isValidEmail(body)) {
