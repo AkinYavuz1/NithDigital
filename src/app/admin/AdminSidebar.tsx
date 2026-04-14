@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Inbox, Rocket, Calendar, Ticket,
-  Users, Mail, FileText, Star, LogOut, HelpCircle, Gift, Calculator, FileSignature, Layout, BarChart2, Target, MapPin, Megaphone, Phone, Menu, X, FolderKanban, Activity, Bell, Search, PoundSterling, MessageSquare, Mic, BookOpen,
+  Users, Mail, FileText, Star, LogOut, HelpCircle, Gift, Calculator, FileSignature, Layout, BarChart2, Target, MapPin, Megaphone, Phone, Menu, X, FolderKanban, Activity, Bell, Search, PoundSterling, MessageSquare, Mic, BookOpen, AlertTriangle,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
@@ -33,6 +33,7 @@ const NAV_ITEMS = [
   { href: '/admin/audits', icon: BarChart2, label: 'Site Audits' },
   { href: '/admin/leads', icon: Target, label: 'Lead Generator' },
   { href: '/admin/prospects', icon: MapPin, label: 'Email List' },
+  { href: '/admin/broken-websites', icon: AlertTriangle, label: 'Broken Websites' },
   { href: '/admin/calls', icon: Phone, label: 'Call List' },
   { href: '/admin/recordings', icon: Mic, label: 'Call Recordings' },
   { href: '/admin/followup-queue', icon: Bell, label: 'Follow-Up Queue' },
