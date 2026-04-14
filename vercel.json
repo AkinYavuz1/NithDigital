@@ -19,10 +19,6 @@
     {
       "path": "/api/cron/sync-starling",
       "schedule": "0 7 * * *"
-    },
-    {
-      "path": "/api/cron/publish-social",
-      "schedule": "*/15 * * * *"
     }
   ]
 }
