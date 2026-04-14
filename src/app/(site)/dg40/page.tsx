@@ -5,6 +5,14 @@ import LaunchpadFAQ from '../launchpad/LaunchpadFAQ'
 export const metadata: Metadata = {
   title: 'Exclusive D&G Offer — Nith Digital',
   robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Half-price website for D&G businesses — £250 + £20/month',
+    description: 'Custom-built website for £250 (normally £500), hosting and support from £20/month. Exclusive offer for businesses in Dumfries & Galloway.',
+    url: 'https://nithdigital.uk/dg40',
+    siteName: 'Nith Digital',
+    locale: 'en_GB',
+    type: 'website',
+  },
 }
 
 const BENEFITS = [
