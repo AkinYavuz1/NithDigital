@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { AlertTriangle, RefreshCw, ChevronDown, ChevronUp, Phone, CheckCircle, ExternalLink } from 'lucide-react'
+import { AlertTriangle, RefreshCw, ChevronDown, ChevronUp, Phone, CheckCircle, XCircle, ExternalLink } from 'lucide-react'
 
 interface Prospect {
   id: string
@@ -40,6 +40,7 @@ const STATUS_BADGE: Record<string, { bg: string; color: string; label: string }>
   interested: { bg: 'rgba(21,128,61,0.1)', color: '#15803d', label: 'Interested' },
   won: { bg: 'rgba(21,128,61,0.15)', color: '#15803d', label: 'Won' },
   lost: { bg: 'rgba(220,38,38,0.1)', color: '#dc2626', label: 'Lost' },
+  dead: { bg: 'rgba(107,114,128,0.12)', color: '#6b7280', label: 'Dead Lead' },
 }
 
 const SECTORS = [
@@ -63,7 +64,7 @@ export default function BrokenWebsitesClient() {
   const [sector, setSector] = useState('all')
   const [sort, setSort] = useState<'score' | 'value'>('score')
   const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'contacted'>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'contacted' | 'dead'>('all')
   const [expanded, setExpanded] = useState<string | null>(null)
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
   const [actioning, setActioning] = useState<string | null>(null)
@@ -103,6 +104,25 @@ export default function BrokenWebsitesClient() {
     }
   }
 
+  const markDead = async (id: string) => {
+    setActioning(id)
+    const res = await fetch('/api/admin/broken-websites', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'mark_dead', id }),
+    })
+    const data = await res.json()
+    setActioning(null)
+    if (data.ok) {
+      setProspects(prev => prev.map(p =>
+        p.id === id ? { ...p, pipeline_status: 'dead' } : p
+      ))
+      showToast('Marked as dead lead')
+    } else {
+      showToast('Failed to update', false)
+    }
+  }
+
   const q = search.toLowerCase()
   const filtered = prospects
     .filter(p => statusFilter === 'all' || p.pipeline_status === statusFilter)
@@ -115,6 +135,7 @@ export default function BrokenWebsitesClient() {
 
   const countNew = prospects.filter(p => p.pipeline_status === 'new').length
   const countContacted = prospects.filter(p => p.pipeline_status === 'contacted').length
+  const countDead = prospects.filter(p => p.pipeline_status === 'dead').length
 
   return (
     <div style={{ padding: 28, maxWidth: 1100, fontFamily: 'var(--font-sans, system-ui)' }}>
@@ -127,7 +148,7 @@ export default function BrokenWebsitesClient() {
             Broken Websites
           </h1>
           <p style={{ fontSize: 13, color: '#5A6A7A', margin: '4px 0 0' }}>
-            {loading ? 'Loading...' : `${prospects.length} leads with broken websites — ${countNew} new · ${countContacted} contacted`}
+            {loading ? 'Loading...' : `${prospects.length} leads with broken websites — ${countNew} new · ${countContacted} contacted · ${countDead} dead`}
           </p>
         </div>
         <button onClick={fetchProspects} style={btn('ghost')}><RefreshCw size={14} /></button>
@@ -139,6 +160,7 @@ export default function BrokenWebsitesClient() {
           { key: 'all' as const, label: `All (${prospects.length})` },
           { key: 'new' as const, label: `New (${countNew})` },
           { key: 'contacted' as const, label: `Contacted (${countContacted})` },
+          { key: 'dead' as const, label: `Dead (${countDead})` },
         ]).map(f => (
           <button key={f.key} onClick={() => setStatusFilter(f.key)} style={{
             padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 600,
@@ -190,11 +212,13 @@ export default function BrokenWebsitesClient() {
             const isExpanded = expanded === p.id
             const badge = STATUS_BADGE[p.pipeline_status] || STATUS_BADGE.new
             const isContacted = p.pipeline_status === 'contacted' || p.pipeline_status === 'interested' || p.pipeline_status === 'won'
+            const isDead = p.pipeline_status === 'dead'
 
             return (
               <div key={p.id} style={{
-                background: '#fff',
-                border: `1px solid ${isContacted ? 'rgba(21,128,61,0.2)' : 'rgba(27,42,74,0.1)'}`,
+                background: isDead ? '#fafafa' : '#fff',
+                border: `1px solid ${isDead ? 'rgba(107,114,128,0.2)' : isContacted ? 'rgba(21,128,61,0.2)' : 'rgba(27,42,74,0.1)'}`,
+                opacity: isDead ? 0.7 : 1,
                 borderRadius: 10, overflow: 'hidden',
               }}>
                 {/* Row */}
@@ -270,6 +294,25 @@ export default function BrokenWebsitesClient() {
                   >
                     <CheckCircle size={13} />
                     {actioning === p.id ? 'Saving...' : 'Contacted by phone'}
+                  </button>
+
+                  {/* Dead lead button */}
+                  <button
+                    onClick={() => markDead(p.id)}
+                    disabled={actioning === p.id || p.pipeline_status === 'dead'}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 6,
+                      padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+                      cursor: actioning === p.id || p.pipeline_status === 'dead' ? 'default' : 'pointer',
+                      border: '1px solid rgba(107,114,128,0.3)',
+                      background: p.pipeline_status === 'dead' ? 'rgba(107,114,128,0.12)' : 'transparent',
+                      color: '#6b7280',
+                      opacity: actioning === p.id ? 0.5 : p.pipeline_status === 'dead' ? 0.6 : 1,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <XCircle size={13} />
+                    {p.pipeline_status === 'dead' ? 'Dead' : 'Dead lead'}
                   </button>
 
                   {/* Expand */}
