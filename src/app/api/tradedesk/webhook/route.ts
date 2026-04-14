@@ -578,7 +578,8 @@ Respond in this exact JSON format:
     })
 
     const text = (msg.content[0] as any).text.trim()
-    const parsed = JSON.parse(text)
+    const jsonText = text.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim()
+    const parsed = JSON.parse(jsonText)
     aiCaption = parsed.caption || aiCaption
     socialPost = parsed.social_post || socialPost
   } catch {
@@ -807,7 +808,9 @@ Only return the JSON, nothing else.`,
     })
 
     rawText = (msg.content[0] as any).text.trim()
-    const parsed = JSON.parse(rawText)
+    // Strip markdown fences (```json ... ```) that models often wrap around JSON
+    const jsonStr = rawText.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim()
+    const parsed = JSON.parse(jsonStr)
     supplier = parsed.supplier || supplier
     invoiceNumber = parsed.invoice_number || null
     date = parsed.date || null
