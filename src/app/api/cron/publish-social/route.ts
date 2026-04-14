@@ -102,7 +102,7 @@ async function runPublish() {
   if (!duePosts || duePosts.length === 0) return { processed: 0, results: [] }
 
   const results = []
-  for (const post of duePosts as SocialPost[]) {
+  for (const post of duePosts as unknown as SocialPost[]) {
     const creds = post.social_clients
 
     if (!creds?.active) {
