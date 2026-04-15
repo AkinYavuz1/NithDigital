@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adkin Joinery | Design 3 — Workshop</title>
+<meta name="description" content="Adkin Joinery — hand-made kitchens, house building, and general carpentry in Thornhill and across Dumfries & Galloway. Quality joinery, built to last.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Tokens ── */
+:root {
+  --bg: #F5F3EF;
+  --surface: #FFFFFF;
+  --text: #1A1714;
+  --muted: #6B6560;
+  --dim: #C5C0B8;
+  --primary: #2C4A3E;
+  --accent: #D4A03C;
+  --radius: 8px;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  /* 1.25 ratio scale */
+  --fs-xs: 12.8px;
+  --fs-sm: 16px;
+  --fs-md: 20px;
+  --fs-lg: 25px;
+  --fs-xl: 31px;
+  --fs-2xl: 39px;
+  --fs-3xl: 49px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; height: auto; }
+button, input, textarea, select { font: inherit; }
+
+/* ── Utilities ── */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Animations ── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.animate-from-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-from-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.animate-from-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-from-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll,
+  .animate-from-left,
+  .animate-from-right {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── 1. Design Label Bar ── */
+.design-label-bar {
+  background: var(--primary);
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-heading);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.5px;
+  padding: 10px 0;
+  text-align: center;
+}
+.design-label-bar span {
+  display: inline-block;
+  margin: 0 6px;
+}
+.design-label-bar .sep {
+  opacity: 0.3;
+}
+
+/* ── 2. Navbar ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245,243,239,0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(197,192,184,0.3);
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.navbar-brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--primary);
+}
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.navbar-links a {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.navbar-links a:hover {
+  color: var(--primary);
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover {
+  background: #1e3a30;
+  transform: translateY(-1px);
+}
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  border: 2px solid var(--primary);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-outline:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.navbar-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* ── 3. Hero ── */
+.hero {
+  padding: 80px 0 100px;
+  overflow: hidden;
+}
+.hero .container {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+.hero-text {
+  flex: 0 0 55%;
+}
+.hero-subtitle {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.hero-heading {
+  font-size: var(--fs-2xl);
+  color: var(--primary);
+  margin-bottom: 24px;
+  white-space: pre-line;
+}
+.hero-intro {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.hero-image {
+  flex: 0 0 45%;
+  position: relative;
+}
+.hero-image img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(44,74,62,0.08);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+
+/* ── 4. Services ── */
+.services {
+  padding: 100px 0;
+}
+.section-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.section-heading {
+  font-size: var(--fs-xl);
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.section-intro {
+  color: var(--muted);
+  max-width: 560px;
+  margin-bottom: 48px;
+}
+.service-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.service-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 40px;
+  width: 100%;
+  max-width: 720px;
+}
+.service-card.premium {
+  padding: 48px 48px;
+}
+.service-card-title {
+  font-size: var(--fs-lg);
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.service-card.premium .service-card-title {
+  font-size: 28px;
+}
+.service-card-desc {
+  color: var(--muted);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+.service-card-link {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--primary);
+  transition: color 0.2s;
+}
+.service-card-link:hover {
+  color: var(--accent);
+}
+.service-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+.service-separator .diamond {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ── 5. How We Work ── */
+.how-we-work {
+  padding: 100px 0;
+  background: var(--surface);
+}
+.how-we-work .section-heading {
+  margin-bottom: 56px;
+}
+.steps {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+.step {
+  display: flex;
+  gap: 24px;
+  position: relative;
+  padding-bottom: 48px;
+}
+.step:last-child {
+  padding-bottom: 0;
+}
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+.step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--dim);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.4s ease;
+  position: relative;
+  z-index: 2;
+}
+.step-number.filled {
+  background: var(--primary);
+}
+.step-line {
+  width: 2px;
+  flex: 1;
+  border-left: 2px dashed var(--dim);
+  margin-top: 8px;
+}
+.step:last-child .step-line {
+  display: none;
+}
+.step-content {
+  padding-top: 4px;
+}
+.step-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.step-desc {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+
+/* ── 6. Gallery ── */
+.gallery {
+  padding: 100px 0;
+}
+.gallery-header {
+  margin-bottom: 48px;
+}
+.gallery-note {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 8px;
+}
+.masonry {
+  columns: 2;
+  column-gap: 20px;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+}
+.masonry-item img {
+  width: 100%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.masonry-item:hover img {
+  transform: scale(1.03);
+}
+.masonry-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,23,20,0.5);
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.masonry-item:hover .masonry-overlay {
+  opacity: 1;
+}
+.masonry-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: #fff;
+  transform: translateY(8px);
+  transition: transform 0.3s ease;
+}
+.masonry-item:hover .masonry-label {
+  transform: translateY(0);
+}
+.masonry-item.tall img {
+  height: 420px;
+  object-fit: cover;
+}
+.masonry-item:not(.tall) img {
+  height: 280px;
+  object-fit: cover;
+}
+
+/* ── 7. About ── */
+.about {
+  padding: 100px 0;
+  background: var(--surface);
+}
+.about-card {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 56px;
+  display: flex;
+  gap: 56px;
+  align-items: flex-start;
+}
+.about-text {
+  flex: 1;
+}
+.about-text h2 {
+  font-size: var(--fs-xl);
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.about-text p {
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+.about-stats {
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-number {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── 8. Testimonials ── */
+.testimonials {
+  padding: 100px 0;
+}
+.testimonials .section-heading {
+  margin-bottom: 48px;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.testimonial-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 32px;
+  border-top: 3px solid var(--accent);
+}
+.testimonial-quote {
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-size: var(--fs-sm);
+}
+.testimonial-attr {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ── 9. FAQ ── */
+.faq {
+  padding: 100px 0;
+  background: var(--surface);
+}
+.faq .section-heading {
+  margin-bottom: 48px;
+}
+.faq-list {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.faq-item {
+  border-bottom: 1px solid var(--dim);
+}
+.faq-item:first-child {
+  border-top: 1px solid var(--dim);
+}
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 24px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+.faq-icon {
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  line-height: 1;
+}
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+.faq-answer-inner {
+  padding: 0 0 24px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── 10. Contact ── */
+.contact {
+  padding: 100px 0;
+  background: var(--primary);
+  color: #fff;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: flex-start;
+}
+.contact-heading {
+  font-size: var(--fs-xl);
+  color: #fff;
+  margin-bottom: 20px;
+}
+.contact-text {
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-detail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.contact-detail-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.contact-detail-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: rgba(255,255,255,0.8);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.contact-detail-label {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+}
+.contact-detail-value {
+  font-size: var(--fs-sm);
+  color: #fff;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-form input,
+.contact-form textarea {
+  background: #fff;
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: var(--fs-sm);
+  width: 100%;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--dim);
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  box-shadow: 0 0 0 3px rgba(212,160,60,0.3);
+}
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+.btn-accent {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 32px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  width: 100%;
+}
+.btn-accent:hover {
+  background: #c4912c;
+  transform: translateY(-1px);
+}
+
+/* ── 11. Footer ── */
+.footer {
+  background: var(--primary);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 32px 0;
+}
+.footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.footer-links a {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  transition: color 0.2s;
+}
+.footer-links a:hover {
+  color: rgba(255,255,255,0.7);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: rgba(245,243,239,0.98);
+    backdrop-filter: blur(12px);
+    padding: 24px;
+    gap: 20px;
+    border-bottom: 1px solid var(--dim);
+  }
+  .navbar-links.open {
+    display: flex;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+  .hero .container {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .hero-text {
+    flex: none;
+    width: 100%;
+  }
+  .hero-image {
+    flex: none;
+    width: 100%;
+  }
+  .hero-image img {
+    height: 320px;
+  }
+  .hero-heading {
+    font-size: var(--fs-xl);
+  }
+  .service-card {
+    padding: 28px;
+  }
+  .service-card.premium {
+    padding: 32px;
+  }
+  .masonry {
+    columns: 1;
+  }
+  .masonry-item.tall img,
+  .masonry-item:not(.tall) img {
+    height: 260px;
+  }
+  .about-card {
+    flex-direction: column;
+    padding: 32px;
+    gap: 40px;
+  }
+  .about-stats {
+    flex: none;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .footer .container {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .design-label-bar {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     1. DESIGN LABEL BAR
+     ════════════════════════════════════════════════════ -->
+<div class="design-label-bar">
+  <span>Design 3 of 3</span>
+  <span class="sep">|</span>
+  <span>Workshop</span>
+  <span class="sep">|</span>
+  <span>Honest, modern, grounded</span>
+  <span class="sep">|</span>
+  <span>Primary: #2C4A3E</span>
+  <span class="sep">|</span>
+  <span>Accent: #D4A03C</span>
+  <span class="sep">|</span>
+  <span>Fonts: Space Grotesk / Source Serif 4</span>
+  <span class="sep">|</span>
+  <span>Signature: masonry gallery with hover labels</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     2. NAVBAR
+     ════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="container">
+    <a href="#" class="navbar-brand">Adkin Joinery</a>
+    <button class="navbar-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="navbar-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how-we-work">How We Work</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="btn-primary">Get a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════
+     3. HERO
+     ════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-text animate-from-left">
+      <p class="hero-subtitle">Joiner &middot; Thornhill &middot; Dumfries &amp; Galloway</p>
+      <h1 class="hero-heading">Built by hand.
+Built to last.</h1>
+      <p class="hero-intro">Adkin Joinery designs and builds kitchens, houses, and bespoke carpentry for homeowners across Dumfries &amp; Galloway. Every project is built by hand with care and precision — from full house builds to fitted kitchens and everyday carpentry.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn-primary">Get a Free Quote</a>
+        <a href="#gallery" class="btn-outline">See Our Work</a>
+      </div>
+    </div>
+    <div class="hero-image animate-from-right">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop" alt="Joinery workshop with tools and timber" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     4. SERVICES
+     ════════════════════════════════════════════════════ -->
+<section class="services" id="services">
+  <div class="container">
+    <p class="section-label animate-on-scroll">What we do</p>
+    <h2 class="section-heading animate-on-scroll">From full-scale builds to fine carpentry</h2>
+    <p class="section-intro animate-on-scroll">Whether you need a new kitchen, a full house build, or skilled carpentry for a renovation, we handle the whole job from design to completion.</p>
+
+    <div class="service-stack">
+      <!-- House Building — premium -->
+      <div class="service-card premium animate-on-scroll stagger-1">
+        <h3 class="service-card-title">House Building</h3>
+        <p class="service-card-desc">Full house builds from foundations to finishing. We manage the joinery and carpentry elements of new-build projects, working alongside other trades to deliver a home built with precision and quality materials.</p>
+        <a href="#contact" class="service-card-link">Discuss your build &rarr;</a>
+      </div>
+
+      <div class="service-separator"><div class="diamond"></div></div>
+
+      <!-- Hand-Made Kitchens -->
+      <div class="service-card animate-on-scroll stagger-2">
+        <h3 class="service-card-title">Hand-Made Kitchens</h3>
+        <p class="service-card-desc">Bespoke kitchens designed and built to fit your space perfectly. Every cabinet, drawer, and worktop is made by hand — not pulled from a catalogue. Your kitchen, your way.</p>
+        <a href="#contact" class="service-card-link">Design your kitchen &rarr;</a>
+      </div>
+
+      <div class="service-separator"><div class="diamond"></div></div>
+
+      <!-- General Carpentry -->
+      <div class="service-card animate-on-scroll stagger-3">
+        <h3 class="service-card-title">General Carpentry</h3>
+        <p class="service-card-desc">Doors, windows, staircases, fitted furniture, shelving, renovations, and repairs. If it involves wood and skill, we do it — and we do it properly.</p>
+        <a href="#contact" class="service-card-link">Get a quote &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     5. HOW WE WORK
+     ════════════════════════════════════════════════════ -->
+<section class="how-we-work" id="how-we-work">
+  <div class="container">
+    <p class="section-label animate-on-scroll">Our process</p>
+    <h2 class="section-heading animate-on-scroll">How we work</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-indicator">
+          <div class="step-number" data-step>1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Discuss</h3>
+          <p class="step-desc">We visit your property, listen to your ideas, and talk through what's possible. No pressure, just an honest conversation about your project.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-indicator">
+          <div class="step-number" data-step>2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Design</h3>
+          <p class="step-desc">We draw up a detailed plan and provide a clear, fixed quote. You know exactly what you're getting and what it costs before any work begins.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-indicator">
+          <div class="step-number" data-step>3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Build</h3>
+          <p class="step-desc">We get to work. Every piece is built by hand with quality materials. We keep you updated throughout and the site stays clean and tidy.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-indicator">
+          <div class="step-number" data-step>4</div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Deliver</h3>
+          <p class="step-desc">We finish the job properly, walk you through the completed work, and make sure you're happy with every detail.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     6. GALLERY — THE SIGNATURE
+     ════════════════════════════════════════════════════ -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="gallery-header">
+      <p class="section-label animate-on-scroll">Our work</p>
+      <h2 class="section-heading animate-on-scroll">Recent projects</h2>
+      <p class="gallery-note animate-on-scroll">More photos coming soon</p>
+    </div>
+
+    <div class="masonry">
+      <div class="masonry-item tall animate-on-scroll stagger-1">
+        <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=600&q=80&auto=format&fit=crop" alt="Kitchen renovation project" loading="lazy">
+        <div class="masonry-overlay">
+          <span class="masonry-label">Kitchen Renovation</span>
+        </div>
+      </div>
+
+      <div class="masonry-item animate-on-scroll stagger-2">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80&auto=format&fit=crop" alt="New build project" loading="lazy">
+        <div class="masonry-overlay">
+          <span class="masonry-label">New Build</span>
+        </div>
+      </div>
+
+      <div class="masonry-item animate-on-scroll stagger-3">
+        <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&q=80&auto=format&fit=crop" alt="Fitted furniture project" loading="lazy">
+        <div class="masonry-overlay">
+          <span class="masonry-label">Fitted Furniture</span>
+        </div>
+      </div>
+
+      <div class="masonry-item tall animate-on-scroll stagger-4">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop" alt="Workshop detail" loading="lazy">
+        <div class="masonry-overlay">
+          <span class="masonry-label">Workshop</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     7. ABOUT
+     ════════════════════════════════════════════════════ -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-card animate-on-scroll">
+      <div class="about-text">
+        <h2>About Adkin Joinery</h2>
+        <p>Adkin Joinery is run by Oliver Adkin, a skilled joiner based in Closeburn, Thornhill. Oliver works across Dumfries &amp; Galloway, bringing the same care and attention to every project — whether it's a full house build or a set of shelves.</p>
+        <p>Every piece of work is built by hand. No shortcuts, no subcontractors, no templated solutions. Just honest joinery done properly.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <span class="stat-number">4</span>
+          <span class="stat-label">Years Trading</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Core Services</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">D&amp;G</span>
+          <span class="stat-label">Covering All Areas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     8. TESTIMONIALS
+     ════════════════════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="container">
+    <p class="section-label animate-on-scroll">What clients say</p>
+    <h2 class="section-heading animate-on-scroll">Good work speaks for itself</h2>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card animate-on-scroll stagger-1">
+        <p class="testimonial-quote">"Oliver built our kitchen from scratch — it fits perfectly and the quality is brilliant. You can tell it's been made by someone who cares about the detail."</p>
+        <p class="testimonial-attr">Recent client &middot; Thornhill</p>
+      </div>
+      <div class="testimonial-card animate-on-scroll stagger-2">
+        <p class="testimonial-quote">"Really impressed with the workmanship. Turned up when he said he would, kept the house tidy, and the finished result is exactly what we wanted."</p>
+        <p class="testimonial-attr">Recent client &middot; Dumfries</p>
+      </div>
+      <div class="testimonial-card animate-on-scroll stagger-3">
+        <p class="testimonial-quote">"We had Oliver do all the joinery on our renovation. Doors, skirting, built-in storage — everything was done to a high standard and on time."</p>
+        <p class="testimonial-attr">Recent client &middot; Moffat</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     9. FAQ
+     ════════════════════════════════════════════════════ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <p class="section-label animate-on-scroll">FAQ</p>
+    <h2 class="section-heading animate-on-scroll">Common questions</h2>
+
+    <div class="faq-list">
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question" aria-expanded="false">
+          <span>What areas do you cover?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">We cover Thornhill, Dumfries, Sanquhar, Moffat, Lockerbie, and all surrounding areas across Dumfries &amp; Galloway.</div>
+        </div>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you offer free quotes?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. We'll visit your property, discuss what you need, and provide an honest, no-obligation quote.</div>
+        </div>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question" aria-expanded="false">
+          <span>How long does a kitchen take?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">A typical hand-made kitchen takes 4 to 8 weeks from initial design to installation, depending on the size and complexity of the project.</div>
+        </div>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you work with other trades?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. For house builds and larger renovations, we coordinate with plumbers, electricians, and other trades to keep your project on track.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     10. CONTACT
+     ════════════════════════════════════════════════════ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="animate-on-scroll">
+        <h2 class="contact-heading">Ready to start your project?</h2>
+        <p class="contact-text">Tell us what you have in mind. We'll come to you, talk it through, and give you an honest quote — no pressure, no obligation.</p>
+        <div class="contact-details">
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <p class="contact-detail-label">Call Oliver</p>
+              <p class="contact-detail-value">Phone number on request</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <p class="contact-detail-label">Email us</p>
+              <p class="contact-detail-value">hello@adkinjoinery.co.uk</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <p class="contact-detail-label">Location</p>
+              <p class="contact-detail-value">Closeburn, Thornhill, D&amp;G</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <p class="contact-detail-label">Availability</p>
+              <p class="contact-detail-value">Mon&ndash;Fri 8am&ndash;5pm, Sat 8am&ndash;12pm</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form animate-on-scroll" onsubmit="event.preventDefault();">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Email address" required>
+        <input type="tel" name="phone" placeholder="Phone number">
+        <textarea name="message" placeholder="Tell us about your project..." rows="5" required></textarea>
+        <button type="submit" class="btn-accent">Send your enquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     11. FOOTER
+     ════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <p class="footer-copy">&copy; 2026 Adkin Joinery. All rights reserved.</p>
+    <ul class="footer-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════
+     JAVASCRIPT
+     ════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ── Scroll reveal ── */
+  var animEls = document.querySelectorAll('.animate-on-scroll, .animate-from-left, .animate-from-right');
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    animEls.forEach(function(el) { observer.observe(el); });
+  } else {
+    // Fallback: show everything
+    animEls.forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  /* ── How We Work: step circles fill on scroll ── */
+  var stepNumbers = document.querySelectorAll('[data-step]');
+
+  if ('IntersectionObserver' in window && stepNumbers.length) {
+    var stepObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('filled');
+          stepObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5, rootMargin: '0px 0px -60px 0px' });
+
+    stepNumbers.forEach(function(el) { stepObserver.observe(el); });
+  } else {
+    stepNumbers.forEach(function(el) { el.classList.add('filled'); });
+  }
+
+  /* ── FAQ accordion ── */
+  var faqBtns = document.querySelectorAll('.faq-question');
+  faqBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var answer = item.querySelector('.faq-answer');
+      var isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        openItem.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+
+      // Open clicked (if it wasn't already open)
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ── Close mobile nav on link click ── */
+  document.querySelectorAll('.navbar-links a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      document.querySelector('.navbar-links').classList.remove('open');
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
