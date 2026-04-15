@@ -44,6 +44,15 @@
 - Flows: expense extraction (invoice OCR via Claude Vision), portfolio photos, Q&A (Groq), onboarding
 - State machine stored in `tradedesk_users.pending_action` + `pending_expense_id`
 
+## Website Creation Workflow
+- To start a new website project: read `website-kickoff.md` and say "new website for [client]"
+- Full 12-stage pipeline: research → brief → 3 PDF designs → copy → GitHub repo (AkinYavuz1) → Vercel deploy
+- All design files saved to `designs/[client-slug]/` — PDFs, HTMLs, brief, copy, theme, scaffold
+- Every client gets a **separate private GitHub repo** under `AkinYavuz1` account
+- Scripts in `src/scripts/` — run via `npx ts-node --project tsconfig.json src/scripts/[name].ts`
+- **Never use `ANTHROPIC_API_KEY`** — use Claude Code CLI token budget only
+- Archive at `designs/archive.json` tracks past designs to prevent repetition
+
 ## Key tables (Supabase)
 - `prospects` — cold call leads, scored, with `contact_phone`
 - `social_clients` — per-client Meta credentials
