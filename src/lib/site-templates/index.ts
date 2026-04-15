@@ -142,7 +142,7 @@ export function getIndustryPreset(industry: string): IndustryPreset {
 // ─── Component templates ──────────────────────────────────────────────────────
 
 export const NAVBAR_TEMPLATE = `'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 
@@ -155,34 +155,73 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  // Close on Escape; trap focus inside mobile menu when open
+  useEffect(() => {
+    if (!open) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setOpen(false); toggleRef.current?.focus() }
+      if (e.key === 'Tab' && menuRef.current) {
+        const focusable = Array.from(
+          menuRef.current.querySelectorAll<HTMLElement>('a, button, [tabindex]:not([tabindex="-1"])')
+        )
+        if (!focusable.length) return
+        const first = focusable[0]; const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
+      }
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [open])
+
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-[var(--color-background)]/95 backdrop-blur border-b border-black/5">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[var(--color-primary)] focus:text-white focus:rounded-[var(--radius)] focus:text-sm focus:font-semibold">
+        Skip to main content
+      </a>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         <Link href="/" className="font-heading text-lg font-semibold text-[var(--color-primary)] tracking-tight">
           BRAND_NAME
         </Link>
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
           {NAV_LINKS.map(l => (
-            <Link key={l.href} href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors">
+            <Link key={l.href} href={l.href} className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors focus-visible:outline-2 focus-visible:outline-[var(--color-primary)] focus-visible:rounded-sm">
               {l.label}
             </Link>
           ))}
-          <Link href="/contact" className="text-sm font-semibold bg-[var(--color-primary)] text-white px-4 py-2 rounded-[var(--radius)] hover:opacity-90 transition-opacity">
+          <Link href="/contact" className="text-sm font-semibold bg-[var(--color-primary)] text-white px-4 py-2 rounded-[var(--radius)] hover:opacity-90 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]">
             Get in Touch
           </Link>
         </nav>
-        <button className="md:hidden p-2 text-[var(--color-text)]" onClick={() => setOpen(o => !o)} aria-label="Toggle menu">
+        <button
+          ref={toggleRef}
+          className="md:hidden p-2 text-[var(--color-text)] focus-visible:outline-2 focus-visible:outline-[var(--color-primary)] rounded-sm"
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+        >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
       {open && (
-        <div className="md:hidden border-t border-black/5 bg-[var(--color-background)] px-4 pb-4 pt-2 flex flex-col gap-3">
+        <div
+          id="mobile-menu"
+          ref={menuRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+          className="md:hidden border-t border-black/5 bg-[var(--color-background)] px-4 pb-4 pt-2 flex flex-col gap-3"
+        >
           {NAV_LINKS.map(l => (
-            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-[var(--color-text)] py-2">
+            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-[var(--color-text)] py-2 focus-visible:outline-2 focus-visible:outline-[var(--color-primary)]">
               {l.label}
             </Link>
           ))}
-          <Link href="/contact" onClick={() => setOpen(false)} className="text-sm font-semibold bg-[var(--color-primary)] text-white px-4 py-2 rounded-[var(--radius)] text-center">
+          <Link href="/contact" onClick={() => setOpen(false)} className="text-sm font-semibold bg-[var(--color-primary)] text-white px-4 py-2 rounded-[var(--radius)] text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             Get in Touch
           </Link>
         </div>
@@ -212,14 +251,25 @@ export default function Footer() {
         <div>
           <p className="text-sm font-semibold uppercase tracking-widest mb-4 text-white/50">Contact</p>
           <ul className="space-y-2 text-sm text-white/70">
-            <li>CONTACT_EMAIL</li>
-            <li>CONTACT_PHONE</li>
+            <li><a href="mailto:CONTACT_EMAIL" className="hover:text-white transition-colors">CONTACT_EMAIL</a></li>
+            <li><a href="tel:CONTACT_PHONE_RAW" className="hover:text-white transition-colors">CONTACT_PHONE</a></li>
             <li>CONTACT_LOCATION</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-white/10 py-5">
-        <p className="text-center text-xs text-white/40">© {new Date().getFullYear()} BRAND_NAME. All rights reserved.</p>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-white/40">© {new Date().getFullYear()} BRAND_NAME. All rights reserved.</p>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="text-xs text-white/40 hover:text-white/70 transition-colors">Privacy Policy</Link>
+            <button
+              onClick={() => { localStorage.removeItem('cookie-consent'); window.location.reload() }}
+              className="text-xs text-white/40 hover:text-white/70 transition-colors bg-transparent border-none cursor-pointer p-0"
+            >
+              Cookie Settings
+            </button>
+          </div>
+        </div>
       </div>
     </footer>
   )
@@ -465,9 +515,42 @@ export const LOADING_TEMPLATE = `export default function Loading() {
   )
 }`
 
+export const TESTIMONIALS_TEMPLATE = `interface Testimonial { name: string; location: string; text: string; rating?: number }
+
+export default function Testimonials({ headline, items }: { headline: string; items: Testimonial[] }) {
+  return (
+    <section className="py-20 sm:py-28 bg-[var(--color-surface)]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[var(--color-primary)] mb-12 text-center">{headline}</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {items.map((t, i) => (
+            <div key={i} className="bg-[var(--color-background)] p-7 rounded-[var(--radius)] border border-black/5 flex flex-col gap-4">
+              {t.rating && (
+                <div className="flex gap-0.5" aria-label={\`\${t.rating} out of 5 stars\`}>
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <svg key={s} className={\`w-4 h-4 \${s < t.rating! ? 'text-[var(--color-accent)]' : 'text-black/15'}\`} fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+              )}
+              <blockquote className="text-sm text-[var(--color-text-muted)] leading-relaxed flex-1">"{t.text}"</blockquote>
+              <div>
+                <p className="text-sm font-semibold text-[var(--color-primary)]">{t.name}</p>
+                {t.location && <p className="text-xs text-[var(--color-text-muted)]">{t.location}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}`
+
 export const CONTACT_FORM_TEMPLATE = `'use client'
 import { useState } from 'react'
 
+// Rate limiting enforced server-side: 5 req/min per IP in /api/contact/route.ts
 export default function ContactForm({ headline, intro, formCta }: {
   headline: string; intro: string; formCta: string
 }) {
@@ -480,6 +563,9 @@ export default function ContactForm({ headline, intro, formCta }: {
     setLoading(true)
     setError('')
     const form = e.currentTarget
+    // Honeypot: silently discard if bot-filled hidden field is set
+    const honeypot = (form.elements.namedItem('website') as HTMLInputElement)?.value
+    if (honeypot) { setLoading(false); setSent(true); return }
     const data = {
       name: (form.elements.namedItem('name') as HTMLInputElement).value,
       email: (form.elements.namedItem('email') as HTMLInputElement).value,
@@ -488,7 +574,16 @@ export default function ContactForm({ headline, intro, formCta }: {
     }
     try {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-      if (res.ok) { setSent(true) } else { setError('Something went wrong. Please try calling us directly.') }
+      if (res.ok) {
+        setSent(true)
+        // GA4 conversion event — only fires when AnalyticsProvider has loaded (consent given)
+        if (typeof window !== 'undefined' && typeof (window as unknown as Record<string, unknown>)['gtag'] === 'function') {
+          ;(window as unknown as Record<string, (...args: unknown[]) => void>)['gtag']('event', 'generate_lead', {
+            event_category: 'Contact Form',
+            event_label: 'Contact Page Submission',
+          })
+        }
+      } else { setError('Something went wrong. Please try calling us directly.') }
     } catch {
       setError('Something went wrong. Please try calling us directly.')
     }
@@ -505,7 +600,9 @@ export default function ContactForm({ headline, intro, formCta }: {
             <p className="font-semibold text-green-700">Message sent — we'll be in touch shortly.</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+            {/* Honeypot — hidden from real users; bots fill it in */}
+            <input name="website" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: 'none' }} />
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Full name</label>
@@ -524,8 +621,9 @@ export default function ContactForm({ headline, intro, formCta }: {
               <label htmlFor="message" className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Message</label>
               <textarea id="message" name="message" required rows={5} className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)] resize-none" />
             </div>
-            {error && <p className="text-sm text-red-600">{error}</p>}
-            <button type="submit" disabled={loading} className="w-full bg-[var(--color-primary)] text-white font-bold py-3.5 rounded-[var(--radius)] hover:opacity-90 transition-opacity disabled:opacity-60">
+            <p className="text-xs text-[var(--color-text-muted)]">We'll only use your details to respond to your enquiry.</p>
+            {error && <p className="text-sm text-red-600" role="alert">{error}</p>}
+            <button type="submit" disabled={loading} className="w-full bg-[var(--color-primary)] text-white font-bold py-3.5 rounded-[var(--radius)] hover:opacity-90 transition-opacity disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]">
               {loading ? 'Sending…' : formCta}
             </button>
           </form>
@@ -536,7 +634,9 @@ export default function ContactForm({ headline, intro, formCta }: {
 }`
 
 // ─── Cookie Consent Banner ────────────────────────────────────────────────────
-// Uses CSS variables so it adapts to any client theme.
+// ICO 2025 compliant: equal-weight Accept and Reject buttons.
+// Consent state stored as 'accepted' | 'rejected' in localStorage.
+// GA4 only loads when consent === 'accepted' (see AnalyticsProvider below).
 // Add to src/components/CookieBanner.tsx and import in layout.tsx.
 
 export const COOKIE_BANNER_TEMPLATE = `'use client'
@@ -551,8 +651,8 @@ export default function CookieBanner() {
     if (!localStorage.getItem('cookie-consent')) setVisible(true)
   }, [])
 
-  const accept = () => {
-    localStorage.setItem('cookie-consent', 'accepted')
+  const respond = (choice: 'accepted' | 'rejected') => {
+    localStorage.setItem('cookie-consent', choice)
     setVisible(false)
   }
 
@@ -561,48 +661,104 @@ export default function CookieBanner() {
   return (
     <div
       role="dialog"
-      aria-label="Cookie notice"
+      aria-modal="true"
+      aria-label="Cookie consent"
       style={{
         position: 'fixed',
         bottom: 24,
         left: 24,
         right: 24,
-        maxWidth: 480,
+        maxWidth: 520,
         background: 'var(--color-primary)',
         color: '#fff',
         borderRadius: 10,
-        padding: '16px 20px',
+        padding: '18px 20px',
         zIndex: 9999,
         boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
-        display: 'flex',
-        gap: 16,
-        alignItems: 'center',
-        flexWrap: 'wrap',
       }}
     >
-      <p style={{ fontSize: 13, margin: 0, flex: 1, lineHeight: 1.5 }}>
-        We use cookies to improve your experience.{' '}
+      <p style={{ fontSize: 13, margin: '0 0 14px', lineHeight: 1.6 }}>
+        We use cookies to analyse site traffic and improve your experience.{' '}
         <Link href="/privacy" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
           Privacy Policy
         </Link>
       </p>
-      <button
-        onClick={accept}
-        style={{
-          background: 'var(--color-accent)',
-          color: 'var(--color-primary)',
-          border: 'none',
-          borderRadius: 6,
-          padding: '8px 18px',
-          fontSize: 13,
-          fontWeight: 600,
-          cursor: 'pointer',
-          flexShrink: 0,
-        }}
-      >
-        Accept
-      </button>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <button
+          onClick={() => respond('accepted')}
+          style={{
+            background: 'var(--color-accent)',
+            color: 'var(--color-primary)',
+            border: 'none',
+            borderRadius: 6,
+            padding: '9px 20px',
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: 'pointer',
+            flex: 1,
+            minWidth: 100,
+          }}
+        >
+          Accept cookies
+        </button>
+        <button
+          onClick={() => respond('rejected')}
+          style={{
+            background: 'transparent',
+            color: '#fff',
+            border: '1.5px solid rgba(255,255,255,0.45)',
+            borderRadius: 6,
+            padding: '9px 20px',
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: 'pointer',
+            flex: 1,
+            minWidth: 100,
+          }}
+        >
+          Reject non-essential
+        </button>
+      </div>
     </div>
+  )
+}`
+
+// ─── Analytics Provider ───────────────────────────────────────────────────────
+// Client component that reads cookie consent and only loads GA4 when accepted.
+// Add to src/components/AnalyticsProvider.tsx and import in layout.tsx.
+// Usage in layout.tsx:
+//   import AnalyticsProvider from '@/components/AnalyticsProvider'
+//   <AnalyticsProvider gaId={process.env.NEXT_PUBLIC_GA_ID} />
+
+export const ANALYTICS_PROVIDER_TEMPLATE = `'use client'
+
+import { useEffect } from 'react'
+import Script from 'next/script'
+import { useState } from 'react'
+
+export default function AnalyticsProvider({ gaId }: { gaId?: string }) {
+  const [consented, setConsented] = useState(false)
+
+  useEffect(() => {
+    const check = () => setConsented(localStorage.getItem('cookie-consent') === 'accepted')
+    check()
+    // Re-check when user interacts with the banner
+    window.addEventListener('storage', check)
+    return () => window.removeEventListener('storage', check)
+  }, [])
+
+  if (!gaId || !consented) return null
+
+  return (
+    <>
+      <Script
+        src={\`https://www.googletagmanager.com/gtag/js?id=\${gaId}\`}
+        strategy="afterInteractive"
+      />
+      <Script id="ga4-init" strategy="afterInteractive">
+        {\`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','\${gaId}',{anonymize_ip:true});\`}
+      </Script>
+    </>
   )
 }`
 
@@ -668,22 +824,15 @@ export default function PrivacyPage() {
   )
 }`
 
-// ─── GA4 Script ───────────────────────────────────────────────────────────────
-// Add to src/app/layout.tsx when brief.json includes ga_measurement_id.
-// Reads NEXT_PUBLIC_GA_ID from environment variables.
+// ─── GA4 — replaced by ANALYTICS_PROVIDER_TEMPLATE (consent-gated) ──────────
+// Do NOT use this bare script snippet — it loads GA4 unconditionally, violating
+// ICO PECR guidance (2025). Use AnalyticsProvider instead (see above).
+// In layout.tsx:
+//   import AnalyticsProvider from '@/components/AnalyticsProvider'
+//   <AnalyticsProvider gaId={process.env.NEXT_PUBLIC_GA_ID} />
+// This only fires gtag() after the user clicks "Accept cookies".
 
-export const GA4_SCRIPT_TEMPLATE = `{/* Google Analytics 4 — only loads if NEXT_PUBLIC_GA_ID is set */}
-{process.env.NEXT_PUBLIC_GA_ID && (
-  <>
-    <Script
-      src={\`https://www.googletagmanager.com/gtag/js?id=\${process.env.NEXT_PUBLIC_GA_ID}\`}
-      strategy="afterInteractive"
-    />
-    <Script id="ga4-init" strategy="afterInteractive">
-      {\`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','\${process.env.NEXT_PUBLIC_GA_ID}',{anonymize_ip:true});\`}
-    </Script>
-  </>
-)}`
+export const GA4_SCRIPT_TEMPLATE = `{/* GA4: use <AnalyticsProvider gaId={process.env.NEXT_PUBLIC_GA_ID} /> — see ANALYTICS_PROVIDER_TEMPLATE */}`
 
 // ─── Redirects stub for migration clients ────────────────────────────────────
 // Include as a comment in next.config.ts when brief.json has existing_site_url.

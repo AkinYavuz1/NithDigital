@@ -223,6 +223,33 @@ function checkScaffoldCode(results: CheckResult[]) {
 
   walkFiles(scaffoldDir)
 
+  // Additional checks
+  let metadataBaseFound = false
+  let securityHeadersFound = false
+  let canonicalFound = false
+  let langEnGbFound = false
+  let cookieRejectFound = false
+  let honeyPotFound = false
+  let telLinkFound = false
+
+  // Re-walk for new checks
+  function walkFilesExtra(dir: string) {
+    for (const entry of fs.readdirSync(dir)) {
+      const fullPath = path.join(dir, entry)
+      if (fs.statSync(fullPath).isDirectory()) { walkFilesExtra(fullPath); continue }
+      if (!fullPath.match(/\.(tsx?|js|mjs)$/)) continue
+      const content = fs.readFileSync(fullPath, 'utf-8')
+      if (content.includes('metadataBase')) metadataBaseFound = true
+      if (content.includes('X-Frame-Options') || content.includes('securityHeaders')) securityHeadersFound = true
+      if (content.includes('alternates') && content.includes('canonical')) canonicalFound = true
+      if (content.includes('lang="en-GB"') || content.includes("lang='en-GB'")) langEnGbFound = true
+      if (content.includes('Reject non-essential') || content.includes("'rejected'")) cookieRejectFound = true
+      if (content.includes('name="website"') && content.includes('honeypot')) honeyPotFound = true
+      if (content.includes('href="tel:') || content.includes('href={`tel:')) telLinkFound = true
+    }
+  }
+  walkFilesExtra(scaffoldDir)
+
   results.push(check('No raw <img> tags (use next/image)', imgTagCount === 0, imgTagCount > 0 ? `${imgTagCount} found` : ''))
   results.push(check('next/image imported', nextImageCount > 0, nextImageCount === 0 ? 'not found' : ''))
   results.push(check('Fonts via next/font (not @import CDN)', importCssCount === 0, importCssCount > 0 ? `${importCssCount} @import found` : ''))
@@ -230,6 +257,13 @@ function checkScaffoldCode(results: CheckResult[]) {
   results.push(check('priority prop on hero image', priorityPropFound))
   results.push(check('JSON-LD schema present', jsonLdFound))
   results.push(check('Unsplash in remotePatterns (next.config.ts)', unsplashConfigFound))
+  results.push(check('metadataBase set in layout.tsx', metadataBaseFound, metadataBaseFound ? '' : 'add metadataBase to root generateMetadata()'))
+  results.push(check('Security headers in next.config.ts', securityHeadersFound, securityHeadersFound ? '' : 'add headers() block to next.config.ts'))
+  results.push(check('Canonical URL in generateMetadata()', canonicalFound, canonicalFound ? '' : 'add alternates.canonical to each page'))
+  results.push(check('lang="en-GB" on <html>', langEnGbFound, langEnGbFound ? '' : 'add lang="en-GB" to layout.tsx <html>'))
+  results.push(check('Cookie banner has Reject button', cookieRejectFound, cookieRejectFound ? '' : 'rewrite CookieBanner with equal-weight Reject button'))
+  results.push(check('Contact form honeypot field', honeyPotFound, honeyPotFound ? '' : 'add name="website" hidden honeypot to contact form'))
+  results.push(check('Footer has tel: link for phone number', telLinkFound, telLinkFound ? '' : 'wrap phone in <a href="tel:...">  in Footer'))
 
   // WebP image format config
   let webpConfigFound = false
@@ -297,11 +331,40 @@ function checkEslint(results: CheckResult[]) {
   }
 }
 
+function fetchUrlWithHeaders(url: string): Promise<{ status: number; body: string; headers: Record<string, string> }> {
+  return new Promise((resolve, reject) => {
+    const protocol = url.startsWith('https') ? https : http
+    protocol.get(url, { headers: { 'User-Agent': 'NithDigitalQA/1.0' } }, (res) => {
+      if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        fetchUrlWithHeaders(res.headers.location).then(resolve).catch(reject)
+        return
+      }
+      let body = ''
+      res.on('data', (chunk) => { body += chunk })
+      res.on('end', () => resolve({
+        status: res.statusCode || 0,
+        body,
+        headers: Object.fromEntries(
+          Object.entries(res.headers).map(([k, v]) => [k, Array.isArray(v) ? v.join(', ') : (v ?? '')])
+        ),
+      }))
+    }).on('error', reject)
+  })
+}
+
 async function checkStagingUrl(url: string, results: CheckResult[]) {
   console.log(`\n── Staging URL: ${url} ───────────────────────`)
 
   try {
-    const home = await fetchUrl(url)
+    const home = await fetchUrlWithHeaders(url)
+
+    // Security headers
+    console.log('\n── Security Headers ───────────────────────────────────')
+    results.push(check('X-Frame-Options header', !!(home.headers['x-frame-options']), home.headers['x-frame-options'] || 'MISSING'))
+    results.push(check('X-Content-Type-Options header', home.headers['x-content-type-options'] === 'nosniff', home.headers['x-content-type-options'] || 'MISSING'))
+    results.push(check('Referrer-Policy header', !!(home.headers['referrer-policy']), home.headers['referrer-policy'] || 'MISSING'))
+    results.push(check('Content-Security-Policy header', !!(home.headers['content-security-policy']), home.headers['content-security-policy'] ? 'present' : 'MISSING'))
+    console.log('\n── Page Content ───────────────────────────────────────')
     results.push(check('Homepage returns 200', home.status === 200, `HTTP ${home.status}`))
 
     // Check sitemap
@@ -327,10 +390,14 @@ async function checkStagingUrl(url: string, results: CheckResult[]) {
     const hasOgDesc = home.body.includes('og:description')
     const hasOgImage = home.body.includes('og:image')
     const hasJsonLd = home.body.includes('application/ld+json')
+    const hasCanonical = home.body.includes('rel="canonical"') || home.body.includes("rel='canonical'")
+    const hasLangEnGb = home.body.includes('lang="en-GB"') || home.body.includes("lang='en-GB'")
     results.push(check('OG meta: og:title present', hasOgTitle))
     results.push(check('OG meta: og:description present', hasOgDesc))
     results.push(check('OG meta: og:image present', hasOgImage))
     results.push(check('JSON-LD schema in rendered HTML', hasJsonLd))
+    results.push(check('Canonical link present', hasCanonical, hasCanonical ? '' : 'add alternates.canonical to generateMetadata()'))
+    results.push(check('lang="en-GB" on <html>', hasLangEnGb, hasLangEnGb ? '' : 'add lang="en-GB" to root layout <html>'))
 
     // FAQPage schema check — only required if copy.json has ≥3 FAQ items
     if (fs.existsSync(copyPath)) {

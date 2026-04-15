@@ -350,7 +350,8 @@ src/app/loading.tsx                 ← Loading spinner (use LOADING_TEMPLATE)
 src/app/api/contact/route.ts        ← Contact form handler (sends email via Resend using RESEND_API_KEY)
 src/components/Navbar.tsx
 src/components/Footer.tsx
-src/components/CookieBanner.tsx     ← GDPR cookie consent (use COOKIE_BANNER_TEMPLATE, CSS var colours)
+src/components/CookieBanner.tsx     ← GDPR cookie consent (use COOKIE_BANNER_TEMPLATE — has Accept + Reject)
+src/components/AnalyticsProvider.tsx ← Consent-gated GA4 (use ANALYTICS_PROVIDER_TEMPLATE, only if ga_measurement_id in brief)
 src/app/privacy/page.tsx            ← UK GDPR privacy policy (use PRIVACY_PAGE_TEMPLATE)
 src/lib/env.ts                      ← Env var validation (throws at build time if vars missing)
 src/__tests__/site.test.ts          ← Per-client unit tests (see spec below)
@@ -360,13 +361,34 @@ src/__tests__/site.test.ts          ← Per-client unit tests (see spec below)
 **Starting point:** Use the component templates from `src/lib/site-templates/index.ts`:
 `NAVBAR_TEMPLATE`, `FOOTER_TEMPLATE`, `HERO_SPLIT_TEMPLATE`, `HERO_CENTERED_TEMPLATE`,
 `HERO_FULLWIDTH_TEMPLATE`, `SERVICES_GRID_TEMPLATE`, `CTA_SECTION_TEMPLATE`,
-`CONTACT_FORM_TEMPLATE`, `TRUST_BADGES_TEMPLATE`
+`CONTACT_FORM_TEMPLATE`, `TRUST_BADGES_TEMPLATE`, `TESTIMONIALS_TEMPLATE`,
+`COOKIE_BANNER_TEMPLATE`, `ANALYTICS_PROVIDER_TEMPLATE`, `PRIVACY_PAGE_TEMPLATE`
 
 Adapt each template using `copy.json` and `theme.json` values.
 
 **`next.config.ts` for the client site MUST include:**
 ```ts
 import type { NextConfig } from 'next'
+
+const securityHeaders = [
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: https://images.unsplash.com",
+      "connect-src 'self' https://www.google-analytics.com",
+      "frame-src 'self' https://www.google.com",
+    ].join('; '),
+  },
+]
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -374,17 +396,73 @@ const nextConfig: NextConfig = {
     ],
     formats: ['image/webp', 'image/avif'],
   },
+  async headers() {
+    return [{ source: '/(.*)', headers: securityHeaders }]
+  },
 }
 export default nextConfig
 ```
 
+**QA note:** Stage 10 QA checks for the presence of `X-Frame-Options` and `Content-Security-Policy` headers in the staging URL response.
+
 **`src/app/api/contact/route.ts`** — wire up Resend for real email delivery:
 ```ts
 import { NextRequest, NextResponse } from 'next/server'
-// Uses RESEND_API_KEY from .env.local
-// Sends to CONTACT_EMAIL (client's email from copy.json nap.email)
-// Always include: name, email, phone, message in the email body
+import { Resend } from 'resend'
+
+// Rate limiting: 5 submissions per minute per IP
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+
+export async function POST(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? 'unknown'
+  const now = Date.now()
+  const entry = rateLimitMap.get(ip)
+  if (entry && now < entry.resetAt) {
+    if (entry.count >= 5) return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+    entry.count++
+  } else {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + 60_000 })
+  }
+
+  const data = await req.json()
+  // Honeypot check
+  if (data.website) return NextResponse.json({ ok: true }) // silently discard
+
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  await resend.emails.send({
+    from: 'Contact Form <noreply@nithdigital.uk>',  // verified Resend sender
+    to: process.env.CONTACT_EMAIL!,                  // set in Vercel env vars
+    replyTo: data.email,                             // reply goes directly to the enquirer
+    subject: \`New enquiry from \${data.name}\`,
+    text: \`Name: \${data.name}\nEmail: \${data.email}\nPhone: \${data.phone || 'N/A'}\n\nMessage:\n\${data.message}\`,
+    html: \`<p><strong>Name:</strong> \${data.name}</p><p><strong>Email:</strong> \${data.email}</p><p><strong>Phone:</strong> \${data.phone || 'N/A'}</p><p><strong>Message:</strong></p><p>\${data.message}</p>\`,
+  })
+  return NextResponse.json({ ok: true })
+}
 ```
+
+Key points:
+- `replyTo: data.email` — client replies land in the enquirer's inbox directly
+- Always include both `text` (plain-text) and `html` bodies (deliverability + accessibility)
+- `CONTACT_EMAIL` set as a Vercel environment variable per client project
+- Rate limiting: 5 req/min per IP, prevents spam bursts
+
+**Email deliverability — DNS records (post-launch handover):**
+
+After the client domain is connected, add these DNS records at their registrar to prevent emails landing in spam:
+
+```
+# SPF — authorise Resend to send on behalf of the domain
+TXT @ "v=spf1 include:spf.resend.com ~all"
+
+# DKIM — Resend provides the CNAME record; get it from the Resend dashboard
+CNAME resend._domainkey.[domain] → [value from Resend domain settings]
+
+# DMARC — tells receiving servers what to do with failing emails
+TXT _dmarc.[domain] "v=DMARC1; p=none; rua=mailto:postmaster@[domain]"
+```
+
+Save these instructions to `designs/[client-slug]/email-dns-setup.md` for the client handover pack. Without SPF/DKIM, contact form notifications may hit spam within weeks.
 
 **`src/components/CookieBanner.tsx`** — Use `COOKIE_BANNER_TEMPLATE` from `src/lib/site-templates/index.ts`. Import and render in `layout.tsx` below the `<Footer />`.
 
@@ -408,15 +486,89 @@ This enables Google FAQ rich results in SERPs.
 
 **`src/app/layout.tsx` MUST include:**
 - `next/font/google` import for heading + body fonts from `theme.json`
+- `lang="en-GB"` on the `<html>` element: `<html lang="en-GB">`
 - JSON-LD LocalBusiness schema using `copy.json` schema fields
-- `generateMetadata()` with OG tags (og:title, og:description, og:image)
+- `generateMetadata()` with:
+  - `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!)` — required for absolute OG image URLs
+  - `og:title`, `og:description`, `og:image` (relative path e.g. `/og-image.jpg`)
+  - `og:type: 'website'`, `og:locale: 'en_GB'`
+  - `og:image:alt` (descriptive alt text for the OG image)
+  - `twitter:card: 'summary_large_image'`
+  - `twitter:title`, `twitter:description`
 - `import '@/lib/env'` at the top (build-time env var guard)
 - `<CookieBanner />` component below `<Footer />`
+- `<AnalyticsProvider gaId={process.env.NEXT_PUBLIC_GA_ID} />` below `<CookieBanner />` (only if `ga_measurement_id` in brief)
+
+**`src/app/globals.css` MUST include:**
+```css
+/* Focus indicator — WCAG 2.1 AA */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+```
+
+**`src/components/Navbar.tsx`** — The skip-to-main link is already in `NAVBAR_TEMPLATE`. Ensure `<main>` in every page has `id="main-content"` so the skip link works.
 
 **Every page MUST export:**
 ```ts
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: '...', description: '...' }
+  return {
+    title: '...',
+    description: '...',
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/[page-path]`,
+    },
+  }
+}
+```
+For the homepage use `canonical: process.env.NEXT_PUBLIC_SITE_URL` (no trailing slash).
+
+**JSON-LD schema — use industry-specific LocalBusiness subtypes**, not the generic `LocalBusiness`:
+
+| Industry | `@type` value |
+|---|---|
+| Electrician / electrical contractor | `ElectricalContractor` |
+| Plumber / plumbing | `Plumber` |
+| HVAC / heating | `HVACBusiness` |
+| Roofer / roofing | `RoofingContractor` |
+| Painter / decorator | `PaintingContractor` |
+| Landscaper / gardener | `LandscapingBusiness` |
+| Restaurant / café | `Restaurant` |
+| Beauty / hair salon | `HairSalon` or `BeautySalon` |
+| Dentist | `Dentist` |
+| Accountant | `AccountingService` |
+| Solicitor / law | `LegalService` |
+| Gym / fitness | `ExerciseGym` |
+| Anything else | `LocalBusiness` |
+
+Map `copy.json schema.type` to the correct `@type` in the JSON-LD block in `layout.tsx`.
+
+**AggregateRating** — add to JSON-LD when `copy.json schema_reviews.review_count > 0`:
+```json
+"aggregateRating": {
+  "@type": "AggregateRating",
+  "ratingValue": "[schema_reviews.rating_value]",
+  "reviewCount": "[schema_reviews.review_count]",
+  "bestRating": "5"
+}
+```
+This enables Google star ratings in search results — high ROI for local businesses.
+
+**`src/app/sitemap.ts`** — include `lastmod` on every URL:
+```ts
+import type { MetadataRoute } from 'next'
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const base = process.env.NEXT_PUBLIC_SITE_URL!
+  const lastModified = new Date().toISOString()
+  return [
+    { url: base, lastModified, priority: 1.0 },
+    { url: `${base}/about`, lastModified, priority: 0.8 },
+    { url: `${base}/services`, lastModified, priority: 0.9 },
+    { url: `${base}/contact`, lastModified, priority: 0.7 },
+  ]
 }
 ```
 
@@ -668,11 +820,22 @@ cd designs/[client-slug]/scaffold && npx lhci autorun
 **Deploy a scaffold-review subagent** to check all files before pushing:
 - No `<img>` tags (must use `next/image`)
 - No `@import` for Google Fonts (must use `next/font/google`)
-- Every page exports `generateMetadata()`
-- `sitemap.ts` and `robots.ts` exist
-- JSON-LD schema block in `layout.tsx`
+- Every page exports `generateMetadata()` with `alternates.canonical`
+- `metadataBase` set in root layout metadata
+- `<html lang="en-GB">` in layout.tsx
+- Skip-to-main link in Navbar; every page `<main>` has `id="main-content"`
+- `focus-visible` CSS block in `globals.css`
+- `sitemap.ts` and `robots.ts` exist; sitemap has `lastModified` dates
+- JSON-LD schema block in `layout.tsx` using industry-specific `@type`
+- `aggregateRating` present in JSON-LD if `schema_reviews.review_count > 0`
 - `priority` prop on hero `<Image>` in `page.tsx`
 - `images.unsplash.com` in `next.config.ts` remotePatterns
+- `headers()` block with security headers in `next.config.ts`
+- Cookie banner has both Accept and Reject buttons
+- `AnalyticsProvider` used for GA4 (not bare `<Script>`)
+- Contact form has honeypot field + privacy notice
+- Contact API route has rate limiting (5/min per IP)
+- Footer has `tel:` and `mailto:` links; Privacy Policy + Cookie Settings in copyright bar
 - `src/__tests__/site.test.ts` exists with real values (no `[PLACEHOLDER]` strings remaining)
 - `src/lib/env.ts` exists and is imported in `layout.tsx`
 - `.eslintrc.json` exists
@@ -828,11 +991,15 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 - [ ] `meta.title` ≤ 60 chars
 - [ ] `meta.description` 150–160 chars
 - [ ] Every page exports `generateMetadata()` with unique title + description
-- [ ] `sitemap.ts` lists all pages
+- [ ] Every `generateMetadata()` includes `alternates: { canonical: ... }`
+- [ ] `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!)` in root layout metadata
+- [ ] `sitemap.ts` lists all pages with `lastModified` dates
 - [ ] `robots.ts` exists and doesn't block all
-- [ ] JSON-LD LocalBusiness schema in `layout.tsx`
+- [ ] JSON-LD schema uses industry-specific `@type` (e.g. `Plumber`, `ElectricalContractor`)
+- [ ] JSON-LD `aggregateRating` block present when `schema_reviews.review_count > 0`
 - [ ] All images have descriptive `alt` text
-- [ ] OG meta tags: `og:title`, `og:description`, `og:image`
+- [ ] OG meta tags: `og:title`, `og:description`, `og:image`, `og:type`, `og:locale`, `og:image:alt`
+- [ ] Twitter meta: `twitter:card: 'summary_large_image'`, `twitter:title`, `twitter:description`
 
 ### Performance
 - [ ] All images via `next/image` (zero `<img>` tags)
@@ -851,12 +1018,28 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 
 ### Legal & GDPR
 - [ ] `src/components/CookieBanner.tsx` exists and imported in `layout.tsx`
+- [ ] Cookie banner has **both** Accept and Reject buttons with equal visual weight (ICO 2025 requirement)
+- [ ] `AnalyticsProvider` (GA4) only loads after `cookie-consent === 'accepted'`
 - [ ] `src/app/privacy/page.tsx` exists with client name/email/location populated
-- [ ] `CookieBanner` links to `/privacy` page
-- [ ] Contact form privacy notice present (e.g. "We'll only use your details to respond to your enquiry")
+- [ ] Privacy Policy linked in footer copyright bar
+- [ ] Cookie Settings link in footer copyright bar (clears consent + reloads)
+- [ ] Contact form has privacy notice: "We'll only use your details to respond to your enquiry"
+- [ ] Contact form has honeypot `name="website"` hidden field (bot spam filter)
+
+### Security
+- [ ] `next.config.ts` has `headers()` block with `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Content-Security-Policy`
+- [ ] Contact API route (`/api/contact/route.ts`) has rate limiting (5 req/min per IP)
+
+### Accessibility (WCAG 2.1 AA)
+- [ ] `<html lang="en-GB">` on root layout
+- [ ] Skip-to-main-content link in Navbar (visible on focus)
+- [ ] `focus-visible` CSS in `globals.css` (`outline: 2px solid var(--color-primary)`)
+- [ ] Mobile nav menu has `aria-modal="true"`, `aria-expanded`, focus trap (Escape closes)
+- [ ] All interactive elements have `:focus-visible` styles
 
 ### SEO (Rich Results)
 - [ ] FAQPage JSON-LD present in `page.tsx` if ≥3 FAQ items in `copy.json`
+- [ ] `aggregateRating` block in JSON-LD if `copy.json schema_reviews.review_count > 0`
 - [ ] Redirects stub in `next.config.ts` if client has `existing_site_url` in brief
 
 ### Copy
