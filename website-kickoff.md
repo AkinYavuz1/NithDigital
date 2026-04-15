@@ -13,6 +13,29 @@ Every website gets its own **private GitHub repo** under the `AkinYavuz1` accoun
 
 ---
 
+## Model Switching Protocol
+
+**You must stop at the end of every stage and wait for Akin to confirm before continuing.**
+
+At each stage transition, output this exact block so it is unmissable in the terminal:
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║  ⚠️  MODEL SWITCH REQUIRED                                   ║
+║  Switch to: [MODEL NAME]                                     ║
+║  Command:   /model [model-id]                                ║
+║  Then type: "Continue to Stage [N]"                          ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+**Do not proceed to the next stage until Akin types "Continue to Stage [N]".**
+
+Model IDs:
+- Sonnet: `claude-sonnet-4-6`
+- Opus: `claude-opus-4-6`
+
+---
+
 ## The 12-Stage Pipeline
 
 ---
@@ -40,6 +63,17 @@ Deploy a market-research subagent immediately:
 - Identify 3–5 competitor sites; note design patterns, what works, what's missing
 - Write findings to `designs/[client-slug]/scraped/market-research.json`
 
+---
+
+---
+> **STAGE 1 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ✅ Stage 1 done. No model switch needed.                    ║
+> ║  Stay on: claude-sonnet-4-6                                  ║
+> ║  Type "Continue to Stage 2" to proceed.                      ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
 ---
 
 ### STAGE 2 — Brief Gathering `[model: sonnet]`
@@ -87,6 +121,18 @@ Once ≥7 are covered, write `designs/[client-slug]/brief.json`:
 
 ---
 
+---
+> **STAGE 2 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 3                    ║
+> ║  Switch to: OPUS (creative design reasoning)                 ║
+> ║  Command:   /model claude-opus-4-6                           ║
+> ║  Then type: "Continue to Stage 3"                            ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+---
+
 ### STAGE 3 — Design Research + Theme Planning `[model: opus]`
 
 Deploy a design-research subagent to:
@@ -128,6 +174,17 @@ State explicitly how each design differs from archive entries before proceeding.
 
 ---
 
+---
+> **STAGE 3 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ✅ Stage 3 done. Stay on OPUS for Stage 4.                  ║
+> ║  Stay on: claude-opus-4-6                                    ║
+> ║  Type "Continue to Stage 4" to proceed.                      ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+---
+
 ### STAGE 4 — Generate 3 HTML Mockups `[model: opus]`
 
 Write `design-1.html`, `design-2.html`, `design-3.html` to `designs/[client-slug]/`.
@@ -167,6 +224,18 @@ Design [N] of 3 | [Theme Name] | [Personality] | Primary: #hex | Accent: #hex | 
 
 ---
 
+---
+> **STAGE 4 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 5                    ║
+> ║  Switch to: SONNET (script execution)                        ║
+> ║  Command:   /model claude-sonnet-4-6                         ║
+> ║  Then type: "Continue to Stage 5"                            ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+---
+
 ### STAGE 5 — Render PDFs + Present Designs `[model: sonnet]`
 
 ```bash
@@ -180,6 +249,18 @@ Tell Akin:
 
 **Iteration:** If changes requested — update the relevant HTML file, re-run the PDF script for that design number, present again. Repeat until Akin approves one.
 
+---
+
+---
+> **STAGE 5 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 6                    ║
+> ║  Switch to: OPUS (copywriting + SEO)                         ║
+> ║  Command:   /model claude-opus-4-6                           ║
+> ║  Then type: "Continue to Stage 6"                            ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
 ---
 
 ### STAGE 6 — Generate Copy + Theme JSON `[model: opus]`
@@ -300,6 +381,18 @@ Write `designs/[client-slug]/theme.json` — the approved ThemeConfig object.
 
 ---
 
+---
+> **STAGE 6 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 7                    ║
+> ║  Switch to: SONNET (provisioning scripts)                    ║
+> ║  Command:   /model claude-sonnet-4-6                         ║
+> ║  Then type: "Continue to Stage 7"                            ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+---
+
 ### STAGE 7 — Provision GitHub Repo + Vercel Project `[model: sonnet]`
 
 ```bash
@@ -324,6 +417,18 @@ Saves `designs/[client-slug]/provision.json` with:
 }
 ```
 
+---
+
+---
+> **STAGE 7 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 8                    ║
+> ║  Switch to: OPUS (full codebase generation — most critical)  ║
+> ║  Command:   /model claude-opus-4-6                           ║
+> ║  Then type: "Continue to Stage 8"                            ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
 ---
 
 ### STAGE 8 — Generate Full Next.js Codebase `[model: opus]`
@@ -849,6 +954,18 @@ Vercel auto-deploys when files are pushed to GitHub.
 
 ---
 
+---
+> **STAGE 8 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 9                    ║
+> ║  Switch to: SONNET (deployment monitoring)                   ║
+> ║  Command:   /model claude-sonnet-4-6                         ║
+> ║  Then type: "Continue to Stage 9"                            ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+---
+
 ### STAGE 9 — Monitor Deployment `[model: sonnet]`
 
 ```bash
@@ -860,6 +977,17 @@ Polls Vercel every 10 seconds (5-minute timeout). Prints the live staging URL wh
 Tell Akin:
 > "Site is live at [staging_url] — ready for your review."
 
+---
+
+---
+> **STAGE 9 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ✅ Stage 9 done. Stay on SONNET for Stage 9.5.              ║
+> ║  Stay on: claude-sonnet-4-6                                  ║
+> ║  Type "Continue to Stage 9.5" to proceed.                    ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
 ---
 
 ### STAGE 9.5 — Akin Internal Review `[model: sonnet]`
@@ -874,6 +1002,17 @@ Before showing the client, Akin reviews the staging URL:
 
 If issues: use Stage 12 refinement loop to fix, then re-check.
 
+---
+> **STAGE 9.5 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ✅ Stage 9.5 done. Stay on SONNET for Stage 9.7.            ║
+> ║  Stay on: claude-sonnet-4-6                                  ║
+> ║  Type "Continue to Stage 9.7" to proceed.                    ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+---
+
 ### STAGE 9.7 — Client Staging Review (recommended) `[model: sonnet]`
 
 Send the client an email with:
@@ -883,6 +1022,17 @@ Send the client an email with:
 - "Once you're happy, reply with 'Approved for launch' to confirm"
 
 Log client feedback in `designs/[client-slug]/client-feedback.json`. Apply via Stage 12. Once client approves, proceed to Stage 10.
+
+---
+> **STAGE 9.7 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ✅ Stage 9.7 done. Stay on SONNET for Stage 10.             ║
+> ║  Stay on: claude-sonnet-4-6                                  ║
+> ║  Type "Continue to Stage 10" to proceed.                     ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+---
 
 ### STAGE 10 — Automated QA `[model: sonnet]`
 
@@ -904,6 +1054,17 @@ Note: the previous Vercel deployment stays live until the new one is READY. No r
 
 Review the report. Fix any failures. Re-push if needed.
 
+---
+
+---
+> **STAGE 10 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ✅ Stage 10 done. Stay on SONNET for Stage 11.              ║
+> ║  Stay on: claude-sonnet-4-6                                  ║
+> ║  Type "Continue to Stage 11" to proceed.                     ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
 ---
 
 ### STAGE 11 — Update Design Archive + GSC Setup `[model: sonnet]`
@@ -942,6 +1103,18 @@ npx ts-node --project tsconfig.json src/scripts/submit-gsc.ts \
 
 **Note:** Nith Ops also runs a monthly sitemap re-submission (`/api/cron/gsc-submit`) for all tracked sites on the 1st of each month at 10:00 UTC. Once the site is added to nith-ops, it's covered automatically.
 
+---
+
+---
+> **STAGE 11 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 12                   ║
+> ║  Switch to: OPUS (client-facing refinements)                 ║
+> ║  Command:   /model claude-opus-4-6                           ║
+> ║  Then type: "Continue to Stage 12"                           ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
 ---
 
 ### STAGE 12 — Refinement Loop `[model: opus]`
