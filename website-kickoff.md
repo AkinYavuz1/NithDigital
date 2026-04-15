@@ -69,7 +69,7 @@ When this is triggered, deploy **3 subagents in parallel**:
 > ...
 > Browse these and tell me which ones (or which elements) you like. These become your design references for the pipeline."
 
-Akin picks favourites. These feed into Stage 1B.
+Akin picks favourites. This takes **10-15 minutes of browsing** — it's the most valuable 15 minutes in the whole pipeline because it sets the design direction. Akin doesn't need to analyse the sites in detail; just note what feels right and what specific elements work (e.g. "I like how this one handles their nav" or "this colour scheme works"). These feed into Stage 1C.
 
 ---
 
@@ -125,6 +125,8 @@ Ask Akin these questions (or pre-fill from what he's already shared):
 7. **What's the competition like locally?** Are there 50 joiners in the area or 3?
 8. **Do they have photography?** Professional shots? Phone photos? Nothing yet?
 9. **What's their budget expectation?** (Akin will know this from the sales conversation)
+
+**Establish the client slug now.** Use the business name, not a generic label. For "Adkin Joinery" the slug is `adkin-joinery`, not `joiner-client`. All files from this point forward go in `designs/[client-slug]/`. Getting this right at the start avoids renaming later.
 
 Write the assessment to `designs/[client-slug]/assessment.json`:
 ```json
@@ -398,7 +400,13 @@ The proposal should be written in plain English, addressed to the client, and co
 
 **5. Timeline** — "We'll send you 3 design concepts within [X days]. Once you choose a direction, the site will be live within [X days]."
 
-**6. Investment** — Akin fills this in manually based on the project scope.
+**6. Investment** — Akin fills this in manually. Structure as Option A (base) vs Option B (recommended upsell). Consider upsells based on the strategic assessment:
+- Client has no/poor photography → **Gallery updates service** (Akin updates their gallery from WhatsApp photos monthly)
+- Client has no social media presence → **Social media management** (automated posting)
+- Client has no Google Business profile → **Include setup for free** (low effort, high trust signal)
+- Client has no reviews → **Review collection setup** (email/SMS follow-up after jobs)
+
+Always position the upsell as the recommended option with a clear benefit statement.
 
 **7. Next steps** — "Reply to this email with 'Let's go' and we'll get started."
 
@@ -531,7 +539,7 @@ Write `designs/[client-slug]/copy.json`:
 - Hero CTA: action-oriented (e.g. "Get Your Free Quote", not "Click Here")
 - Client name, location, and key services must appear in the copy
 - No Lorem ipsum anywhere
-- `testimonials` array: use real reviews if found during research; otherwise write 3 realistic placeholder quotes appropriate to the industry
+- `testimonials` array: use real reviews if found during research; otherwise write 3 realistic placeholder quotes appropriate to the industry. **Mark placeholders clearly** — use "Recent client" as the name (not a made-up name) so it's obvious these need swapping for real testimonials later. Add a note in `pipeline-state.json` to remind the next session
 - `schema.same_as`: populate with actual social URLs found during research
 
 **Deploy a copy-review subagent** to check:
@@ -638,11 +646,13 @@ Write `designs/[client-slug]/design-compare.html`:
 - Active tab highlighted with accent colour
 
 Tell Akin:
-> "Three design proposals are ready — open `designs/[client-slug]/design-compare.html` in your browser to compare them. These are Round 1 — they exist to find the right direction. Tell me:
+> "Three design proposals are ready in `designs/[client-slug]/`. Review them in your browser via `design-compare.html`, then tell me:
 > 1. Which one is closest to what you want?
 > 2. What specifically works about it?
 > 3. What doesn't work or needs to change?
 > 4. Any elements from the OTHER designs you'd like to pull in?"
+
+**Presenting to the client:** Do NOT send the HTML files or PDFs to the client — record a Loom walkthrough instead. Raw HTML gives away that the site is already built; PDFs don't capture animations and hover states. A 2-3 minute screen recording where Akin scrolls through each design and briefly narrates is the most professional presentation format. Structure: 30s intro, 60s per design (scroll slowly, point out key sections), 15s close asking for feedback.
 
 **Round 1 exists to be refined, not approved.** Its purpose is to surface what Akin does and doesn't want — things that are hard to articulate in a brief but easy to point at in a visual.
 
