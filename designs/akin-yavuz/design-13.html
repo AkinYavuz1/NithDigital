@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — Senior BI &amp; Data Professional</title>
+<meta name="description" content="Akin Yavuz — Senior BI & Data Professional with 10+ years turning raw data into dashboards, pipelines, and platforms.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Tokens ── */
+:root {
+  --bg: #FAFAF9;
+  --surface: #FFFFFF;
+  --text: #1A1A1A;
+  --muted: #8A8A86;
+  --dim: #C5C5C0;
+  --border: rgba(26,26,26,0.06);
+  --accent: #C8963E;
+  --accent-bg: rgba(200,150,62,0.08);
+  --blue-dot: #4A90D9;
+  --radius-card: 16px;
+  --radius-tag: 8px;
+  --radius-pill: 999px;
+  --font-heading: 'Libre Baskerville', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── Animations ── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll { opacity: 1; transform: none; transition: none; }
+}
+
+/* Hero staggered entrance */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-stagger {
+  opacity: 0;
+  animation: heroFadeUp 0.7s ease-out forwards;
+}
+.hero-stagger:nth-child(1) { animation-delay: 0.1s; }
+.hero-stagger:nth-child(2) { animation-delay: 0.25s; }
+.hero-stagger:nth-child(3) { animation-delay: 0.4s; }
+.hero-stagger:nth-child(4) { animation-delay: 0.55s; }
+.hero-stagger:nth-child(5) { animation-delay: 0.7s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-stagger { opacity: 1; animation: none; }
+}
+
+/* ── 1. Design Label Bar ── */
+.design-label {
+  background: var(--text);
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 10px 32px;
+  text-align: center;
+}
+
+/* ── 2. Navbar ── */
+.navbar {
+  padding: 28px 0;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-brand {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text);
+}
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.navbar-links a {
+  font-size: 13px;
+  color: var(--muted);
+  position: relative;
+  transition: color 0.2s;
+}
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  border-bottom: 1px dotted var(--text);
+  transition: width 0.3s ease;
+}
+.navbar-links a:hover {
+  color: var(--text);
+}
+.navbar-links a:hover::after {
+  width: 100%;
+}
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+.nav-status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ── 3. Hero ── */
+.hero {
+  text-align: center;
+  padding: 120px 0 80px;
+}
+.hero-name-first {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(64px, 10vw, 96px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text);
+}
+.hero-name-last {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(64px, 10vw, 96px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.hero-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+}
+.hero-subtitle span {
+  margin: 0 10px;
+  opacity: 0.4;
+}
+.hero-bio {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-outline {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--text);
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-outline:hover { background: rgba(26,26,26,0.04); transform: translateY(-1px); }
+
+/* ── 4. Stats Strip ── */
+.stats-strip {
+  padding: 48px 0 64px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.stat-card {
+  position: relative;
+  border: 1px dashed var(--dim);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+.stat-card:hover {
+  border-color: var(--muted);
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.stat-number {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* ── Section titles ── */
+.section-title {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 42px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 48px;
+}
+
+/* ── 5. About Section — Canvas Element ── */
+.about-section {
+  padding: 80px 0;
+}
+.canvas-card {
+  position: relative;
+  border: 1px dashed var(--dim);
+  border-radius: var(--radius-card);
+  padding: 56px;
+  background: var(--surface);
+}
+/* Corner handle dots */
+.canvas-card .handle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue-dot);
+  transition: transform 0.3s ease;
+}
+.canvas-card:hover .handle { transform: scale(1.35); }
+.canvas-card .handle-tl { top: -3px; left: -3px; }
+.canvas-card .handle-tr { top: -3px; right: -3px; }
+.canvas-card .handle-bl { bottom: -3px; left: -3px; }
+.canvas-card .handle-br { bottom: -3px; right: -3px; }
+
+.canvas-card:hover {
+  border-color: rgba(197,197,192,0.7);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 56px;
+}
+.about-text p {
+  margin-bottom: 20px;
+  color: var(--text);
+  line-height: 1.8;
+}
+.about-text p:last-child { margin-bottom: 0; }
+
+.certs-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.cert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.cert-item .cert-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+/* ── 6. Skills Section ── */
+.skills-section {
+  padding: 80px 0;
+}
+.skill-band {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.skill-band:first-of-type {
+  border-top: 1px solid var(--border);
+}
+.skill-category {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 600;
+  min-width: 180px;
+  flex-shrink: 0;
+  padding-top: 6px;
+}
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skill-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  background: transparent;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: default;
+}
+.skill-tag:hover {
+  background: var(--accent-bg);
+  border-color: rgba(200,150,62,0.25);
+}
+
+/* ── 7. Experience Section ── */
+.experience-section {
+  padding: 80px 0;
+}
+.experience-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.experience-header .section-title { margin-bottom: 0; }
+.experience-meta {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  font-family: var(--font-heading);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 36px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 7px;
+  width: 1px;
+  height: calc(100% - 16px);
+  border-left: 1px dashed var(--dim);
+}
+.timeline-entry {
+  position: relative;
+  margin-bottom: 56px;
+}
+.timeline-entry:last-child { margin-bottom: 0; }
+
+.timeline-dot {
+  position: absolute;
+  left: -36px;
+  top: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid var(--dim);
+  background: var(--bg);
+  transition: background 0.4s, border-color 0.4s;
+}
+.timeline-dot.filled {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.timeline-company {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.timeline-date {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--muted);
+  margin-left: 8px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.timeline-role {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 8px 0 12px;
+  color: var(--text);
+}
+.timeline-bullets {
+  list-style: none;
+  margin-bottom: 16px;
+}
+.timeline-bullets li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.7;
+}
+.timeline-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--dim);
+}
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.timeline-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+}
+
+/* ── 8. Projects Section ── */
+.projects-section {
+  padding: 80px 0;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.project-card {
+  position: relative;
+  border: 1px dashed var(--dim);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  overflow: visible;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+}
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(26,26,26,0.06);
+  border-color: rgba(197,197,192,0.7);
+}
+.project-card .handle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue-dot);
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+.project-card:hover .handle { transform: scale(1.35); }
+.project-card .handle-tl { top: -3px; left: -3px; }
+.project-card .handle-tr { top: -3px; right: -3px; }
+.project-card .handle-bl { bottom: -3px; left: -3px; }
+.project-card .handle-br { bottom: -3px; right: -3px; }
+
+.project-card-inner {
+  padding: 20px;
+}
+.project-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.project-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.project-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.project-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.project-tags {
+  display: flex;
+  gap: 6px;
+}
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+}
+.project-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+}
+.project-link:hover { gap: 8px; }
+.project-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ── 9. Quotes ── */
+.quotes-section {
+  padding: 80px 0;
+}
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.quote-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 40px 32px 32px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.quote-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(26,26,26,0.06);
+}
+.quote-mark {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 12px;
+  user-select: none;
+}
+.quote-text {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.quote-author {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.quote-role {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── 10. Contact / CTA ── */
+.contact-section {
+  background: var(--text);
+  padding: 96px 0 72px;
+}
+.contact-heading {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 42px;
+  font-weight: 400;
+  color: var(--surface);
+  text-align: center;
+  margin-bottom: 56px;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.contact-item {
+  text-align: center;
+}
+.contact-item-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.contact-item-value {
+  font-size: 15px;
+  color: var(--surface);
+}
+.contact-item-value a {
+  color: var(--surface);
+  border-bottom: 1px dotted rgba(255,255,255,0.3);
+  transition: border-color 0.2s;
+}
+.contact-item-value a:hover {
+  border-color: var(--accent);
+}
+.contact-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.contact-status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ── 11. Footer ── */
+.footer {
+  background: var(--text);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 24px 0;
+}
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-left {
+  font-size: 12px;
+  color: var(--muted);
+}
+.footer-right a {
+  font-size: 12px;
+  color: var(--muted);
+  border-bottom: 1px dotted rgba(255,255,255,0.15);
+  transition: color 0.2s;
+}
+.footer-right a:hover { color: var(--surface); }
+
+/* ══════ Responsive ══════ */
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .design-label { padding: 10px 20px; font-size: 10px; }
+
+  .navbar-links { gap: 20px; }
+  .navbar-links li:not(.nav-status-li) { display: none; }
+
+  .hero { padding: 80px 0 56px; }
+  .hero-name-first,
+  .hero-name-last { font-size: 48px; }
+  .hero-subtitle { font-size: 12px; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .stat-card { padding: 20px 16px; }
+  .stat-number { font-size: 28px; }
+
+  .about-section { padding: 56px 0; }
+  .canvas-card { padding: 32px 24px; }
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+
+  .skills-section { padding: 56px 0; }
+  .skill-band { flex-direction: column; gap: 12px; }
+  .skill-category { min-width: unset; padding-top: 0; }
+
+  .experience-section { padding: 56px 0; }
+  .experience-header { flex-direction: column; gap: 4px; }
+  .section-title { font-size: 32px; margin-bottom: 36px; }
+
+  .projects-grid { grid-template-columns: 1fr; }
+  .projects-section { padding: 56px 0; }
+
+  .quotes-grid { grid-template-columns: 1fr; }
+  .quotes-section { padding: 56px 0; }
+
+  .contact-section { padding: 64px 0 48px; }
+  .contact-heading { font-size: 32px; }
+  .contact-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+
+  .footer .container { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── 1. Design Label Bar ── -->
+<div class="design-label">
+  Design 13 of 3 &nbsp;|&nbsp; Canvas &nbsp;|&nbsp; Design-tool aesthetic, monochrome warmth &nbsp;|&nbsp; Primary: #C8963E &nbsp;|&nbsp; Fonts: Libre Baskerville / Inter &nbsp;|&nbsp; Layout: centred
+</div>
+
+<!-- ── 2. Navbar ── -->
+<nav class="navbar">
+  <div class="container">
+    <a href="#" class="navbar-brand">Akin Yavuz</a>
+    <ul class="navbar-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="nav-status-li">
+        <span class="nav-status"><span class="dot"></span> Available</span>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── 3. Hero ── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-stagger">
+      <div class="hero-name-first">Akin</div>
+    </div>
+    <div class="hero-stagger">
+      <div class="hero-name-last">Yavuz</div>
+    </div>
+    <div class="hero-stagger">
+      <p class="hero-subtitle">Senior BI Developer <span>&middot;</span> Microsoft Certified <span>&middot;</span> 10+ years</p>
+    </div>
+    <div class="hero-stagger">
+      <p class="hero-bio">&ldquo;I turn raw data into dashboards, pipelines, and platforms that organisations actually use to make decisions.&rdquo;</p>
+    </div>
+    <div class="hero-stagger">
+      <div class="hero-buttons">
+        <a href="#contact" class="btn-primary">Get in touch</a>
+        <a href="#" class="btn-outline">Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. Stats Strip ── -->
+<section class="stats-strip animate-on-scroll">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years in BI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">SSRS Reports</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">40h</div>
+        <div class="stat-label">Saved Monthly</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4&times;</div>
+        <div class="stat-label">Commonwealth Gold</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. About ── -->
+<section id="about" class="about-section animate-on-scroll">
+  <div class="container">
+    <div class="section-title">About</div>
+    <div class="canvas-card">
+      <span class="handle handle-tl"></span>
+      <span class="handle handle-tr"></span>
+      <span class="handle handle-bl"></span>
+      <span class="handle handle-br"></span>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a Senior BI &amp; Data Professional with over a decade of experience turning raw data into dashboards, pipelines, and platforms that organisations actually use to make decisions.</p>
+          <p>My background spans the NHS, financial services (Openwork, Holloway Friendly), energy (Good Energy), and software consulting. I've built self-service BI systems for thousands of users, automated reporting workflows saving 40+ hours per month, and delivered insight products to regulators including Ofgem and the Citizens Advice Bureau.</p>
+          <p>Outside of data: I'm a 4&times; Commonwealth Games gold medallist in powerlifting. I bring the same discipline and attention to detail from sport into my work.</p>
+        </div>
+        <div class="about-certs">
+          <div class="certs-title">Certifications</div>
+          <div class="cert-item"><span class="cert-dot"></span> MS Certified Power BI Data Analyst</div>
+          <div class="cert-item"><span class="cert-dot"></span> Microsoft Certified SQL Developer</div>
+          <div class="cert-item"><span class="cert-dot"></span> Certified Scrum Master (CSM)</div>
+          <div class="cert-item"><span class="cert-dot"></span> Diploma in Leadership &amp; Management</div>
+          <div class="cert-item"><span class="cert-dot"></span> BA (Hons) BIS — Northumbria University</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 6. Skills ── -->
+<section class="skills-section animate-on-scroll">
+  <div class="container">
+    <div class="section-title">The full stack</div>
+
+    <div class="skill-band">
+      <div class="skill-category">Core BI</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">DAX</span>
+        <span class="skill-tag">Power Query (M)</span>
+        <span class="skill-tag">SSRS</span>
+        <span class="skill-tag">SSAS</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">Excel</span>
+      </div>
+    </div>
+
+    <div class="skill-band">
+      <div class="skill-category">Data Engineering</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL Server</span>
+        <span class="skill-tag">T-SQL</span>
+        <span class="skill-tag">SSIS</span>
+        <span class="skill-tag">ETL/ELT</span>
+        <span class="skill-tag">Azure Data Factory</span>
+        <span class="skill-tag">Data Warehousing</span>
+        <span class="skill-tag">Star Schema</span>
+      </div>
+    </div>
+
+    <div class="skill-band">
+      <div class="skill-category">Cloud &amp; DevOps</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Azure</span>
+        <span class="skill-tag">Microsoft Fabric</span>
+        <span class="skill-tag">Dynamics 365</span>
+        <span class="skill-tag">Git/GitHub</span>
+        <span class="skill-tag">Azure DevOps</span>
+      </div>
+    </div>
+
+    <div class="skill-band">
+      <div class="skill-category">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">DAX</span>
+        <span class="skill-tag">M/Power Query</span>
+        <span class="skill-tag">VBA</span>
+      </div>
+    </div>
+
+    <div class="skill-band">
+      <div class="skill-category">Leadership</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Agile/Scrum</span>
+        <span class="skill-tag">Stakeholder Mgmt</span>
+        <span class="skill-tag">Mentoring</span>
+        <span class="skill-tag">Requirements Elicitation</span>
+      </div>
+    </div>
+
+    <div class="skill-band">
+      <div class="skill-category">Sectors</div>
+      <div class="skill-tags">
+        <span class="skill-tag">NHS/Healthcare</span>
+        <span class="skill-tag">Financial Services</span>
+        <span class="skill-tag">Energy/Utilities</span>
+        <span class="skill-tag">Regulatory Reporting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 7. Experience ── -->
+<section id="work" class="experience-section">
+  <div class="container">
+    <div class="experience-header">
+      <div class="section-title">Where I've worked</div>
+      <div class="experience-meta">4 roles &middot; 10+ years</div>
+    </div>
+
+    <div class="timeline">
+      <!-- Role 1 -->
+      <div class="timeline-entry animate-on-scroll">
+        <div class="timeline-dot" data-fill></div>
+        <div>
+          <span class="timeline-company">NHS Arden &amp; GEM CSU</span>
+          <span class="timeline-date">Oct 2022 – Jun 2025</span>
+        </div>
+        <div class="timeline-role">Principal Insight Developer</div>
+        <ul class="timeline-bullets">
+          <li>Led Power BI best-practice standards — semantic model design and report governance</li>
+          <li>Built KPI frameworks tracking healthcare outcomes, patient flow, staffing levels</li>
+          <li>Designed self-service BI datasets enabling non-technical teams to build reports independently</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">SQL</span>
+          <span class="timeline-tag">Azure</span>
+          <span class="timeline-tag">DAX</span>
+          <span class="timeline-tag">NHS Analytics</span>
+        </div>
+      </div>
+
+      <!-- Role 2 -->
+      <div class="timeline-entry animate-on-scroll">
+        <div class="timeline-dot" data-fill></div>
+        <div>
+          <span class="timeline-company">The Openwork Partnership</span>
+          <span class="timeline-date">Mar 2020 – Oct 2022</span>
+        </div>
+        <div class="timeline-role">Senior MI Analyst</div>
+        <ul class="timeline-bullets">
+          <li>Built 50+ SSRS reports automating manual processes — saving 40 hours per month</li>
+          <li>Power BI datasets sourced from Azure Data Warehouse, embedded into Dynamics 365</li>
+          <li>Complex SQL stored procedures for Finance audit testing and regulatory compliance</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">SSRS</span>
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">Azure DWH</span>
+          <span class="timeline-tag">Dynamics 365</span>
+        </div>
+      </div>
+
+      <!-- Role 3 -->
+      <div class="timeline-entry animate-on-scroll">
+        <div class="timeline-dot" data-fill></div>
+        <div>
+          <span class="timeline-company">Good Energy</span>
+          <span class="timeline-date">Dec 2018 – Mar 2020</span>
+        </div>
+        <div class="timeline-role">BI Developer</div>
+        <ul class="timeline-bullets">
+          <li>Power BI dashboards for Ofgem, Citizens Advice Bureau, government departments</li>
+          <li>Led data migration to a new CRM, rewriting reports against new data structures</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">SSRS</span>
+          <span class="timeline-tag">Regulatory Reporting</span>
+        </div>
+      </div>
+
+      <!-- Role 4 -->
+      <div class="timeline-entry animate-on-scroll">
+        <div class="timeline-dot" data-fill></div>
+        <div>
+          <span class="timeline-company">7 Layer Solutions</span>
+          <span class="timeline-date">Mar 2016 – Jun 2018</span>
+        </div>
+        <div class="timeline-role">Report Developer</div>
+        <ul class="timeline-bullets">
+          <li>Delivered Power BI dashboards for Retail and Banking clients in Agile consulting</li>
+          <li>Travelled internationally to deliver Power BI training to enterprise teams</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">Agile</span>
+          <span class="timeline-tag">Client Consulting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. Projects ── -->
+<section id="projects" class="projects-section animate-on-scroll">
+  <div class="container">
+    <div class="section-title">Projects &amp; experiments</div>
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <span class="handle handle-tl"></span>
+        <span class="handle handle-tr"></span>
+        <span class="handle handle-bl"></span>
+        <span class="handle handle-br"></span>
+        <div class="project-card-inner">
+          <img class="project-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80&auto=format&fit=crop" alt="Dashboard data visualisation" loading="lazy">
+          <div class="project-title">Sanquhar Business Directory</div>
+          <p class="project-desc">62% of 197 local businesses have no web presence. Built with data visualisation at its core.</p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="project-tag">Data Viz</span>
+              <span class="project-tag">Web App</span>
+            </div>
+            <a href="https://businessdirectory-nine.vercel.app/" target="_blank" rel="noopener" class="project-link">
+              View live
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <span class="handle handle-tl"></span>
+        <span class="handle handle-tr"></span>
+        <span class="handle handle-bl"></span>
+        <span class="handle handle-br"></span>
+        <div class="project-card-inner">
+          <img class="project-img" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&q=80&auto=format&fit=crop" alt="Code on screen" loading="lazy">
+          <div class="project-title">Daily Duel</div>
+          <p class="project-desc">Competitive daily word game with multi-mode scoring, leaderboards, shareable challenges.</p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="project-tag">PostgreSQL</span>
+              <span class="project-tag">Game Logic</span>
+            </div>
+            <a href="https://daily-duel.akinyavuz.workers.dev/" target="_blank" rel="noopener" class="project-link">
+              View live
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card">
+        <span class="handle handle-tl"></span>
+        <span class="handle handle-tr"></span>
+        <span class="handle handle-bl"></span>
+        <span class="handle handle-br"></span>
+        <div class="project-card-inner">
+          <img class="project-img" src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&q=80&auto=format&fit=crop" alt="Data analysis" loading="lazy">
+          <div class="project-title">Not An Octavia</div>
+          <p class="project-desc">Custom ML model to surface genuinely good second-hand car deals.</p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="project-tag">ML</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Scraping</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 9. Quotes ── -->
+<section class="quotes-section animate-on-scroll">
+  <div class="container">
+    <div class="section-title">What people say</div>
+    <div class="quotes-grid">
+
+      <div class="quote-card">
+        <div class="quote-mark">&ldquo;</div>
+        <p class="quote-text">Akin transformed our reporting — what used to take our team days now runs automatically.</p>
+        <div class="quote-author">Sarah Mitchell</div>
+        <div class="quote-role">NHS Programme Director</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-mark">&ldquo;</div>
+        <p class="quote-text">Clear communicator who translates complex data into actionable insight.</p>
+        <div class="quote-author">James Porter</div>
+        <div class="quote-role">Head of Finance, Openwork</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-mark">&ldquo;</div>
+        <p class="quote-text">Technically excellent and always delivers on time.</p>
+        <div class="quote-author">David Chen</div>
+        <div class="quote-role">CTO, 7 Layer Solutions</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 10. Contact / CTA ── -->
+<section id="contact" class="contact-section animate-on-scroll">
+  <div class="container">
+    <h2 class="contact-heading">Let's talk about your data.</h2>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-value"><a href="mailto:akin@nithdigital.com">akin@nithdigital.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Phone</div>
+        <div class="contact-item-value"><a href="tel:+447425137337">07425 137 337</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Location</div>
+        <div class="contact-item-value">Dumfries &amp; Galloway</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Status</div>
+        <div class="contact-item-value">
+          <span class="contact-status"><span class="dot"></span> Available for remote roles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 11. Footer ── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-left">Akin Yavuz &middot; Dumfries &amp; Galloway &middot; Built with care</div>
+    <div class="footer-right"><a href="#">Privacy</a></div>
+  </div>
+</footer>
+
+<!-- ── Scripts ── -->
+<script>
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Scroll reveal
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // Timeline dots fill on scroll
+  var dotObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('filled');
+        dotObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.timeline-dot[data-fill]').forEach(function(dot) {
+    dotObserver.observe(dot);
+  });
+})();
+</script>
+</body>
+</html>
