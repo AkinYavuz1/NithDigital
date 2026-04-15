@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "title": "Adkin Joinery | Joiner in Thornhill, Dumfries & Galloway",
+    "description": "Adkin Joinery — hand-made kitchens, house building, and general carpentry in Thornhill and across Dumfries & Galloway. Quality joinery, built to last.",
+    "og_title": "Adkin Joinery | Joiner in Thornhill, Dumfries & Galloway",
+    "og_image": "https://adkinjoinery.co.uk/og-image.jpg",
+    "keywords": ["joiner thornhill", "joiner dumfries and galloway", "carpenter dumfries", "kitchen fitter thornhill", "house builder dumfries", "bespoke joinery dumfries"]
+  },
+  "nap": {
+    "name": "Adkin Joinery",
+    "phone": "",
+    "email": "",
+    "address": "Closeburn, Thornhill",
+    "postal_code": "",
+    "city": "Thornhill",
+    "country": "GB"
+  },
+  "pages": {
+    "home": {
+      "hero_headline": "Built by hand. Built to last.",
+      "hero_subheading": "Joinery and carpentry across Dumfries & Galloway",
+      "hero_cta": "Get a Free Quote",
+      "intro_paragraph": "Adkin Joinery designs and builds kitchens, houses, and bespoke carpentry for homeowners across Dumfries & Galloway. Every project is built by hand with care and precision — from full house builds to fitted kitchens and everyday carpentry.",
+      "services_intro": "Whether you need a new kitchen, a full house build, or skilled carpentry for a renovation, we handle the whole job from design to completion.",
+      "trust_statement": "",
+      "cta_section_headline": "Ready to start your project?",
+      "cta_section_body": "Tell us what you have in mind. We'll come to you, talk it through, and give you an honest quote — no pressure, no obligation.",
+      "cta_button": "Get in Touch"
+    },
+    "about": {
+      "headline": "About Adkin Joinery",
+      "story_paragraph": "Adkin Joinery is run by Oliver Adkin, a skilled joiner based in Closeburn, Thornhill. Oliver works across Dumfries & Galloway, bringing the same care and attention to every project — whether it's a full house build or a set of shelves.\n\nEvery piece of work is built by hand. No shortcuts, no subcontractors, no templated solutions. Just honest joinery done properly.",
+      "values_intro": "",
+      "values": [],
+      "team_intro": ""
+    },
+    "services": {
+      "headline": "What we do",
+      "intro": "From full-scale house builds to hand-made kitchens and everyday carpentry — we handle projects of every size.",
+      "service_items": [
+        {
+          "name": "House Building",
+          "description": "Full house builds from foundations to finishing. We manage the joinery and carpentry elements of new-build projects, working alongside other trades to deliver a home built with precision and quality materials.",
+          "cta": "Discuss your build"
+        },
+        {
+          "name": "Hand-Made Kitchens",
+          "description": "Bespoke kitchens designed and built to fit your space perfectly. Every cabinet, drawer, and worktop is made by hand — not pulled from a catalogue. Your kitchen, your way.",
+          "cta": "Design your kitchen"
+        },
+        {
+          "name": "General Carpentry",
+          "description": "Doors, windows, staircases, fitted furniture, shelving, renovations, and repairs. If it involves wood and skill, we do it — and we do it properly.",
+          "cta": "Get a quote"
+        }
+      ]
+    },
+    "contact": {
+      "headline": "Get in touch",
+      "intro": "Tell us about your project and we'll get back to you within 24 hours. We cover Thornhill, Dumfries, Sanquhar, Moffat, Lockerbie, and all surrounding areas.",
+      "form_cta": "Send your enquiry",
+      "phone_label": "Call Oliver",
+      "email_label": "Email us"
+    },
+    "faq": {
+      "intro": "Common questions",
+      "items": [
+        { "question": "What areas do you cover?", "answer": "We cover Thornhill, Dumfries, Sanquhar, Moffat, Lockerbie, and all surrounding areas across Dumfries & Galloway." },
+        { "question": "Do you offer free quotes?", "answer": "Yes. We'll visit your property, discuss what you need, and provide an honest, no-obligation quote." },
+        { "question": "How long does a kitchen take?", "answer": "A typical hand-made kitchen takes 4 to 8 weeks from initial design to installation, depending on the size and complexity of the project." },
+        { "question": "Do you work with other trades?", "answer": "Yes. For house builds and larger renovations, we coordinate with plumbers, electricians, and other trades to keep your project on track." }
+      ]
+    }
+  },
+  "how_we_work": [
+    { "step": 1, "title": "Discuss", "description": "We visit your property, listen to your ideas, and talk through what's possible. No pressure, just an honest conversation about your project." },
+    { "step": 2, "title": "Design", "description": "We draw up a detailed plan and provide a clear, fixed quote. You know exactly what you're getting and what it costs before any work begins." },
+    { "step": 3, "title": "Build", "description": "We get to work. Every piece is built by hand with quality materials. We keep you updated throughout and the site stays clean and tidy." },
+    { "step": 4, "title": "Deliver", "description": "We finish the job properly, walk you through the completed work, and make sure you're happy with every detail." }
+  ],
+  "testimonials": [
+    { "quote": "Oliver built our kitchen from scratch — it fits perfectly and the quality is brilliant. You can tell it's been made by someone who cares about the detail.", "name": "Recent client", "location": "Thornhill", "rating": 5 },
+    { "quote": "Really impressed with the workmanship. Turned up when he said he would, kept the house tidy, and the finished result is exactly what we wanted.", "name": "Recent client", "location": "Dumfries", "rating": 5 },
+    { "quote": "We had Oliver do all the joinery on our renovation. Doors, skirting, built-in storage — everything was done to a high standard and on time.", "name": "Recent client", "location": "Moffat", "rating": 5 }
+  ],
+  "schema": {
+    "type": "LocalBusiness",
+    "name": "Adkin Joinery",
+    "description": "Joinery and carpentry services in Thornhill and across Dumfries & Galloway. Hand-made kitchens, house building, and general carpentry.",
+    "telephone": "",
+    "address": {
+      "street_address": "Closeburn",
+      "postal_code": "",
+      "locality": "Thornhill",
+      "country": "GB"
+    },
+    "geo": { "latitude": "55.2527", "longitude": "-3.7758" },
+    "opening_hours": [
+      { "day": "Monday-Friday", "opens": "08:00", "closes": "17:00" },
+      { "day": "Saturday", "opens": "08:00", "closes": "12:00" }
+    ],
+    "service_areas": ["Thornhill", "Dumfries", "Sanquhar", "Moffat", "Lockerbie", "Closeburn", "Moniaive", "New Cumnock"],
+    "price_range": "$$",
+    "same_as": []
+  },
+  "schema_reviews": {
+    "rating_value": 5.0,
+    "review_count": 0,
+    "review_text": ""
+  },
+  "maps": {
+    "embed_url": "",
+    "latitude": "55.2527",
+    "longitude": "-3.7758"
+  },
+  "social": {
+    "tagline": "Quality joinery, built to last",
+    "twitter_bio": "",
+    "google_business_description": "Adkin Joinery offers hand-made kitchens, house building, and general carpentry across Dumfries & Galloway. Based in Closeburn, Thornhill. Free quotes available."
+  }
+}

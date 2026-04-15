@@ -1,0 +1,40 @@
+{
+  "client_name": "Adkin Joinery",
+  "business_description": "Local joinery business offering house building, hand-made kitchens, and general carpentry across Dumfries & Galloway.",
+  "industry": "Joinery / Carpentry",
+  "location": "Closeburn, Thornhill, Dumfries and Galloway",
+  "service_area": "Dumfries and Galloway — Thornhill, Dumfries, Sanquhar, Moffat, Lockerbie and surrounding areas",
+  "target_audience": "Local homeowners in Dumfries & Galloway looking for a reliable joiner for kitchens, renovations, and carpentry",
+  "key_services": [
+    "House Building",
+    "Hand-Made Kitchens",
+    "General Carpentry"
+  ],
+  "usp": "Young, ambitious joiner who builds entire houses as well as kitchens and general carpentry — not just a repair man",
+  "tone": "professional",
+  "pages": ["Home", "Services", "Gallery", "About", "Contact"],
+  "features": ["contact form", "gallery", "how we work process section"],
+  "style_notes": "Must look premium WITHOUT professional photography. Typography-led and structure-led design. Grovewood Joinery's font and How We Work section are good references. SPLINTR's gallery page is the benchmark for the portfolio. Design should feel modern and energetic (young owner), not heritage-heavy.",
+  "competitors": [],
+  "existing_assets": "",
+  "sitemap": ["home", "services", "gallery", "about", "contact"],
+  "color_preferences": "Open to suggestion. Grovewood's gold on dark works well for joinery. Avoid bright blues, greens, multi-colour schemes. Warm tones preferred.",
+  "brief_summary": "Website for Adkin Joinery, a young joiner in Thornhill, D&G. No current online presence. Site must work without professional photos, build credibility through design quality and clear process communication, and dominate local search terms. Gallery will be populated with phone shots after launch.",
+  "existing_site_url": "",
+  "scraped_images": [],
+  "design_references": [
+    { "url": "https://www.grovewoodjoinery.co.uk/", "what_works": "The font choice, the How We Work section, gold on dark palette", "component_notes": "Borrow the process/how-we-work structure and the serif/sans typography pairing" },
+    { "url": "https://www.splintr.co.uk/project-gallery-page", "what_works": "Excellent portfolio/gallery page layout", "component_notes": "Gallery page structure — how they present project images" },
+    { "url": "https://www.thomasmaybespoke.co.uk/", "what_works": "Dark, atmospheric, editorial feel", "component_notes": "Overall mood and image treatment approach" }
+  ],
+  "design_constraints": [
+    "Design must look premium with basic phone photography or placeholder images — typography and colour do the heavy lifting, not photos",
+    "Must include a How We Work / process section that builds trust without relying on testimonials or reviews",
+    "Gallery section must look intentional even with only 3-4 images or placeholders",
+    "No heritage messaging (est. since, years of experience) — owner is 26, lead with quality and ambition instead",
+    "Services must clearly distinguish house building (premium) from general carpentry (bread and butter)"
+  ],
+  "contact_email": "",
+  "contact_phone": "",
+  "ga_measurement_id": ""
+}

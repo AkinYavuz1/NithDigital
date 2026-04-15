@@ -1,0 +1,36 @@
+{
+  "references": [
+    {
+      "url": "https://www.grovewoodjoinery.co.uk/",
+      "what_akin_likes": "The font choice, the How We Work section, gold on dark palette",
+      "layout_patterns": "Full-width hero with dark overlay, two-column services (residential/commercial), 4-step process section, testimonial carousel, portfolio grid",
+      "spacing": "Generous — 5% horizontal padding, 1.5rem preset spacing, flexbox gaps throughout",
+      "typography": "Karla (sans-serif) as primary font, system defaults for body. No display serif, but the gold colour adds the warmth that a serif would",
+      "colour_usage": "Gold #aa9a5d on black #000000 is the entire identity. Darkened gold #857a4d for hover. White text on dark backgrounds throughout. Very disciplined two-colour scheme.",
+      "interactions": "Smooth scroll (500ms), lazy-loaded images, scroll-to-top button, hover overlays on gallery items with rgba(0,0,0,0.7)",
+      "premium_signals": "Gold accent on black communicates luxury. Photography style is atmospheric and dark. Language uses 'bespoke' and 'craftsmanship'. Testimonials from architects and designers position them upmarket."
+    },
+    {
+      "url": "https://www.splintr.co.uk/project-gallery-page",
+      "what_akin_likes": "Excellent portfolio/gallery page — how they present work",
+      "layout_patterns": "Full-screen slideshow rather than grid. One project at a time, autoplay with fade transitions (2s intervals). Dot indicators for navigation. 3:2 aspect ratio images throughout.",
+      "spacing": "Minimal — the image IS the page. 20px grid spacing in underlying config but slideshow format makes it full-bleed.",
+      "typography": "Project title only in gallery view, no descriptions or tags. Minimal text lets the images dominate.",
+      "colour_usage": "Neutral — white arrows on dark backgrounds. Gallery info overlay uses rgba(0,0,0,0.7). Photography provides all colour.",
+      "interactions": "Autoplay slideshow, fade transitions, hover to reveal project info overlay, dot navigation indicators",
+      "premium_signals": "Full-screen presentation treats each project as important. The slideshow format forces attention on one piece of work at a time — it's curated, not dumped."
+    },
+    {
+      "url": "https://www.thomasmaybespoke.co.uk/",
+      "what_akin_likes": "Dark, atmospheric, editorial feel",
+      "layout_patterns": "Image-heavy, full-width backgrounds, alternating text/image content blocks, categorised galleries by room type",
+      "spacing": "Generous whitespace between sections, content breathes",
+      "typography": "Mixed serif/sans — serif headings for elegance, sans body for readability",
+      "colour_usage": "Dark backgrounds, near-black, restrained highlights. Photography does the colour work.",
+      "interactions": "Smooth transitions, atmospheric image reveals",
+      "premium_signals": "The darkness and restraint communicate exclusivity. Language emphasises meticulous craftsmanship. Case studies rather than simple galleries."
+    }
+  ],
+  "common_threads": "All three references use dark palettes with warm accents. Gold/amber on black is the joinery luxury signature. Typography is clean and restrained. Photography is atmospheric rather than clinical. The best gallery approach (SPLINTR) treats each project as a full-screen moment rather than a thumbnail grid.",
+  "design_direction_summary": "For Adkin Joinery: dark palette with warm accent (gold or amber), clean sans-serif typography with optional serif for section headers, process-driven content to compensate for limited photography, gallery that looks intentional even with few images. The design must carry the weight that professional photography would normally carry."
+}
