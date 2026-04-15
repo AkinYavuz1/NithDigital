@@ -1,0 +1,178 @@
+[
+  {
+    "url": "https://peststopboys.co.uk",
+    "name": "Pest Stop Boys",
+    "industry": "Pest control (trade/service business, Brighton UK)",
+    "what_makes_it_work_without_photos": "Zero reliance on photography. The entire visual identity is built from custom SVG illustrations (plant patterns, simplified pest silhouettes inspired by Matisse), bold colour blocks, and animated vector elements. The custom cursor reveals hidden bugs as an interactive layer. Photography is completely absent — illustration and colour do all the heavy lifting.",
+    "design_elements": [
+      "Custom SVG illustrations replace photography entirely",
+      "Vibrant blue (#1865f6) primary with yellow (#ffae33) and red accents on white",
+      "Large, bold sans-serif typography with strong hierarchy",
+      "Animated vector elements add movement and personality",
+      "Interactive cursor revealing hidden pest illustrations",
+      "Generous whitespace between colour-blocked sections"
+    ],
+    "transferable_to_trades": "Highly transferable. Proves a local trade business can look world-class without a single photo. A joiner could use wood-grain SVG patterns, tool silhouettes, or timber textures in the same way Pest Stop Boys uses botanical patterns. The illustration-first approach means phone photos become optional extras, not structural requirements. Won Awwwards SOTD, CSS Design Awards SOTD, and almost every major web design award.",
+    "feeling": "Playful, confident, contemporary — a 21st-century trade business that doesn't look like every other tradesman site"
+  },
+  {
+    "url": "https://blackbird-fc.com",
+    "name": "Blackbird Finish Carpentry",
+    "industry": "Finish carpentry (trim, cabinetry, door installation — Colorado)",
+    "what_makes_it_work_without_photos": "Dark background with bold gold accent colour and large sans-serif typography (Oswald/Muli) creates a luxury feel that doesn't depend on imagery. The design uses selective, minimal photography — just a team photo and a few project shots. The dark palette, generous padding, and typographic hierarchy would hold up entirely with phone photos because the design framework carries the premium positioning, not the images.",
+    "design_elements": [
+      "Dark background (blacks, deep browns) with white text",
+      "Gold accent colour (rgba(225,204,50,1)) for premium feel",
+      "Large Oswald sans-serif headlines at substantial sizes",
+      "Generous padding and whitespace between sections",
+      "Minimal, selective use of photography",
+      "Clean navigation with restrained visual elements"
+    ],
+    "transferable_to_trades": "Directly transferable to a UK joiner. Dark + gold is a proven premium combination for craft businesses. The typography-first approach means even basic phone photos of finished work would sit comfortably in this layout. Just swap 'Finish Carpentry' for 'Joinery' and the design translates perfectly. The sophisticated restraint appeals universally to high-end trades markets.",
+    "feeling": "Luxurious, confident, craftsmanlike — the kind of site that makes a sole trader look like a premium operation"
+  },
+  {
+    "url": "https://www.allta.ie",
+    "name": "Allta",
+    "industry": "Restaurant (Dublin, Ireland — #1 restaurant in Ireland 2026)",
+    "what_makes_it_work_without_photos": "Design-led, not photography-led. Uses custom Auger Mono font family across three weights to create a distinctive typographic voice. The warm earthy colour palette (#525027 brown, #988575 taupe, #d69900 ochre on #fef1e8 cream) does the emotional heavy lifting — it feels rooted in natural materials and craft before you see a single image. Photography serves as supporting evidence, not the main attraction.",
+    "design_elements": [
+      "Custom mono typeface (Auger Mono) in light/regular/medium weights",
+      "Earthy, intentional colour palette (brown, taupe, ochre on cream)",
+      "Extreme whitespace and minimal navigation",
+      "Photography treated as editorial content, not decoration",
+      "High-contrast text ensuring legibility without aggression",
+      "Simple grid galleries with restrained styling"
+    ],
+    "transferable_to_trades": "The colour palette and mono typography approach is highly transferable to a joiner or woodworker — earthy tones naturally evoke timber and craft. A joiner could use this exact colour system with phone photos of workshop and finished pieces, and it would feel premium. The mono font choice is inspired — it signals craft and precision without trying too hard.",
+    "feeling": "Curated, honest, ingredient-focused — the visual equivalent of 'we let our work speak for itself'"
+  },
+  {
+    "url": "https://sfcd.com",
+    "name": "SFCD",
+    "industry": "Digital design agency (New York)",
+    "what_makes_it_work_without_photos": "Typography and whitespace are the entire design system. The site uses a combination of white and black, big and small, italics and regular type to create visual interest through pure typographic variation. Images are secondary — the strength lies in layout, hierarchy, and composition. The design would function identically without any photography at all.",
+    "design_elements": [
+      "Black and white with selective accent use",
+      "Multiple type treatments: scale, weight, italic variation",
+      "Generous margins and breathing room",
+      "Grid-based layout with clear section breaks",
+      "Minimal decorative elements — typography IS the decoration",
+      "Content clarity prioritised over visual spectacle"
+    ],
+    "transferable_to_trades": "Extremely transferable. A joiner could adopt this exact framework: bold service headings, clean project descriptions, ample whitespace. The black-and-white foundation means phone photos actually work better here — they become the only colour on the page, making even basic shots feel intentional. The approach requires zero design assets beyond good typography choices.",
+    "feeling": "Confident, minimal, professional — design through restraint rather than decoration"
+  },
+  {
+    "url": "https://leibal.com",
+    "name": "Leibal",
+    "industry": "Minimal design publication (architecture, interiors, furniture, objects)",
+    "what_makes_it_work_without_photos": "The Maison Neue sans-serif typeface with 2px letter-spacing creates sophisticated visual rhythm entirely through typography. The grid-based card system organises content through spacing alone — content cards remain readable and distinct without imagery. The neutral colour palette makes photography an editorial choice rather than a structural necessity.",
+    "design_elements": [
+      "Maison Neue sans-serif with generous letter-spacing (2px)",
+      "Modular card system organised by date and category",
+      "Neutral background allowing imagery to be optional",
+      "Extreme negative space between entries",
+      "Typographic hierarchy drives all navigation and content",
+      "Clean grid that works with or without images"
+    ],
+    "transferable_to_trades": "The modular card system translates perfectly to a joiner's portfolio — each card could be a project (kitchen refit, built-in wardrobe, bespoke shelving) with a title, date, and optional photo. The letter-spaced typography creates premium feel without any images at all. A joiner could populate this layout with phone photos or even just text descriptions and it would still feel curated.",
+    "feeling": "Gallery-like, editorial, quietly premium — everything feels considered and intentional"
+  },
+  {
+    "url": "https://emcap.com",
+    "name": "Emergence Capital",
+    "industry": "Venture capital (San Francisco)",
+    "what_makes_it_work_without_photos": "Zero photography dependency. The site uses oversized typography, a limited palette (black backgrounds, yellow accent bars, grayscale with brass tones), and geometric design elements to create sophistication. Yellow bar accent lines before section headers, 6px geometric shapes, and micro-interactions provide visual interest entirely through design. Logo lockups and colour blocks replace hero imagery.",
+    "design_elements": [
+      "Black backgrounds with yellow (#var(--yellow)) accent colour",
+      "6px yellow accent bars before section headers",
+      "Oversized bold headlines as visual anchors",
+      "Testimonial cards using colour blocks, not photos",
+      "Sophisticated cubic-bezier transitions (400ms)",
+      "Grayscale with gold/brass (#b1a164) secondary accents"
+    ],
+    "transferable_to_trades": "The accent line technique is immediately transferable — a coloured bar before each section heading creates visual rhythm without any imagery. The dark background + single accent colour approach would work brilliantly for a premium joiner (dark charcoal + timber gold). The design proves you can build a credible, sophisticated site with zero photography using just colour, type, and geometric elements.",
+    "feeling": "Authoritative, modern, design-forward — sophistication through pure design craft"
+  },
+  {
+    "url": "https://www.pocketknife.design",
+    "name": "Pocketknife",
+    "industry": "Web design agency (Squarespace specialists)",
+    "what_makes_it_work_without_photos": "Light, airy design that functions entirely without professional photography. Bold headline text establishes hierarchy, rounded-corner cards (20px border-radius) with subtle grey borders define content blocks, and custom icons (magnifying glass, wrench, rocket) provide visual interest without images. The grid-based layout with 30px column gaps creates structure through whitespace alone.",
+    "design_elements": [
+      "White/off-white backgrounds with generous whitespace",
+      "Bold, confident headline typography with substantial font weights",
+      "Rounded-corner cards (20px radius) with light grey borders",
+      "Custom icons replacing photographic elements",
+      "Grid-based layout with precise 30px column gaps",
+      "Subtle borders (#b8b8b8) defining content areas without heaviness"
+    ],
+    "transferable_to_trades": "Directly transferable. The card-based layout with rounded corners and icons is perfect for a joiner's service pages — each card could represent a service (kitchens, wardrobes, shelving) with an icon and description. Phone photos become optional enhancements, not structural requirements. The light, clean aesthetic builds trust and professionalism.",
+    "feeling": "Clean, trustworthy, accessible — professional without being intimidating"
+  },
+  {
+    "url": "https://www.sankollc.com",
+    "name": "Sanko Custom Carpentry",
+    "industry": "Custom woodworking and carpentry (Denver, Colorado)",
+    "what_makes_it_work_without_photos": "An actual carpentry business whose design framework carries the premium feel independently of image quality. The typography-forward approach with defined font hierarchy, controlled colour palette through CSS variables, and modular component system means the layout would look professional with any quality of photography. Emphasises process credibility and emotional copy ('A Gathering Place For You') over lifestyle photography.",
+    "design_elements": [
+      "Typography-first hierarchy with defined font styles",
+      "Controlled colour palette through CSS custom properties",
+      "Modular, reusable component system (buttons, text blocks, cards)",
+      "Generous whitespace and professional spacing",
+      "Emotional copywriting as visual anchor",
+      "Testimonials as trust-building design elements"
+    ],
+    "transferable_to_trades": "This IS a carpentry business — proof that the approach works for real trades. The design language is location-agnostic. A UK joiner could adopt the same typography-led, whitespace-rich approach with phone photos and the site would look equally premium. The emphasis on craftsmanship fundamentals (clarity, precision, controlled hierarchy) mirrors the trade itself.",
+    "feeling": "Refined, trustworthy, craft-focused — the design mirrors the precision of the woodwork"
+  },
+  {
+    "url": "https://austinjoinery.com",
+    "name": "Austin Joinery",
+    "industry": "Custom furniture and joinery (Austin, Texas)",
+    "what_makes_it_work_without_photos": "Premium minimalism that deliberately doesn't lean on photography. Uses a single hero image (ribbon table) but the real visual anchors are the testimonial carousel and typographic hierarchy (42px headings). The neutral palette with sparing blue accent (#428bca) creates sophistication through restraint. Testimonials become the design hero — social proof outweighs lifestyle imagery.",
+    "design_elements": [
+      "42px heading hierarchy creating visual rhythm",
+      "Neutral palette with single blue accent (#428bca)",
+      "Centered, sparse layouts with deliberate whitespace",
+      "Testimonial carousel as primary visual engagement",
+      "Single hero image rather than gallery-dependent design",
+      "Content-first approach: copy and social proof over decoration"
+    ],
+    "transferable_to_trades": "Directly applicable — this is a joinery business. The testimonial-as-hero approach is brilliant for trades: let your customers' words carry the page instead of trying to compete on photography. A UK joiner could replicate this with a strong heading, 3-5 testimonials, a simple service list, and one decent phone photo. The design trusts the work's quality.",
+    "feeling": "Understated confidence — the visual equivalent of letting your work speak for itself"
+  },
+  {
+    "url": "https://www.taktproject.com",
+    "name": "TAKT PROJECT",
+    "industry": "Design research studio (Tokyo, Japan)",
+    "what_makes_it_work_without_photos": "The design intentionally doesn't depend on striking visuals — placeholder images appear throughout, yet the site feels premium. Typography and whitespace dominate. The neutral black/white/grey palette with generous negative space creates a gallery-like atmosphere. Content is organised by clear categories (Self-Driven Research, Collaborate, News) with typography doing all the hierarchical work.",
+    "design_elements": [
+      "Monochrome palette (black, white, greys only)",
+      "Generous negative space as primary design element",
+      "Clear category-based content organisation",
+      "Typography-only hierarchy with no decorative elements",
+      "Minimal photography treated as supporting content",
+      "Concept-driven layout where ideas outweigh imagery"
+    ],
+    "transferable_to_trades": "The category-based organisation translates well to trades — a joiner could use the same structure for project types (Kitchens, Built-ins, Restoration, Bespoke Furniture). The monochrome foundation means phone photos become the only colour on the page, making even basic shots feel intentional and editorial. The minimalism signals confidence and expertise.",
+    "feeling": "Intellectual, precise, quietly authoritative — mastery communicated through restraint"
+  },
+  {
+    "url": "https://www.baselinewoodworks.com",
+    "name": "Baseline Woodworks",
+    "industry": "Custom cabinetry and carpentry (Denver, Colorado)",
+    "what_makes_it_work_without_photos": "Another real carpentry business whose design framework carries the premium positioning. Multiple font hierarchy levels create visual rhythm through text alone. Images use blur-animate loading effects and lazy-loading, suggesting they're enhancements rather than structural elements. The sophisticated spacing system (CSS variables for padding and margins) creates professional breathing room that would maintain quality regardless of photo quality.",
+    "design_elements": [
+      "Multi-level typography hierarchy (font_2 through font_10)",
+      "Sophisticated spacing via CSS custom properties",
+      "Light neutral colour palette with accent blues",
+      "Subtle shadows and transitions instead of bold imagery",
+      "Blur-animate effects on images (supporting, not structural)",
+      "Grid-based layouts with measured precision"
+    ],
+    "transferable_to_trades": "Another carpentry business proving the model works. The multi-level type hierarchy is the key takeaway — having 4-5 distinct text styles creates visual variety and professionalism without needing photography. A UK joiner could use: display heading for hero, medium heading for services, small heading for details, body for descriptions, caption for project metadata. The structure does the work.",
+    "feeling": "Professional, understated, craftsmanlike — attention to structural detail mirrors the carpentry itself"
+  }
+]
