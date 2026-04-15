@@ -43,13 +43,13 @@ if (!siteUrl || !clientSlug) {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function fetchUrl(url: string): Promise<string> {
+function fetchUrl(url: string, redirectDepth = 0): Promise<string> {
   return new Promise((resolve, reject) => {
+    if (redirectDepth > 5) { reject(new Error('Too many redirects')); return }
     const protocol = url.startsWith('https') ? https : http
     const req = protocol.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NithDigitalBot/1.0)' } }, (res) => {
-      // Follow redirects (up to 5)
       if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        fetchUrl(res.headers.location).then(resolve).catch(reject)
+        fetchUrl(res.headers.location, redirectDepth + 1).then(resolve).catch(reject)
         return
       }
       let data = ''

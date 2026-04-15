@@ -142,6 +142,19 @@ function checkCopy(results: CheckResult[]) {
   // Hero CTA not "Click here"
   const heroCta = copy.pages?.home?.hero_cta || ''
   results.push(check('Hero CTA not generic', !heroCta.toLowerCase().includes('click here') && heroCta.length > 0, `"${heroCta}"`))
+
+  // Unique meta descriptions per page (not identical)
+  const pageMetas: string[] = []
+  for (const page of Object.values(copy.pages || {})) {
+    if (page && typeof page === 'object' && 'headline' in page) {
+      // Descriptions are set at page level via generateMetadata — check titles are unique at minimum
+    }
+  }
+  // Check NAP fields present if schema exists
+  const schema = (copy as unknown as Record<string, unknown>).schema as Record<string, unknown> | undefined
+  results.push(check('Schema: telephone field present', !!(schema?.telephone)))
+  results.push(check('Schema: address.postal_code present', !!(schema && (schema as Record<string, unknown>)['address'] && ((schema as Record<string, unknown>)['address'] as Record<string, unknown>)['postal_code'])))
+  results.push(check('Schema: opening_hours present', !!(schema?.opening_hours)))
 }
 
 function checkScaffoldCode(results: CheckResult[]) {
@@ -194,6 +207,21 @@ function checkScaffoldCode(results: CheckResult[]) {
   results.push(check('priority prop on hero image', priorityPropFound))
   results.push(check('JSON-LD schema present', jsonLdFound))
   results.push(check('Unsplash in remotePatterns (next.config.ts)', unsplashConfigFound))
+
+  // WebP image format config
+  let webpConfigFound = false
+  const nextConfigPath = path.join(scaffoldDir, 'next.config.ts')
+  if (fs.existsSync(nextConfigPath)) {
+    const cfg = fs.readFileSync(nextConfigPath, 'utf-8')
+    webpConfigFound = cfg.includes('image/webp') || cfg.includes('formats')
+  }
+  results.push(check('WebP image format in next.config.ts', webpConfigFound))
+
+  // Error page templates
+  const hasNotFound = fs.existsSync(path.join(scaffoldDir, 'src', 'app', 'not-found.tsx'))
+  const hasErrorPage = fs.existsSync(path.join(scaffoldDir, 'src', 'app', 'error.tsx'))
+  results.push(check('not-found.tsx exists', hasNotFound))
+  results.push(check('error.tsx exists', hasErrorPage))
 }
 
 async function checkStagingUrl(url: string, results: CheckResult[]) {
@@ -224,8 +252,12 @@ async function checkStagingUrl(url: string, results: CheckResult[]) {
     // Check OG meta tags in homepage
     const hasOgTitle = home.body.includes('og:title')
     const hasOgDesc = home.body.includes('og:description')
+    const hasOgImage = home.body.includes('og:image')
+    const hasJsonLd = home.body.includes('application/ld+json')
     results.push(check('OG meta: og:title present', hasOgTitle))
     results.push(check('OG meta: og:description present', hasOgDesc))
+    results.push(check('OG meta: og:image present', hasOgImage))
+    results.push(check('JSON-LD schema in rendered HTML', hasJsonLd))
 
   } catch (err) {
     results.push(check('Homepage reachable', false, String(err)))

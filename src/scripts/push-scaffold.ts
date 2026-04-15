@@ -107,7 +107,8 @@ function walkDir(dir: string, baseDir: string): string[] {
     if (stat.isDirectory()) {
       results.push(...walkDir(fullPath, baseDir))
     } else {
-      results.push(path.relative(baseDir, fullPath).replace(/\\/g, '/'))
+      // Always use forward slashes for GitHub API paths (even on Windows)
+      results.push(path.relative(baseDir, fullPath).split(path.sep).join('/'))
     }
   }
   return results

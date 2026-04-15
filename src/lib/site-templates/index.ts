@@ -233,7 +233,7 @@ export default function HeroCentered({ headline, subheading, cta, imageUrl }: {
 }) {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center text-center overflow-hidden pt-16">
-      <Image src={imageUrl} alt="Hero" fill className="object-cover brightness-[0.35]" priority />
+      <Image src={imageUrl} alt="Hero background" fill className="object-cover brightness-[0.35]" priority sizes="100vw" />
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6">
         <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">{headline}</h1>
         <p className="text-lg sm:text-xl text-white/80 mb-10 max-w-xl mx-auto leading-relaxed">{subheading}</p>
@@ -263,7 +263,7 @@ export default function HeroSplit({ headline, subheading, cta, imageUrl }: {
         </div>
       </div>
       <div className="relative min-h-[400px] md:min-h-full">
-        <Image src={imageUrl} alt="Hero" fill className="object-cover" priority />
+        <Image src={imageUrl} alt="Hero background" fill className="object-cover" priority sizes="50vw" />
       </div>
     </section>
   )
@@ -277,7 +277,7 @@ export default function HeroFullwidth({ headline, subheading, cta, imageUrl }: {
 }) {
   return (
     <section className="relative min-h-[85vh] flex items-end pb-16 sm:pb-24 overflow-hidden pt-16">
-      <Image src={imageUrl} alt="Hero" fill className="object-cover brightness-[0.4]" priority />
+      <Image src={imageUrl} alt="Hero background" fill className="object-cover brightness-[0.4]" priority sizes="100vw" />
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 w-full">
         <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-none mb-6 max-w-3xl">{headline}</h1>
         <p className="text-lg sm:text-xl text-white/75 mb-10 max-w-xl leading-relaxed">{subheading}</p>
@@ -360,6 +360,111 @@ export default function CTASection({ headline, body, button }: {
   )
 }`
 
+export const FAQ_TEMPLATE = `'use client'
+import { useState } from 'react'
+
+interface FaqItem { question: string; answer: string }
+
+export default function FaqSection({ intro, items }: { intro: string; items: FaqItem[] }) {
+  const [open, setOpen] = useState<number | null>(null)
+  return (
+    <section className="py-20 sm:py-28 bg-[var(--color-surface)]">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[var(--color-primary)] mb-4">Frequently Asked Questions</h2>
+        <p className="text-[var(--color-text-muted)] mb-12 leading-relaxed">{intro}</p>
+        <div className="space-y-3">
+          {items.map((item, i) => (
+            <div key={i} className="border border-black/10 rounded-[var(--radius)] overflow-hidden">
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full text-left px-6 py-4 flex items-center justify-between font-semibold text-[var(--color-primary)] hover:bg-[var(--color-background)] transition-colors"
+                aria-expanded={open === i}
+              >
+                {item.question}
+                <span className="ml-4 text-lg leading-none">{open === i ? '−' : '+'}</span>
+              </button>
+              {open === i && (
+                <div className="px-6 pb-5 text-sm text-[var(--color-text-muted)] leading-relaxed border-t border-black/5 pt-4">
+                  {item.answer}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}`
+
+export const MAPS_EMBED_TEMPLATE = `export default function MapsEmbed({ embedUrl, businessName }: { embedUrl: string; businessName: string }) {
+  if (!embedUrl) return null
+  return (
+    <section className="py-12 bg-[var(--color-background)]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="rounded-[var(--radius)] overflow-hidden border border-black/10 shadow-sm" style={{ height: '380px' }}>
+          <iframe
+            src={embedUrl}
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title={\`\${businessName} location map\`}
+          />
+        </div>
+      </div>
+    </section>
+  )
+}`
+
+export const NOT_FOUND_TEMPLATE = `import Link from 'next/link'
+
+export default function NotFound() {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-[var(--color-background)] px-4">
+      <div className="text-center max-w-lg">
+        <p className="font-heading text-8xl font-bold text-[var(--color-primary)]/10 mb-4">404</p>
+        <h1 className="font-heading text-3xl font-bold text-[var(--color-primary)] mb-4">Page not found</h1>
+        <p className="text-[var(--color-text-muted)] mb-10 leading-relaxed">
+          The page you're looking for doesn't exist or may have moved.
+        </p>
+        <Link href="/" className="inline-flex items-center gap-2 bg-[var(--color-primary)] text-white font-bold px-8 py-3.5 rounded-[var(--radius)] hover:opacity-90 transition-opacity">
+          Back to home
+        </Link>
+      </div>
+    </main>
+  )
+}`
+
+export const ERROR_TEMPLATE = `'use client'
+import { useEffect } from 'react'
+
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+  useEffect(() => { console.error(error) }, [error])
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-[var(--color-background)] px-4">
+      <div className="text-center max-w-lg">
+        <h2 className="font-heading text-3xl font-bold text-[var(--color-primary)] mb-4">Something went wrong</h2>
+        <p className="text-[var(--color-text-muted)] mb-8 leading-relaxed">
+          We've encountered an unexpected error. Please try again or contact us directly.
+        </p>
+        <button onClick={reset} className="bg-[var(--color-primary)] text-white font-bold px-8 py-3.5 rounded-[var(--radius)] hover:opacity-90 transition-opacity">
+          Try again
+        </button>
+      </div>
+    </main>
+  )
+}`
+
+export const LOADING_TEMPLATE = `export default function Loading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)]">
+      <div className="w-8 h-8 rounded-full border-2 border-[var(--color-primary)]/20 border-t-[var(--color-primary)] animate-spin" />
+    </div>
+  )
+}`
+
 export const CONTACT_FORM_TEMPLATE = `'use client'
 import { useState } from 'react'
 
@@ -367,6 +472,29 @@ export default function ContactForm({ headline, intro, formCta }: {
   headline: string; intro: string; formCta: string
 }) {
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    const form = e.currentTarget
+    const data = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      phone: (form.elements.namedItem('phone') as HTMLInputElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+    }
+    try {
+      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      if (res.ok) { setSent(true) } else { setError('Something went wrong. Please try calling us directly.') }
+    } catch {
+      setError('Something went wrong. Please try calling us directly.')
+    }
+    setLoading(false)
+  }
+
   return (
     <section className="py-20 sm:py-28 bg-[var(--color-background)]">
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
@@ -377,27 +505,28 @@ export default function ContactForm({ headline, intro, formCta }: {
             <p className="font-semibold text-green-700">Message sent — we'll be in touch shortly.</p>
           </div>
         ) : (
-          <form onSubmit={e => { e.preventDefault(); setSent(true) }} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Full name</label>
-                <input type="text" required className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)]" />
+                <label htmlFor="name" className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Full name</label>
+                <input id="name" name="name" type="text" required autoComplete="name" className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)]" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Email</label>
-                <input type="email" required className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)]" />
+                <label htmlFor="email" className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Email</label>
+                <input id="email" name="email" type="email" required autoComplete="email" className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)]" />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Phone</label>
-              <input type="tel" className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)]" />
+              <label htmlFor="phone" className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Phone</label>
+              <input id="phone" name="phone" type="tel" autoComplete="tel" className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)]" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Message</label>
-              <textarea required rows={5} className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)] resize-none" />
+              <label htmlFor="message" className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Message</label>
+              <textarea id="message" name="message" required rows={5} className="w-full px-4 py-3 border border-black/10 rounded-[var(--radius)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 bg-[var(--color-surface)] resize-none" />
             </div>
-            <button type="submit" className="w-full bg-[var(--color-primary)] text-white font-bold py-3.5 rounded-[var(--radius)] hover:opacity-90 transition-opacity">
-              {formCta}
+            {error && <p className="text-sm text-red-600">{error}</p>}
+            <button type="submit" disabled={loading} className="w-full bg-[var(--color-primary)] text-white font-bold py-3.5 rounded-[var(--radius)] hover:opacity-90 transition-opacity disabled:opacity-60">
+              {loading ? 'Sending…' : formCta}
             </button>
           </form>
         )}

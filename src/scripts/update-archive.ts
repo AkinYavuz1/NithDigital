@@ -136,7 +136,10 @@ function main() {
   archive = archive.filter(a => a.client_slug !== clientSlug)
   archive.push(entry)
 
-  fs.writeFileSync(archivePath, JSON.stringify(archive, null, 2))
+  // Write atomically: temp file then rename to prevent corruption
+  const tmpPath = archivePath + '.tmp'
+  fs.writeFileSync(tmpPath, JSON.stringify(archive, null, 2))
+  fs.renameSync(tmpPath, archivePath)
   console.log(`\n✓ Archive updated: ${archivePath}`)
   console.log(`  ${archive.length} total entries`)
   console.log(`\nNew entry:`)

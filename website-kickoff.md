@@ -44,6 +44,8 @@ Deploy a market-research subagent immediately:
 
 ### STAGE 2 — Brief Gathering
 
+**If Akin sent a pre-kickoff form** (Google Form / Typeform / email template), answers may already be on hand — pre-fill and confirm rather than asking from scratch.
+
 Ask these questions **1–2 at a time** (never a wall of text). Pre-fill from `site-analysis.json` where available and confirm:
 
 1. Client name and business description
@@ -184,14 +186,24 @@ Tell Akin:
 
 Once a design is approved, deploy a copy-writing subagent (or write directly) to produce:
 
-**`designs/[client-slug]/copy.json`** — same schema as `/api/generate-website-copy`:
+**`designs/[client-slug]/copy.json`** — extended schema with full local SEO fields:
 ```json
 {
   "meta": {
     "title": "",
     "description": "",
     "og_title": "",
+    "og_image": "https://[domain]/og-image.jpg",
     "keywords": []
+  },
+  "nap": {
+    "name": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "postal_code": "",
+    "city": "",
+    "country": "GB"
   },
   "pages": {
     "home": {
@@ -223,14 +235,42 @@ Once a design is approved, deploy a copy-writing subagent (or write directly) to
       "form_cta": "",
       "phone_label": "",
       "email_label": ""
+    },
+    "faq": {
+      "intro": "Common questions about our services",
+      "items": [
+        { "question": "", "answer": "" }
+      ]
     }
   },
   "schema": {
     "type": "LocalBusiness",
     "name": "",
     "description": "",
-    "address_locality": "",
-    "service_area": ""
+    "telephone": "",
+    "address": {
+      "street_address": "",
+      "postal_code": "",
+      "locality": "",
+      "country": "GB"
+    },
+    "geo": { "latitude": "", "longitude": "" },
+    "opening_hours": [
+      { "day": "Monday–Friday", "opens": "09:00", "closes": "17:00" }
+    ],
+    "service_areas": [],
+    "price_range": "££",
+    "same_as": []
+  },
+  "schema_reviews": {
+    "rating_value": 5.0,
+    "review_count": 0,
+    "review_text": ""
+  },
+  "maps": {
+    "embed_url": "",
+    "latitude": "",
+    "longitude": ""
   },
   "social": {
     "tagline": "",
@@ -290,17 +330,21 @@ Write **all 14 files** into `designs/[client-slug]/scaffold/`:
 
 ```
 package.json
-next.config.ts                      ← MUST include unsplash.com in remotePatterns
+next.config.ts                      ← MUST include unsplash.com in remotePatterns + formats: ['image/webp','image/avif']
 tsconfig.json
 postcss.config.mjs
 src/app/globals.css                 ← CSS variables from theme.json
-src/app/layout.tsx                  ← next/font/google, JSON-LD schema, OG meta
-src/app/page.tsx                    ← Home: generateMetadata(), hero, services, CTA
+src/app/layout.tsx                  ← next/font/google, JSON-LD schema, OG meta, og:image, og:locale="en_GB"
+src/app/page.tsx                    ← Home: generateMetadata(), hero, services, FAQ (if ≥3 items), CTA
 src/app/about/page.tsx
 src/app/services/page.tsx
-src/app/contact/page.tsx
+src/app/contact/page.tsx            ← Includes maps embed (if maps.embed_url set), contact form
 src/app/sitemap.ts                  ← exports sitemap() with all page URLs
-src/app/robots.ts                   ← exports robots()
+src/app/robots.ts                   ← exports robots() with Sitemap: URL
+src/app/not-found.tsx               ← Branded 404 page (use NOT_FOUND_TEMPLATE)
+src/app/error.tsx                   ← Branded error page (use ERROR_TEMPLATE)
+src/app/loading.tsx                 ← Loading spinner (use LOADING_TEMPLATE)
+src/app/api/contact/route.ts        ← Contact form handler (sends email via Resend using RESEND_API_KEY)
 src/components/Navbar.tsx
 src/components/Footer.tsx
 ```
@@ -320,9 +364,18 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
+    formats: ['image/webp', 'image/avif'],
   },
 }
 export default nextConfig
+```
+
+**`src/app/api/contact/route.ts`** — wire up Resend for real email delivery:
+```ts
+import { NextRequest, NextResponse } from 'next/server'
+// Uses RESEND_API_KEY from .env.local
+// Sends to CONTACT_EMAIL (client's email from copy.json nap.email)
+// Always include: name, email, phone, message in the email body
 ```
 
 **`src/app/layout.tsx` MUST include:**
@@ -368,6 +421,28 @@ Tell Akin:
 
 ---
 
+### STAGE 9.5 — Akin Internal Review
+
+Before showing the client, Akin reviews the staging URL:
+- [ ] Hero renders correctly at desktop and mobile
+- [ ] All 4 pages load without error
+- [ ] Contact form submits and email is received
+- [ ] Navigation links all resolve
+- [ ] Google Fonts loaded (check Network tab — no FOUT)
+- [ ] No console errors
+
+If issues: use Stage 12 refinement loop to fix, then re-check.
+
+### STAGE 9.7 — Client Staging Review (recommended)
+
+Send the client an email with:
+- Staging URL
+- "Please review your new site and reply with any feedback by [date + 5 days]"
+- "Any amendments after this date are billed at £35/hour"
+- "Once you're happy, reply with 'Approved for launch' to confirm"
+
+Log client feedback in `designs/[client-slug]/client-feedback.json`. Apply via Stage 12. Once client approves, proceed to Stage 10.
+
 ### STAGE 10 — Automated QA
 
 ```bash
@@ -402,6 +477,31 @@ When Akin requests changes:
 For substantial redesigns: update the HTML mockup first, get approval, then regenerate scaffold files.
 
 **Site is complete when** Akin confirms the staging URL is ready to go live.
+
+**Domain go-live options:**
+
+1. **Nith Digital subdomain** (`[slug].nithdigital.uk`) — instant, no client action needed. Default for early-stage clients.
+2. **Client's own domain at their registrar** — call `/api/launch-domain` to get Vercel DNS records, then send the client a plain-English guide:
+   - "Log into [registrar]"
+   - "Go to DNS Management"
+   - "Add this CNAME: `[record]`"
+   - "Propagation takes up to 48 hours"
+   - Save instructions to `designs/[client-slug]/domain-setup.md`
+3. **Client on Cloudflare** — `/api/launch-domain` auto-creates DNS records. Fastest option.
+
+**Post-launch handover** — save `designs/[client-slug]/handover.json` and email to client:
+```json
+{
+  "live_url": "",
+  "staging_url": "",
+  "github_full_name": "",
+  "vercel_project": "",
+  "contact_for_changes": "akin@nithdigital.uk",
+  "changes_rate": "£35/hour",
+  "turnaround": "Quote within 24 hours, delivery within 5 business days",
+  "free_fixes": "Typos and broken links in the first 48 hours post-launch only"
+}
+```
 
 **Post-launch changes:** All content updates and amendments are quoted at **£35/hour**. Changes are made via this refinement loop (Stage 12) — Claude edits take minutes, but client-facing time includes briefing, QA, and deployment. Log time spent per session.
 

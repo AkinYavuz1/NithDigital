@@ -47,7 +47,8 @@ function resolveEdgePath() {
 // ─── Render with Edge headless ────────────────────────────────────────────────
 
 function renderWithEdge(edgePath, htmlFile, pdfFile) {
-  const fileUri = 'file:///' + htmlFile.replace(/\\/g, '/').replace(/^\//, '')
+  // Build a valid Windows file URI: file:///C:/path/to/file.html
+  const fileUri = 'file:///' + htmlFile.replace(/\\/g, '/').replace(/^([a-zA-Z]):/, '$1:')
   const cmd = [
     `"${edgePath}"`,
     '--headless',
