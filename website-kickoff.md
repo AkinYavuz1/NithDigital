@@ -1,7 +1,51 @@
 # Nith Digital — Website Creation Kickoff
 
 > **How to use:** Read this file at the start of every new website project session.
+>
+> **Before starting the pipeline**, find design references:
+> Say: `"Research premium websites for a [industry] — find the best UK sites and adjacent craft/trade businesses I can use as design references"`
+>
+> Browse the results, pick 3-5 you like, then start:
 > Say: `"New website for [Client Name]"` (and optionally `"— existing site: https://..."`)
+
+---
+
+## Pre-Pipeline: Reference Research
+
+**Before opening the pipeline**, Akin can ask for design research at any time:
+
+```
+Research premium websites for a [industry] — find the best UK sites and 
+adjacent craft/trade businesses I can use as design references
+```
+
+When this is triggered, deploy **3 subagents in parallel**:
+
+**Subagent 1 — Industry leaders:**
+- Search: `best [industry] website UK 2025 2026`
+- Search: `[industry] website design award`
+- Search: `premium [industry] website examples`
+- Find 5-8 sites. For each, note: URL, what makes it good, layout approach, colour palette, typography, image treatment.
+
+**Subagent 2 — Adjacent premium:**
+- Identify 2-3 adjacent industries that sell the same thing (craftsmanship, trust, quality) at a higher price point
+- Search for the best sites in those industries
+- Find 4-6 sites with transferable design ideas
+
+**Subagent 3 — Reference library check:**
+- Read `designs/references.json` — find any existing entries relevant to the industry
+- Search: `[industry] website inspiration portfolio` on design galleries (Awwwards, Godly, Minimal Gallery, etc.)
+- Find 3-5 design-forward sites that could work for this context even if they're from a different industry
+
+**Output:** Write `designs/[client-slug]/scraped/reference-research.json` with all findings. Then present a summary to Akin:
+
+> "I found [N] sites worth looking at. Here are the standouts:
+> 1. [URL] — [one-line description of what makes it good]
+> 2. [URL] — [one-line description]
+> ...
+> Browse these and tell me which ones (or which elements) you like. These become your design references for the pipeline."
+
+Akin picks favourites. These feed into Stage 1B.
 
 ---
 

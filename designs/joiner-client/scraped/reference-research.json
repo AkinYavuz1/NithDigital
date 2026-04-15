@@ -1,0 +1,159 @@
+{
+  "industry": "Joinery / Carpentry",
+  "researched_at": "2026-04-15",
+  "industry_leaders": [
+    {
+      "url": "https://www.thomasmaybespoke.co.uk/",
+      "name": "Thomas May Bespoke",
+      "standout": "Dark, atmospheric photography with luxury editorial feel — more interiors magazine than joinery site",
+      "layout": "Image-heavy, portfolio-led, full-width backgrounds, alternating text/image blocks",
+      "colours": "Dark and sophisticated — deep neutrals, near-black backgrounds, restrained highlights",
+      "typography": "Mixed serif/sans — serif headings for elegance, sans body for readability",
+      "work_presentation": "Categorised galleries (Kitchens, Bathrooms, Bedrooms, Furniture, Windows, Doors) plus dedicated case studies",
+      "feeling": "Premium, exclusive, craft-focused"
+    },
+    {
+      "url": "https://www.grovewoodjoinery.co.uk/",
+      "name": "Grovewood Joinery",
+      "standout": "Gold accent (#aa9a5d) against black is immediately distinctive and luxurious",
+      "layout": "Clean, modular, hero imagery with vertical-flow content sections",
+      "colours": "Black (#000) with warm gold (#aa9a5d) and white text",
+      "typography": "Mixed — Karla sans for nav/body, serif-style headings",
+      "work_presentation": "Portfolio grid, embedded client testimonials from architects and designers",
+      "feeling": "Premium craft, positioned for architect collaboration"
+    },
+    {
+      "url": "https://www.tatesjoinery.co.uk/",
+      "name": "Tates Joinery",
+      "standout": "Cleanest, most modern design — deep navy (#0a1b61) with warm beige (#ecece7) is distinctive",
+      "layout": "Minimalist with ample whitespace, full-width grid, generous spacing",
+      "colours": "Deep navy/indigo, warm beiges, muted taupe — premium and elegant",
+      "typography": "Montserrat exclusively, weights from thin to bold, contemporary",
+      "work_presentation": "Gallery with featured imagery, testimonials as bold pull-quotes",
+      "feeling": "Premium craft meets modern professionalism"
+    },
+    {
+      "url": "https://jsmithfurniture.co.uk/",
+      "name": "James Smith Furniture",
+      "standout": "Most artisan feeling — award-winning Edinburgh cabinetmaker, Instagram feed integration makes it feel alive",
+      "layout": "Portfolio-led, image-heavy with substantial whitespace",
+      "colours": "Neutral — whites, blacks, greyscale. Wood tones through photography, not design elements",
+      "typography": "Mixed serif/sans — sans nav with serif body text, elegant contrast",
+      "work_presentation": "Integrated gallery by category (Work, Commissions, Workshop) plus live Instagram feed showing process",
+      "feeling": "Premium craftsman, artisan, approachable, genuine"
+    },
+    {
+      "url": "https://www.splintr.co.uk/",
+      "name": "SPLINTR",
+      "standout": "Most design-studio feeling — 'WE CREATE THE SPACES PEOPLE TALK ABOUT' — bold, confident positioning",
+      "layout": "Portfolio-led, image-centric, minimalist, full-width slideshow hero",
+      "colours": "Sophisticated neutrals — white and dark grey, photography does all colour work",
+      "typography": "Sans-serif throughout, contemporary, clean",
+      "work_presentation": "Portfolio gallery, visual impact over detailed case studies",
+      "feeling": "Premium, design-forward, architectural"
+    },
+    {
+      "url": "https://www.wessexjoinery.co.uk/",
+      "name": "Wessex Joinery",
+      "standout": "Best service categorisation — 7 clear product types immediately visible, storytelling case studies",
+      "layout": "Hierarchical, service-focused, hero navigation into modular card grid",
+      "colours": "White/cream backgrounds, dark neutrals, heritage feel",
+      "typography": "Mixed serif/sans — traditional serif headings, clean sans body",
+      "work_presentation": "Case study narratives with read-more links — storytelling approach",
+      "feeling": "Premium craft with heritage positioning"
+    },
+    {
+      "url": "https://www.staffordjoinery.co.uk/",
+      "name": "Stafford Joinery",
+      "standout": "40+ year heritage combined with modern CAD imagery — tradition meets technology",
+      "layout": "Portfolio-led, full-width background images, modular service cards",
+      "colours": "Dark backgrounds with gold/cream accents (#f6cc8e), neutral greys",
+      "typography": "Sans-serif only — Questrial uppercase headers, Inter body, generous letter-spacing",
+      "work_presentation": "Large background images in service cards, masonry gallery, 8 service categories",
+      "feeling": "Premium artisanal-corporate hybrid"
+    },
+    {
+      "url": "https://www.gowercroft.co.uk/",
+      "name": "Gowercroft Joinery",
+      "standout": "Best multi-audience approach — dedicated paths for Architects, Construction Professionals, Homeowners",
+      "layout": "Modern, content-rich, hero sections with card-based product layouts",
+      "colours": "Warm, earthy with green accents (sustainability), gold/amber for awards",
+      "typography": "Mixed serif/sans — sans for nav/body, serif for heritage headings",
+      "work_presentation": "Case studies with before/after narrative, context-challenge-solution format",
+      "feeling": "Premium craftsman meets corporation, Made in Britain emphasis"
+    }
+  ],
+  "adjacent_premium": [
+    {
+      "url": "https://www.dinesen.com/en",
+      "name": "Dinesen",
+      "industry": "Premium timber flooring (Danish, est. 1898)",
+      "transferable": "Heritage narrative, project photography in architectural context, wood grain as visual hero, 17+ atmospheric case studies",
+      "layout": "White backgrounds, vertical flow, enormous whitespace",
+      "colours": "White, dark text, natural wood tones as only colour",
+      "typography": "Clean sans-serif, restrained, hierarchical",
+      "feeling": "Quiet authority. Timeless. The wood speaks for itself."
+    },
+    {
+      "url": "https://www.thuma.co",
+      "name": "Thuma",
+      "industry": "Minimalist furniture (San Francisco)",
+      "transferable": "Alternating rhythm of studio/lifestyle/close-up shots, poetic headline copy, Japanese joinery references",
+      "layout": "Modular grid, generous whitespace, mega-menu with product imagery",
+      "colours": "White, charcoal, wood tones from photography only",
+      "typography": "Contemporary sans-serif, lightweight",
+      "feeling": "Understated luxury through restraint. Gallery-like."
+    },
+    {
+      "url": "https://www.barrettmade.com/",
+      "name": "Barrett Made",
+      "industry": "Architecture + Construction (Portland, Maine)",
+      "transferable": "Portfolio-first homepage, in-progress shots alongside finished work, ultra-light font weight (100), three-link navigation",
+      "layout": "24-column grid, photography-dominant",
+      "colours": "Greyscale, photography provides all colour",
+      "typography": "Uppercase headers with extremely light weight — sparse and architectural",
+      "feeling": "Architectural precision. Design reflects the craft."
+    },
+    {
+      "url": "https://christiantroels.com",
+      "name": "Christian Troels",
+      "industry": "Furniture designer/maker (Denmark)",
+      "transferable": "Rejecting the rustic default, positioning joinery alongside contemporary design, thumbnail grid, minimal text",
+      "layout": "Clean grid, generous whitespace, neutral palette",
+      "colours": "Whites, greys, blacks with warm wood tones from photography",
+      "typography": "Sans-serif throughout, modern",
+      "feeling": "Contemporary craft — bridges maker and designer."
+    }
+  ],
+  "design_forward": [
+    {
+      "url": "https://martinellivenezia.com/",
+      "name": "Martinelli Venezia",
+      "industry": "Design studio (Venice)",
+      "transferable": "Gallery-over-commerce approach, photography does 90% of communication, four-item nav only, enormous negative space",
+      "layout": "Grid-based but not rigid, images breathe",
+      "colours": "Black, white, neutral greys only",
+      "typography": "Sans-serif, modern, minimal",
+      "feeling": "Confident silence. Work speaks for itself."
+    },
+    {
+      "url": "https://www.aesop.com",
+      "name": "Aesop",
+      "industry": "Luxury skincare (Melbourne)",
+      "transferable": "Design system from physical materials (grain/tools/workshop palette for joiner), calm transitions, educational content embedded naturally, digital mirrors physical experience",
+      "layout": "Editorial, content-rich but never cluttered",
+      "colours": "Muted earth tones, generous whitespace",
+      "typography": "Packaging-inspired hierarchy, elegant",
+      "feeling": "Intellectual luxury. Every element considered."
+    }
+  ],
+  "key_patterns": {
+    "colours": "Dark palettes (black/navy/charcoal) with gold/warm accents signal premium in joinery. Neutral palettes with wood tones from photography also work. Avoid: bright blues, greens, multi-colour schemes.",
+    "typography": "Mixed serif/sans is the premium signal — serif headings for craft/heritage, sans body for modern readability. Best sites use tight tracking on large headings.",
+    "work_presentation": "Case studies beat galleries. Show work in context (the kitchen in the home, not the kitchen in isolation). Include in-progress shots and material close-ups.",
+    "navigation": "3-4 items maximum. The best sites lead with the work, not with services lists.",
+    "whitespace": "The more space around content, the more premium it feels. Every top site uses generous padding.",
+    "photography": "Photography IS the design. Neutral site chrome lets the wood and craftsmanship be the visual interest.",
+    "heritage": "Years of experience always prominent. Track record builds trust in trade contexts."
+  }
+}
