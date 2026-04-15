@@ -13,5 +13,65 @@
       "typography": "Display serif for headings, geometric sans for body, tight tracking on large text",
       "interaction": "Drag gestures, hover reveals with backdrop blur, scroll-triggered content"
     }
+  },
+  {
+    "url": "https://oddritualgolf.com",
+    "added": "2026-04-15",
+    "category": "e-commerce",
+    "what_works": "Instrument Serif for headings, 12-column CSS Grid with breakout regions for full-width moments, fluid clamp() typography, dark/light theme toggle, accordion animations with cubic-bezier easing, full-width hero slider with manual navigation",
+    "best_for": "Lifestyle brands, boutique retail, premium small businesses",
+    "elements": {
+      "nav": "Minimal top bar with dark/light variant, hamburger menu",
+      "hero": "Full-width image slider with editorial serif overlay text",
+      "content": "Split-grid layouts alternating image and text, breakout regions",
+      "colour": "Restrained palette with dark and light theme states",
+      "typography": "Instrument Serif headings, system sans body, fluid sizing via clamp()",
+      "interaction": "Smooth accordion expand/collapse (400ms cubic-bezier), hover effects on footer links"
+    }
+  },
+  {
+    "url": "https://artefakt.mov",
+    "added": "2026-04-15",
+    "category": "agency",
+    "what_works": "Numbered portfolio sections (01, 02, 03) create editorial structure, minimalist dark aesthetic, capitalized bold tagline as hero, clean information hierarchy, prefetch optimisation for snappy navigation",
+    "best_for": "Creative agencies, production companies, service businesses with strong portfolio",
+    "elements": {
+      "nav": "Toggle menu with minimal chrome, high contrast",
+      "hero": "Typography-led hero with capitalised statement, no hero image needed",
+      "content": "Numbered portfolio grid with thumbnail carousel, hierarchical sections",
+      "colour": "Dark base with high contrast text, minimal accent",
+      "typography": "Bold sans-serif for statements, clean hierarchy through size and weight",
+      "interaction": "Prefetch on link hover for instant navigation, back-to-top anchor"
+    }
+  },
+  {
+    "url": "https://react-view-transitions-demo.labs.vercel.dev",
+    "added": "2026-04-15",
+    "category": "technical-reference",
+    "what_works": "Official Next.js View Transitions demo showing shared element morphing, Suspense reveals, directional navigation slides, and same-route crossfades -- all using React ViewTransition component with no animation libraries",
+    "best_for": "Technical reference for implementing page transitions in Next.js 16.2+",
+    "elements": {
+      "nav": "Anchored header that stays fixed during page transitions",
+      "hero": "Photo grid with thumbnail-to-hero morph animation",
+      "content": "Gallery grid with photographer tabs using crossfade transitions",
+      "colour": "Clean neutral palette focused on showcasing the transition effects",
+      "typography": "System fonts, functional sizing",
+      "interaction": "Shared element morph, directional slide (forward/back), skeleton-to-content reveal, tab crossfade"
+    }
+  },
+  {
+    "url": "https://scroll-driven-animations.style",
+    "added": "2026-04-15",
+    "category": "technical-reference",
+    "what_works": "Comprehensive collection of CSS scroll-driven animation demos using animation-timeline: scroll() and view(). All examples are CSS-only with no JavaScript, showcasing progress bars, parallax, reveal animations, and sticky headers",
+    "best_for": "Technical reference for replacing AOS.js/GSAP ScrollTrigger with native CSS scroll animations",
+    "elements": {
+      "nav": "Simple, functional",
+      "hero": "Interactive demo-first approach",
+      "content": "Code examples alongside live demos",
+      "colour": "Functional, code-focused",
+      "typography": "Monospace for code, clean sans for labels",
+      "interaction": "Every demo is scroll-driven using only CSS animation-timeline property"
+    }
   }
 ]
