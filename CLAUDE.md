@@ -51,6 +51,7 @@
 - Every client gets a **separate private GitHub repo** under `AkinYavuz1` account
 - Scripts in `src/scripts/` — run via `npx ts-node --project tsconfig.json src/scripts/[name].ts`
 - **Never use `ANTHROPIC_API_KEY`** — use Claude Code CLI token budget only
+- Post-launch changes are billed at **£35/hour** — clients do not self-edit; all updates go through Stage 12 refinement
 - Archive at `designs/archive.json` tracks past designs to prevent repetition
 
 ## Key tables (Supabase)

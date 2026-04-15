@@ -403,6 +403,8 @@ For substantial redesigns: update the HTML mockup first, get approval, then rege
 
 **Site is complete when** Akin confirms the staging URL is ready to go live.
 
+**Post-launch changes:** All content updates and amendments are quoted at **£35/hour**. Changes are made via this refinement loop (Stage 12) — Claude edits take minutes, but client-facing time includes briefing, QA, and deployment. Log time spent per session.
+
 ---
 
 ## Design Archive — Avoiding Repetition
