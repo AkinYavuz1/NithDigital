@@ -67,25 +67,61 @@ Deploy a market-research subagent immediately:
 
 ---
 
-#### 1B — Brief Gathering
+#### 1B — References + Brief
 
-**If Akin sent a pre-kickoff form** (Google Form / Typeform / email template), answers may already be on hand — pre-fill and confirm rather than asking from scratch.
+**References come first.** The single most important input for design quality is real websites that capture the right feeling. Before asking about colours or fonts, establish the visual direction.
 
-Ask these questions **1–2 at a time** (never a wall of text). Pre-fill from `site-analysis.json` where available and confirm:
+**First question:** "Do you have any websites you think look great — they don't need to be in the same industry, just sites where the design feels right?"
+
+Akin will provide 2-5 reference URLs with a note on what he likes about each. These might look like:
+```
+- https://bilal.world — the dashed borders, extreme whitespace, serif highlights
+- https://stripe.com — clean section transitions, how they show complex info simply
+- https://linear.app — dark mode done right, the typography hierarchy
+```
+
+**Deploy a reference-analysis subagent** to fetch each URL and extract:
+- Layout patterns (how is the hero structured? how are sections divided?)
+- Spacing approach (tight/generous? how much padding between sections?)
+- Typography (serif/sans/mono pairing? heading size vs body? weight contrast?)
+- Colour usage (monochrome? one accent? gradient? how sparingly is colour used?)
+- Interaction style (hover states? scroll animations? playful? restrained?)
+- What makes it feel premium (whitespace? image treatment? typography? details?)
+
+Write findings to `designs/[client-slug]/scraped/reference-analysis.json`:
+```json
+{
+  "references": [
+    {
+      "url": "",
+      "what_akin_likes": "",
+      "layout_patterns": "",
+      "spacing": "",
+      "typography": "",
+      "colour_usage": "",
+      "interactions": "",
+      "premium_signals": ""
+    }
+  ],
+  "common_threads": "",
+  "design_direction_summary": ""
+}
+```
+
+**Then gather the brief.** Ask these questions **1-2 at a time** (never a wall of text). Pre-fill from `site-analysis.json` and reference analysis where available:
 
 1. Client name and business description
 2. Industry + website type: brochure / e-commerce / landing page / booking site / portfolio
 3. Location and service area
 4. Target audience
-5. Key services/products (top 3–5)
+5. Key services/products (top 3-5)
 6. Unique selling point
 7. Tone of voice: professional / premium / friendly / bold / minimal
 8. Pages needed — suggest industry defaults from `src/lib/site-templates/index.ts` INDUSTRY_PRESETS
 9. Desired features: booking form, gallery, WhatsApp button, live chat, e-commerce
 10. Brand colours or style preferences (use scraped colours as starting point if available)
-11. Competitor sites or design inspiration
 
-Once ≥7 are covered, write `designs/[client-slug]/brief.json`:
+Once >=7 are covered, write `designs/[client-slug]/brief.json`:
 ```json
 {
   "client_name": "",
@@ -106,7 +142,11 @@ Once ≥7 are covered, write `designs/[client-slug]/brief.json`:
   "color_preferences": "",
   "brief_summary": "",
   "existing_site_url": "",
-  "scraped_images": []
+  "scraped_images": [],
+  "design_references": [
+    { "url": "", "what_works": "", "component_notes": "" }
+  ],
+  "design_constraints": []
 }
 ```
 
@@ -114,14 +154,55 @@ Once ≥7 are covered, write `designs/[client-slug]/brief.json`:
 
 #### 1C — Design Research + Theme Planning
 
-Deploy a design-research subagent to:
-1. Read `designs/archive.json` — find same-industry past designs, note their colors/fonts/layouts
-2. Search: `[industry] website design trends 2025 2026`
-3. Search: `best [industry] website UI UX examples`
-4. If client has existing site: identify what to preserve and what to modernise
-5. Write findings to `designs/[client-slug]/scraped/design-research.json`
+**Step 1 — Analyse references and archive:**
 
-Then define **3 ThemeConfig objects** — each must differ from the others AND from same-industry archive entries in ≥2 of: hero_layout, primary colour hue family (warm/cool/neutral), heading font style (serif/sans/display).
+Deploy a design-research subagent to:
+1. Read `designs/[client-slug]/scraped/reference-analysis.json` — understand what Akin liked and the common threads
+2. Read `designs/archive.json` — find same-industry past designs, note their colors/fonts/layouts
+3. Search: `[industry] website design trends 2025 2026`
+4. Search: `best [industry] website UI UX examples`
+5. If client has existing site: identify what to preserve and what to modernise
+6. Write findings to `designs/[client-slug]/scraped/design-research.json`
+
+**Step 2 — Define design constraints:**
+
+Based on the reference analysis, define 3-5 constraints that will prevent generic output. Constraints are things the design MUST or MUST NOT do. They force creative problem-solving.
+
+Examples of good constraints (pick ones relevant to the references):
+- "The colour palette must use only 2 colours total (one neutral, one accent)"
+- "No section may use a different background colour from the page base — separation comes from whitespace only"
+- "The hero must not use a background image"
+- "No horizontal card grids — all content flows vertically"
+- "Navigation must not be a horizontal bar with centred links"
+- "No pill-shaped buttons — all CTAs are text links with underlines"
+- "Border radius must be 0px everywhere — sharp, editorial feel"
+- "The accent colour must appear on fewer than 10 elements total"
+
+Write the constraints to `brief.json design_constraints` array.
+
+**Step 3 — Define anti-patterns:**
+
+These are common AI design cliches to actively avoid. Write to `designs/[client-slug]/scraped/design-research.json` under an `anti_patterns` key:
+
+Default anti-patterns (always include these):
+- 3-column card grid with icon + title + 2-line description (the "services grid" cliche)
+- Gradient overlay on hero image
+- "Get Your Free Quote" or "Click Here" as CTA text
+- Pill-shaped tags in a horizontal wrap
+- Full-width coloured CTA banner between sections
+- Trust badges in a horizontal strip with checkmark icons
+- Dark overlay on stock photos
+- Hamburger menu sliding in from the right with a full-screen overlay
+
+Add project-specific anti-patterns based on what makes the reference sites special. If the references are all minimal, add "no decorative SVG icons in cards." If the references use extreme whitespace, add "no section with less than 60px vertical padding."
+
+**Step 4 — Define 3 ThemeConfig objects:**
+
+Each theme must:
+- Respond to at least one reference site's design language (state which one and how)
+- Respect all constraints defined in Step 2
+- Avoid all anti-patterns defined in Step 3
+- Differ from same-industry archive entries in >=2 of: primary colour hue family, heading font style, overall layout approach
 
 For clients with an existing site: Design A = brand evolution (keep core colours), B & C = fresh directions.
 
@@ -130,6 +211,7 @@ For clients with an existing site: Design A = brand evolution (keep core colours
   "id": "theme-1",
   "name": "Two-word evocative name",
   "personality": "One sentence — the feeling this design creates",
+  "inspired_by": "Which reference URL this responds to, and what element it borrows",
   "colors": {
     "primary": "#hex",
     "secondary": "#hex",
@@ -152,13 +234,17 @@ For clients with an existing site: Design A = brand evolution (keep core colours
     "heading_letter_spacing": "-0.02em",
     "body_letter_spacing": "0"
   },
-  "border_radius": "sharp|soft|rounded",
+  "border_radius": "0px|8px|16px",
   "spacing": "compact|balanced|generous",
-  "hero_layout": "centered|split|fullwidth"
+  "signature_element": "One unique design detail that makes this design memorable (e.g. dashed borders with corner handles, animated timeline dots, flowing text instead of tag pills)"
 }
 ```
 
-State explicitly how each design differs from archive entries before proceeding.
+State explicitly:
+- Which reference each design responds to
+- How each design satisfies the constraints
+- How each design avoids the anti-patterns
+- How each design differs from archive entries
 
 ---
 
@@ -299,7 +385,7 @@ Write `designs/[client-slug]/copy.json`:
 
 ---
 
-#### 2B — Generate 3 HTML Mockups
+#### 2B — Round 1: Generate 3 HTML Mockups
 
 Write `design-1.html`, `design-2.html`, `design-3.html` to `designs/[client-slug]/`.
 
@@ -310,47 +396,35 @@ Write `design-1.html`, `design-2.html`, `design-3.html` to `designs/[client-slug
 - Uses the ThemeConfig hex values directly as CSS custom properties
 - **Contains real images** — Unsplash URLs from `INDUSTRY_PRESETS` in `src/lib/site-templates/index.ts`, or downloaded images from `designs/[client-slug]/scraped/images/` for existing sites
 - Uses the typography scale from the ThemeConfig — not just font-family but explicit `font-size`, `line-height`, `letter-spacing` at each level
+- **Respects all constraints** from `brief.json design_constraints`
+- **Avoids all anti-patterns** from `design-research.json anti_patterns`
+- Includes the **signature element** from the ThemeConfig
 
-**Mandatory sections in this order:**
+**There is NO mandatory sections list.** The page structure should emerge from:
+1. The reference sites' layout patterns (from `reference-analysis.json`)
+2. The brief (what content needs to be communicated)
+3. The ThemeConfig's personality and signature element
+4. The constraints
 
-**1. Design label bar** (top of page, small strip):
+The only truly required elements are:
+- **Navigation** — however it's implemented (top bar, sidebar, minimal text links, floating dots — whatever fits the design language)
+- **The client's core message** — who they are and what they do, prominently communicated
+- **A way to make contact** — email, phone, form, or a combination
+- **Social proof** — testimonials, reviews, certifications, or trust signals in whatever form suits the design
+
+Everything else — how many sections, what order, whether there are cards or flowing text, whether skills are pills or prose, whether the hero has an image or is pure typography — is a design decision. Make it intentionally, referencing which reference site inspired the approach.
+
+**Design label bar** (always include, top of page, small strip):
 ```
-Design [N] of 3 | [Theme Name] | [Personality] | Primary: #hex | Accent: #hex | Fonts: Heading/Body | Layout: [hero_layout]
+Design [N] of 3 | [Theme Name] | [Personality] | Inspired by: [reference URL] | Fonts: Heading/Body | Signature: [signature element]
 ```
-
-**2. Navbar** — Logo name left, nav links centre/right, CTA button in accent colour
-
-**3. Hero** — matching `hero_layout`:
-- `centered`: full-width image + 50% dark overlay, h1 + subheading centred, 2 CTA buttons
-- `split`: left = brand-colour bg with text + CTA, right = image (50/50)
-- `fullwidth`: image full viewport height, text bottom-left overlaid with gradient fade
-
-**4. Trust badges** — horizontal strip: 3-4 trust signals appropriate to the industry
-(e.g. "5-Star Google Rated", "10+ Years Experience", "Free Quotes", "Fully Insured")
-
-**5. Services grid** — 3 cards: inline SVG icon, title, 2-line description
-
-**6. Testimonials** — 3 cards: quote, name, location, star rating (5 stars default). Use real reviews from scraped data if available; otherwise use realistic placeholder quotes from `copy.json testimonials`.
-
-**7. CTA section** — full-width brand-colour banner: bold headline + single CTA button
-
-**8. Footer** — 3 columns: brand info + tagline | quick links | contact details
-
-**For portfolio/consultant sites**, replace sections 4-5 with:
-
-**4. About summary** — brief professional bio with key stats (years experience, projects, etc.)
-
-**5. Project showcase** — 3 cards with Unsplash screenshot thumbnails, project title, 2-line description, tech tags
-
-**6. Skills / Experience** — skills grid or career timeline with visual treatment (animated bars, timeline dots, etc.)
-
-Then continue with sections 6-8 (testimonials, CTA, footer) as above.
 
 **Image treatment:**
-- Hero images: apply CSS overlay, gradient, or duotone filter — never raw unprocessed stock
-- Card images: consistent aspect ratio, rounded corners matching `border_radius` theme setting
+- Never use raw unprocessed stock images — apply CSS overlay, duotone, border, or context-appropriate treatment
 - Use `object-fit: cover` on all images
-- For portfolio sites: use abstract data visualisation, dashboard, or workspace images — NOT generic "person at laptop" stock
+- Images should feel intentional, not decorative filler
+- For portfolio sites: use abstract data visualisation, workspace, or architectural images — NOT generic "person at laptop" stock
+- For service businesses: prefer images of actual work/results over generic industry stock
 
 **Text/background contrast:** Verify >= 4.5:1 ratio for body text, >= 3:1 for large text before writing.
 
@@ -396,7 +470,7 @@ And this CSS block in `<style>`:
 
 ---
 
-#### 2C — Generate Comparison Viewer
+#### 2C — Generate Comparison Viewer + Review Round 1
 
 Write `designs/[client-slug]/design-compare.html`:
 - Tabbed viewer: 3 tabs at the top, each loads the corresponding design HTML in an iframe
@@ -406,9 +480,29 @@ Write `designs/[client-slug]/design-compare.html`:
 - Active tab highlighted with accent colour
 
 Tell Akin:
-> "Three design proposals are ready — open `designs/[client-slug]/design-compare.html` in your browser to compare them side by side. Tell me which direction you prefer, or describe what you'd like adjusted."
+> "Three design proposals are ready — open `designs/[client-slug]/design-compare.html` in your browser to compare them. These are Round 1 — they exist to find the right direction. Tell me:
+> 1. Which one is closest to what you want?
+> 2. What specifically works about it?
+> 3. What doesn't work or needs to change?
+> 4. Any elements from the OTHER designs you'd like to pull in?"
 
-**Iteration:** If changes requested — update the relevant HTML file and present again. Repeat until Akin approves one.
+**Round 1 exists to be refined, not approved.** Its purpose is to surface what Akin does and doesn't want — things that are hard to articulate in a brief but easy to point at in a visual.
+
+---
+
+#### 2D — Round 2: Refined Design
+
+Based on Akin's Round 1 feedback, generate **1 refined design** (not 3) that combines:
+- The approved direction from Round 1
+- Specific fixes and adjustments Akin requested
+- Any elements borrowed from the other Round 1 designs
+
+Write this as `design-final.html` in `designs/[client-slug]/`.
+
+This design should be close to production-ready. Ask Akin:
+> "Here's the refined design based on your feedback — open `designs/[client-slug]/design-final.html`. Is this the direction to build? Any final tweaks before we move to the scaffold?"
+
+**Iteration:** If further changes requested — update `design-final.html` and present again. Repeat until Akin approves. This is the last design gate before code generation begins.
 
 ---
 
@@ -1253,9 +1347,14 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 - [ ] Mobile `@media` block collapses grids
 - [ ] **Images present** — no text-only designs
 - [ ] **Scroll animations** — IntersectionObserver fade-up on sections
-- [ ] **Hover states** — cards and buttons have visible transitions
-- [ ] **Testimonials section** present
+- [ ] **Hover states** — interactive elements have visible transitions
+- [ ] **Social proof present** — testimonials, reviews, certs, or trust signals in some form
 - [ ] `prefers-reduced-motion` respected
+- [ ] **Design constraints respected** — all constraints from `brief.json` are satisfied
+- [ ] **Anti-patterns avoided** — none of the `design-research.json anti_patterns` appear
+- [ ] **Signature element present** — the ThemeConfig's unique design detail is implemented
+- [ ] **Reference connection clear** — the design visibly responds to at least one reference site's language
+- [ ] **Not structurally identical to other designs** — each of the 3 has a different page structure, not just different colours on the same skeleton
 
 ---
 
@@ -1275,7 +1374,9 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 | `designs/[slug]/scaffold/.lighthouserc.json` | Lighthouse CI config |
 | `designs/[slug]/scaffold/CHANGELOG.md` | Change log (billing reference) |
 | `designs/[slug]/scraped/` | Scraped site data + downloaded images |
-| `designs/[slug]/design-compare.html` | Tabbed comparison viewer for 3 design proposals |
+| `designs/[slug]/scraped/reference-analysis.json` | Analysis of Akin's reference sites |
+| `designs/[slug]/design-compare.html` | Tabbed comparison viewer for Round 1 designs |
+| `designs/[slug]/design-final.html` | Approved refined design from Round 2 |
 | `src/lib/site-templates/index.ts` | Industry presets + component templates |
 | `src/lib/github.ts` | GitHub API helpers |
 | `src/scripts/scrape-existing-site.ts` | Scrape client's existing site |

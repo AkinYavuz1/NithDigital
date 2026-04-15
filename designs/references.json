@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://bilal.world",
+    "added": "2026-04-15",
+    "category": "portfolio",
+    "what_works": "Monochrome base with subtle colour pops, serif/sans pairing for drama, design-tool aesthetic (dashed borders, corner handles), extreme whitespace, 96px hero heading, playful interactive details, minimap sidebar",
+    "best_for": "Creative professionals, portfolios, personal sites",
+    "elements": {
+      "nav": "Sidebar with minimap, playful",
+      "hero": "Massive typography, centred, no image needed",
+      "content": "Card-based with dashed selection borders and corner dots",
+      "colour": "Grey-scale with one accent used very sparingly",
+      "typography": "Display serif for headings, geometric sans for body, tight tracking on large text",
+      "interaction": "Drag gestures, hover reveals with backdrop blur, scroll-triggered content"
+    }
+  }
+]
