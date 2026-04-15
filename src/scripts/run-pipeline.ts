@@ -45,7 +45,7 @@ const startStage   = parseInt(getArg('--stage') || '1', 10)
 
 if (!clientSlug) {
   console.error('Usage: run-pipeline.ts --client-slug <slug> [--client-name "Name"] [--existing-url URL] [--stage N]')
-  process.exit(1)
+  process.exit(1) as never
 }
 
 // ─── State management ─────────────────────────────────────────────────────────
