@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz &mdash; Senior BI &amp; Data Professional</title>
+<meta name="description" content="Akin Yavuz — Senior BI & Data Professional. Microsoft-certified. 10+ years across NHS, fintech, and energy sectors. Power BI, SQL, Azure.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Tokens ── */
+:root {
+  --bg: #FFFFFF;
+  --surface: #F5F5F0;
+  --text: #141210;
+  --muted: #7A7872;
+  --dim: #BAB8B0;
+  --border: rgba(20,18,16,0.08);
+  --accent: #1A1A1A;
+  --highlight: #E8E0D0;
+  --green: #2D6A4F;
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.1;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+img { display: block; max-width: 100%; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── Caption / Meta style ── */
+.caption {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* ── Animations ── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Horizontal rule animation ── */
+.hr-animate {
+  width: 0;
+  transition: width 0.8s ease-out;
+  border: none;
+  border-top: 1px solid var(--dim);
+  margin: 0;
+}
+.hr-animate.visible {
+  width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hr-animate { width: 100%; transition: none; }
+}
+
+/* ── Text link style (underline slides from left) ── */
+.text-link {
+  position: relative;
+  display: inline-block;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-bottom: 1px dotted var(--dim);
+  padding-bottom: 2px;
+  transition: color 0.3s;
+}
+.text-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--text);
+  transition: width 0.3s ease-out;
+}
+.text-link:hover::after {
+  width: 100%;
+}
+.text-link:hover {
+  border-bottom-color: transparent;
+}
+
+/* ── Design Label Bar ── */
+.design-label {
+  background: var(--accent);
+  color: var(--dim);
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 8px 40px;
+  text-align: center;
+}
+
+/* ── Navbar ── */
+.navbar {
+  padding: 0 40px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.navbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+.navbar-brand {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.navbar-links a {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.navbar-links a:hover { color: var(--text); }
+.nav-available {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--green);
+}
+.nav-available::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Hero ── */
+.hero {
+  background: var(--bg);
+  padding: 100px 0 80px;
+  text-align: center;
+}
+.hero-name {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(72px, 12vw, 144px);
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+  color: var(--text);
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  transition: letter-spacing 1s ease-out;
+}
+.hero-name.loaded {
+  letter-spacing: -0.05em;
+}
+.hero-rule {
+  border: none;
+  border-top: 1px solid var(--dim);
+  margin: 0 auto 32px;
+  max-width: 800px;
+  width: 0;
+  transition: width 1s ease-out 0.3s;
+}
+.hero-rule.visible {
+  width: 100%;
+}
+.hero-title {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.hero-bio {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 680px;
+  margin: 0 auto 40px;
+}
+.hero-ctas {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+/* ── Stats Strip ── */
+.stats-section {
+  background: var(--surface);
+  padding: 64px 0;
+}
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 0 32px;
+  position: relative;
+}
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 48px;
+  background: var(--dim);
+}
+.stat-number {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 48px;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* ── About ── */
+.about-section {
+  background: var(--bg);
+  padding: 100px 0;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+.about-heading {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.about-title {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+.about-text p {
+  margin-bottom: 20px;
+  color: var(--text);
+}
+.pull-quote {
+  background: var(--highlight);
+  padding: 48px 40px;
+  align-self: start;
+}
+.pull-quote p {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.pull-quote-attr {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--muted);
+}
+.certs-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  padding-top: 40px;
+  border-top: 1px solid var(--dim);
+}
+.certs-list li {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.certs-list li:not(:last-child)::after {
+  content: '\00B7';
+  margin: 0 16px;
+  color: var(--dim);
+  font-size: 18px;
+}
+
+/* ── Skills (Expertise) ── */
+.skills-section {
+  background: var(--surface);
+  padding: 100px 0;
+}
+.skills-heading {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 40px;
+}
+.skills-flow {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 2;
+  color: var(--text);
+}
+.skills-flow strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+.skills-flow .em-sep {
+  color: var(--dim);
+  margin: 0 6px;
+}
+
+/* ── Experience (Career) ── */
+.career-section {
+  background: var(--bg);
+  padding: 100px 0;
+}
+.career-heading {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 48px;
+}
+.career-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px 60px;
+}
+.role-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.role-company {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.role-dates {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+}
+.role-rule {
+  border: none;
+  border-top: 1px solid var(--dim);
+  margin: 0 0 16px;
+}
+.role-title {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.role-bullets {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 16px;
+}
+.role-bullets li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+.role-bullets li::before {
+  content: '\2013';
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+.role-tech {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── Projects ── */
+.projects-section {
+  background: var(--surface);
+  padding: 100px 0;
+}
+.projects-heading {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 48px;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.project-card {
+  background: transparent;
+}
+.project-img-wrap {
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid var(--dim);
+}
+.project-img-wrap img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.5s ease-out;
+}
+.project-card:hover .project-img-wrap img {
+  transform: scale(1.02);
+}
+.project-card h3 {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.project-card p {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* ── Testimonials ── */
+.testimonials-section {
+  background: var(--bg);
+  padding: 100px 0;
+}
+.testimonials-heading {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 48px;
+}
+.testimonial-item {
+  padding: 40px 0;
+}
+.testimonial-item:not(:last-child) {
+  border-bottom: 1px solid var(--dim);
+}
+.testimonial-quote {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 20px;
+  max-width: 800px;
+}
+.testimonial-attr {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ── Contact ── */
+.contact-section {
+  background: var(--accent);
+  padding: 100px 0;
+  text-align: center;
+}
+.contact-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 300;
+  color: #FFFFFF;
+  margin-bottom: 40px;
+  line-height: 1;
+}
+.contact-details {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.contact-details a,
+.contact-details span {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--dim);
+  transition: color 0.2s;
+}
+.contact-details a:hover {
+  color: #FFFFFF;
+}
+
+/* ── Footer ── */
+.footer {
+  background: var(--accent);
+  padding: 32px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+}
+.footer p {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--muted);
+}
+.footer a {
+  color: var(--dim);
+  border-bottom: 1px dotted rgba(255,255,255,0.2);
+  transition: color 0.2s;
+}
+.footer a:hover {
+  color: #FFFFFF;
+}
+
+/* ── Staggered testimonial animations ── */
+.testimonial-item:nth-child(1) { transition-delay: 0s; }
+.testimonial-item:nth-child(2) { transition-delay: 0.15s; }
+.testimonial-item:nth-child(3) { transition-delay: 0.3s; }
+
+/* ── Mobile menu toggle ── */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.menu-toggle span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--text);
+  margin: 4px 0;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  .design-label { padding: 8px 24px; font-size: 10px; }
+
+  /* Navbar */
+  .navbar { padding: 0 24px; }
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 24px;
+    gap: 20px;
+    z-index: 99;
+  }
+  .navbar-links.open { display: flex; }
+  .menu-toggle { display: block; }
+
+  /* Hero */
+  .hero { padding: 60px 0 48px; }
+  .hero-bio { font-size: 18px; }
+  .hero-ctas { flex-direction: column; gap: 16px; align-items: center; }
+
+  /* Stats */
+  .stats-section { padding: 40px 0; }
+  .stats-grid {
+    flex-wrap: wrap;
+    gap: 32px 0;
+  }
+  .stat-item {
+    flex: 0 0 50%;
+    margin-bottom: 8px;
+  }
+  .stat-item:nth-child(2)::after { display: none; }
+  .stat-number { font-size: 36px; }
+
+  /* About */
+  .about-section { padding: 64px 0; }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about-title { font-size: 36px; }
+
+  /* Skills */
+  .skills-section { padding: 64px 0; }
+  .skills-heading { font-size: 36px; }
+
+  /* Career */
+  .career-section { padding: 64px 0; }
+  .career-heading { font-size: 36px; }
+  .career-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* Projects */
+  .projects-section { padding: 64px 0; }
+  .projects-heading { font-size: 36px; }
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Testimonials */
+  .testimonials-section { padding: 64px 0; }
+  .testimonials-heading { font-size: 36px; }
+  .testimonial-quote { font-size: 22px; }
+
+  /* Contact */
+  .contact-section { padding: 64px 0; }
+  .contact-details { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── Design Label Bar ─── -->
+<div class="design-label">
+  Design 14 of 3 &nbsp;|&nbsp; Ink &amp; Light &nbsp;|&nbsp; Editorial warmth, newspaper typography &nbsp;|&nbsp; Primary: #141210 &nbsp;|&nbsp; Fonts: Cormorant Garamond / DM Sans &nbsp;|&nbsp; Layout: fullwidth
+</div>
+
+<!-- ─── Navbar ─── -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="navbar-brand">AY</a>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.navbar-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="navbar-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#career">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><span class="nav-available">Available</span></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── Hero ─── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-name" id="heroName">AKIN<br>YAVUZ</div>
+    <hr class="hero-rule" id="heroRule">
+    <p class="hero-title">Senior BI &amp; Data Professional</p>
+    <p class="hero-bio animate-on-scroll">I turn raw data into dashboards, pipelines, and platforms that organisations actually use to make decisions &mdash; from NHS patient flow to Ofgem regulatory reporting.</p>
+    <div class="hero-ctas animate-on-scroll">
+      <a href="#contact" class="text-link">Get in touch &rarr;</a>
+      <a href="#" class="text-link">Download CV &darr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Stats Strip ─── -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">SSRS Reports</div>
+      </div>
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">40h</div>
+        <div class="stat-label">Saved / Month</div>
+      </div>
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">4&times;</div>
+        <div class="stat-label">Commonwealth Gold</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── About ─── -->
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="about-heading animate-on-scroll">About</p>
+        <h2 class="about-title animate-on-scroll">Turning data into<br>decisions since 2016</h2>
+        <div class="animate-on-scroll">
+          <p>I specialise in the Microsoft data stack &mdash; Power BI, SQL Server, Azure, SSRS &mdash; building reporting platforms that scale across large organisations. Over a decade, I have worked in NHS healthcare analytics, financial services compliance, energy sector regulation, and agile consulting.</p>
+          <p>My approach focuses on self-service BI: designing semantic models, datasets, and governance frameworks that let non-technical teams build their own reports independently. I believe the best BI solution is the one people actually use.</p>
+          <p>I hold Microsoft certifications in Power BI and SQL, a Certified Scrum Master qualification, and a Diploma in Leadership. Outside of data, I am a four-time Commonwealth Games gold medallist in karate &mdash; discipline and precision define everything I do.</p>
+        </div>
+      </div>
+      <div class="pull-quote animate-on-scroll">
+        <p>&ldquo;I turn raw data into dashboards, pipelines, and platforms that organisations actually use to make decisions.&rdquo;</p>
+        <div class="pull-quote-attr">&mdash; Akin Yavuz</div>
+      </div>
+    </div>
+    <ul class="certs-list animate-on-scroll">
+      <li>Microsoft Certified: Power BI</li>
+      <li>SQL Developer</li>
+      <li>Certified Scrum Master</li>
+      <li>Diploma in Leadership</li>
+      <li>BA (Hons) BIS, Northumbria University</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─── Skills (Expertise) ─── -->
+<section id="skills" class="skills-section">
+  <div class="container">
+    <h2 class="skills-heading animate-on-scroll">Expertise</h2>
+    <div class="skills-flow animate-on-scroll">
+      <strong>Core BI</strong> &mdash; Power BI, DAX, Power Query (M), SSRS, SSAS, Tableau, Excel
+      <span class="em-sep">&mdash;</span>
+      <strong>Data Engineering</strong> &mdash; SQL Server, T-SQL, SSIS, ETL/ELT, Azure Data Factory, Data Warehousing, Star Schema
+      <span class="em-sep">&mdash;</span>
+      <strong>Cloud &amp; DevOps</strong> &mdash; Azure, Microsoft Fabric, Dynamics 365, Git / GitHub, Azure DevOps
+      <span class="em-sep">&mdash;</span>
+      <strong>Languages</strong> &mdash; SQL, Python, DAX, M / Power Query, VBA
+      <span class="em-sep">&mdash;</span>
+      <strong>Leadership</strong> &mdash; Agile / Scrum, Stakeholder Management, Mentoring, Requirements Elicitation
+      <span class="em-sep">&mdash;</span>
+      <strong>Sectors</strong> &mdash; NHS / Healthcare, Financial Services, Energy / Utilities, Regulatory Reporting
+    </div>
+  </div>
+</section>
+
+<!-- ─── Experience (Career) ─── -->
+<section id="career" class="career-section">
+  <div class="container">
+    <h2 class="career-heading animate-on-scroll">Career</h2>
+    <div class="career-grid">
+
+      <!-- Role 1 -->
+      <div class="animate-on-scroll">
+        <div class="role-header">
+          <span class="role-company">NHS Arden &amp; GEM CSU</span>
+          <span class="role-dates">Oct 2022 &ndash; Jun 2025</span>
+        </div>
+        <hr class="role-rule">
+        <div class="role-title">Principal Insight Developer</div>
+        <ul class="role-bullets">
+          <li>Led Power BI best-practice standards &mdash; semantic model design and report governance</li>
+          <li>Built KPI frameworks tracking healthcare outcomes, patient flow, staffing levels</li>
+          <li>Designed self-service BI datasets enabling non-technical teams to build reports independently</li>
+        </ul>
+        <div class="role-tech">Power BI &middot; SQL &middot; Azure &middot; DAX</div>
+      </div>
+
+      <!-- Role 2 -->
+      <div class="animate-on-scroll">
+        <div class="role-header">
+          <span class="role-company">The Openwork Partnership</span>
+          <span class="role-dates">Mar 2020 &ndash; Oct 2022</span>
+        </div>
+        <hr class="role-rule">
+        <div class="role-title">Senior MI Analyst</div>
+        <ul class="role-bullets">
+          <li>Built 50+ SSRS reports automating manual processes &mdash; saving 40 hours per month</li>
+          <li>Power BI datasets from Azure Data Warehouse, embedded into Dynamics 365</li>
+          <li>Complex SQL stored procedures for Finance audit testing and compliance</li>
+        </ul>
+        <div class="role-tech">SSRS &middot; Power BI &middot; Azure DWH &middot; Dynamics 365</div>
+      </div>
+
+      <!-- Role 3 -->
+      <div class="animate-on-scroll">
+        <div class="role-header">
+          <span class="role-company">Good Energy</span>
+          <span class="role-dates">Dec 2018 &ndash; Mar 2020</span>
+        </div>
+        <hr class="role-rule">
+        <div class="role-title">BI Developer</div>
+        <ul class="role-bullets">
+          <li>Power BI dashboards for Ofgem, Citizens Advice Bureau, government departments</li>
+          <li>Led data migration to new CRM, rewriting reports across the platform</li>
+        </ul>
+        <div class="role-tech">Power BI &middot; SSRS &middot; Regulatory Reporting</div>
+      </div>
+
+      <!-- Role 4 -->
+      <div class="animate-on-scroll">
+        <div class="role-header">
+          <span class="role-company">7 Layer Solutions</span>
+          <span class="role-dates">Mar 2016 &ndash; Jun 2018</span>
+        </div>
+        <hr class="role-rule">
+        <div class="role-title">Report Developer</div>
+        <ul class="role-bullets">
+          <li>Power BI dashboards for Retail and Banking in Agile consulting engagements</li>
+          <li>International Power BI training delivery for client teams</li>
+        </ul>
+        <div class="role-tech">Power BI &middot; Agile &middot; Client Consulting</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Projects ─── -->
+<section id="projects" class="projects-section">
+  <div class="container">
+    <h2 class="projects-heading animate-on-scroll">Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card animate-on-scroll">
+        <div class="project-img-wrap">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80&auto=format&fit=crop" alt="Sanquhar Business Directory" loading="lazy">
+        </div>
+        <h3>Sanquhar Business Directory</h3>
+        <p>A local business listing and data visualisation web app for a small Scottish town, built with Next.js and Supabase.</p>
+        <a href="https://businessdirectory-nine.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-link">View &rarr;</a>
+      </div>
+
+      <div class="project-card animate-on-scroll">
+        <div class="project-img-wrap">
+          <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&q=80&auto=format&fit=crop" alt="Daily Duel" loading="lazy">
+        </div>
+        <h3>Daily Duel</h3>
+        <p>A daily competitive trivia game with PostgreSQL leaderboard, real-time scoring, and persistent stats tracking.</p>
+        <a href="https://daily-duel.akinyavuz.workers.dev/" target="_blank" rel="noopener noreferrer" class="text-link">View &rarr;</a>
+      </div>
+
+      <div class="project-card animate-on-scroll">
+        <div class="project-img-wrap">
+          <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&q=80&auto=format&fit=crop" alt="Not An Octavia" loading="lazy">
+        </div>
+        <h3>Not An Octavia</h3>
+        <p>A machine learning experiment using Python and web scraping to classify and identify vehicle models from images.</p>
+        <a href="#" class="text-link">View &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Testimonials ─── -->
+<section id="testimonials" class="testimonials-section">
+  <div class="container">
+    <h2 class="testimonials-heading animate-on-scroll">Testimonials</h2>
+
+    <div class="testimonial-item animate-on-scroll">
+      <p class="testimonial-quote">&ldquo;Akin transformed our reporting &mdash; what used to take our team days now runs automatically.&rdquo;</p>
+      <div class="testimonial-attr">&mdash; Sarah Mitchell, NHS Programme Director</div>
+    </div>
+
+    <div class="testimonial-item animate-on-scroll">
+      <p class="testimonial-quote">&ldquo;Clear communicator who translates complex data into actionable insight.&rdquo;</p>
+      <div class="testimonial-attr">&mdash; James Porter, Head of Finance, Openwork</div>
+    </div>
+
+    <div class="testimonial-item animate-on-scroll">
+      <p class="testimonial-quote">&ldquo;Technically excellent and always delivers on time.&rdquo;</p>
+      <div class="testimonial-attr">&mdash; David Chen, CTO, 7 Layer Solutions</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── Contact ─── -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <h2 class="contact-heading animate-on-scroll">Let&rsquo;s talk.</h2>
+    <div class="contact-details animate-on-scroll">
+      <a href="mailto:akinyavuz@outlook.com">akinyavuz@outlook.com</a>
+      <a href="tel:+447949116770">07949 116 770</a>
+      <span>Dumfries &amp; Galloway, Scotland</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 Akin Yavuz &nbsp;&middot;&nbsp; <a href="#">Privacy</a></p>
+  </div>
+</footer>
+
+<!-- ─── Scripts ─── -->
+<script>
+(function() {
+  /* ── Hero name letter-spacing animation ── */
+  var heroName = document.getElementById('heroName');
+  var heroRule = document.getElementById('heroRule');
+  setTimeout(function() {
+    heroName.classList.add('loaded');
+    heroRule.classList.add('visible');
+  }, 100);
+
+  /* ── Scroll animations ── */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+      el.classList.add('visible');
+    });
+    document.querySelectorAll('.hr-animate').forEach(function(el) {
+      el.classList.add('visible');
+    });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  /* ── Horizontal rule width animations ── */
+  var hrObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        hrObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.hr-animate').forEach(function(el) {
+    hrObserver.observe(el);
+  });
+
+  /* ── Smooth scroll for anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        /* Close mobile menu if open */
+        var navLinks = document.querySelector('.navbar-links');
+        if (navLinks) navLinks.classList.remove('open');
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
