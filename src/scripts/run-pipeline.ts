@@ -1,21 +1,21 @@
 /**
  * run-pipeline.ts
- * Master orchestrator for the full Nith Digital website pipeline.
+ * Master orchestrator for the Nith Digital 6-stage website pipeline.
  *
  * Chains all automatable stages back-to-back. Pauses at three human gates:
- *   Gate 1 — Brief Q&A (Stage 2)
- *   Gate 2 — Design approval (Stage 5)
- *   Gate 3 — Staging review + client approval (Stage 9.5–9.7)
+ *   Gate 1 — Brief Q&A (Stage 1)
+ *   Gate 2 — Design approval (Stage 2)
+ *   Gate 3 — Staging review + client approval (Stage 5)
  *
  * Saves progress to pipeline-state.json so any interruption can be resumed.
  *
  * Usage:
  *   npx ts-node --project tsconfig.json src/scripts/run-pipeline.ts \
  *     --client-slug my-client [--client-name "Full Name"] \
- *     [--existing-url https://old-site.co.uk] [--stage 7]
+ *     [--existing-url https://old-site.co.uk] [--stage 3]
  *
  * Resume from a specific stage:
- *   ... --stage 8
+ *   ... --stage 4
  */
 
 import * as fs from 'fs'
@@ -41,12 +41,27 @@ const getArg = (flag: string) => { const i = rawArgs.indexOf(flag); return i !==
 const clientSlug   = getArg('--client-slug')
 const clientName   = getArg('--client-name')
 const existingUrl  = getArg('--existing-url')
-const startStage   = parseInt(getArg('--stage') || '1', 10)
+const startStageRaw = parseInt(getArg('--stage') || '1', 10)
 
 if (!clientSlug) {
   console.error('Usage: run-pipeline.ts --client-slug <slug> [--client-name "Name"] [--existing-url URL] [--stage N]')
-  process.exit(1) as never
+  process.exit(1)
 }
+
+// ─── Backward compatibility: map old stage numbers to new ─────────────────────
+
+function migrateStage(n: number): number {
+  // Old 12-stage pipeline → new 6-stage pipeline
+  if (n <= 3) return 1      // old stages 1-3 → new stage 1 (Discovery)
+  if (n <= 5) return 2      // old stages 4-5 → new stage 2 (Design)
+  if (n <= 7) return 3      // old stages 6-7 → new stage 3 (Content & Provision)
+  if (n <= 9) return 4      // old stages 8-9 → new stage 4 (Build)
+  if (n === 95 || n === 97 || n === 10 || n === 11) return 5  // old stages 9.5-11 → new stage 5 (QA + Launch)
+  if (n === 12) return 6    // old stage 12 → new stage 6 (Refine)
+  return n  // already a new stage number (1-6)
+}
+
+const startStage = startStageRaw > 6 ? migrateStage(startStageRaw) : startStageRaw
 
 // ─── State management ─────────────────────────────────────────────────────────
 
@@ -67,7 +82,13 @@ const stateFile   = path.join(designsDir, 'pipeline-state.json')
 
 function loadState(): PipelineState {
   if (fs.existsSync(stateFile)) {
-    return JSON.parse(fs.readFileSync(stateFile, 'utf-8'))
+    const state = JSON.parse(fs.readFileSync(stateFile, 'utf-8')) as PipelineState
+    // Migrate old stage numbers in completed_stages
+    const hasOldStages = state.completed_stages.some(n => n > 6)
+    if (hasOldStages) {
+      state.completed_stages = [...new Set(state.completed_stages.map(migrateStage))]
+    }
+    return state
   }
   return {
     client_slug:       clientSlug,
@@ -113,119 +134,104 @@ function tsNode(script: string, extraArgs: string[] = []): boolean {
 }
 
 function header(title: string) {
-  const bar = '═'.repeat(44)
-  console.log(`\n╔${bar}╗`)
-  console.log(`║  ${title.padEnd(43)}║`)
-  console.log(`╚${bar}╝\n`)
+  const bar = '='.repeat(44)
+  console.log(`\n+${bar}+`)
+  console.log(`|  ${title.padEnd(43)}|`)
+  console.log(`+${bar}+\n`)
 }
 
-function tick(msg: string) { console.log(`  ✓ ${msg}`) }
-function info(msg: string) { console.log(`  → ${msg}`) }
-function warn(msg: string) { console.log(`  ⚠ ${msg}`) }
+function tick(msg: string) { console.log(`  + ${msg}`) }
+function info(msg: string) { console.log(`  > ${msg}`) }
+function warn(msg: string) { console.log(`  ! ${msg}`) }
 
-// ─── Individual stage runners ─────────────────────────────────────────────────
+// ─── Stage 1: Discovery ──────────────────────────────────────────────────────
 
-async function stage1_research(s: PipelineState) {
-  if (s.completed_stages.includes(1)) { info('Stage 1 already complete — skipping'); return }
-  header('STAGE 1 — Research')
+async function stage1_discovery(s: PipelineState) {
+  if (s.completed_stages.includes(1)) { info('Stage 1 already complete -- skipping'); return }
+  header('STAGE 1 -- Discovery (Research + Brief + Design Research)')
 
+  // 1A: Research
   const url = s.existing_url || existingUrl
   if (url) {
     info(`Scraping existing site: ${url}`)
     const ok = tsNode('src/scripts/scrape-existing-site.ts', ['--url', url, '--client-slug', clientSlug])
-    if (!ok) { warn('Scrape failed — continuing without site data'); return }
-    tick('Site analysis saved')
+    if (!ok) { warn('Scrape failed -- continuing without site data') }
+    else tick('Site analysis saved')
   } else {
-    info('No existing URL — Claude will run market research in Stage 3')
+    info('No existing URL -- Claude will run market research')
   }
 
-  done(s, 1)
-  tick('Stage 1 complete')
-}
+  // 1B: Brief gathering (human gate)
+  console.log('\n  Claude will now ask brief questions about the client.')
+  console.log('  Answer each question in the Claude session.\n')
 
-async function stage2_brief(s: PipelineState) {
-  if (s.completed_stages.includes(2)) { info('Stage 2 already complete — skipping'); return }
-  header('STAGE 2 — GATE 1: Brief Gathering')
-
-  console.log('  Claude will now ask brief questions about the client.')
-  console.log('  Answer each question in the Claude session, then come back here.\n')
-  console.log('  Once brief.json exists, press Enter to continue.\n')
-
-  // Wait for brief.json
   const briefPath = path.join(designsDir, 'brief.json')
   while (true) {
     const answer = await ask('  Has the brief been completed? (yes / skip): ')
     if (answer === 'skip') break
     if (answer === 'yes' || answer === 'y') {
       if (!fs.existsSync(briefPath)) {
-        warn('brief.json not found yet — check Claude has written it to designs/' + clientSlug + '/brief.json')
+        warn('brief.json not found yet -- check Claude has written it to designs/' + clientSlug + '/brief.json')
         continue
       }
       break
     }
   }
+  tick('Brief confirmed')
 
-  done(s, 2)
-  tick('Stage 2 complete — brief.json confirmed')
-}
-
-async function stage3_designResearch(s: PipelineState) {
-  if (s.completed_stages.includes(3)) { info('Stage 3 already complete — skipping'); return }
-  header('STAGE 3 — Design Research (Claude)')
-
-  console.log('  Claude reads the archive, searches design trends, and plans 3 themes.')
-  console.log('  This runs in the Claude session.\n')
+  // 1C: Design research (Claude runs this)
+  console.log('\n  Claude reads the archive, searches design trends, and plans 3 themes.')
   console.log('  Claude must write: designs/' + clientSlug + '/scraped/design-research.json\n')
 
   const researchPath = path.join(designsDir, 'scraped', 'design-research.json')
   while (true) {
     const answer = await ask('  Has Claude completed design research? (yes): ')
     if (answer !== 'yes' && answer !== 'y') continue
-
     if (!fs.existsSync(researchPath)) {
-      warn('design-research.json not found — Claude must write it to designs/' + clientSlug + '/scraped/design-research.json first')
+      warn('design-research.json not found -- Claude must write it first')
       continue
     }
     break
   }
+  tick('Design research confirmed')
 
-  done(s, 3)
-  tick('Stage 3 complete — design-research.json confirmed')
+  done(s, 1)
+  tick('Stage 1 complete')
 }
 
-async function stage4_htmlMockups(s: PipelineState) {
-  if (s.completed_stages.includes(4)) { info('Stage 4 already complete — skipping'); return }
-  header('STAGE 4 — HTML Mockups (Claude)')
+// ─── Stage 2: Design ──────────────────────────────────────────────────────────
 
-  console.log('  Claude writes design-1.html, design-2.html, design-3.html.\n')
+async function stage2_design(s: PipelineState) {
+  if (s.completed_stages.includes(2)) { info('Stage 2 already complete -- skipping'); return }
+  header('STAGE 2 -- Design (Copy + HTML Mockups + Approval)')
+
+  // 2A: Copy generation + 2B: HTML mockups
+  console.log('  Claude writes copy.json first, then generates 3 HTML mockups.')
+  console.log('  A comparison viewer (design-compare.html) is also generated.\n')
 
   while (true) {
-    const answer = await ask('  Has Claude written all 3 HTML mockups? (yes): ')
+    const answer = await ask('  Has Claude written copy.json + 3 HTML mockups + design-compare.html? (yes): ')
     if (answer !== 'yes' && answer !== 'y') continue
+
+    const copyPath = path.join(designsDir, 'copy.json')
+    if (!fs.existsSync(copyPath)) {
+      warn('copy.json not found -- Claude must write it before the HTML mockups')
+      continue
+    }
 
     const files = [1, 2, 3].map(n => path.join(designsDir, `design-${n}.html`))
     const missing = files.filter(f => !fs.existsSync(f))
     if (missing.length > 0) {
-      warn(`Missing: ${missing.map(f => path.basename(f)).join(', ')} — please write them first`)
+      warn(`Missing: ${missing.map(f => path.basename(f)).join(', ')}`)
       continue
     }
     break
   }
+  tick('Copy + 3 HTML mockups confirmed')
 
-  done(s, 4)
-  tick('Stage 4 complete — 3 HTML mockups confirmed')
-}
-
-async function stage5_pdfsAndApproval(s: PipelineState) {
-  if (s.completed_stages.includes(5)) { info('Stage 5 already complete — skipping'); return }
-  header('STAGE 5 — GATE 2: Design Approval')
-
-  info('Rendering PDFs…')
-  const ok = run(['node', 'src/scripts/generate-design-pdf.js', clientSlug])
-  if (!ok) warn('PDF rendering had issues — open the HTML files directly in a browser')
-
-  console.log(`\n  PDFs saved to: C:\\nithdigital\\designs\\${clientSlug}\\`)
-  console.log('  Open them (or the .html files at 1440px) and choose a design.\n')
+  // 2C: Design approval (human gate)
+  console.log(`\n  Open: C:\\nithdigital\\designs\\${clientSlug}\\design-compare.html`)
+  console.log('  Compare the 3 designs and choose one.\n')
 
   let chosen = ''
   while (!['1', '2', '3'].includes(chosen)) {
@@ -233,41 +239,17 @@ async function stage5_pdfsAndApproval(s: PipelineState) {
     if (!['1', '2', '3'].includes(chosen)) warn('Enter 1, 2, or 3')
   }
 
-  // Record approved design in state
-  const themePath = path.join(designsDir, 'theme.json')
-  if (!fs.existsSync(themePath)) {
-    info(`Tell Claude: "Approved design ${chosen} — please write copy.json and theme.json"`)
-    await ask('  Press Enter when copy.json and theme.json are written: ')
-  }
-
-  done(s, 5)
-  tick(`Stage 5 complete — Design ${chosen} approved`)
+  done(s, 2)
+  tick(`Stage 2 complete -- Design ${chosen} approved`)
 }
 
-async function stage6_copyAndTheme(s: PipelineState) {
-  if (s.completed_stages.includes(6)) { info('Stage 6 already complete — skipping'); return }
-  header('STAGE 6 — Copy + Theme (Claude)')
+// ─── Stage 3: Content & Provision ──────────────────────────────────────────────
 
-  const copyPath  = path.join(designsDir, 'copy.json')
-  const themePath = path.join(designsDir, 'theme.json')
+async function stage3_contentProvision(s: PipelineState) {
+  if (s.completed_stages.includes(3)) { info('Stage 3 already complete -- skipping'); return }
+  header('STAGE 3 -- Content & Provision (Theme + GitHub + Vercel)')
 
-  while (true) {
-    if (fs.existsSync(copyPath) && fs.existsSync(themePath)) break
-    warn('copy.json and/or theme.json not found yet')
-    info('Tell Claude: "Write copy.json and theme.json for ' + clientSlug + '"')
-    await ask('  Press Enter when both files exist: ')
-  }
-
-  tick('copy.json and theme.json confirmed')
-  done(s, 6)
-  tick('Stage 6 complete')
-}
-
-async function stage7_provision(s: PipelineState) {
-  if (s.completed_stages.includes(7)) { info('Stage 7 already complete — skipping'); return }
-  header('STAGE 7 — Provision GitHub + Vercel')
-
-  // Try to get client name
+  // 3A: Provision GitHub + Vercel
   let name = s.client_name || clientName
   if (!name) {
     const briefPath = path.join(designsDir, 'brief.json')
@@ -280,9 +262,9 @@ async function stage7_provision(s: PipelineState) {
   }
   if (!name) name = await ask('  Client name for repo (e.g. "Apex Electrical"): ')
 
-  info(`Creating GitHub repo and Vercel project for "${name}"…`)
+  info(`Creating GitHub repo and Vercel project for "${name}"...`)
   const ok = tsNode('src/scripts/provision-project.ts', ['--client', name, '--project', 'Website'])
-  if (!ok) { warn('Provision failed — check GITHUB_TOKEN and VERCEL_TOKEN in .env.local'); return }
+  if (!ok) { warn('Provision failed -- check GITHUB_TOKEN and VERCEL_TOKEN in .env.local'); return }
 
   const provisionPath = path.join(designsDir, 'provision.json')
   if (fs.existsSync(provisionPath)) {
@@ -294,25 +276,41 @@ async function stage7_provision(s: PipelineState) {
     tick(`Vercel staging: ${p.staging_url}`)
   }
 
-  done(s, 7)
-  tick('Stage 7 complete')
+  // 3B: Theme.json confirmation
+  const themePath = path.join(designsDir, 'theme.json')
+  if (!fs.existsSync(themePath)) {
+    info('Tell Claude: "Write theme.json from the approved design"')
+    while (true) {
+      const answer = await ask('  Has theme.json been written? (yes): ')
+      if (answer === 'yes' || answer === 'y') {
+        if (fs.existsSync(themePath)) break
+        warn('theme.json not found yet')
+      }
+    }
+  }
+  tick('theme.json confirmed')
+
+  done(s, 3)
+  tick('Stage 3 complete')
 }
 
-async function stage8_scaffoldAndPush(s: PipelineState) {
-  if (s.completed_stages.includes(8)) { info('Stage 8 already complete — skipping'); return }
-  header('STAGE 8 — Generate Scaffold + Push to GitHub')
+// ─── Stage 4: Build ──────────────────────────────────────────────────────────
+
+async function stage4_build(s: PipelineState) {
+  if (s.completed_stages.includes(4)) { info('Stage 4 already complete -- skipping'); return }
+  header('STAGE 4 -- Build (Scaffold + QA + Push + Deploy)')
 
   const scaffoldDir = path.join(designsDir, 'scaffold')
 
   console.log('  Claude writes all Next.js files to designs/' + clientSlug + '/scaffold/')
-  console.log('  A scaffold-review subagent checks quality gates.\n')
+  console.log('  Then runs pre-push QA.\n')
 
   while (true) {
-    const answer = await ask('  Has Claude generated and reviewed all scaffold files? (yes): ')
+    const answer = await ask('  Has Claude generated all scaffold files? (yes): ')
     if (answer !== 'yes' && answer !== 'y') continue
 
     if (!fs.existsSync(scaffoldDir)) {
-      warn('scaffold/ directory not found — Claude must write the files first')
+      warn('scaffold/ directory not found -- Claude must write the files first')
       continue
     }
 
@@ -329,11 +327,22 @@ async function stage8_scaffoldAndPush(s: PipelineState) {
     break
   }
 
-  info('Pushing scaffold to GitHub…')
-  const ok = tsNode('src/scripts/push-scaffold.ts', ['--client-slug', clientSlug])
-  if (!ok) { warn('Push failed — check GitHub token and try again with --stage 8'); return }
+  // Pre-push QA
+  info('Running pre-push QA...')
+  const qaOk = tsNode('src/scripts/qa-checklist.ts', ['--client-slug', clientSlug, '--pre-push'])
+  if (!qaOk) {
+    warn('Pre-push QA failed -- fix issues before pushing')
+    warn('Re-run with --stage 4 after fixes')
+    process.exit(1)
+  }
+  tick('Pre-push QA passed')
 
-  // Validate push result — block stage completion if any files failed
+  // Push
+  info('Pushing scaffold to GitHub...')
+  const pushOk = tsNode('src/scripts/push-scaffold.ts', ['--client-slug', clientSlug])
+  if (!pushOk) { warn('Push failed -- check GitHub token and try again with --stage 4'); return }
+
+  // Validate push result
   const resultPath = path.join(designsDir, 'scaffold-result.json')
   if (fs.existsSync(resultPath)) {
     try {
@@ -342,26 +351,19 @@ async function stage8_scaffoldAndPush(s: PipelineState) {
       }
       if (result.failed > 0) {
         warn(`${result.failed}/${result.total} files failed to push: ${result.failed_files.join(', ')}`)
-        warn('Fix the issue and retry with --stage 8. Stage NOT marked complete.')
+        warn('Fix the issue and retry with --stage 4. Stage NOT marked complete.')
         return
       }
       tick(`All ${result.pushed} files pushed to GitHub`)
     } catch { /* if result file unreadable, proceed */ }
   }
 
-  done(s, 8)
-  tick('Stage 8 complete — Vercel is now building')
-}
+  // Monitor deployment
+  info('Polling Vercel... (up to 5 minutes)\n')
+  const deployOk = run(['node', 'src/scripts/check-deploy.js', '--client-slug', clientSlug])
+  if (!deployOk) { warn('Deployment failed or timed out -- check Vercel dashboard'); return }
 
-async function stage9_deployment(s: PipelineState) {
-  if (s.completed_stages.includes(9)) { info('Stage 9 already complete — skipping'); return }
-  header('STAGE 9 — Monitor Vercel Deployment')
-
-  info('Polling Vercel… (up to 5 minutes)\n')
-  const ok = run(['node', 'src/scripts/check-deploy.js', '--client-slug', clientSlug])
-  if (!ok) { warn('Deployment failed or timed out — check Vercel dashboard'); return }
-
-  // Re-read staging URL (check-deploy.js updates provision.json)
+  // Re-read staging URL
   const provisionPath = path.join(designsDir, 'provision.json')
   if (fs.existsSync(provisionPath)) {
     const p = JSON.parse(fs.readFileSync(provisionPath, 'utf-8'))
@@ -369,85 +371,89 @@ async function stage9_deployment(s: PipelineState) {
   }
 
   tick(`Site live at: ${s.staging_url}`)
-  done(s, 9)
+  done(s, 4)
+  tick('Stage 4 complete -- Vercel deployment ready')
 }
 
-async function stage95_akinReview(s: PipelineState) {
-  if (s.completed_stages.includes(95)) { info('Stage 9.5 already complete — skipping'); return }
-  header('STAGE 9.5 — GATE 3a: Your Internal Review')
+// ─── Stage 5: QA + Launch ─────────────────────────────────────────────────────
 
+async function stage5_qaLaunch(s: PipelineState) {
+  if (s.completed_stages.includes(5)) { info('Stage 5 already complete -- skipping'); return }
+  header('STAGE 5 -- QA + Launch (Review + QA + Archive + GSC + Domain)')
+
+  // 5A: Internal review
   console.log(`  Open: ${s.staging_url || 'staging URL'}`)
   console.log('  Quick checklist before showing the client:\n')
-  console.log('    □ Hero renders correctly (desktop + mobile)')
-  console.log('    □ All pages load without errors')
-  console.log('    □ Contact form submits — check you receive the email')
-  console.log('    □ Nav links all work')
-  console.log('    □ Fonts loaded correctly\n')
-  console.log('  If anything needs fixing: tell Claude what to change,')
-  console.log('  then run with --stage 12 to push the fix.\n')
+  console.log('    [] Hero renders correctly (desktop + mobile)')
+  console.log('    [] All pages load without errors')
+  console.log('    [] Contact form submits -- check you receive the email')
+  console.log('    [] Nav links work')
+  console.log('    [] Fonts loaded, animations fire on scroll\n')
 
-  const answer = await ask('  Does the staging site look good? (yes / fix): ')
+  let answer = await ask('  Does the staging site look good? (yes / fix): ')
   if (answer === 'fix' || answer === 'no' || answer === 'n') {
-    info('Fix mode — use Stage 12 refinements. Come back with --stage 95 when ready.')
+    info('Fix mode -- use Stage 6 refinements. Come back with --stage 5 when ready.')
     process.exit(0)
   }
+  tick('Internal review passed')
 
-  done(s, 95)
-  tick('Stage 9.5 complete — internal review passed')
-}
-
-async function stage97_clientApproval(s: PipelineState) {
-  if (s.completed_stages.includes(97)) { info('Stage 9.7 already complete — skipping'); return }
-  header('STAGE 9.7 — GATE 3b: Client Staging Approval')
-
-  console.log('  Send this to the client:\n')
-  console.log('  ─────────────────────────────────────────────────────────')
+  // 5B: Client approval
+  console.log('\n  Send this to the client:\n')
+  console.log('  ----------------------------------------------------------')
   console.log(`  Hi [Name], your new website is ready to preview:`)
   console.log(`  ${s.staging_url || '[staging URL]'}`)
   console.log()
   console.log('  Please review and reply with any feedback by [date + 5 days].')
   console.log('  Once you\'re happy, reply "Approved for launch" and we\'ll')
-  console.log('  get it live. Any changes after that are billed at £35/hour.')
-  console.log('  ─────────────────────────────────────────────────────────\n')
+  console.log('  get it live. Any changes after that are billed at GBP 35/hour.')
+  console.log('  ----------------------------------------------------------\n')
 
-  const answer = await ask('  Has the client approved for launch? (yes / feedback): ')
+  answer = await ask('  Has the client approved for launch? (yes / feedback): ')
   if (answer !== 'yes' && answer !== 'y') {
-    info('Apply client feedback via Stage 12, then return with --stage 97')
+    info('Apply client feedback via Stage 6, then return with --stage 5')
     process.exit(0)
   }
+  tick('Client approved for launch')
 
-  done(s, 97)
-  tick('Stage 9.7 complete — client approved for launch')
-}
-
-async function stage10_qa(s: PipelineState) {
-  if (s.completed_stages.includes(10)) { info('Stage 10 already complete — skipping'); return }
-  header('STAGE 10 — Automated QA')
-
+  // 5C: Full QA
   const stagingUrl = s.staging_url || await ask('  Staging URL: ')
-  info('Running QA checklist…\n')
+  info('Running full QA checklist...\n')
 
-  const ok = tsNode('src/scripts/qa-checklist.ts', ['--client-slug', clientSlug, '--staging-url', stagingUrl])
-
-  if (!ok) {
-    warn('QA failed — tell Claude which checks failed and fix them')
-    warn('Re-run with --stage 10 after fixes are pushed')
+  const qaOk = tsNode('src/scripts/qa-checklist.ts', ['--client-slug', clientSlug, '--staging-url', stagingUrl])
+  if (!qaOk) {
+    warn('QA failed -- fix issues and re-run with --stage 5')
     process.exit(1)
   }
+  tick('All QA checks passed')
 
-  done(s, 10)
-  tick('Stage 10 complete — all QA checks passed')
+  // 5D: Archive + GSC
+  info('Updating design archive...')
+  tsNode('src/scripts/update-archive.ts', ['--client-slug', clientSlug])
+  tick('Design archived')
+
+  info('Submitting to Google Search Console...')
+  tsNode('src/scripts/submit-gsc.ts', ['--client-slug', clientSlug])
+  tick('GSC submission complete')
+
+  done(s, 5)
+  tick('Stage 5 complete')
 }
 
-async function stage11_archive(s: PipelineState) {
-  if (s.completed_stages.includes(11)) { info('Stage 11 already complete — skipping'); return }
-  header('STAGE 11 — Update Design Archive')
+// ─── Stage 6: Refine ──────────────────────────────────────────────────────────
 
-  const ok = tsNode('src/scripts/update-archive.ts', ['--client-slug', clientSlug])
-  if (!ok) { warn('Archive update failed — run manually later'); return }
+async function stage6_refine(s: PipelineState) {
+  header('STAGE 6 -- Refine (Post-Launch Changes)')
 
-  done(s, 11)
-  tick('Stage 11 complete — design archived for future reference')
+  console.log('  Tell Claude what to change in the Claude session.')
+  console.log('  Claude will:')
+  console.log('    1. Fetch current repo files')
+  console.log('    2. Edit locally in scaffold/')
+  console.log('    3. Push to GitHub')
+  console.log('    4. Vercel auto-redeploys\n')
+  console.log('  Each change is logged in CHANGELOG.md with hours.')
+  console.log('  Rate: GBP 35/hour\n')
+
+  info('Refinement loop active -- run individual commands as needed.')
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -456,29 +462,22 @@ async function main() {
   const s = loadState()
   fs.mkdirSync(designsDir, { recursive: true })
 
-  const bar = '═'.repeat(44)
-  console.log(`\n╔${bar}╗`)
-  console.log(`║  Nith Digital Pipeline                     ║`)
-  console.log(`║  Client slug : ${clientSlug.padEnd(27)}║`)
-  console.log(`║  Starting at : Stage ${String(startStage).padEnd(21)}║`)
+  const bar = '='.repeat(44)
+  console.log(`\n+${bar}+`)
+  console.log(`|  Nith Digital Pipeline (6-stage)          |`)
+  console.log(`|  Client slug : ${clientSlug.padEnd(27)}|`)
+  console.log(`|  Starting at : Stage ${String(startStage).padEnd(21)}|`)
   if (s.completed_stages.length > 0) {
-    console.log(`║  Completed   : ${s.completed_stages.join(', ').padEnd(27)}║`)
+    console.log(`|  Completed   : ${s.completed_stages.join(', ').padEnd(27)}|`)
   }
-  console.log(`╚${bar}╝`)
+  console.log(`+${bar}+`)
 
-  if (startStage <= 1)  await stage1_research(s)
-  if (startStage <= 2)  await stage2_brief(s)
-  if (startStage <= 3)  await stage3_designResearch(s)
-  if (startStage <= 4)  await stage4_htmlMockups(s)
-  if (startStage <= 5)  await stage5_pdfsAndApproval(s)
-  if (startStage <= 6)  await stage6_copyAndTheme(s)
-  if (startStage <= 7)  await stage7_provision(s)
-  if (startStage <= 8)  await stage8_scaffoldAndPush(s)
-  if (startStage <= 9)  await stage9_deployment(s)
-  if (startStage <= 95) await stage95_akinReview(s)
-  if (startStage <= 97) await stage97_clientApproval(s)
-  if (startStage <= 10) await stage10_qa(s)
-  if (startStage <= 11) await stage11_archive(s)
+  if (startStage <= 1) await stage1_discovery(s)
+  if (startStage <= 2) await stage2_design(s)
+  if (startStage <= 3) await stage3_contentProvision(s)
+  if (startStage <= 4) await stage4_build(s)
+  if (startStage <= 5) await stage5_qaLaunch(s)
+  if (startStage <= 6) await stage6_refine(s)
 
   rl.close()
 
@@ -488,11 +487,11 @@ async function main() {
   console.log()
   console.log('  Next step: plug in a live domain.')
   console.log()
-  console.log('  Option A — Nith Digital subdomain (instant):')
+  console.log('  Option A -- Nith Digital subdomain (instant):')
   console.log(`    npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \\`)
   console.log(`      --client-slug ${clientSlug} --option subdomain`)
   console.log()
-  console.log('  Option B — Custom domain bought by client:')
+  console.log('  Option B -- Custom domain bought by client:')
   console.log(`    npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \\`)
   console.log(`      --client-slug ${clientSlug} --option custom --domain example.com`)
   console.log()

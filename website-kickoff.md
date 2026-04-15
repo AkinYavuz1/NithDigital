@@ -13,38 +13,40 @@ Every website gets its own **private GitHub repo** under the `AkinYavuz1` accoun
 
 ---
 
-## Model Switching Protocol
+## Stage Gates
 
 **You must stop at the end of every stage and wait for Akin to confirm before continuing.**
 
-At each stage transition, output this exact block so it is unmissable in the terminal:
+At each stage transition, output this exact block:
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
-║  ⚠️  MODEL SWITCH REQUIRED                                   ║
-║  Switch to: [MODEL NAME]                                     ║
-║  Command:   /model [model-id]                                ║
-║  Then type: "Continue to Stage [N]"                          ║
+║  STAGE [N] COMPLETE                                          ║
+║  Type "Continue to Stage [N+1]" to proceed.                  ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
 **Do not proceed to the next stage until Akin types "Continue to Stage [N]".**
 
-Model IDs:
-- Sonnet: `claude-sonnet-4-6`
-- Opus: `claude-opus-4-6`
+All stages run on **Opus** — no model switching required.
 
 ---
 
-## The 12-Stage Pipeline
+## The 6-Stage Pipeline
 
 ---
 
-### STAGE 1 — Project Start & Research `[model: sonnet]`
+### STAGE 1 — Discovery
+
+Covers: research, brief gathering, design research, and theme planning.
+
+---
+
+#### 1A — Research
 
 **First question:** "Does the client have an existing website? If yes, share the URL."
 
-#### If client HAS an existing site:
+**If client HAS an existing site:**
 Deploy a web-research subagent to run:
 ```bash
 npx ts-node --project tsconfig.json src/scripts/scrape-existing-site.ts \
@@ -55,28 +57,17 @@ Read `designs/[client-slug]/scraped/site-analysis.json` — pre-fill the brief f
 
 Also use web search to find the client's Google Business profile, social media accounts, and any customer reviews.
 
-#### If client has NO existing site:
+**If client has NO existing site:**
 Deploy a market-research subagent immediately:
-- Search: `[industry] top UK website design examples 2025`
-- Search: `[industry] website best practices 2025`
+- Search: `[industry] top UK website design examples 2025 2026`
+- Search: `[industry] website best practices 2026`
 - Search: `[client location] [industry] competitors`
 - Identify 3–5 competitor sites; note design patterns, what works, what's missing
 - Write findings to `designs/[client-slug]/scraped/market-research.json`
 
 ---
 
----
-> **STAGE 1 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ✅ Stage 1 done. No model switch needed.                    ║
-> ║  Stay on: claude-sonnet-4-6                                  ║
-> ║  Type "Continue to Stage 2" to proceed.                      ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
-
-### STAGE 2 — Brief Gathering `[model: sonnet]`
+#### 1B — Brief Gathering
 
 **If Akin sent a pre-kickoff form** (Google Form / Typeform / email template), answers may already be on hand — pre-fill and confirm rather than asking from scratch.
 
@@ -121,19 +112,7 @@ Once ≥7 are covered, write `designs/[client-slug]/brief.json`:
 
 ---
 
----
-> **STAGE 2 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 3                    ║
-> ║  Switch to: OPUS (creative design reasoning)                 ║
-> ║  Command:   /model claude-opus-4-6                           ║
-> ║  Then type: "Continue to Stage 3"                            ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
-
-### STAGE 3 — Design Research + Theme Planning `[model: opus]`
+#### 1C — Design Research + Theme Planning
 
 Deploy a design-research subagent to:
 1. Read `designs/archive.json` — find same-industry past designs, note their colors/fonts/layouts
@@ -164,6 +143,15 @@ For clients with an existing site: Design A = brand evolution (keep core colours
     "heading": "Google Font name",
     "body": "Google Font name"
   },
+  "typography_scale": {
+    "base": "16px",
+    "scale_ratio": 1.25,
+    "sizes": "16 / 20 / 25 / 31 / 39 / 49px",
+    "heading_line_height": 1.1,
+    "body_line_height": 1.65,
+    "heading_letter_spacing": "-0.02em",
+    "body_letter_spacing": "0"
+  },
   "border_radius": "sharp|soft|rounded",
   "spacing": "compact|balanced|generous",
   "hero_layout": "centered|split|fullwidth"
@@ -174,100 +162,27 @@ State explicitly how each design differs from archive entries before proceeding.
 
 ---
 
----
-> **STAGE 3 COMPLETE — STOP HERE**
+> **STAGE 1 COMPLETE — STOP HERE**
 > ```
 > ╔══════════════════════════════════════════════════════════════╗
-> ║  ✅ Stage 3 done. Stay on OPUS for Stage 4.                  ║
-> ║  Stay on: claude-opus-4-6                                    ║
-> ║  Type "Continue to Stage 4" to proceed.                      ║
+> ║  STAGE 1 COMPLETE                                            ║
+> ║  Type "Continue to Stage 2" to proceed.                      ║
 > ╚══════════════════════════════════════════════════════════════╝
 > ```
----
-
-### STAGE 4 — Generate 3 HTML Mockups `[model: opus]`
-
-Write `design-1.html`, `design-2.html`, `design-3.html` to `designs/[client-slug]/`.
-
-**Each file must be:**
-- Fully self-contained HTML (inline `<style>`, Google Fonts via `@import` from CDN)
-- 1440px desktop-first with `@media (max-width: 768px)` collapsing grids
-- Client-specific copy throughout — **no Lorem ipsum**
-- Uses the ThemeConfig hex values directly as CSS custom properties
-- Background images from `INDUSTRY_PRESETS` in `src/lib/site-templates/index.ts` (Unsplash URLs)
-- If client has existing site: use downloaded images from `designs/[client-slug]/scraped/images/`
-
-**Mandatory sections in this order:**
-
-**1. Design label bar** (top of page, small strip):
-```
-Design [N] of 3 | [Theme Name] | [Personality] | Primary: #hex | Accent: #hex | Fonts: Heading/Body | Layout: [hero_layout]
-```
-
-**2. Navbar** — Logo name left, nav links centre/right, CTA button in accent colour
-
-**3. Hero** — matching `hero_layout`:
-- `centered`: full-width image + 50% dark overlay, h1 + subheading centred, 2 CTA buttons
-- `split`: left = brand-colour bg with text + CTA, right = image (50/50)
-- `fullwidth`: image full viewport height, text bottom-left overlaid with gradient fade
-
-**4. Trust badges** — horizontal strip: 3–4 trust signals appropriate to the industry
-(e.g. "5-Star Google Rated", "10+ Years Experience", "Free Quotes", "Fully Insured")
-
-**5. Services grid** — 3 cards: inline SVG icon, title, 2-line description
-
-**6. CTA section** — full-width brand-colour banner: bold headline + single CTA button
-
-**7. Footer** — 3 columns: brand info + tagline | quick links | contact details
-
-**Text/background contrast:** Verify ≥4.5:1 ratio for body text before writing.
 
 ---
 
----
-> **STAGE 4 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 5                    ║
-> ║  Switch to: SONNET (script execution)                        ║
-> ║  Command:   /model claude-sonnet-4-6                         ║
-> ║  Then type: "Continue to Stage 5"                            ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
+### STAGE 2 — Design
 
-### STAGE 5 — Render PDFs + Present Designs `[model: sonnet]`
-
-```bash
-node src/scripts/generate-design-pdf.js [client-slug]
-```
-
-The script uses Edge headless to render each HTML to PDF (falls back to jspdf if Edge not found).
-
-Tell Akin:
-> "Three design proposals are ready at `C:\nithdigital\designs\[client-slug]\` — please open the PDFs (or the HTML files directly in a browser at 1440px width) and tell me which direction you prefer, or describe what you'd like adjusted."
-
-**Iteration:** If changes requested — update the relevant HTML file, re-run the PDF script for that design number, present again. Repeat until Akin approves one.
+Covers: copy generation, HTML mockups, and design comparison viewer.
 
 ---
 
----
-> **STAGE 5 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 6                    ║
-> ║  Switch to: OPUS (copywriting + SEO)                         ║
-> ║  Command:   /model claude-opus-4-6                           ║
-> ║  Then type: "Continue to Stage 6"                            ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
+#### 2A — Generate Copy
 
-### STAGE 6 — Generate Copy + Theme JSON `[model: opus]`
+**Before** generating HTML mockups, produce the full copy for the site. This ensures copy is written once and mockups use the actual final text.
 
-Once a design is approved, deploy a copy-writing subagent (or write directly) to produce:
-
-**`designs/[client-slug]/copy.json`** — extended schema with full local SEO fields:
+Write `designs/[client-slug]/copy.json`:
 ```json
 {
   "meta": {
@@ -324,6 +239,9 @@ Once a design is approved, deploy a copy-writing subagent (or write directly) to
       ]
     }
   },
+  "testimonials": [
+    { "quote": "", "name": "", "location": "", "rating": 5 }
+  ],
   "schema": {
     "type": "LocalBusiness",
     "name": "",
@@ -337,10 +255,10 @@ Once a design is approved, deploy a copy-writing subagent (or write directly) to
     },
     "geo": { "latitude": "", "longitude": "" },
     "opening_hours": [
-      { "day": "Monday–Friday", "opens": "09:00", "closes": "17:00" }
+      { "day": "Monday-Friday", "opens": "09:00", "closes": "17:00" }
     ],
     "service_areas": [],
-    "price_range": "££",
+    "price_range": "$$",
     "same_as": []
   },
   "schema_reviews": {
@@ -364,13 +282,13 @@ Once a design is approved, deploy a copy-writing subagent (or write directly) to
 **Copy rules:**
 - British English (colour, centre, realise, optimise, organisation)
 - Benefit-led: focus on outcomes for the client's customer, not just features
-- `meta.title`: ≤ 60 characters
-- `meta.description`: 150–160 characters
+- `meta.title`: <= 60 characters
+- `meta.description`: 150-160 characters
 - Hero CTA: action-oriented (e.g. "Get Your Free Quote", not "Click Here")
 - Client name, location, and key services must appear in the copy
 - No Lorem ipsum anywhere
-
-Write `designs/[client-slug]/theme.json` — the approved ThemeConfig object.
+- `testimonials` array: use real reviews if found during research; otherwise write 3 realistic placeholder quotes appropriate to the industry
+- `schema.same_as`: populate with actual social URLs found during research
 
 **Deploy a copy-review subagent** to check:
 - No Lorem ipsum
@@ -381,19 +299,136 @@ Write `designs/[client-slug]/theme.json` — the approved ThemeConfig object.
 
 ---
 
----
-> **STAGE 6 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 7                    ║
-> ║  Switch to: SONNET (provisioning scripts)                    ║
-> ║  Command:   /model claude-sonnet-4-6                         ║
-> ║  Then type: "Continue to Stage 7"                            ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
+#### 2B — Generate 3 HTML Mockups
+
+Write `design-1.html`, `design-2.html`, `design-3.html` to `designs/[client-slug]/`.
+
+**Each file must be:**
+- Fully self-contained HTML (inline `<style>`, Google Fonts via `@import` from CDN)
+- 1440px desktop-first with `@media (max-width: 768px)` collapsing grids
+- **Uses copy from `copy.json`** throughout — no made-up text, no Lorem ipsum
+- Uses the ThemeConfig hex values directly as CSS custom properties
+- **Contains real images** — Unsplash URLs from `INDUSTRY_PRESETS` in `src/lib/site-templates/index.ts`, or downloaded images from `designs/[client-slug]/scraped/images/` for existing sites
+- Uses the typography scale from the ThemeConfig — not just font-family but explicit `font-size`, `line-height`, `letter-spacing` at each level
+
+**Mandatory sections in this order:**
+
+**1. Design label bar** (top of page, small strip):
+```
+Design [N] of 3 | [Theme Name] | [Personality] | Primary: #hex | Accent: #hex | Fonts: Heading/Body | Layout: [hero_layout]
+```
+
+**2. Navbar** — Logo name left, nav links centre/right, CTA button in accent colour
+
+**3. Hero** — matching `hero_layout`:
+- `centered`: full-width image + 50% dark overlay, h1 + subheading centred, 2 CTA buttons
+- `split`: left = brand-colour bg with text + CTA, right = image (50/50)
+- `fullwidth`: image full viewport height, text bottom-left overlaid with gradient fade
+
+**4. Trust badges** — horizontal strip: 3-4 trust signals appropriate to the industry
+(e.g. "5-Star Google Rated", "10+ Years Experience", "Free Quotes", "Fully Insured")
+
+**5. Services grid** — 3 cards: inline SVG icon, title, 2-line description
+
+**6. Testimonials** — 3 cards: quote, name, location, star rating (5 stars default). Use real reviews from scraped data if available; otherwise use realistic placeholder quotes from `copy.json testimonials`.
+
+**7. CTA section** — full-width brand-colour banner: bold headline + single CTA button
+
+**8. Footer** — 3 columns: brand info + tagline | quick links | contact details
+
+**For portfolio/consultant sites**, replace sections 4-5 with:
+
+**4. About summary** — brief professional bio with key stats (years experience, projects, etc.)
+
+**5. Project showcase** — 3 cards with Unsplash screenshot thumbnails, project title, 2-line description, tech tags
+
+**6. Skills / Experience** — skills grid or career timeline with visual treatment (animated bars, timeline dots, etc.)
+
+Then continue with sections 6-8 (testimonials, CTA, footer) as above.
+
+**Image treatment:**
+- Hero images: apply CSS overlay, gradient, or duotone filter — never raw unprocessed stock
+- Card images: consistent aspect ratio, rounded corners matching `border_radius` theme setting
+- Use `object-fit: cover` on all images
+- For portfolio sites: use abstract data visualisation, dashboard, or workspace images — NOT generic "person at laptop" stock
+
+**Text/background contrast:** Verify >= 4.5:1 ratio for body text, >= 3:1 for large text before writing.
+
+**Animation layer (mandatory):**
+
+Every HTML mockup must include scroll-triggered animations and micro-interactions:
+
+- **Hero**: elements fade-in on page load (CSS `@keyframes`, 0.6s ease-out)
+- **Sections**: fade-up on scroll using IntersectionObserver (add `animate-on-scroll` class)
+- **Cards**: lift on hover with `box-shadow` transition and subtle `translateY(-4px)`
+- **Stat counters**: animate from 0 to final value on scroll (if applicable)
+- **Buttons**: background/colour transition on hover (0.2s ease)
+- **Respect `prefers-reduced-motion`**: wrap animations in `@media (prefers-reduced-motion: no-preference)`
+
+Include this exact snippet at the bottom of each HTML `<body>`:
+```html
+<script>
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+})();
+</script>
+```
+
+And this CSS block in `<style>`:
+```css
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll { opacity: 1; transform: none; transition: none; }
+}
+```
+
 ---
 
-### STAGE 7 — Provision GitHub Repo + Vercel Project `[model: sonnet]`
+#### 2C — Generate Comparison Viewer
+
+Write `designs/[client-slug]/design-compare.html`:
+- Tabbed viewer: 3 tabs at the top, each loads the corresponding design HTML in an iframe
+- Tab labels: "Design 1: [Theme Name]", "Design 2: [Theme Name]", "Design 3: [Theme Name]"
+- Full-width iframe at `100vh` below the tabs
+- Simple self-contained HTML with inline CSS
+- Active tab highlighted with accent colour
+
+Tell Akin:
+> "Three design proposals are ready — open `designs/[client-slug]/design-compare.html` in your browser to compare them side by side. Tell me which direction you prefer, or describe what you'd like adjusted."
+
+**Iteration:** If changes requested — update the relevant HTML file and present again. Repeat until Akin approves one.
+
+---
+
+> **STAGE 2 COMPLETE — STOP HERE**
+> ```
+> ╔══════════════════════════════════════════════════════════════╗
+> ║  STAGE 2 COMPLETE                                            ║
+> ║  Type "Continue to Stage 3" to proceed.                      ║
+> ╚══════════════════════════════════════════════════════════════╝
+> ```
+
+---
+
+### STAGE 3 — Content & Provision
+
+Covers: provisioning the GitHub repo + Vercel project (in parallel with copy review and theme finalisation).
+
+---
+
+#### 3A — Provision GitHub Repo + Vercel Project
 
 ```bash
 npx ts-node --project tsconfig.json src/scripts/provision-project.ts \
@@ -417,50 +452,91 @@ Saves `designs/[client-slug]/provision.json` with:
 }
 ```
 
----
+#### 3B — Finalise Copy + Theme (runs in parallel with 3A)
+
+Write `designs/[client-slug]/theme.json` — the approved ThemeConfig object from Stage 1C.
+
+Review and update `copy.json` based on any feedback from the design approval:
+- Adjust tone/wording to match the approved design direction
+- Ensure all sections referenced in the approved design have corresponding copy
+
+**Deploy a copy-review subagent** to do a final check:
+- No Lorem ipsum
+- meta.title length, meta.description length
+- British English (flag US spellings: optimize, organize, color:, center:)
+- CTA buttons are action-oriented
+- All `schema.same_as` URLs populated if social accounts were found
+- Fix any issues before continuing
 
 ---
-> **STAGE 7 COMPLETE — STOP HERE**
+
+> **STAGE 3 COMPLETE — STOP HERE**
 > ```
 > ╔══════════════════════════════════════════════════════════════╗
-> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 8                    ║
-> ║  Switch to: OPUS (full codebase generation — most critical)  ║
-> ║  Command:   /model claude-opus-4-6                           ║
-> ║  Then type: "Continue to Stage 8"                            ║
+> ║  STAGE 3 COMPLETE                                            ║
+> ║  Type "Continue to Stage 4" to proceed.                      ║
 > ╚══════════════════════════════════════════════════════════════╝
 > ```
+
 ---
 
-### STAGE 8 — Generate Full Next.js Codebase `[model: opus]`
+### STAGE 4 — Build
+
+Covers: scaffold generation, QA, push to GitHub, and deployment monitoring.
+
+---
+
+#### 4A — Generate Full Next.js Codebase
 
 Write **all files listed below** into `designs/[client-slug]/scaffold/`:
 
 ```
 package.json
-next.config.ts                      ← MUST include unsplash.com in remotePatterns + formats: ['image/webp','image/avif']
+next.config.ts                      <- MUST include unsplash.com in remotePatterns + formats: ['image/webp','image/avif']
 tsconfig.json
 postcss.config.mjs
-.eslintrc.json                      ← a11y ESLint rules (see spec below)
-src/app/globals.css                 ← CSS variables from theme.json
-src/app/layout.tsx                  ← next/font/google, JSON-LD schema, OG meta, og:image, og:locale="en_GB"
-src/app/page.tsx                    ← Home: generateMetadata(), hero, services, FAQ (if ≥3 items), CTA
+.eslintrc.json                      <- a11y ESLint rules (see spec below)
+src/app/globals.css                 <- CSS variables from theme.json
+src/app/layout.tsx                  <- next/font/google, JSON-LD schema, OG meta, og:image, og:locale="en_GB"
+src/app/page.tsx                    <- Home: generateMetadata(), hero, services, FAQ (if >=3 items), CTA
 src/app/about/page.tsx
 src/app/services/page.tsx
-src/app/contact/page.tsx            ← Includes maps embed (if maps.embed_url set), contact form
-src/app/sitemap.ts                  ← exports sitemap() with all page URLs
-src/app/robots.ts                   ← exports robots() with Sitemap: URL
-src/app/not-found.tsx               ← Branded 404 page (use NOT_FOUND_TEMPLATE)
-src/app/error.tsx                   ← Branded error page (use ERROR_TEMPLATE)
-src/app/loading.tsx                 ← Loading spinner (use LOADING_TEMPLATE)
-src/app/api/contact/route.ts        ← Contact form handler (sends email via Resend using RESEND_API_KEY)
+src/app/contact/page.tsx            <- Includes maps embed (if maps.embed_url set), contact form
+src/app/sitemap.ts                  <- exports sitemap() with all page URLs
+src/app/robots.ts                   <- exports robots() with Sitemap: URL
+src/app/not-found.tsx               <- Branded 404 page (use NOT_FOUND_TEMPLATE)
+src/app/error.tsx                   <- Branded error page (use ERROR_TEMPLATE)
+src/app/loading.tsx                 <- Loading spinner (use LOADING_TEMPLATE)
+src/app/api/contact/route.ts        <- Contact form handler (sends email via Resend using RESEND_API_KEY)
 src/components/Navbar.tsx
 src/components/Footer.tsx
-src/components/CookieBanner.tsx     ← GDPR cookie consent (use COOKIE_BANNER_TEMPLATE — has Accept + Reject)
-src/components/AnalyticsProvider.tsx ← Consent-gated GA4 (use ANALYTICS_PROVIDER_TEMPLATE, only if ga_measurement_id in brief)
-src/app/privacy/page.tsx            ← UK GDPR privacy policy (use PRIVACY_PAGE_TEMPLATE)
-src/lib/env.ts                      ← Env var validation (throws at build time if vars missing)
-src/__tests__/site.test.ts          ← Per-client unit tests (see spec below)
-.lighthouserc.json                  ← Lighthouse CI config targeting staging URL
+src/components/CookieBanner.tsx     <- GDPR cookie consent (use COOKIE_BANNER_TEMPLATE -- has Accept + Reject)
+src/components/AnalyticsProvider.tsx <- Consent-gated GA4 (use ANALYTICS_PROVIDER_TEMPLATE, only if ga_measurement_id in brief)
+src/app/privacy/page.tsx            <- UK GDPR privacy policy (use PRIVACY_PAGE_TEMPLATE)
+src/lib/env.ts                      <- Env var validation (throws at build time if vars missing)
+src/__tests__/site.test.ts          <- Per-client unit tests (see spec below)
+.lighthouserc.json                  <- Lighthouse CI config targeting staging URL
+```
+
+**For local service businesses with >3 services**, also generate:
+```
+src/app/services/[service-slug]/page.tsx   <- One page per service in copy.json service_items
+```
+
+Each service page includes: `generateMetadata()` with unique title targeting "[service] in [location]", canonical URL, service description, CTA to contact page.
+
+**For local service businesses with >2 service areas**, also generate:
+```
+src/app/areas/[area-slug]/page.tsx         <- One page per area in copy.json schema.service_areas
+```
+
+Each area page includes: `generateMetadata()` with title targeting "[service] in [area]", canonical URL, area-specific intro, list of services offered in that area, CTA.
+
+Add all per-service and per-area pages to `sitemap.ts`.
+
+**For portfolio/consultant sites**, replace `src/app/services/page.tsx` with:
+```
+src/app/projects/page.tsx           <- Project showcase with cards, screenshots, tech tags
 ```
 
 **Starting point:** Use the component templates from `src/lib/site-templates/index.ts`:
@@ -508,14 +584,14 @@ const nextConfig: NextConfig = {
 export default nextConfig
 ```
 
-**QA note:** Stage 10 QA checks for the presence of `X-Frame-Options` and `Content-Security-Policy` headers in the staging URL response.
-
 **`src/app/api/contact/route.ts`** — wire up Resend for real email delivery:
 ```ts
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-// Rate limiting: 5 submissions per minute per IP
+// Note: in-memory rate limiting resets on Vercel cold starts.
+// For production-grade rate limiting, use Vercel KV or Upstash Redis.
+// The honeypot field is the primary spam defence.
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
 export async function POST(req: NextRequest) {
@@ -538,19 +614,13 @@ export async function POST(req: NextRequest) {
     from: 'Contact Form <noreply@nithdigital.uk>',  // verified Resend sender
     to: process.env.CONTACT_EMAIL!,                  // set in Vercel env vars
     replyTo: data.email,                             // reply goes directly to the enquirer
-    subject: \`New enquiry from \${data.name}\`,
-    text: \`Name: \${data.name}\nEmail: \${data.email}\nPhone: \${data.phone || 'N/A'}\n\nMessage:\n\${data.message}\`,
-    html: \`<p><strong>Name:</strong> \${data.name}</p><p><strong>Email:</strong> \${data.email}</p><p><strong>Phone:</strong> \${data.phone || 'N/A'}</p><p><strong>Message:</strong></p><p>\${data.message}</p>\`,
+    subject: `New enquiry from ${data.name}`,
+    text: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\n\nMessage:\n${data.message}`,
+    html: `<p><strong>Name:</strong> ${data.name}</p><p><strong>Email:</strong> ${data.email}</p><p><strong>Phone:</strong> ${data.phone || 'N/A'}</p><p><strong>Message:</strong></p><p>${data.message}</p>`,
   })
   return NextResponse.json({ ok: true })
 }
 ```
-
-Key points:
-- `replyTo: data.email` — client replies land in the enquirer's inbox directly
-- Always include both `text` (plain-text) and `html` bodies (deliverability + accessibility)
-- `CONTACT_EMAIL` set as a Vercel environment variable per client project
-- Rate limiting: 5 req/min per IP, prevents spam bursts
 
 **Email deliverability — DNS records (post-launch handover):**
 
@@ -561,23 +631,23 @@ After the client domain is connected, add these DNS records at their registrar t
 TXT @ "v=spf1 include:spf.resend.com ~all"
 
 # DKIM — Resend provides the CNAME record; get it from the Resend dashboard
-CNAME resend._domainkey.[domain] → [value from Resend domain settings]
+CNAME resend._domainkey.[domain] -> [value from Resend domain settings]
 
 # DMARC — tells receiving servers what to do with failing emails
 TXT _dmarc.[domain] "v=DMARC1; p=none; rua=mailto:postmaster@[domain]"
 ```
 
-Save these instructions to `designs/[client-slug]/email-dns-setup.md` for the client handover pack. Without SPF/DKIM, contact form notifications may hit spam within weeks.
+Save these instructions to `designs/[client-slug]/email-dns-setup.md` for the client handover pack.
 
 **`src/components/CookieBanner.tsx`** — Use `COOKIE_BANNER_TEMPLATE` from `src/lib/site-templates/index.ts`. Import and render in `layout.tsx` below the `<Footer />`.
 
-**`src/app/privacy/page.tsx`** — Use `PRIVACY_PAGE_TEMPLATE`. Replace `[CLIENT_NAME]`, `[CLIENT_EMAIL]`, `[SITE_URL]`, `[LOCATION]`, `[DATE]` with real values from `brief.json` and `copy.json`. This page is required by UK GDPR for any site with a contact form.
+**`src/app/privacy/page.tsx`** — Use `PRIVACY_PAGE_TEMPLATE`. Replace `[CLIENT_NAME]`, `[CLIENT_EMAIL]`, `[SITE_URL]`, `[LOCATION]`, `[DATE]` with real values from `brief.json` and `copy.json`.
 
 **`next.config.ts`** — If `brief.json` has `existing_site_url` set, add the `NEXT_CONFIG_REDIRECTS_COMMENT` stub from `src/lib/site-templates/index.ts` with old URL paths from `site-analysis.json` nav links as comments for Akin to fill in.
 
 **Analytics** — If `brief.json` includes a `ga_measurement_id` field, add `GA4_SCRIPT_TEMPLATE` from `src/lib/site-templates/index.ts` into `layout.tsx` and add `NEXT_PUBLIC_GA_ID=[value]` as an instruction for Akin to set in Vercel environment variables.
 
-**FAQPage schema** — If `copy.json pages.faq.items` has ≥3 items, add a second `<script type="application/ld+json">` block in `page.tsx` with:
+**FAQPage schema** — If `copy.json pages.faq.items` has >=3 items, add a second `<script type="application/ld+json">` block in `page.tsx` with:
 ```json
 {
   "@context": "https://schema.org",
@@ -587,14 +657,13 @@ Save these instructions to `designs/[client-slug]/email-dns-setup.md` for the cl
   ]
 }
 ```
-This enables Google FAQ rich results in SERPs.
 
 **`src/app/layout.tsx` MUST include:**
 - `next/font/google` import for heading + body fonts from `theme.json`
 - `lang="en-GB"` on the `<html>` element: `<html lang="en-GB">`
 - JSON-LD LocalBusiness schema using `copy.json` schema fields
 - `generateMetadata()` with:
-  - `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!)` — required for absolute OG image URLs
+  - `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!)`
   - `og:title`, `og:description`, `og:image` (relative path e.g. `/og-image.jpg`)
   - `og:type: 'website'`, `og:locale: 'en_GB'`
   - `og:image:alt` (descriptive alt text for the OG image)
@@ -611,6 +680,15 @@ This enables Google FAQ rich results in SERPs.
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 ```
 
@@ -640,12 +718,13 @@ For the homepage use `canonical: process.env.NEXT_PUBLIC_SITE_URL` (no trailing 
 | Roofer / roofing | `RoofingContractor` |
 | Painter / decorator | `PaintingContractor` |
 | Landscaper / gardener | `LandscapingBusiness` |
-| Restaurant / café | `Restaurant` |
+| Restaurant / cafe | `Restaurant` |
 | Beauty / hair salon | `HairSalon` or `BeautySalon` |
 | Dentist | `Dentist` |
 | Accountant | `AccountingService` |
 | Solicitor / law | `LegalService` |
 | Gym / fitness | `ExerciseGym` |
+| Portfolio / consultant | `ProfessionalService` |
 | Anything else | `LocalBusiness` |
 
 Map `copy.json schema.type` to the correct `@type` in the JSON-LD block in `layout.tsx`.
@@ -659,25 +738,25 @@ Map `copy.json schema.type` to the correct `@type` in the JSON-LD block in `layo
   "bestRating": "5"
 }
 ```
-This enables Google star ratings in search results — high ROI for local businesses.
 
-**`src/app/sitemap.ts`** — include `lastmod` on every URL:
+**`src/app/sitemap.ts`** — include `lastmod` using a build-time constant:
 ```ts
 import type { MetadataRoute } from 'next'
 
+const LAST_BUILT = process.env.NEXT_PUBLIC_BUILD_DATE || new Date().toISOString().split('T')[0]
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL!
-  const lastModified = new Date().toISOString()
   return [
-    { url: base, lastModified, priority: 1.0 },
-    { url: `${base}/about`, lastModified, priority: 0.8 },
-    { url: `${base}/services`, lastModified, priority: 0.9 },
-    { url: `${base}/contact`, lastModified, priority: 0.7 },
+    { url: base, lastModified: LAST_BUILT, priority: 1.0 },
+    { url: `${base}/about`, lastModified: LAST_BUILT, priority: 0.8 },
+    { url: `${base}/services`, lastModified: LAST_BUILT, priority: 0.9 },
+    { url: `${base}/contact`, lastModified: LAST_BUILT, priority: 0.7 },
   ]
 }
 ```
 
-**`scaffold/.eslintrc.json`** — a11y rules, enforced on every push:
+**`scaffold/.eslintrc.json`** — a11y rules:
 ```json
 {
   "extends": ["next/core-web-vitals", "plugin:jsx-a11y/recommended"],
@@ -698,8 +777,6 @@ Add to `scaffold/package.json` devDependencies:
 
 **`scaffold/src/lib/env.ts`** — build-time guard:
 ```ts
-// Validates required environment variables at startup.
-// Import this in layout.tsx to catch misconfigured Vercel projects before they go live.
 const required = ['RESEND_API_KEY', 'NEXT_PUBLIC_SITE_URL'] as const
 
 for (const key of required) {
@@ -714,25 +791,17 @@ export const env = {
 }
 ```
 
-Import in `src/app/layout.tsx` (server component, top of file):
-```ts
-import '@/lib/env'
-```
-
 **`scaffold/src/__tests__/site.test.ts`** — per-client unit tests. Write these with the actual client values substituted in (not placeholders):
 
 ```ts
 // Per-client unit tests for [CLIENT_NAME]
-// Generated by Nith Digital pipeline — Stage 8
-// Tests pure logic extracted from the scaffold. No HTTP calls, no mocks needed.
-
-// ─── Metadata validation ──────────────────────────────────────────────────────
+// Generated by Nith Digital pipeline — Stage 4
 
 describe('[CLIENT_NAME] — metadata', () => {
   const META_TITLE = '[actual meta.title from copy.json]'
   const META_DESC = '[actual meta.description from copy.json]'
 
-  test('meta title is ≤ 60 characters', () => {
+  test('meta title is <= 60 characters', () => {
     expect(META_TITLE.length).toBeLessThanOrEqual(60)
   })
 
@@ -740,7 +809,7 @@ describe('[CLIENT_NAME] — metadata', () => {
     expect(META_TITLE.length).toBeGreaterThan(0)
   })
 
-  test('meta description is 150–160 characters', () => {
+  test('meta description is 150-160 characters', () => {
     expect(META_DESC.length).toBeGreaterThanOrEqual(150)
     expect(META_DESC.length).toBeLessThanOrEqual(160)
   })
@@ -754,8 +823,6 @@ describe('[CLIENT_NAME] — metadata', () => {
   })
 })
 
-// ─── JSON-LD schema ───────────────────────────────────────────────────────────
-
 describe('[CLIENT_NAME] — JSON-LD schema', () => {
   const schema = {
     telephone: '[copy.json schema.telephone]',
@@ -763,7 +830,7 @@ describe('[CLIENT_NAME] — JSON-LD schema', () => {
       postal_code: '[copy.json schema.address.postal_code]',
       locality: '[copy.json schema.address.locality]',
     },
-    opening_hours: [{ day: 'Monday–Friday', opens: '09:00', closes: '17:00' }],
+    opening_hours: [{ day: 'Monday-Friday', opens: '09:00', closes: '17:00' }],
     name: '[copy.json schema.name]',
   }
 
@@ -788,8 +855,6 @@ describe('[CLIENT_NAME] — JSON-LD schema', () => {
     expect(schema.name).toBe('[CLIENT_NAME]')
   })
 })
-
-// ─── Sitemap URLs ─────────────────────────────────────────────────────────────
 
 describe('[CLIENT_NAME] — sitemap', () => {
   const SITE_URL = 'https://[domain_or_staging_url]'
@@ -821,10 +886,7 @@ describe('[CLIENT_NAME] — sitemap', () => {
   })
 })
 
-// ─── Contact form validation ──────────────────────────────────────────────────
-
 describe('[CLIENT_NAME] — contact form validation', () => {
-  // Mirror the validation logic from src/app/api/contact/route.ts
   function validateContactForm(data: { name?: string; email?: string; message?: string }) {
     if (!data.name || data.name.trim().length < 2) return { ok: false, error: 'Name is required' }
     if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return { ok: false, error: 'Valid email is required' }
@@ -861,8 +923,6 @@ describe('[CLIENT_NAME] — contact form validation', () => {
   })
 })
 
-// ─── Copy: no Lorem ipsum ─────────────────────────────────────────────────────
-
 describe('[CLIENT_NAME] — copy quality', () => {
   const heroCta = '[copy.json pages.home.hero_cta]'
   const heroHeadline = '[copy.json pages.home.hero_headline]'
@@ -889,7 +949,7 @@ describe('[CLIENT_NAME] — copy quality', () => {
 
 Replace all `[CLIENT_NAME]`, `[location_lowercase]`, `[domain_or_staging_url]`, and `[copy.json ...]` placeholders with the actual values from `brief.json` and `copy.json` before writing the file.
 
-**`scaffold/.lighthouserc.json`** — Lighthouse CI config. Replace `[STAGING_URL]` with the Vercel staging URL from `provision.json`:
+**`scaffold/.lighthouserc.json`** — Replace `[STAGING_URL]` with the Vercel staging URL from `provision.json`:
 ```json
 {
   "ci": {
@@ -917,57 +977,32 @@ Replace all `[CLIENT_NAME]`, `[location_lowercase]`, `[domain_or_staging_url]`, 
 }
 ```
 
-To run Lighthouse CI manually after deployment:
+---
+
+#### 4B — Pre-Push QA
+
+Run `qa-checklist.ts` in pre-push mode to catch issues before deploying:
+
 ```bash
-cd designs/[client-slug]/scaffold && npx lhci autorun
+npx ts-node --project tsconfig.json src/scripts/qa-checklist.ts \
+  --client-slug [slug] --pre-push
 ```
 
-**Deploy a scaffold-review subagent** to check all files before pushing:
-- No `<img>` tags (must use `next/image`)
-- No `@import` for Google Fonts (must use `next/font/google`)
-- Every page exports `generateMetadata()` with `alternates.canonical`
-- `metadataBase` set in root layout metadata
-- `<html lang="en-GB">` in layout.tsx
-- Skip-to-main link in Navbar; every page `<main>` has `id="main-content"`
-- `focus-visible` CSS block in `globals.css`
-- `sitemap.ts` and `robots.ts` exist; sitemap has `lastModified` dates
-- JSON-LD schema block in `layout.tsx` using industry-specific `@type`
-- `aggregateRating` present in JSON-LD if `schema_reviews.review_count > 0`
-- `priority` prop on hero `<Image>` in `page.tsx`
-- `images.unsplash.com` in `next.config.ts` remotePatterns
-- `headers()` block with security headers in `next.config.ts`
-- Cookie banner has both Accept and Reject buttons
-- `AnalyticsProvider` used for GA4 (not bare `<Script>`)
-- Contact form has honeypot field + privacy notice
-- Contact API route has rate limiting (5/min per IP)
-- Footer has `tel:` and `mailto:` links; Privacy Policy + Cookie Settings in copyright bar
-- `src/__tests__/site.test.ts` exists with real values (no `[PLACEHOLDER]` strings remaining)
-- `src/lib/env.ts` exists and is imported in `layout.tsx`
-- `.eslintrc.json` exists
+This checks file completeness, code quality, copy quality, and unit tests — everything that can be verified without a live URL.
 
-Fix any issues, then push:
+Fix any failures before pushing.
+
+---
+
+#### 4C — Push + Deploy
+
 ```bash
 npx ts-node --project tsconfig.json src/scripts/push-scaffold.ts --client-slug [slug]
 ```
 
 Vercel auto-deploys when files are pushed to GitHub.
 
----
-
----
-> **STAGE 8 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 9                    ║
-> ║  Switch to: SONNET (deployment monitoring)                   ║
-> ║  Command:   /model claude-sonnet-4-6                         ║
-> ║  Then type: "Continue to Stage 9"                            ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
-
-### STAGE 9 — Monitor Deployment `[model: sonnet]`
-
+Monitor deployment:
 ```bash
 node src/scripts/check-deploy.js --client-slug [slug]
 ```
@@ -979,69 +1014,57 @@ Tell Akin:
 
 ---
 
----
-> **STAGE 9 COMPLETE — STOP HERE**
+> **STAGE 4 COMPLETE — STOP HERE**
 > ```
 > ╔══════════════════════════════════════════════════════════════╗
-> ║  ✅ Stage 9 done. Stay on SONNET for Stage 9.5.              ║
-> ║  Stay on: claude-sonnet-4-6                                  ║
-> ║  Type "Continue to Stage 9.5" to proceed.                    ║
+> ║  STAGE 4 COMPLETE                                            ║
+> ║  Type "Continue to Stage 5" to proceed.                      ║
 > ╚══════════════════════════════════════════════════════════════╝
 > ```
+
 ---
 
-### STAGE 9.5 — Akin Internal Review `[model: sonnet]`
+### STAGE 5 — QA + Launch
+
+Covers: internal review, client review, full QA, archive update, GSC submission, and domain go-live.
+
+---
+
+#### 5A — Akin Internal Review
 
 Before showing the client, Akin reviews the staging URL:
 - [ ] Hero renders correctly at desktop and mobile
-- [ ] All 4 pages load without error
+- [ ] All pages load without error
 - [ ] Contact form submits and email is received
 - [ ] Navigation links all resolve
 - [ ] Google Fonts loaded (check Network tab — no FOUT)
 - [ ] No console errors
+- [ ] Animations fire on scroll
 
-If issues: use Stage 12 refinement loop to fix, then re-check.
+If issues: fix files in `designs/[slug]/scaffold/`, push with `push-scaffold.ts --files [file1,file2]`, redeploy.
 
 ---
-> **STAGE 9.5 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ✅ Stage 9.5 done. Stay on SONNET for Stage 9.7.            ║
-> ║  Stay on: claude-sonnet-4-6                                  ║
-> ║  Type "Continue to Stage 9.7" to proceed.                    ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
 
-### STAGE 9.7 — Client Staging Review (recommended) `[model: sonnet]`
+#### 5B — Client Staging Review
 
 Send the client an email with:
 - Staging URL
 - "Please review your new site and reply with any feedback by [date + 5 days]"
-- "Any amendments after this date are billed at £35/hour"
+- "Any amendments after this date are billed at GBP 35/hour"
 - "Once you're happy, reply with 'Approved for launch' to confirm"
 
-Log client feedback in `designs/[client-slug]/client-feedback.json`. Apply via Stage 12. Once client approves, proceed to Stage 10.
+Log client feedback in `designs/[client-slug]/client-feedback.json`. Apply fixes via the Stage 6 refinement loop. Once client approves, proceed.
 
 ---
-> **STAGE 9.7 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ✅ Stage 9.7 done. Stay on SONNET for Stage 10.             ║
-> ║  Stay on: claude-sonnet-4-6                                  ║
-> ║  Type "Continue to Stage 10" to proceed.                     ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
 
-### STAGE 10 — Automated QA `[model: sonnet]`
+#### 5C — Full QA
 
 ```bash
 npx ts-node --project tsconfig.json src/scripts/qa-checklist.ts \
   --client-slug [slug] --staging-url [url]
 ```
 
-Checks: file completeness, copy quality (meta lengths, no Lorem ipsum, British English), code quality (next/image, next/font, generateMetadata, JSON-LD, sitemap, robots), unit tests, ESLint, staging URL health, FAQPage schema (if ≥3 FAQ items).
+Full checks: file completeness, copy quality, code quality, unit tests, ESLint, staging URL health, security headers, FAQPage schema.
 
 **QA Failure Procedure:**
 1. Check which tests failed: `cat designs/[slug]/qa-report.json | jq '.results[] | select(.passed == false)'`
@@ -1050,24 +1073,9 @@ Checks: file completeness, copy quality (meta lengths, no Lorem ipsum, British E
 4. Vercel redeploys automatically — run `check-deploy.js` to confirm
 5. Re-run full QA: `qa-checklist.ts --client-slug [slug] --staging-url [url]`
 
-Note: the previous Vercel deployment stays live until the new one is READY. No rollback action is needed.
-
-Review the report. Fix any failures. Re-push if needed.
-
 ---
 
----
-> **STAGE 10 COMPLETE — STOP HERE**
-> ```
-> ╔══════════════════════════════════════════════════════════════╗
-> ║  ✅ Stage 10 done. Stay on SONNET for Stage 11.              ║
-> ║  Stay on: claude-sonnet-4-6                                  ║
-> ║  Type "Continue to Stage 11" to proceed.                     ║
-> ╚══════════════════════════════════════════════════════════════╝
-> ```
----
-
-### STAGE 11 — Update Design Archive + GSC Setup `[model: sonnet]`
+#### 5D — Archive + GSC
 
 **Step 1 — Lighthouse CI** (optional, captures scores in archive):
 ```bash
@@ -1086,66 +1094,58 @@ Appends entry to `designs/archive.json` — includes Lighthouse scores if `lhci`
 npx ts-node --project tsconfig.json src/scripts/submit-gsc.ts --client-slug [slug]
 ```
 
-Run this as soon as the live URL is known (either staging or custom domain). What it does:
+Run this as soon as the live URL is known. What it does:
 - Adds the site as a property in GSC (using `GSC_CLIENT_ID/SECRET/REFRESH_TOKEN` from `.env.local`)
 - Submits `/sitemap.xml` to Google
 - Fetches back sitemap status (submitted/indexed counts)
 - Inspects homepage coverage state
 - Writes `designs/[slug]/gsc-setup.json` with full results + direct link to GSC console
 
-**If the site isn't verified yet** (HTTP 403 on sitemap submit), the script will print the manual verification URL. After Akin verifies ownership in GSC, re-run the script — sitemap submission will then succeed.
-
-To check status against the live URL explicitly:
-```bash
-npx ts-node --project tsconfig.json src/scripts/submit-gsc.ts \
-  --client-slug [slug] --url https://[live-domain.com]
-```
-
-**Note:** Nith Ops also runs a monthly sitemap re-submission (`/api/cron/gsc-submit`) for all tracked sites on the 1st of each month at 10:00 UTC. Once the site is added to nith-ops, it's covered automatically.
+**If the site isn't verified yet** (HTTP 403 on sitemap submit), the script will print the manual verification URL. After Akin verifies ownership in GSC, re-run the script.
 
 ---
 
+#### 5E — Domain Launch
+
+**Domain go-live options:**
+
+1. **Nith Digital subdomain** (`[slug].nithdigital.uk`) — instant, no client action needed. Default for early-stage clients.
+2. **Client's own domain at their registrar** — call `launch-domain.ts --mode custom` to get Vercel DNS records, then send the client a plain-English guide. Save instructions to `designs/[client-slug]/domain-setup.md`.
+3. **Client on Cloudflare** — `launch-domain.ts --mode cloudflare` auto-creates DNS records. Fastest option.
+
 ---
-> **STAGE 11 COMPLETE — STOP HERE**
+
+> **STAGE 5 COMPLETE — STOP HERE**
 > ```
 > ╔══════════════════════════════════════════════════════════════╗
-> ║  ⚠️  MODEL SWITCH REQUIRED before Stage 12                   ║
-> ║  Switch to: OPUS (client-facing refinements)                 ║
-> ║  Command:   /model claude-opus-4-6                           ║
-> ║  Then type: "Continue to Stage 12"                           ║
+> ║  STAGE 5 COMPLETE                                            ║
+> ║  The site is live. Type "Continue to Stage 6" only if        ║
+> ║  refinements are needed.                                     ║
 > ╚══════════════════════════════════════════════════════════════╝
 > ```
+
 ---
 
-### STAGE 12 — Refinement Loop `[model: opus]`
+### STAGE 6 — Refine
+
+Post-launch changes and client amendments.
 
 When Akin requests changes:
 1. Fetch current repo state: `npx ts-node --project tsconfig.json src/scripts/fetch-repo-files.ts --client-slug [slug]`
 2. Edit the relevant file(s) in `designs/[client-slug]/scaffold/`
 3. Push targeted changes: `npx ts-node --project tsconfig.json src/scripts/push-scaffold.ts --client-slug [slug] --files src/app/page.tsx`
 4. Vercel auto-redeploys — run `check-deploy.js` to confirm
-5. **Append to CHANGELOG.md** — include a `Hours: [N]` line with your honest estimate (round to nearest 0.5h). This feeds billing at £35/hour. Example entry:
+5. **Append to CHANGELOG.md** — include a `Hours: [N]` line with your honest estimate (round to nearest 0.5h). This feeds billing at GBP 35/hour. Example entry:
 ```
 ## 2026-04-20 — 14:30 UTC
 **Files:** src/app/page.tsx
 **Change:** Updated hero headline and service descriptions per client feedback
-**Hours:** 0.5 (£17.50 @ £35/hr)
+**Hours:** 0.5 (GBP 17.50 @ GBP 35/hr)
 ```
 
 For substantial redesigns: update the HTML mockup first, get approval, then regenerate scaffold files.
 
 **Site is complete when** Akin confirms the staging URL is ready to go live.
-
-**Domain go-live options:**
-
-1. **Nith Digital subdomain** (`[slug].nithdigital.uk`) — instant, no client action needed. Default for early-stage clients.
-2. **Client's own domain at their registrar** — call `/api/launch-domain` to get Vercel DNS records, then send the client a plain-English guide:
-   - "Log into [registrar]"
-   - "Go to DNS Management"
-   - "Add this CNAME: `[record]`"
-   - "Propagation takes up to 48 hours"
-   - Save instructions to `designs/[client-slug]/domain-setup.md`
-3. **Client on Cloudflare** — `/api/launch-domain` auto-creates DNS records. Fastest option.
 
 **Post-launch handover** — save `designs/[client-slug]/handover.json` and email to client:
 ```json
@@ -1155,13 +1155,13 @@ For substantial redesigns: update the HTML mockup first, get approval, then rege
   "github_full_name": "",
   "vercel_project": "",
   "contact_for_changes": "akin@nithdigital.uk",
-  "changes_rate": "£35/hour",
+  "changes_rate": "GBP 35/hour",
   "turnaround": "Quote within 24 hours, delivery within 5 business days",
   "free_fixes": "Typos and broken links in the first 48 hours post-launch only"
 }
 ```
 
-**Post-launch changes:** All content updates and amendments are quoted at **£35/hour**. Changes are made via this refinement loop (Stage 12) — Claude edits take minutes, but client-facing time includes briefing, QA, and deployment. Log time spent per session.
+**Post-launch changes:** All content updates and amendments are quoted at **GBP 35/hour**. Changes are made via this refinement loop — Claude edits take minutes, but client-facing time includes briefing, QA, and deployment. Log time spent per session.
 
 ---
 
@@ -1171,7 +1171,7 @@ Before proposing any designs, read `designs/archive.json`.
 
 Find all same-industry entries. For each, note: `approved_hero_layout`, `primary_color` (hue family), `heading_font`.
 
-New proposals must differ in ≥2 of:
+New proposals must differ in >=2 of:
 - Hero layout (centered / split / fullwidth)
 - Primary colour hue family (warm: reds/oranges/yellows vs cool: blues/greens/purples vs neutral: greys/blacks)
 - Heading font style (serif vs sans-serif vs display/decorative)
@@ -1183,8 +1183,8 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 ## Quality Gates (mandatory before staging review)
 
 ### SEO
-- [ ] `meta.title` ≤ 60 chars
-- [ ] `meta.description` 150–160 chars
+- [ ] `meta.title` <= 60 chars
+- [ ] `meta.description` 150-160 chars
 - [ ] Every page exports `generateMetadata()` with unique title + description
 - [ ] Every `generateMetadata()` includes `alternates: { canonical: ... }`
 - [ ] `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!)` in root layout metadata
@@ -1195,6 +1195,8 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 - [ ] All images have descriptive `alt` text
 - [ ] OG meta tags: `og:title`, `og:description`, `og:image`, `og:type`, `og:locale`, `og:image:alt`
 - [ ] Twitter meta: `twitter:card: 'summary_large_image'`, `twitter:title`, `twitter:description`
+- [ ] Per-service pages exist for local businesses with >3 services
+- [ ] Per-area pages exist for local businesses with >2 service areas
 
 ### Performance
 - [ ] All images via `next/image` (zero `<img>` tags)
@@ -1223,17 +1225,18 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 
 ### Security
 - [ ] `next.config.ts` has `headers()` block with `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Content-Security-Policy`
-- [ ] Contact API route (`/api/contact/route.ts`) has rate limiting (5 req/min per IP)
+- [ ] Contact API route (`/api/contact/route.ts`) has rate limiting + honeypot
 
 ### Accessibility (WCAG 2.1 AA)
 - [ ] `<html lang="en-GB">` on root layout
 - [ ] Skip-to-main-content link in Navbar (visible on focus)
 - [ ] `focus-visible` CSS in `globals.css` (`outline: 2px solid var(--color-primary)`)
+- [ ] `prefers-reduced-motion` CSS in `globals.css` (disables animations)
 - [ ] Mobile nav menu has `aria-modal="true"`, `aria-expanded`, focus trap (Escape closes)
 - [ ] All interactive elements have `:focus-visible` styles
 
-### SEO (Rich Results)
-- [ ] FAQPage JSON-LD present in `page.tsx` if ≥3 FAQ items in `copy.json`
+### Rich Results
+- [ ] FAQPage JSON-LD present in `page.tsx` if >=3 FAQ items in `copy.json`
 - [ ] `aggregateRating` block in JSON-LD if `copy.json schema_reviews.review_count > 0`
 - [ ] Redirects stub in `next.config.ts` if client has `existing_site_url` in brief
 
@@ -1246,8 +1249,13 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 
 ### Visual (HTML mockup)
 - [ ] Renders in browser without JS errors
-- [ ] Text/background contrast ≥ 4.5:1
+- [ ] Text/background contrast >= 4.5:1
 - [ ] Mobile `@media` block collapses grids
+- [ ] **Images present** — no text-only designs
+- [ ] **Scroll animations** — IntersectionObserver fade-up on sections
+- [ ] **Hover states** — cards and buttons have visible transitions
+- [ ] **Testimonials section** present
+- [ ] `prefers-reduced-motion` respected
 
 ---
 
@@ -1267,10 +1275,10 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 | `designs/[slug]/scaffold/.lighthouserc.json` | Lighthouse CI config |
 | `designs/[slug]/scaffold/CHANGELOG.md` | Change log (billing reference) |
 | `designs/[slug]/scraped/` | Scraped site data + downloaded images |
+| `designs/[slug]/design-compare.html` | Tabbed comparison viewer for 3 design proposals |
 | `src/lib/site-templates/index.ts` | Industry presets + component templates |
 | `src/lib/github.ts` | GitHub API helpers |
 | `src/scripts/scrape-existing-site.ts` | Scrape client's existing site |
-| `src/scripts/generate-design-pdf.js` | HTML → PDF renderer |
 | `src/scripts/provision-project.ts` | GitHub + Vercel provisioner |
 | `src/scripts/push-scaffold.ts` | Push scaffold/ to GitHub |
 | `src/scripts/fetch-repo-files.ts` | Pull repo files for refinement |

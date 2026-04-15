@@ -46,12 +46,16 @@
 
 ## Website Creation Workflow
 - To start a new website project: read `website-kickoff.md` and say "new website for [client]"
-- Full 12-stage pipeline: research → brief → 3 PDF designs → copy → GitHub repo (AkinYavuz1) → Vercel deploy
-- All design files saved to `designs/[client-slug]/` — PDFs, HTMLs, brief, copy, theme, scaffold
+- Full 6-stage pipeline: discovery → design (with animations + images) → content & provision → build → QA + launch → refine
+- All stages run on **Opus** — no model switching
+- Copy is generated **before** HTML mockups (written once, not twice)
+- HTML mockups must include images, scroll animations, hover states, and testimonials
+- Design comparison via `design-compare.html` tabbed viewer (no PDFs)
+- All design files saved to `designs/[client-slug]/` — HTMLs, brief, copy, theme, scaffold
 - Every client gets a **separate private GitHub repo** under `AkinYavuz1` account
 - Scripts in `src/scripts/` — run via `npx ts-node --project tsconfig.json src/scripts/[name].ts`
 - **Never use `ANTHROPIC_API_KEY`** — use Claude Code CLI token budget only
-- Post-launch changes are billed at **£35/hour** — clients do not self-edit; all updates go through Stage 12 refinement
+- Post-launch changes are billed at **£35/hour** — clients do not self-edit; all updates go through Stage 6 refinement
 - Archive at `designs/archive.json` tracks past designs to prevent repetition
 
 ## Key tables (Supabase)

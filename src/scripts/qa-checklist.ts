@@ -36,9 +36,10 @@ const getArg = (flag: string): string | undefined => {
 
 const clientSlug = getArg('--client-slug')
 const stagingUrl = getArg('--staging-url')
+const prePush = args.includes('--pre-push')
 
 if (!clientSlug) {
-  console.error('Usage: qa-checklist.ts --client-slug <slug> [--staging-url <url>]')
+  console.error('Usage: qa-checklist.ts --client-slug <slug> [--staging-url <url>] [--pre-push]')
   process.exit(1)
 }
 
@@ -277,8 +278,47 @@ function checkScaffoldCode(results: CheckResult[]) {
   // Error page templates
   const hasNotFound = fs.existsSync(path.join(scaffoldDir, 'src', 'app', 'not-found.tsx'))
   const hasErrorPage = fs.existsSync(path.join(scaffoldDir, 'src', 'app', 'error.tsx'))
+  const hasLoading = fs.existsSync(path.join(scaffoldDir, 'src', 'app', 'loading.tsx'))
   results.push(check('not-found.tsx exists', hasNotFound))
   results.push(check('error.tsx exists', hasErrorPage))
+  results.push(check('loading.tsx exists', hasLoading))
+
+  // ─── Scaffold-review checks (absorbed from old Stage 8 prose) ───────────
+  // These were previously only in the pipeline doc as instructions to a subagent.
+
+  let skipToMainFound = false
+  let focusVisibleFound = false
+  let reducedMotionFound = false
+  let envImportFound = false
+  let privacyFooterFound = false
+  let sitemapLastModFound = false
+  let mainIdFound = false
+
+  function walkFilesScaffoldReview(dir: string) {
+    for (const entry of fs.readdirSync(dir)) {
+      const fullPath = path.join(dir, entry)
+      if (fs.statSync(fullPath).isDirectory()) { walkFilesScaffoldReview(fullPath); continue }
+      if (!fullPath.match(/\.(tsx?|css|js|mjs)$/)) continue
+      const content = fs.readFileSync(fullPath, 'utf-8')
+
+      if (content.includes('skip-to-main') || content.includes('#main-content')) skipToMainFound = true
+      if (content.includes('focus-visible')) focusVisibleFound = true
+      if (content.includes('prefers-reduced-motion')) reducedMotionFound = true
+      if (content.includes("import '@/lib/env'") || content.includes('import "@/lib/env"') || content.includes("import '../lib/env'")) envImportFound = true
+      if (content.includes('Privacy') && content.includes('/privacy')) privacyFooterFound = true
+      if (content.includes('lastModified') && content.includes('sitemap')) sitemapLastModFound = true
+      if (content.includes('id="main-content"') || content.includes("id='main-content'")) mainIdFound = true
+    }
+  }
+  walkFilesScaffoldReview(scaffoldDir)
+
+  results.push(check('Skip-to-main link in Navbar', skipToMainFound, skipToMainFound ? '' : 'add skip link targeting #main-content'))
+  results.push(check('focus-visible CSS in globals.css', focusVisibleFound, focusVisibleFound ? '' : 'add :focus-visible outline styles'))
+  results.push(check('prefers-reduced-motion CSS', reducedMotionFound, reducedMotionFound ? '' : 'add @media (prefers-reduced-motion) block'))
+  results.push(check('env.ts imported in layout.tsx', envImportFound, envImportFound ? '' : "add import '@/lib/env' to layout.tsx"))
+  results.push(check('Privacy Policy link in footer', privacyFooterFound, privacyFooterFound ? '' : 'add link to /privacy in Footer'))
+  results.push(check('sitemap.ts has lastModified dates', sitemapLastModFound, sitemapLastModFound ? '' : 'add lastModified to sitemap entries'))
+  results.push(check('<main id="main-content"> in pages', mainIdFound, mainIdFound ? '' : 'add id="main-content" to <main> element'))
 }
 
 function checkUnitTests(results: CheckResult[]) {
@@ -434,7 +474,9 @@ async function main() {
   checkUnitTests(results)
   checkEslint(results)
 
-  if (stagingUrl) {
+  if (prePush) {
+    console.log('\n── Pre-push mode: skipping staging URL checks ────────────')
+  } else if (stagingUrl) {
     await checkStagingUrl(stagingUrl, results)
   } else {
     // Try to load from provision.json

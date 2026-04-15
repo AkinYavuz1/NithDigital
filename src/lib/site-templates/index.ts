@@ -123,6 +123,24 @@ export const INDUSTRY_PRESETS: Record<string, IndustryPreset> = {
       services: 'https://images.unsplash.com/photo-1448630360428-65456885c650?w=1200&q=80&auto=format&fit=crop',
     },
   },
+  portfolio: {
+    sitemap: ['Home', 'About', 'Projects', 'Contact'],
+    heroLayout: 'split',
+    unsplashImages: {
+      hero: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&q=80&auto=format&fit=crop',
+      about: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80&auto=format&fit=crop',
+      services: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop',
+    },
+  },
+  consultant: {
+    sitemap: ['Home', 'About', 'Projects', 'Contact'],
+    heroLayout: 'split',
+    unsplashImages: {
+      hero: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&q=80&auto=format&fit=crop',
+      about: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80&auto=format&fit=crop',
+      services: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop',
+    },
+  },
   default: {
     sitemap: ['Home', 'About', 'Services', 'Contact'],
     heroLayout: 'split',
