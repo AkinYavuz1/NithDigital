@@ -38,6 +38,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ dry_run: true, post: { week: post.week_number, topic: post.topic, content: post.content } })
   }
 
+  // Atomically claim the post so a concurrent invocation (double-fired cron,
+  // manual retry, etc.) can't publish the same row twice to Facebook.
+  const { data: claimed, error: claimError } = await supabase
+    .from('facebook_posts')
+    .update({ status: 'publishing' })
+    .eq('id', post.id)
+    .eq('status', 'scheduled')
+    .select('id')
+  if (claimError || !claimed || claimed.length === 0) {
+    return NextResponse.json({ message: 'Post already claimed by another run.', published: 0 })
+  }
+
   // Post to Facebook Page
   try {
     const res = await fetch(`${GRAPH_API}/${PAGE_ID}/feed`, {

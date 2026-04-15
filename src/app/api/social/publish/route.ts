@@ -106,10 +106,25 @@ export async function POST(req: NextRequest) {
   if (post.status === 'published') {
     return NextResponse.json({ error: 'Post already published' }, { status: 409 })
   }
+  if (post.status === 'publishing') {
+    return NextResponse.json({ error: 'Post is already being published' }, { status: 409 })
+  }
 
   const creds = post.social_clients as ClientCredentials & { active: boolean }
   if (!creds?.active) {
     return NextResponse.json({ error: 'Client is inactive or credentials not found' }, { status: 422 })
+  }
+
+  // Atomically claim the post so it can't be double-published by a concurrent request
+  // (e.g. a user double-clicks the publish button, or the cron picks it up at the same time).
+  const { data: claimed, error: claimError } = await supabase
+    .from('social_posts')
+    .update({ status: 'publishing' })
+    .eq('id', id)
+    .in('status', ['draft', 'scheduled', 'failed'])
+    .select('id')
+  if (claimError || !claimed || claimed.length === 0) {
+    return NextResponse.json({ error: 'Post already being published or in an unexpected state' }, { status: 409 })
   }
 
   const results: Record<string, string> = {}

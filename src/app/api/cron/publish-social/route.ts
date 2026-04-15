@@ -105,6 +105,19 @@ async function runPublish() {
   for (const post of duePosts as unknown as SocialPost[]) {
     const creds = post.social_clients
 
+    // Atomically claim the post so a concurrent cron invocation can't double-publish it.
+    // Only proceed if the row was still in 'scheduled' status at update time.
+    const { data: claimed, error: claimError } = await supabase
+      .from('social_posts')
+      .update({ status: 'publishing' })
+      .eq('id', post.id)
+      .eq('status', 'scheduled')
+      .select('id')
+    if (claimError || !claimed || claimed.length === 0) {
+      results.push({ id: post.id, status: 'skipped', error: 'Already claimed by another run' })
+      continue
+    }
+
     if (!creds?.active) {
       await supabase
         .from('social_posts')
