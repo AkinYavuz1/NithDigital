@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — BI Developer & Data Analyst</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
+:root {
+  --bg: #0C0C0C;
+  --surface: #141414;
+  --surface-2: #1C1C1C;
+  --border: rgba(255,255,255,0.08);
+  --text: #EFEFEF;
+  --muted: rgba(239,239,239,0.4);
+  --accent: #7EE8A2;
+  --accent-dim: rgba(126,232,162,0.12);
+  --warn: #FF6B6B;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Design label */
+.design-label {
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 10px;
+  padding: 7px 24px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(12,12,12,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+.nav-status {
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a { font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  border: 1px solid var(--accent) !important;
+  color: var(--accent) !important;
+  padding: 6px 18px;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--accent-dim) !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  padding: 120px 40px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+/* grid texture */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+/* radial fade over grid */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 100%, transparent 0%, var(--bg) 100%);
+  pointer-events: none;
+}
+
+.hero-terminal {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 48px;
+  max-width: 680px;
+}
+.terminal-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.terminal-prompt { color: var(--accent); }
+.terminal-text { color: var(--muted); }
+.terminal-val { color: var(--text); }
+.cursor {
+  display: inline-block;
+  width: 9px; height: 15px;
+  background: var(--accent);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.hero-title {
+  position: relative;
+  z-index: 2;
+}
+.hero-title h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(56px, 9vw, 130px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.hero-title h1 .accent { color: var(--accent); }
+.hero-title h1 .outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(239,239,239,0.25);
+}
+
+.hero-bottom {
+  position: relative;
+  z-index: 2;
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: end;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.hero-desc {
+  max-width: 460px;
+}
+.hero-desc p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-accent {
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  padding: 11px 24px;
+  display: inline-block;
+  transition: opacity 0.2s;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.btn-accent:hover { opacity: 0.85; }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  padding: 10px 24px;
+  display: inline-block;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
+
+.hero-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+.hero-stat-item {
+  text-align: right;
+}
+.stat-value {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.stat-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+/* ── TRUST ── */
+.trust-row {
+  display: flex;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.trust-ticker {
+  display: flex;
+  animation: ticker 20s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 16px 36px;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.trust-item span { color: var(--accent); font-size: 14px; }
+
+/* ── SERVICES ── */
+.services-section {
+  padding: 96px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+}
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text);
+}
+.section-count {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.service-list { display: flex; flex-direction: column; }
+.service-item {
+  display: grid;
+  grid-template-columns: 64px 1fr 1fr auto;
+  gap: 32px;
+  align-items: center;
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  cursor: default;
+  transition: background 0.2s;
+  margin: 0 -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.service-item:last-child { border-bottom: 1px solid var(--border); }
+.service-item:hover { background: var(--surface); }
+.service-item:hover .service-num { color: var(--accent); }
+
+.service-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+.service-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.service-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 360px;
+}
+.service-tag {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(126,232,162,0.3);
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding: 96px 40px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.cta-left h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.cta-left h2 .acc { color: var(--accent); }
+.cta-left p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 36px;
+  max-width: 400px;
+}
+.cta-right {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 40px;
+}
+.contact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.contact-row:first-child { padding-top: 0; }
+.contact-row:last-child { border-bottom: none; padding-bottom: 0; }
+.contact-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.contact-val {
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+.contact-val:hover { color: var(--accent); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-left { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+.footer-right { display: flex; gap: 24px; list-style: none; }
+.footer-right a { font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+.footer-right a:hover { color: var(--text); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  .hero-title h1 { font-size: 52px; }
+  .hero-bottom { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: row; align-items: center; justify-content: flex-start; }
+  .hero-stat-item { text-align: left; }
+  .service-item { grid-template-columns: 40px 1fr; gap: 16px; }
+  .service-desc, .service-tag { display: none; }
+  .cta-section { grid-template-columns: 1fr; }
+  .services-section, .cta-section { padding: 56px 20px; }
+  footer { padding: 20px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="design-label">Design 5 of 3 &nbsp;·&nbsp; Terminal Dark &nbsp;·&nbsp; Syne / IBM Plex Mono &nbsp;·&nbsp; Primary: #0C0C0C &nbsp;·&nbsp; Accent: #7EE8A2 &nbsp;·&nbsp; Layout: fullwidth dark</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-dot"></span>
+    AY
+  </a>
+  <span class="nav-status">// available for hire</span>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-terminal">
+    <div class="terminal-line">
+      <span class="terminal-prompt">$</span>
+      <span class="terminal-text">whoami</span>
+    </div>
+    <div class="terminal-line">
+      <span class="terminal-prompt">→</span>
+      <span class="terminal-val">Akin Yavuz — Senior BI Developer &amp; Data Analyst</span>
+    </div>
+    <div class="terminal-line">
+      <span class="terminal-prompt">$</span>
+      <span class="terminal-text">cat skills.txt</span>
+    </div>
+    <div class="terminal-line">
+      <span class="terminal-prompt">→</span>
+      <span class="terminal-val">Power BI · Tableau · SQL · Data Warehousing · Analytics<span class="cursor"></span></span>
+    </div>
+  </div>
+
+  <div class="hero-title">
+    <h1>Akin</h1>
+    <h1><span class="accent">Yavuz</span></h1>
+    <h1 class="outline">Data.</h1>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-desc">
+      <p>End-to-end analytics — from the first data source through to dashboards that people actually open on a Monday morning. Based in Dumfries &amp; Galloway, available across the UK.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-accent">View Projects</a>
+        <a href="#" class="btn-ghost">Download CV</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="stat-value">8+</div>
+        <div class="stat-label">Years in Data</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="stat-value">Full</div>
+        <div class="stat-label">Stack</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust-row">
+  <div class="trust-ticker">
+    <span class="trust-item"><span>✦</span> Full Analytics Stack</span>
+    <span class="trust-item"><span>✦</span> Power BI &amp; Tableau</span>
+    <span class="trust-item"><span>✦</span> Data Warehousing</span>
+    <span class="trust-item"><span>✦</span> UK-Based &amp; Remote</span>
+    <span class="trust-item"><span>✦</span> Freelance &amp; Contract</span>
+    <span class="trust-item"><span>✦</span> Senior-Level Experience</span>
+    <span class="trust-item"><span>✦</span> Full Analytics Stack</span>
+    <span class="trust-item"><span>✦</span> Power BI &amp; Tableau</span>
+    <span class="trust-item"><span>✦</span> Data Warehousing</span>
+    <span class="trust-item"><span>✦</span> UK-Based &amp; Remote</span>
+    <span class="trust-item"><span>✦</span> Freelance &amp; Contract</span>
+    <span class="trust-item"><span>✦</span> Senior-Level Experience</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="section-header">
+    <div>
+      <p class="section-label">// what I do</p>
+      <h2 class="section-title">Services</h2>
+    </div>
+    <span class="section-count">03 disciplines</span>
+  </div>
+
+  <div class="service-list">
+    <div class="service-item">
+      <span class="service-num">01</span>
+      <span class="service-name">Business Intelligence</span>
+      <span class="service-desc">Interactive dashboards in Power BI and Tableau — built around what decision-makers actually need, not what looks good in a demo.</span>
+      <span class="service-tag">Power BI · Tableau</span>
+    </div>
+    <div class="service-item">
+      <span class="service-num">02</span>
+      <span class="service-name">Data Warehousing</span>
+      <span class="service-desc">Structured data models that turn scattered sources into a single, reliable foundation your analysts can trust.</span>
+      <span class="service-tag">SQL · Modelling</span>
+    </div>
+    <div class="service-item">
+      <span class="service-num">03</span>
+      <span class="service-name">Analytics Consultancy</span>
+      <span class="service-desc">Strategic input on tooling, pipelines, and reporting architecture. No jargon — just clear thinking applied to your specific problem.</span>
+      <span class="service-tag">Strategy · Architecture</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-left">
+    <h2>Ready to talk<br>about your <span class="acc">data?</span></h2>
+    <p>Available for freelance and contract engagements. UK-based, remote-first, on-site where needed.</p>
+    <a href="#" class="btn-accent">Get in Touch</a>
+  </div>
+  <div class="cta-right">
+    <div class="contact-row">
+      <span class="contact-label">Email</span>
+      <a href="mailto:akinyavuz@outlook.com" class="contact-val">akinyavuz@outlook.com</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">Phone</span>
+      <a href="tel:07949116770" class="contact-val">07949 116 770</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">Location</span>
+      <span class="contact-val">Dumfries &amp; Galloway, Scotland</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">Availability</span>
+      <span class="contact-val" style="color: var(--accent);">Open to new work</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">&copy; 2026 Akin Yavuz</span>
+  <ul class="footer-right">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

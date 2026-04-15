@@ -1,0 +1,37 @@
+{
+  "researched_at": "2026-04-15",
+  "industry": "Data Analytics / BI Developer Portfolio",
+  "archive_conflicts": [],
+  "avoid": [
+    "animated gradient hero backgrounds",
+    "floating blobs or geometric shapes",
+    "Montserrat typeface (overused in templates)",
+    "animated counters",
+    "parallax scrolling",
+    "stock photos of people at computers",
+    "emoji in headings",
+    "oversized hero with thin content",
+    "rainbow accent lines under headings",
+    "testimonial carousels"
+  ],
+  "design_directions": [
+    {
+      "name": "Analyst's Dashboard",
+      "colors": { "primary": "#4F46E5", "background": "#F8F9FA", "text": "#1E1E1E" },
+      "typography": { "heading": "Poppins", "body": "Inter" },
+      "layout": "portfolio-first, project card grid"
+    },
+    {
+      "name": "Consultant's Minimal",
+      "colors": { "primary": "#2E5090", "background": "#FFFFFF", "text": "#1A1A1A" },
+      "typography": { "heading": "DM Sans", "body": "Lora" },
+      "layout": "statement hero, clean sections"
+    },
+    {
+      "name": "Warm Minimalist",
+      "colors": { "primary": "#7C3C3C", "background": "#F9F7F4", "text": "#2A2A2A" },
+      "typography": { "heading": "Manrope", "body": "Roboto" },
+      "layout": "centered hero, text-led project cards"
+    }
+  ]
+}

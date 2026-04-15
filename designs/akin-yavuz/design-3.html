@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — BI Developer & Data Analyst</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+
+:root {
+  --primary: #0D0D0D;
+  --secondary: #1A1A1A;
+  --accent: #D97706;
+  --accent-light: #FEF3C7;
+  --background: #FAFAFA;
+  --surface: #FFFFFF;
+  --surface-2: #F4F4F4;
+  --text: #0D0D0D;
+  --text-muted: #737373;
+  --border: #E5E5E5;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Merriweather', Georgia, serif; background: var(--background); color: var(--text); font-size: 15px; line-height: 1.75; }
+h1,h2,h3,h4,.nav-logo,.section-label,.trust-item,.btn-primary,.btn-outline,.stat-number,.nav-cta { font-family: 'Outfit', sans-serif; }
+
+/* Design label */
+.design-label {
+  background: #0D0D0D;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  padding: 7px 24px;
+  letter-spacing: 0.04em;
+}
+
+/* Navbar */
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-logo span {
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-left: 3px;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+.nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; transition: color 0.2s; font-family: 'Outfit', sans-serif; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--primary) !important;
+  color: #fff !important;
+  padding: 9px 22px;
+  border-radius: 4px;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.01em;
+}
+
+/* Hero — centered */
+.hero {
+  background: var(--surface);
+  padding: 100px 32px 88px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner { max-width: 760px; margin: 0 auto; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.badge-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
+.hero h1 {
+  font-size: clamp(40px, 5.5vw, 68px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.0;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.hero h1 mark {
+  background: none;
+  color: var(--accent);
+  position: relative;
+}
+.hero p {
+  font-family: 'Merriweather', serif;
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  padding: 13px 30px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+  letter-spacing: 0.01em;
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  padding: 13px 30px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+  border: 1.5px solid var(--border);
+}
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+.hero-stat { text-align: center; }
+.stat-number { font-size: 32px; font-weight: 800; color: var(--text); letter-spacing: -0.03em; }
+.stat-label { font-size: 12px; color: var(--text-muted); font-family: 'Outfit', sans-serif; margin-top: 4px; font-weight: 500; letter-spacing: 0.02em; }
+.hero-divider-sep { width: 1px; height: 40px; background: var(--border); }
+
+/* Trust strip */
+.trust-strip {
+  background: var(--accent);
+  padding: 16px 32px;
+}
+.trust-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.trust-item::before { content: '—'; opacity: 0.6; font-size: 10px; }
+
+/* Services */
+.section {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 88px 32px;
+}
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  font-family: 'Outfit', sans-serif;
+}
+.section-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
+  align-items: end;
+}
+.section-title {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1.1;
+  font-family: 'Outfit', sans-serif;
+}
+.section-intro {
+  font-family: 'Merriweather', serif;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-weight: 300;
+  padding-top: 8px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.service-card {
+  background: var(--surface);
+  padding: 40px 32px;
+  border-top: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+.service-card:hover { border-top-color: var(--accent); }
+.service-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  font-family: 'Outfit', sans-serif;
+}
+.service-card p {
+  font-family: 'Merriweather', serif;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  font-weight: 300;
+}
+.service-arrow {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* CTA section */
+.cta-section {
+  background: var(--primary);
+  padding: 88px 32px;
+  text-align: center;
+}
+.cta-inner { max-width: 580px; margin: 0 auto; }
+.cta-section h2 {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 18px;
+  line-height: 1.1;
+  font-family: 'Outfit', sans-serif;
+}
+.cta-section p {
+  font-family: 'Merriweather', serif;
+  font-size: 16px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 36px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 34px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* Footer */
+footer {
+  background: #0A0A0A;
+  color: rgba(255,255,255,0.5);
+  padding: 56px 32px 32px;
+}
+.footer-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand h3 {
+  font-size: 17px;
+  color: #fff;
+  margin-bottom: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.footer-brand p { font-family: 'Merriweather', serif; font-size: 13px; line-height: 1.75; max-width: 280px; font-weight: 300; }
+.footer-col h4 { color: rgba(255,255,255,0.3); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; font-family: 'Outfit', sans-serif; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; font-family: 'Outfit', sans-serif; }
+.footer-bottom {
+  max-width: 1080px;
+  margin: 24px auto 0;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Outfit', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 64px 20px 56px; }
+  .hero-divider { gap: 24px; }
+  .section-header { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .trust-inner { gap: 20px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Design Label -->
+<div class="design-label">Design 3 of 3 &nbsp;|&nbsp; Ink Minimal &nbsp;|&nbsp; Sharp, considered, distinctly non-template &nbsp;|&nbsp; Primary: #0D0D0D &nbsp;|&nbsp; Accent: #D97706 &nbsp;|&nbsp; Fonts: Outfit / Merriweather &nbsp;|&nbsp; Layout: centered</div>
+
+<!-- Navbar -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Akin Yavuz<span></span></a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#" class="nav-cta">Get in Touch</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero — centered -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="badge-dot"></span>Available for Freelance &amp; Contract</div>
+    <h1>BI Developer.<br><mark>Data Analyst.</mark></h1>
+    <p>End-to-end knowledge of the data analytics stack — from raw source data and modelling through to dashboards and reporting that people trust.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">View My Projects</a>
+      <a href="#" class="btn-outline">Download CV</a>
+    </div>
+    <div class="hero-divider">
+      <div class="hero-stat">
+        <div class="stat-number">8+</div>
+        <div class="stat-label">Years in Data</div>
+      </div>
+      <div class="hero-divider-sep"></div>
+      <div class="hero-stat">
+        <div class="stat-number">Full</div>
+        <div class="stat-label">Stack Expertise</div>
+      </div>
+      <div class="hero-divider-sep"></div>
+      <div class="hero-stat">
+        <div class="stat-number">UK</div>
+        <div class="stat-label">Remote &amp; On-site</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Trust strip -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item">Full Analytics Stack</div>
+    <div class="trust-item">UK-Based, Remote-First</div>
+    <div class="trust-item">Senior Experience</div>
+    <div class="trust-item">Freelance &amp; Contract</div>
+  </div>
+</div>
+
+<!-- Services -->
+<div class="section">
+  <div class="section-label">What I Do</div>
+  <div class="section-header">
+    <h2 class="section-title">Analytics expertise,<br>end to end</h2>
+    <p class="section-intro">From the first data source through to the report on your screen — I handle every stage of the analytics lifecycle without the hand-holding.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <h3>Business Intelligence</h3>
+      <p>Interactive dashboards and reports in Power BI and Tableau — built around what decision-makers actually need to see.</p>
+      <span class="service-arrow">Learn more &rarr;</span>
+    </div>
+    <div class="service-card">
+      <h3>Data Warehousing</h3>
+      <p>Clean data models and warehouse architecture that turn scattered sources into a reliable foundation for analysis.</p>
+      <span class="service-arrow">Learn more &rarr;</span>
+    </div>
+    <div class="service-card">
+      <h3>Analytics Consultancy</h3>
+      <p>Strategic input on tooling, pipelines, and reporting design — no jargon, no generic frameworks, just what works for your organisation.</p>
+      <span class="service-arrow">Learn more &rarr;</span>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to make your<br>data work harder?</h2>
+    <p>Available for freelance and contract engagements. UK-based, remote-first, and happy to travel for the right project.</p>
+    <a href="#" class="btn-accent">Get in Touch</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Akin Yavuz</h3>
+      <p>Senior BI Developer &amp; Data Analyst. Based in Dumfries &amp; Galloway, available for freelance and contract work across the UK.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:akinyavuz@outlook.com">akinyavuz@outlook.com</a></li>
+        <li><a href="tel:07949116770">07949 116 770</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Akin Yavuz</span>
+    <span>Dumfries &amp; Galloway, Scotland</span>
+  </div>
+</footer>
+
+</body>
+</html>

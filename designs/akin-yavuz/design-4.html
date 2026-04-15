@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — BI Developer & Data Analyst</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --ink: #0A0A0A;
+  --paper: #F0EDE6;
+  --gold: #C9A84C;
+  --gold-light: #E8D5A3;
+  --mid: #6B6560;
+  --line: rgba(10,10,10,0.12);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  cursor: default;
+}
+
+/* Design label */
+.design-label {
+  background: var(--ink);
+  color: var(--gold);
+  font-size: 10px;
+  padding: 8px 28px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  mix-blend-mode: multiply;
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+.nav-mark {
+  pointer-events: all;
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  line-height: 1.3;
+}
+.nav-mark strong { font-style: normal; font-weight: 700; font-size: 15px; display: block; }
+.nav-items {
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  list-style: none;
+}
+.nav-items a {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.nav-items a:hover { opacity: 1; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 56px;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* large decorative number */
+.hero-index {
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  transform: translateY(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(280px, 35vw, 480px);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(10,10,10,0.07);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-upper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 0;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 340px;
+}
+.hero-meta p {
+  font-size: 13px;
+  color: var(--mid);
+  letter-spacing: 0.02em;
+  line-height: 1.65;
+}
+.hero-meta-tag {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 2px;
+  width: fit-content;
+  margin-bottom: 8px;
+}
+
+.hero-cta-wrap { display: flex; align-items: center; gap: 20px; }
+.hero-cta {
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+}
+.hero-cta:hover { background: #b8952f; transform: translateY(-1px); }
+.hero-scroll {
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  writing-mode: horizontal-tb;
+}
+.hero-scroll::before { content: ''; display: block; width: 32px; height: 1px; background: var(--mid); }
+
+/* Main title — editorial oversized */
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(64px, 10.5vw, 148px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-top: 32px;
+  position: relative;
+  z-index: 2;
+}
+.hero-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+.hero-title .sub {
+  display: block;
+  font-size: clamp(24px, 4vw, 52px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--mid);
+  margin-top: 8px;
+  letter-spacing: -0.01em;
+}
+
+/* ── TRUST ROW ── */
+.trust-row {
+  border-bottom: 1px solid var(--line);
+  padding: 20px 48px;
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+}
+.trust-ticker {
+  display: flex;
+  gap: 64px;
+  animation: ticker 18s linear infinite;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  flex-shrink: 0;
+}
+.trust-diamond {
+  width: 5px; height: 5px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ── SERVICES — editorial layout ── */
+.services-section {
+  padding: 96px 48px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+}
+.services-sidebar {
+  padding-top: 4px;
+  padding-right: 48px;
+  border-right: 1px solid var(--line);
+}
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mid);
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  height: fit-content;
+}
+.services-body { padding-left: 64px; }
+.services-body h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 56px;
+  color: var(--ink);
+}
+.services-body h2 em { font-style: italic; color: var(--gold); }
+
+.service-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 28px;
+  align-items: start;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  transition: background 0.2s;
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.service-row:last-child { border-bottom: 1px solid var(--line); }
+.service-row:hover { background: rgba(201,168,76,0.06); }
+.service-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gold);
+  padding-top: 3px;
+}
+.service-row h3 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.service-row p {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.65;
+  max-width: 480px;
+}
+.service-arrow {
+  font-size: 18px;
+  color: var(--gold);
+  padding-top: 4px;
+  transition: transform 0.2s;
+}
+.service-row:hover .service-arrow { transform: translateX(4px); }
+
+/* ── CTA ── */
+.cta-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 440px;
+}
+.cta-left {
+  background: var(--ink);
+  padding: 72px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cta-left h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  color: #fff;
+}
+.cta-left h2 em { font-style: italic; color: var(--gold); }
+.cta-left p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  max-width: 340px;
+  margin-top: 16px;
+}
+.cta-btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 2px;
+  width: fit-content;
+  margin-top: 48px;
+  transition: background 0.2s;
+}
+.cta-btn:hover { background: #b8952f; }
+.cta-right {
+  background: var(--gold);
+  padding: 72px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cta-right-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(10,10,10,0.5);
+}
+.cta-contact-block { margin-top: auto; }
+.cta-contact-block p {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(10,10,10,0.6);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.cta-contact-block a {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+}
+.cta-contact-block a:hover { opacity: 0.7; }
+.cta-location {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(10,10,10,0.5);
+  margin-top: 24px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 32px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.06em;
+}
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold); }
+
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .hero { padding: 0 24px 40px; }
+  .hero-title { font-size: 56px; }
+  .hero-index { display: none; }
+  .hero-upper { flex-direction: column; gap: 24px; align-items: flex-start; }
+  .trust-row { padding: 16px 24px; }
+  .services-section { grid-template-columns: 1fr; padding: 48px 24px; }
+  .services-sidebar { display: none; }
+  .services-body { padding-left: 0; }
+  .service-row { grid-template-columns: 40px 1fr; }
+  .service-arrow { display: none; }
+  .cta-section { grid-template-columns: 1fr; }
+  footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="design-label">Design 4 of 3 &nbsp;·&nbsp; The Editorial &nbsp;·&nbsp; Playfair Display / Space Grotesk &nbsp;·&nbsp; Primary: #0A0A0A &nbsp;·&nbsp; Accent: #C9A84C &nbsp;·&nbsp; Layout: fullwidth editorial</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-mark">
+    <strong>Akin Yavuz</strong>
+    BI Developer
+  </a>
+  <ul class="nav-items">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-index">01</div>
+
+  <div class="hero-upper">
+    <div class="hero-meta">
+      <span class="hero-meta-tag">Available for hire</span>
+      <p>Senior BI Developer &amp; Data Analyst based in Dumfries &amp; Galloway. Covering the full analytics stack — from raw data to decisions.</p>
+    </div>
+    <div class="hero-cta-wrap">
+      <a href="#" class="hero-cta">View Projects</a>
+      <span class="hero-scroll">Scroll</span>
+    </div>
+  </div>
+
+  <h1 class="hero-title">
+    Data<br>
+    <em>Analyst.</em>
+    <span class="sub">BI Developer &amp; Analytics Consultant</span>
+  </h1>
+</section>
+
+<!-- TRUST TICKER -->
+<div class="trust-row">
+  <div class="trust-ticker">
+    <span class="trust-item"><span class="trust-diamond"></span>Full Analytics Stack</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Power BI &amp; Tableau</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Data Warehousing</span>
+    <span class="trust-item"><span class="trust-diamond"></span>UK-Based &amp; Remote</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Freelance &amp; Contract</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Senior-Level Experience</span>
+    <!-- duplicate for seamless loop -->
+    <span class="trust-item"><span class="trust-diamond"></span>Full Analytics Stack</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Power BI &amp; Tableau</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Data Warehousing</span>
+    <span class="trust-item"><span class="trust-diamond"></span>UK-Based &amp; Remote</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Freelance &amp; Contract</span>
+    <span class="trust-item"><span class="trust-diamond"></span>Senior-Level Experience</span>
+  </div>
+</div>
+
+<!-- SERVICES — editorial -->
+<section class="services-section">
+  <div class="services-sidebar">
+    <span class="sidebar-label">Services</span>
+  </div>
+  <div class="services-body">
+    <h2>What I do,<br>and how I do <em>it well</em></h2>
+
+    <div class="service-row">
+      <span class="service-num">i.</span>
+      <div>
+        <h3>Business Intelligence</h3>
+        <p>Power BI and Tableau dashboards that surface what matters — built around the actual decisions your teams need to make, not what looks impressive in a demo.</p>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-row">
+      <span class="service-num">ii.</span>
+      <div>
+        <h3>Data Warehousing</h3>
+        <p>Structured models and warehouse architecture that turn messy, siloed sources into a single reliable foundation. Built once, relied on daily.</p>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-row">
+      <span class="service-num">iii.</span>
+      <div>
+        <h3>Analytics Consultancy</h3>
+        <p>Strategic guidance on tooling, pipelines, and reporting design. No jargon, no generic frameworks — just clear thinking applied to your specific problem.</p>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-left">
+    <div>
+      <h2>Let's talk about<br>your <em>data.</em></h2>
+      <p>Available for freelance and contract engagements across the UK. Remote-first, with on-site options for the right project.</p>
+    </div>
+    <a href="#" class="cta-btn">Get in Touch</a>
+  </div>
+  <div class="cta-right">
+    <span class="cta-right-label">Contact</span>
+    <div class="cta-contact-block">
+      <p>Reach me directly</p>
+      <a href="mailto:akinyavuz@outlook.com">akinyavuz@outlook.com</a>
+      <a href="tel:07949116770">07949 116 770</a>
+      <p class="cta-location">Dumfries &amp; Galloway, Scotland</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">&copy; 2026 Akin Yavuz. All rights reserved.</span>
+  <ul class="footer-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

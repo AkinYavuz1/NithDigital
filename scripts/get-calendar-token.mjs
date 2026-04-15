@@ -9,14 +9,33 @@
 import { createServer } from 'http'
 import { URL } from 'url'
 
-// Reads from env — set these before running:
-// GSC_CLIENT_ID and GSC_CLIENT_SECRET are already in .env.local
-// Run with: node -r dotenv/config scripts/get-calendar-token.mjs
+import { readFileSync } from 'fs'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+// Load .env.local manually (dotenv/config only reads .env by default)
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const envPath = resolve(__dirname, '../.env.local')
+try {
+  const lines = readFileSync(envPath, 'utf8').split('\n')
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith('#')) continue
+    const eq = trimmed.indexOf('=')
+    if (eq === -1) continue
+    const key = trimmed.slice(0, eq).trim()
+    const val = trimmed.slice(eq + 1).trim()
+    if (!process.env[key]) process.env[key] = val
+  }
+} catch {
+  // .env.local not found — rely on existing environment
+}
+
 const CLIENT_ID = process.env.GSC_CLIENT_ID || process.env.GOOGLE_CALENDAR_CLIENT_ID
 const CLIENT_SECRET = process.env.GSC_CLIENT_SECRET || process.env.GOOGLE_CALENDAR_CLIENT_SECRET
 
 if (!CLIENT_ID || !CLIENT_SECRET) {
-  console.error('Error: GSC_CLIENT_ID and GSC_CLIENT_SECRET must be set in environment')
+  console.error('Error: GSC_CLIENT_ID and GSC_CLIENT_SECRET not found in .env.local or environment')
   process.exit(1)
 }
 const REDIRECT_URI = 'http://localhost:3333/callback'

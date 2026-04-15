@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — BI Developer & Data Analyst</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --primary: #1B3A6B;
+  --secondary: #2C5F8A;
+  --accent: #3B82F6;
+  --background: #F5F7FA;
+  --surface: #FFFFFF;
+  --text: #111827;
+  --text-muted: #6B7280;
+  --border: #E5E7EB;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: var(--background); color: var(--text); font-size: 16px; line-height: 1.6; }
+h1,h2,h3,h4 { font-family: 'DM Sans', sans-serif; font-weight: 600; }
+
+/* Design label */
+.design-label {
+  background: #1B3A6B;
+  color: #fff;
+  font-family: 'Inter', monospace;
+  font-size: 11px;
+  padding: 7px 24px;
+  letter-spacing: 0.04em;
+}
+
+/* Navbar */
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--accent);
+  color: #fff !important;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+}
+.nav-cta:hover { background: #2563EB; color: #fff !important; }
+
+/* Hero — split layout */
+.hero {
+  background: var(--surface);
+  min-height: calc(100vh - 65px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  align-items: center;
+  gap: 64px;
+}
+.hero-text {}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #EFF6FF;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.hero-text h1 {
+  font-size: clamp(36px, 4vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.hero-text h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.hero-text p {
+  font-size: 17px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: #2563EB; }
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  padding: 12px 28px;
+  border-radius: 7px;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-block;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.2s;
+}
+.btn-outline:hover { border-color: #9CA3AF; }
+
+.hero-visual {
+  background: linear-gradient(135deg, #1B3A6B 0%, #2C5F8A 100%);
+  border-radius: 16px;
+  padding: 40px;
+  color: #fff;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero-visual-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 24px;
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.skill-tag {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.skill-tag strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; margin-bottom: 4px; font-weight: 400; }
+.hero-visual-footer {
+  display: flex;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.stat { }
+.stat-number { font-size: 28px; font-weight: 700; font-family: 'DM Sans', sans-serif; }
+.stat-label { font-size: 12px; opacity: 0.6; margin-top: 2px; }
+
+/* Trust strip */
+.trust-strip {
+  background: var(--primary);
+  color: rgba(255,255,255,0.9);
+  padding: 20px 32px;
+}
+.trust-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.trust-item svg { opacity: 0.8; flex-shrink: 0; }
+
+/* Services */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 32px;
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.section-intro {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  transition: box-shadow 0.2s;
+}
+.service-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
+.service-icon {
+  width: 44px; height: 44px;
+  background: #EFF6FF;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.service-card h3 {
+  font-size: 17px;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.service-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* CTA section */
+.cta-section {
+  background: var(--primary);
+  color: #fff;
+  padding: 80px 32px;
+  text-align: center;
+}
+.cta-inner { max-width: 640px; margin: 0 auto; }
+.cta-section h2 {
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  color: #fff;
+}
+.cta-section p {
+  font-size: 17px;
+  opacity: 0.8;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+.btn-white {
+  background: #fff;
+  color: var(--primary);
+  padding: 14px 32px;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Footer */
+footer {
+  background: #0F1E35;
+  color: rgba(255,255,255,0.7);
+  padding: 56px 32px 32px;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.footer-brand h3 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 10px;
+  font-family: 'DM Sans', sans-serif;
+}
+.footer-brand p { font-size: 14px; line-height: 1.65; max-width: 280px; }
+.footer-col h4 { color: #fff; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; font-family: 'DM Sans', sans-serif; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; }
+.footer-bottom {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; padding: 48px 20px; gap: 40px; min-height: auto; }
+  .hero-visual { min-height: 260px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .trust-inner { gap: 24px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Design Label -->
+<div class="design-label">Design 1 of 3 &nbsp;|&nbsp; Slate Precision &nbsp;|&nbsp; Clean, authoritative, data-focused &nbsp;|&nbsp; Primary: #1B3A6B &nbsp;|&nbsp; Accent: #3B82F6 &nbsp;|&nbsp; Fonts: DM Sans / Inter &nbsp;|&nbsp; Layout: split</div>
+
+<!-- Navbar -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Akin <span>Yavuz</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#" class="nav-cta">Get in Touch</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero — split -->
+<div style="background: var(--surface);">
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">BI Developer &amp; Data Analyst</div>
+    <h1>Turning data into<br><em>decisions that matter</em></h1>
+    <p>I cover the full analytics stack — from raw data and warehousing through to dashboards and reporting that business teams actually use.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">View My Projects</a>
+      <a href="#" class="btn-outline">Download CV</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-label">Core Expertise</div>
+    <div class="skills-grid">
+      <div class="skill-tag"><strong>Tooling</strong>Power BI &amp; Tableau</div>
+      <div class="skill-tag"><strong>Data Layer</strong>SQL &amp; Warehousing</div>
+      <div class="skill-tag"><strong>Analytics</strong>End-to-end pipelines</div>
+      <div class="skill-tag"><strong>Delivery</strong>Stakeholder reporting</div>
+    </div>
+    <div class="hero-visual-footer">
+      <div class="stat"><div class="stat-number">8+</div><div class="stat-label">Years in Data</div></div>
+      <div class="stat"><div class="stat-number">Full</div><div class="stat-label">Stack Analytics</div></div>
+      <div class="stat"><div class="stat-number">UK</div><div class="stat-label">Remote &amp; On-site</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Trust strip -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Full Analytics Stack
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      UK-Based, Remote-Ready
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Senior-Level Experience
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Insight-Driven Delivery
+    </div>
+  </div>
+</div>
+
+<!-- Services -->
+<div class="section">
+  <div class="section-label">What I Do</div>
+  <h2 class="section-title">Analytics expertise,<br>front to back</h2>
+  <p class="section-intro">From the first data source through to the dashboard on your screen, I handle every stage of the analytics lifecycle.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#3B82F6" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      </div>
+      <h3>Business Intelligence</h3>
+      <p>Interactive dashboards and reports built in Power BI and Tableau that give decision-makers clear, real-time visibility of what matters.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#3B82F6" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+      </div>
+      <h3>Data Warehousing</h3>
+      <p>Structured data models and warehouse design that make your data consistent, reliable, and ready for analysis at scale.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#3B82F6" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <h3>Analytics Consultancy</h3>
+      <p>Strategic input on your data architecture, tooling choices, and reporting approach — built around what your organisation actually needs.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to get more from your data?</h2>
+    <p>Whether you need a single dashboard or a full analytics overhaul, I'm available for freelance engagements across the UK.</p>
+    <a href="#" class="btn-white">Get in Touch</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Akin Yavuz</h3>
+      <p>Senior BI Developer &amp; Data Analyst based in Dumfries &amp; Galloway. Available for freelance and contract work across the UK.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:akinyavuz@outlook.com">akinyavuz@outlook.com</a></li>
+        <li><a href="tel:07949116770">07949 116 770</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Akin Yavuz. All rights reserved.</span>
+    <span>Dumfries &amp; Galloway, Scotland</span>
+  </div>
+</footer>
+
+</body>
+</html>

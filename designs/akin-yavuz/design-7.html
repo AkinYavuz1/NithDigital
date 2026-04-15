@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — Senior BI & Data Professional</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --bg:      #0E0E0E;
+  --surface: #161616;
+  --lift:    #1E1E1E;
+  --border:  rgba(255,255,255,0.07);
+  --text:    #EDEDED;
+  --muted:   #6E6E6E;
+  --dim:     #3A3A3A;
+  --blue:    #4A90D9;
+  --blue-bg: rgba(74,144,217,0.08);
+  --green:   #4ade80;
+  --red:     #e63946;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Instrument Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── LABEL ── */
+.design-label{background:#4A90D9;color:#fff;font-size:10px;padding:7px 28px;letter-spacing:.08em}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,14,14,.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+}
+.nav-logo{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:20px;
+  color:var(--text);
+  text-decoration:none;
+  letter-spacing:-.01em;
+}
+.nav-logo b{font-style:normal;font-family:'Instrument Sans',sans-serif;font-weight:700;font-size:12px;color:var(--muted);margin-left:10px;vertical-align:middle;letter-spacing:.04em;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .2s;letter-spacing:.01em}
+.nav-links a:hover{color:var(--text)}
+.nav-avail{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--green);font-weight:500}
+.nav-avail-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.4)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(74,222,128,0)}}
+
+/* ── HERO ── */
+.hero{
+  padding:80px 40px 0;
+  min-height:calc(100vh - 58px);
+  display:flex;flex-direction:column;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+
+/* subtle grain texture */
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;opacity:.4;
+}
+
+.hero-top{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:40px;
+  align-items:start;
+  margin-bottom:48px;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:28px;
+}
+.hero-eyebrow::before{content:'//';color:var(--blue);margin-right:2px}
+
+.hero-h1{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(64px,9.5vw,140px);
+  font-weight:400;
+  line-height:.92;
+  letter-spacing:-.04em;
+  color:var(--text);
+}
+.hero-h1 .italic{font-style:italic;color:var(--muted)}
+.hero-h1 .blue{color:var(--blue);font-style:italic}
+
+.hero-meta{
+  max-width:320px;
+  text-align:right;
+}
+.hero-meta p{
+  font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px
+}
+.hero-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.btn-primary{
+  background:var(--blue);color:#fff;
+  font-size:12px;font-weight:600;letter-spacing:.04em;
+  text-decoration:none;padding:10px 22px;
+  transition:opacity .2s;display:inline-block;
+}
+.btn-primary:hover{opacity:.85}
+.btn-ghost{
+  background:transparent;color:var(--muted);
+  font-size:12px;font-weight:500;letter-spacing:.04em;
+  text-decoration:none;padding:9px 22px;
+  border:1px solid var(--border);
+  transition:border-color .2s,color .2s;display:inline-block;
+}
+.btn-ghost:hover{border-color:var(--dim);color:var(--text)}
+
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border);
+  margin-top:auto;
+}
+.hero-stat{
+  padding:28px 0;
+  border-right:1px solid var(--border);
+}
+.hero-stat:last-child{border-right:none}
+.stat-val{
+  font-family:'Instrument Serif',serif;
+  font-size:40px;font-weight:400;letter-spacing:-.03em;
+  color:var(--text);line-height:1;margin-bottom:4px;
+}
+.stat-val em{font-style:italic;color:var(--blue)}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.04em}
+
+/* ── TICKER ── */
+.ticker-wrap{
+  overflow:hidden;border-bottom:1px solid var(--border);
+  background:var(--surface);
+  padding:14px 0;
+}
+.ticker{
+  display:flex;gap:0;
+  animation:tick 22s linear infinite;
+  white-space:nowrap;
+}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);
+  padding:0 36px;
+  border-right:1px solid var(--border);
+  flex-shrink:0;
+}
+.ticker-item .t-sep{color:var(--blue);font-size:8px}
+
+/* ── SECTION CHROME ── */
+.section{padding:80px 40px;border-bottom:1px solid var(--border)}
+.section-head{
+  display:flex;align-items:baseline;gap:16px;
+  margin-bottom:52px;
+}
+.section-num{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:13px;color:var(--blue);
+  flex-shrink:0;
+}
+.section-title{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(28px,3.5vw,44px);
+  font-weight:400;letter-spacing:-.03em;color:var(--text);
+  line-height:1.1;
+}
+.section-title em{font-style:italic;color:var(--muted)}
+
+/* ── ABOUT ── */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:80px;
+  align-items:start;
+}
+.about-body p{
+  font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:16px;
+}
+.about-body p strong{color:var(--text);font-weight:600}
+.about-body p em{font-style:italic;color:var(--blue)}
+.about-aside{}
+.stats-block{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--border);margin-bottom:1px;
+}
+.stat-card{
+  background:var(--surface);padding:24px;
+}
+.stat-card .val{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:36px;color:var(--text);letter-spacing:-.03em;line-height:1;
+  margin-bottom:4px;
+}
+.stat-card .val span{color:var(--blue)}
+.stat-card .lbl{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.04em}
+.gold-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:24px;
+  margin-top:1px;
+  display:flex;align-items:center;gap:20px;
+}
+.gold-medal{
+  font-size:32px;flex-shrink:0;
+}
+.gold-text h4{
+  font-family:'Instrument Serif',serif;
+  font-size:17px;font-weight:400;color:var(--text);margin-bottom:4px;
+}
+.gold-text p{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ── SKILLS ── */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);
+}
+.skill-group{background:var(--surface);padding:28px}
+.skill-group-name{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:16px;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px}
+.skill-tag{
+  background:var(--lift);
+  color:var(--muted);
+  font-size:12px;font-weight:500;
+  padding:5px 10px;letter-spacing:.01em;
+  transition:background .2s,color .2s;
+  cursor:default;
+}
+.skill-tag:hover{background:var(--blue-bg);color:var(--blue)}
+
+/* ── EXPERIENCE ── */
+.exp-list{display:flex;flex-direction:column}
+.exp-item{
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:0;
+  border-top:1px solid var(--border);
+  padding:36px 0;
+  transition:background .2s;
+  margin:0 -40px;
+  padding-left:40px;padding-right:40px;
+}
+.exp-item:last-child{border-bottom:1px solid var(--border)}
+.exp-item:hover{background:var(--surface)}
+.exp-left{}
+.exp-period{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:13px;color:var(--muted);margin-bottom:6px;
+}
+.exp-company{
+  font-size:13px;font-weight:600;color:var(--text);
+  letter-spacing:.01em;
+}
+.exp-right{}
+.exp-role{
+  font-family:'Instrument Serif',serif;
+  font-size:22px;font-weight:400;letter-spacing:-.02em;
+  color:var(--text);margin-bottom:16px;line-height:1.2;
+}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:8px}
+.exp-bullets li{
+  font-size:13px;color:var(--muted);line-height:1.65;
+  padding-left:16px;position:relative;
+}
+.exp-bullets li::before{
+  content:'';position:absolute;left:0;top:9px;
+  width:5px;height:1px;background:var(--blue);
+}
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.exp-tag{
+  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);background:var(--blue-bg);
+  padding:3px 10px;
+}
+
+/* ── PROJECTS ── */
+.projects-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);
+}
+.project-card{
+  background:var(--surface);padding:32px;
+  display:flex;flex-direction:column;
+  transition:background .2s;
+}
+.project-card:hover{background:var(--lift)}
+.project-card-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:20px;
+}
+.project-num{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:13px;color:var(--muted);
+}
+.project-live{
+  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--green);display:flex;align-items:center;gap:5px;
+}
+.project-live::before{
+  content:'';width:5px;height:5px;background:var(--green);border-radius:50%;
+}
+.project-card h3{
+  font-family:'Instrument Serif',serif;
+  font-size:22px;font-weight:400;letter-spacing:-.02em;
+  color:var(--text);margin-bottom:12px;line-height:1.2;
+}
+.project-card p{font-size:13px;color:var(--muted);line-height:1.7;flex:1}
+.project-card-footer{
+  margin-top:24px;padding-top:20px;border-top:1px solid var(--border);
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.project-tech{
+  font-size:10px;color:var(--dim);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* ── CTA ── */
+.cta-section{
+  padding:96px 40px;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.cta-left h2{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(40px,5.5vw,72px);font-weight:400;
+  letter-spacing:-.04em;line-height:.95;color:var(--text);margin-bottom:20px;
+}
+.cta-left h2 em{font-style:italic;color:var(--blue)}
+.cta-left p{font-size:14px;color:var(--muted);line-height:1.75;max-width:420px;margin-bottom:32px}
+.cta-right{border:1px solid var(--border);padding:36px}
+.contact-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.contact-row:first-child{padding-top:0}
+.contact-row:last-child{border-bottom:none;padding-bottom:0}
+.contact-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.contact-val{font-size:13px;color:var(--text);text-decoration:none;font-weight:500;transition:color .2s}
+.contact-val:hover{color:var(--blue)}
+
+/* ── FOOTER ── */
+footer{
+  padding:24px 40px;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+}
+.footer-copy{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.footer-links{display:flex;gap:24px;list-style:none}
+.footer-links a{font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:.04em;transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hero{padding:56px 20px 0}
+  .hero-top{grid-template-columns:1fr}
+  .hero-meta{max-width:100%;text-align:left}
+  .hero-actions{justify-content:flex-start}
+  .hero-h1{font-size:60px}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .about-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr 1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .cta-section{grid-template-columns:1fr;padding:56px 20px}
+  .exp-item{grid-template-columns:1fr;margin:0;padding:28px 0}
+  .section{padding:56px 20px}
+  footer{padding:20px;flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<div class="design-label">Design 7 · Instrument — dark editorial with serif warmth · Instrument Serif / Instrument Sans · #0E0E0E + #4A90D9</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Akin Yavuz <b>AY.DEV</b></a>
+  <ul class="nav-links">
+    <li><a href="#">About</a></li>
+    <li><a href="#">Skills</a></li>
+    <li><a href="#">Experience</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-avail"><span class="nav-avail-dot"></span>Available for remote roles</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="hero-eyebrow">Senior BI &amp; Data Professional</div>
+      <h1 class="hero-h1">
+        Akin<br>
+        <span class="italic">Yavuz</span>
+      </h1>
+    </div>
+    <div class="hero-meta">
+      <p>Microsoft-certified BI developer with 10+ years building data platforms, Power BI solutions, and analytics pipelines across the NHS, financial services, and energy.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">Get in touch</a>
+        <a href="#" class="btn-ghost">Download CV</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-val"><em>10</em>+</div>
+      <div class="stat-label">Years in BI &amp; Data</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val"><em>50</em>+</div>
+      <div class="stat-label">SSRS Reports Built</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val"><em>40</em>h</div>
+      <div class="stat-label">Saved per Month</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val"><em>4</em>×</div>
+      <div class="stat-label">Commonwealth Gold</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">SQL <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Power BI <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Azure Data Factory <span class="t-sep">✦</span></span>
+    <span class="ticker-item">SSIS / SSRS / SSAS <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Data Warehousing <span class="t-sep">✦</span></span>
+    <span class="ticker-item">DAX / Power Query <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Python <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Microsoft Fabric <span class="t-sep">✦</span></span>
+    <span class="ticker-item">SQL <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Power BI <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Azure Data Factory <span class="t-sep">✦</span></span>
+    <span class="ticker-item">SSIS / SSRS / SSAS <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Data Warehousing <span class="t-sep">✦</span></span>
+    <span class="ticker-item">DAX / Power Query <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Python <span class="t-sep">✦</span></span>
+    <span class="ticker-item">Microsoft Fabric <span class="t-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">01 —</span>
+    <h2 class="section-title">Who I <em>am</em></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>I'm a <strong>Senior BI &amp; Data Professional</strong> with over a decade of experience turning raw data into dashboards, pipelines, and platforms that organisations actually use to make decisions.</p>
+      <p>My background spans the <strong>NHS</strong>, financial services (Openwork, Holloway Friendly), energy (Good Energy), and software consulting. I've built self-service BI systems for thousands of users, automated reporting workflows saving <em>40+ hours per month</em>, and delivered insight products to regulators including Ofgem and the Citizens Advice Bureau.</p>
+      <p>I'm equally comfortable writing a complex <strong>SQL stored procedure</strong>, designing a star-schema data warehouse, or presenting KPI frameworks to senior leadership. I hold a Certified Scrum Master qualification and have led teams in Agile environments across multiple industries.</p>
+      <p>Outside of data: I'm a <strong>4× Commonwealth Games gold medallist</strong> in powerlifting, a competitive coach, and an avid hiker. I bring the same discipline and attention to detail from sport into my work.</p>
+    </div>
+    <div class="about-aside">
+      <div class="stats-block">
+        <div class="stat-card"><div class="val"><span>10</span>+</div><div class="lbl">Years in BI &amp; Data</div></div>
+        <div class="stat-card"><div class="val"><span>50</span>+</div><div class="lbl">SSRS Reports Built</div></div>
+        <div class="stat-card"><div class="val"><span>40</span>h</div><div class="lbl">Saved per Month</div></div>
+        <div class="stat-card"><div class="val"><span>5</span></div><div class="lbl">Certifications</div></div>
+      </div>
+      <div class="gold-card">
+        <span class="gold-medal">🥇</span>
+        <div class="gold-text">
+          <h4>4× Commonwealth Games Gold</h4>
+          <p>Powerlifting competitor at Commonwealth level. Discipline, structured training, and long-term goal-setting.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">02 —</span>
+    <h2 class="section-title">Technical <em>expertise</em></h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-name">Core BI &amp; Reporting</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Power BI</span><span class="skill-tag">DAX</span><span class="skill-tag">Power Query (M)</span><span class="skill-tag">SSRS</span><span class="skill-tag">SSAS</span><span class="skill-tag">Tableau</span><span class="skill-tag">Excel</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-name">Data Engineering</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL Server</span><span class="skill-tag">T-SQL</span><span class="skill-tag">SSIS</span><span class="skill-tag">ETL / ELT</span><span class="skill-tag">Azure Data Factory</span><span class="skill-tag">Data Warehousing</span><span class="skill-tag">Star Schema</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-name">Cloud &amp; DevOps</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Azure</span><span class="skill-tag">Microsoft Fabric</span><span class="skill-tag">Dynamics 365</span><span class="skill-tag">Git / GitHub</span><span class="skill-tag">Azure DevOps</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-name">Languages &amp; Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL</span><span class="skill-tag">Python</span><span class="skill-tag">DAX</span><span class="skill-tag">M / Power Query</span><span class="skill-tag">VBA</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-name">Leadership</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Agile / Scrum</span><span class="skill-tag">Stakeholder Mgmt</span><span class="skill-tag">Mentoring</span><span class="skill-tag">Requirements Elicitation</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-name">Sector Knowledge</div>
+      <div class="skill-tags">
+        <span class="skill-tag">NHS / Healthcare</span><span class="skill-tag">Financial Services</span><span class="skill-tag">Energy / Utilities</span><span class="skill-tag">Regulatory Reporting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">03 —</span>
+    <h2 class="section-title">Where I've <em>worked</em></h2>
+  </div>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">Oct 2022 – Jun 2025</div>
+        <div class="exp-company">NHS Arden &amp; GEM CSU</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Principal Insight Developer</div>
+        <ul class="exp-bullets">
+          <li>Led Power BI best-practice standards across the department — consistent semantic model design and report governance for a national NHS commissioning organisation.</li>
+          <li>Built KPI and performance frameworks to track healthcare outcomes, patient flow, staffing levels, and service efficiency for senior clinical and operational leaders.</li>
+          <li>Designed self-service BI datasets enabling non-technical teams to build their own reports without depending on the data team.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Power BI</span>
+          <span class="exp-tag">SQL</span>
+          <span class="exp-tag">Azure</span>
+          <span class="exp-tag">DAX</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">Mar 2020 – Oct 2022</div>
+        <div class="exp-company">The Openwork Partnership</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Senior MI Analyst</div>
+        <ul class="exp-bullets">
+          <li>Built 50+ SSRS reports automating manual processes — saving 40 hours of work per month across Finance and Operations.</li>
+          <li>Built Power BI datasets sourced from an Azure Data Warehouse, embedded into Dynamics 365 for business-wide consumption.</li>
+          <li>Authored complex SQL stored procedures supporting Finance with audit testing and regulatory compliance reporting.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Power BI</span>
+          <span class="exp-tag">SSRS</span>
+          <span class="exp-tag">Azure DWH</span>
+          <span class="exp-tag">Dynamics 365</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">Dec 2018 – Mar 2020</div>
+        <div class="exp-company">Good Energy</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">BI Developer</div>
+        <ul class="exp-bullets">
+          <li>Created Power BI dashboards for Ofgem, the Citizens Advice Bureau, and multiple government departments reporting on company finances and customer statistics.</li>
+          <li>Led the data migration to a new CRM system, rewriting Power BI and SSRS reports to align with new data structures.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Power BI</span>
+          <span class="exp-tag">SSRS</span>
+          <span class="exp-tag">Regulatory Reporting</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">Mar 2016 – Jun 2018</div>
+        <div class="exp-company">7 Layer Solutions</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Report Developer</div>
+        <ul class="exp-bullets">
+          <li>Delivered Power BI dashboards for clients in Retail and Banking in a fast-paced Agile consulting environment.</li>
+          <li>Travelled internationally to deliver Power BI training to enterprise client teams.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Power BI</span>
+          <span class="exp-tag">Agile</span>
+          <span class="exp-tag">Client Consulting</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">05 —</span>
+    <h2 class="section-title">Projects &amp; <em>work samples</em></h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-card-top">
+        <span class="project-num">i.</span>
+        <span class="project-live">Live</span>
+      </div>
+      <h3>Sanquhar Business Directory</h3>
+      <p>Local business directory revealing a striking insight: 62% of 197 local businesses have no web presence. Built with data visualisation at its core — donut charts, category breakdowns, and live data.</p>
+      <div class="project-card-footer">
+        <span class="project-tech">Data Viz</span>
+        <span class="project-tech">Web App</span>
+        <span class="project-tech">Directory</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-card-top">
+        <span class="project-num">ii.</span>
+        <span class="project-live">Live</span>
+      </div>
+      <h3>Daily Duel</h3>
+      <p>A competitive daily word game — similar in concept to Wordle but with multi-mode competitive scoring, leaderboards, and shareable daily challenge links.</p>
+      <div class="project-card-footer">
+        <span class="project-tech">PostgreSQL</span>
+        <span class="project-tech">Auth / Sessions</span>
+        <span class="project-tech">Game Logic</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-card-top">
+        <span class="project-num">iii.</span>
+        <span class="project-live">Live</span>
+      </div>
+      <h3>Not An Octavia</h3>
+      <p>Custom ML model trained on hand-curated second-hand car data to surface genuinely good deals — filtering noise from overpriced listings using price, mileage, condition, and market-rate comparisons.</p>
+      <div class="project-card-footer">
+        <span class="project-tech">Machine Learning</span>
+        <span class="project-tech">Python</span>
+        <span class="project-tech">Data Scraping</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section">
+  <div class="cta-left">
+    <h2>Let's talk<br>about your <em>data.</em></h2>
+    <p>Actively looking for fully remote Senior BI / Data Engineer roles in the UK, paying £50,000+. If you have a role that fits or just want to connect — reach out.</p>
+    <a href="#" class="btn-primary">Get in touch</a>
+  </div>
+  <div class="cta-right">
+    <div class="contact-row">
+      <span class="contact-lbl">Email</span>
+      <a href="mailto:akinyavuz@outlook.com" class="contact-val">akinyavuz@outlook.com</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-lbl">Phone</span>
+      <a href="tel:07949116770" class="contact-val">07949 116 770</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-lbl">Location</span>
+      <span class="contact-val">Dumfries &amp; Galloway, Scotland</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-lbl">Target salary</span>
+      <span class="contact-val" style="color:var(--green)">£50,000+ remote</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">Akin Yavuz · Dumfries &amp; Galloway, Scotland</span>
+  <ul class="footer-links">
+    <li><a href="#">About</a></li><li><a href="#">Experience</a></li>
+    <li><a href="#">Projects</a></li><li><a href="#">Contact</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

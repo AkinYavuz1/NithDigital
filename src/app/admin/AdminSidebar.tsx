@@ -4,23 +4,18 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
-  LayoutDashboard, Inbox, Rocket, Calendar, Ticket,
-  Users, Mail, FileText, Star, LogOut, HelpCircle, Gift, Calculator, FileSignature, Layout, BarChart2, Target, MapPin, Megaphone, Phone, Menu, X, FolderKanban, Activity, Bell, Search, PoundSterling, MessageSquare, Mic, BookOpen, AlertTriangle, TrendingUp,
+  Inbox, Rocket, Ticket,
+  FileText, Star, LogOut, HelpCircle, Gift, FileSignature, Layout, BarChart2, MapPin, Megaphone, Phone, Menu, X, Activity, AlertTriangle, Search, PoundSterling, MessageSquare, BookOpen, TrendingUp,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
 
 const NAV_ITEMS = [
-  { href: '/admin', icon: LayoutDashboard, label: 'Overview' },
   { href: '/admin/finance', icon: PoundSterling, label: 'Finance' },
-  { href: '/admin/websites', icon: FolderKanban, label: 'Website Projects' },
   { href: '/admin/tradedesk', icon: MessageSquare, label: 'TradeDesk' },
   { href: '/admin/contacts', icon: Inbox, label: 'Contact Submissions' },
   { href: '/admin/launchpad', icon: Rocket, label: 'Launchpad Analytics' },
-  { href: '/admin/bookings', icon: Calendar, label: 'Bookings' },
   { href: '/admin/promo-codes', icon: Ticket, label: 'Promo Codes' },
-  { href: '/admin/users', icon: Users, label: 'Users' },
-  { href: '/admin/emails', icon: Mail, label: 'Email Queue' },
   { href: '/admin/blog', icon: FileText, label: 'Blog Posts' },
   { href: '/admin/proposals', icon: FileSignature, label: 'Proposals' },
   { href: '/admin/proposals/pipeline', icon: TrendingUp, label: 'Proposals Pipeline' },
@@ -29,15 +24,11 @@ const NAV_ITEMS = [
   { href: '/admin/testimonials', icon: Star, label: 'Testimonials' },
   { href: '/admin/help', icon: HelpCircle, label: 'Help Articles' },
   { href: '/admin/referrals', icon: Gift, label: 'Referrals' },
-  { href: '/admin/quote-leads', icon: Calculator, label: 'Quote Leads' },
   { href: '/admin/seo', icon: Search, label: 'SEO Performance' },
   { href: '/admin/audits', icon: BarChart2, label: 'Site Audits' },
-  { href: '/admin/leads', icon: Target, label: 'Lead Generator' },
-  { href: '/admin/prospects', icon: MapPin, label: 'Email List' },
+  { href: '/admin/prospects', icon: MapPin, label: 'Prospects' },
   { href: '/admin/broken-websites', icon: AlertTriangle, label: 'Broken Websites' },
   { href: '/admin/calls', icon: Phone, label: 'Call List' },
-  { href: '/admin/recordings', icon: Mic, label: 'Call Recordings' },
-  { href: '/admin/followup-queue', icon: Bell, label: 'Follow-Up Queue' },
   { href: '/admin/ads', icon: Megaphone, label: 'Google Ads' },
   { href: '/admin/health-report', icon: Activity, label: 'Health Report' },
 ]

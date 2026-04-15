@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — BI Developer & Data Analyst</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700;1,9..144,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+:root {
+  --bg: #F2EFE9;
+  --bg-dark: #E8E3DA;
+  --ink: #1A1714;
+  --muted: #7A7470;
+  --accent: #2D5A3D;
+  --accent-light: #E8F0EB;
+  --warm: #C4773B;
+  --border: rgba(26,23,20,0.1);
+  --surface: #FFFFFF;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Design label */
+.design-label {
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  padding: 7px 28px;
+  letter-spacing: 0.08em;
+}
+
+/* ── NAV ── */
+nav {
+  padding: 0 48px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.nav-logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  text-decoration: none;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+.nav-logo em { font-style: normal; color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+.nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 500; letter-spacing: 0.01em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  background: var(--ink) !important;
+  color: var(--bg) !important;
+  padding: 9px 22px;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em;
+  border-radius: 100px;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--accent) !important; }
+
+/* ── HERO — asymmetric split ── */
+.hero {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  min-height: calc(100vh - 64px);
+  border-bottom: 1px solid var(--border);
+}
+.hero-left {
+  padding: 72px 56px 64px 48px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-sup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+.hero-sup-line {
+  width: 40px; height: 1px;
+  background: var(--accent);
+}
+.hero-sup-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(52px, 7.5vw, 108px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-title .row-1 { display: block; }
+.hero-title .row-2 {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--muted);
+}
+.hero-title .row-3 {
+  display: block;
+  color: var(--accent);
+}
+
+.hero-bottom-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+.hero-desc {
+  max-width: 380px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+}
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  padding: 13px 28px;
+  border-radius: 100px;
+  display: inline-block;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--accent); }
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 100px;
+  display: inline-block;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.2s;
+}
+.btn-outline:hover { border-color: rgba(26,23,20,0.3); }
+
+/* Hero right panel */
+.hero-right {
+  background: var(--bg-dark);
+  padding: 72px 48px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero-right-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+.skill-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.2s;
+  cursor: default;
+}
+.skill-item:hover { padding-left: 6px; }
+.skill-item:first-child { border-top: 1px solid var(--border); }
+.skill-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.skill-level {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.hero-right-bottom {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.avail-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.avail-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(45,90,61,0.15);
+}
+.avail-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.avail-sub { font-size: 12px; color: var(--muted); }
+
+/* ── SERVICES ── */
+.services-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.service-panel {
+  padding: 64px 40px;
+  border-right: 1px solid var(--border);
+  transition: background 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.service-panel:last-child { border-right: none; }
+.service-panel::before {
+  content: attr(data-num);
+  position: absolute;
+  bottom: -20px; right: -10px;
+  font-family: 'Fraunces', serif;
+  font-size: 140px;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(26,23,20,0.05);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.service-panel:hover { background: var(--accent-light); }
+.service-panel:hover::before { -webkit-text-stroke-color: rgba(45,90,61,0.1); }
+
+.service-icon-wrap {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  background: var(--surface);
+}
+.service-panel h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.service-panel p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding: 96px 48px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 80px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.cta-left {}
+.cta-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.cta-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+.cta-left h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.cta-left h2 em { font-style: italic; font-weight: 300; color: var(--muted); }
+.cta-left p {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-style: italic;
+  font-weight: 300;
+  max-width: 440px;
+  margin-bottom: 36px;
+}
+
+.cta-right {
+  background: var(--accent);
+  padding: 48px 40px;
+  color: #fff;
+  border-radius: 16px;
+}
+.cta-right-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 28px;
+}
+.contact-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.contact-item:last-of-type { border-bottom: none; margin-bottom: 28px; padding-bottom: 0; }
+.contact-item-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+.contact-item-val {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s;
+}
+.contact-item-val:hover { opacity: 0.8; }
+.cta-btn-white {
+  display: block;
+  text-align: center;
+  background: #fff;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 14px;
+  border-radius: 100px;
+  transition: opacity 0.2s;
+}
+.cta-btn-white:hover { opacity: 0.9; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+}
+.footer-left {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+}
+.footer-right { display: flex; gap: 24px; list-style: none; }
+.footer-right a { font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+.footer-right a:hover { color: var(--ink); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 48px 20px; border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-right { padding: 40px 20px; }
+  .hero-title { font-size: 56px; }
+  .hero-bottom-row { flex-direction: column; gap: 24px; align-items: flex-start; }
+  .services-section { grid-template-columns: 1fr; }
+  .service-panel { border-right: none; border-bottom: 1px solid var(--border); }
+  .cta-section { grid-template-columns: 1fr; padding: 56px 20px; }
+  footer { padding: 20px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="design-label">Design 6 of 3 &nbsp;·&nbsp; Forest Editorial &nbsp;·&nbsp; Fraunces / DM Sans &nbsp;·&nbsp; Primary: #2D5A3D &nbsp;·&nbsp; Accent: #C4773B &nbsp;·&nbsp; Layout: asymmetric split</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><em>Akin</em> <span style="color:var(--muted)">Yavuz</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#" class="nav-cta">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hero-sup">
+        <span class="hero-sup-line"></span>
+        <span class="hero-sup-text">Senior BI Developer &amp; Data Analyst</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="row-1">Data</span>
+        <span class="row-2">that works</span>
+        <span class="row-3">for you.</span>
+      </h1>
+    </div>
+    <div class="hero-bottom-row">
+      <p class="hero-desc">End-to-end analytics knowledge — from raw data and modelling through to dashboards your team will actually rely on.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">View Projects</a>
+        <a href="#" class="btn-outline">Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <p class="hero-right-label">Core Skills</p>
+    <div class="skills-list">
+      <div class="skill-item">
+        <span class="skill-name">Business Intelligence</span>
+        <span class="skill-level">Expert</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Power BI &amp; Tableau</span>
+        <span class="skill-level">Expert</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">SQL &amp; Data Modelling</span>
+        <span class="skill-level">Expert</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Data Warehousing</span>
+        <span class="skill-level">Senior</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Analytics Consultancy</span>
+        <span class="skill-level">Senior</span>
+      </div>
+    </div>
+    <div class="hero-right-bottom">
+      <div class="avail-row">
+        <span class="avail-dot"></span>
+        <span class="avail-text">Open to new engagements</span>
+      </div>
+      <p class="avail-sub">Dumfries &amp; Galloway · Remote UK-wide</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="service-panel" data-num="1">
+    <div class="service-icon-wrap">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    </div>
+    <h3>Business Intelligence</h3>
+    <p>Dashboards and reports in Power BI and Tableau — designed around what your decision-makers actually need to see on a Monday morning.</p>
+  </div>
+  <div class="service-panel" data-num="2">
+    <div class="service-icon-wrap">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+    </div>
+    <h3>Data Warehousing</h3>
+    <p>Clean data models and warehouse architecture — turning scattered, inconsistent sources into a foundation your analysts can actually trust.</p>
+  </div>
+  <div class="service-panel" data-num="3">
+    <div class="service-icon-wrap">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+    </div>
+    <h3>Analytics Consultancy</h3>
+    <p>Strategic guidance on tooling, pipelines, and reporting design. No jargon — just clear thinking applied to your organisation's specific problem.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-left">
+    <p class="cta-label">Let's work together</p>
+    <h2>Your data has <em>a story</em><br>worth telling.</h2>
+    <p>Available for freelance and contract engagements across the UK. Remote-first, with on-site options for the right project.</p>
+    <a href="#" class="btn-primary">Start a Conversation</a>
+  </div>
+  <div class="cta-right">
+    <p class="cta-right-label">Contact</p>
+    <div class="contact-item">
+      <p class="contact-item-label">Email</p>
+      <a href="mailto:akinyavuz@outlook.com" class="contact-item-val">akinyavuz@outlook.com</a>
+    </div>
+    <div class="contact-item">
+      <p class="contact-item-label">Phone</p>
+      <a href="tel:07949116770" class="contact-item-val">07949 116 770</a>
+    </div>
+    <div class="contact-item">
+      <p class="contact-item-label">Location</p>
+      <span class="contact-item-val">Dumfries &amp; Galloway, Scotland</span>
+    </div>
+    <a href="#" class="cta-btn-white">Send a Message</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">&copy; 2026 Akin Yavuz — Dumfries &amp; Galloway</span>
+  <ul class="footer-right">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

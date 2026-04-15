@@ -1,0 +1,30 @@
+{
+  "client_name": "Akin Yavuz",
+  "business_description": "Senior BI Developer and Data Analyst offering full-stack data analytics consultancy — from data modelling and warehousing through to dashboard development and reporting.",
+  "industry": "Data Analytics / Business Intelligence",
+  "location": "Dumfries & Galloway, Scotland",
+  "service_area": "UK-wide (remote)",
+  "target_audience": "Businesses and hiring managers seeking a freelance BI developer or data analyst",
+  "key_services": [
+    "Business Intelligence Development",
+    "Data Analytics & Reporting",
+    "Dashboard Design (Power BI / Tableau)",
+    "Data Warehousing",
+    "Analytics Consultancy"
+  ],
+  "usp": "End-to-end knowledge of the full data analytics stack — from raw data ingestion to polished, decision-ready dashboards",
+  "tone": "professional",
+  "pages": ["Home", "About / CV", "Projects", "Contact"],
+  "features": ["contact form", "project showcase"],
+  "style_notes": "Professional, clean, human — explicitly NOT AI-generated looking. Client dislikes the current colour scheme and wants the site to feel considered and distinctive, not templated.",
+  "competitors": [],
+  "existing_assets": "",
+  "sitemap": ["home", "about", "projects", "contact"],
+  "color_preferences": "Professional palette typical for portfolios — neutral base with a strong single accent. Avoid gradients, neons, and anything that looks like a Canva template.",
+  "brief_summary": "Personal portfolio and CV site for Akin Yavuz, Senior BI Developer based in Dumfries & Galloway. Showcases data analytics expertise, projects, and CV. Professional tone, clean design that feels human and intentional — not AI-slop.",
+  "existing_site_url": "https://www.akinyavuz.co.uk",
+  "scraped_images": [],
+  "contact_email": "akinyavuz@outlook.com",
+  "contact_phone": "07949116770",
+  "ga_measurement_id": ""
+}
