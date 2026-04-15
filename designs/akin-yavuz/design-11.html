@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akin Yavuz — Senior BI &amp; Data Professional</title>
+<meta name="description" content="Akin Yavuz — Senior BI & Data Professional based in Dumfries & Galloway, Scotland. Microsoft-certified, 10+ years experience across NHS, fintech, and energy sectors.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/* ── Reset ─────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Design tokens ─────────────────────────────────── */
+:root {
+  --bg: #FFFFFF;
+  --surface: #F9FAFB;
+  --text: #111827;
+  --muted: #6B7280;
+  --border: rgba(17,24,39,0.08);
+  --primary: #0D6B6E;
+  --accent-light: #E6F7F7;
+  --radius: 0px;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+}
+
+/* ── Base ──────────────────────────────────────────── */
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--primary); text-decoration: none; transition: color 0.25s; }
+a:hover { color: #095456; }
+
+/* ── Typography scale (1.25) ───────────────────────── */
+h1 { font-family: var(--font-heading); font-size: 49px; font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; }
+h2 { font-family: var(--font-heading); font-size: 39px; font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; }
+h3 { font-family: var(--font-heading); font-size: 31px; font-weight: 600; line-height: 1.05; }
+h4 { font-family: var(--font-heading); font-size: 25px; font-weight: 600; line-height: 1.05; }
+h5 { font-family: var(--font-heading); font-size: 20px; font-weight: 600; line-height: 1.05; }
+p, li { font-size: 16px; }
+
+/* ── Layout ────────────────────────────────────────── */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+section { padding: 120px 0; }
+
+/* ── Design label bar ──────────────────────────────── */
+.design-label {
+  background: var(--text);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 16px;
+  line-height: 1.4;
+}
+
+/* ── Navbar ─────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+}
+.navbar-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.navbar-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text);
+}
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.navbar-links a {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.25s;
+}
+.navbar-links a:hover { color: var(--text); }
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary);
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Hero ──────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  padding: 140px 0 120px;
+  animation: hero-fade 0.9s ease-out both;
+}
+@keyframes hero-fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 48px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 42px;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+}
+.hero h1 { margin-bottom: 24px; }
+.hero h1 span { display: block; }
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.hero-description {
+  max-width: 620px;
+  margin: 0 auto 48px;
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Buttons ───────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+.btn-primary:hover { background: #095456; border-color: #095456; color: #FFFFFF; }
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+}
+.btn-outline:hover { background: var(--text); color: #FFFFFF; }
+
+/* ── Stats ─────────────────────────────────────────── */
+.stats {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  text-align: center;
+}
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 49px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Section headings ──────────────────────────────── */
+.section-heading {
+  margin-bottom: 72px;
+}
+.section-heading h2 { margin-bottom: 16px; }
+.section-heading p {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 560px;
+}
+
+/* ── Career timeline ───────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 48px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.timeline-entry {
+  position: relative;
+  margin-bottom: 80px;
+}
+.timeline-entry:last-child { margin-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -48px;
+  top: 6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid #D1D5DB;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+  z-index: 2;
+}
+.timeline-dot.filled {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+.timeline-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.timeline-company {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.timeline-dates {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.timeline-role {
+  font-family: var(--font-heading);
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.timeline-bullets {
+  list-style: none;
+  margin-bottom: 20px;
+}
+.timeline-bullets li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.timeline-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 6px;
+  height: 2px;
+  background: var(--primary);
+}
+.timeline-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.timeline-tag {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+  background: var(--surface);
+}
+
+/* ── Skills ────────────────────────────────────────── */
+.skill-band {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.skill-band:first-child { border-top: 1px solid var(--border); }
+.skill-category {
+  flex: 0 0 200px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  padding-top: 6px;
+}
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
+}
+.skill-pill {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 20px;
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius);
+  color: var(--primary);
+  background: transparent;
+  transition: background 0.3s, color 0.3s;
+  cursor: default;
+}
+.skill-pill:hover {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+/* ── Projects ──────────────────────────────────────── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.project-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+}
+.project-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.project-card-body {
+  padding: 32px;
+}
+.project-card-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.project-card-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.project-card-tag {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+}
+.project-card-link {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.25s;
+}
+.project-card-link:hover { gap: 10px; }
+.project-card-link::after { content: '\2192'; }
+
+/* ── Testimonials ──────────────────────────────────── */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.testimonial-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 32px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.06);
+}
+.testimonial-stars {
+  color: var(--primary);
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+.testimonial-quote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+.testimonial-author {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.testimonial-role {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── CTA / Contact ─────────────────────────────────── */
+.cta-section {
+  background: var(--primary);
+  padding: 120px 0;
+}
+.cta-section h2 { color: #FFFFFF; margin-bottom: 16px; }
+.cta-description {
+  color: rgba(255,255,255,0.8);
+  font-size: 18px;
+  max-width: 520px;
+  margin-bottom: 56px;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.contact-item-label {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+.contact-item-value {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+.contact-item-value a { color: #FFFFFF; }
+.contact-item-value a:hover { color: var(--accent-light); }
+
+/* ── Certifications ────────────────────────────────── */
+.certs {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
+.certs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.cert-item {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  background: var(--surface);
+}
+
+/* ── Footer ────────────────────────────────────────── */
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 48px 0;
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: var(--muted);
+}
+.footer-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.footer-links a {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.25s;
+}
+.footer-links a:hover { color: var(--text); }
+
+/* ── Scroll animations ─────────────────────────────── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll { opacity: 1; transform: none; transition: none; }
+  .hero { animation: none; }
+  .timeline-dot { transition: none; }
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  section { padding: 80px 0; }
+
+  h1 { font-size: 36px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 24px; }
+  h4 { font-size: 20px; }
+
+  .navbar-links { gap: 20px; }
+  .navbar-links li:nth-child(-n+3) { display: none; }
+
+  .hero { padding: 100px 0 80px; }
+  .hero-avatar { width: 96px; height: 96px; font-size: 34px; margin-bottom: 36px; }
+  .hero-description { font-size: 16px; }
+
+  .stats { padding: 60px 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .stat-number { font-size: 36px; }
+
+  .section-heading { margin-bottom: 48px; }
+
+  .timeline { padding-left: 36px; }
+  .timeline::before { left: 8px; }
+  .timeline-dot { left: -36px; width: 20px; height: 20px; }
+  .timeline-entry { margin-bottom: 56px; }
+  .timeline-role { font-size: 20px; }
+
+  .skill-band { flex-direction: column; gap: 16px; padding: 24px 0; }
+  .skill-category { flex: none; }
+
+  .projects-grid { grid-template-columns: 1fr; gap: 24px; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 24px; }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 28px; }
+
+  .cta-section { padding: 80px 0; }
+
+  .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+
+  .hero-ctas { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Design label bar ────────────────────────────── -->
+<div class="design-label">
+  Design 11 of 3 &nbsp;|&nbsp; Clean Mono &nbsp;|&nbsp; Confident restraint, maximum whitespace &nbsp;|&nbsp; Primary: #0D6B6E &nbsp;|&nbsp; Fonts: Space Grotesk / Source Serif 4 &nbsp;|&nbsp; Layout: centered
+</div>
+
+<!-- ── Navbar ──────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="navbar-name">Akin Yavuz</a>
+    <ul class="navbar-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li>
+        <span class="status-badge">
+          <span class="status-dot"></span>
+          Available
+        </span>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-avatar">AY</div>
+    <h1>
+      <span>Akin</span>
+      <span>Yavuz</span>
+    </h1>
+    <p class="hero-subtitle">Senior BI &amp; Data Professional</p>
+    <p class="hero-tagline">Microsoft-certified. 10+ years. NHS, fintech, energy.</p>
+    <p class="hero-description">I turn raw data into dashboards, pipelines, and platforms that organisations actually use to make decisions &mdash; from NHS patient flow to Ofgem regulatory reporting.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#experience" class="btn btn-outline">View Experience</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats ───────────────────────────────────────── -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="animate-on-scroll">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="animate-on-scroll">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">SSRS Reports</div>
+      </div>
+      <div class="animate-on-scroll">
+        <div class="stat-number">40h</div>
+        <div class="stat-label">Saved / Month</div>
+      </div>
+      <div class="animate-on-scroll">
+        <div class="stat-number">4&times;</div>
+        <div class="stat-label">Commonwealth Gold</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience ──────────────────────────────────── -->
+<section id="experience">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2>Career Timeline</h2>
+      <p>A decade of turning data into decisions across healthcare, finance, and energy.</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- Role 1 -->
+      <div class="timeline-entry animate-on-scroll" data-timeline>
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">NHS Arden &amp; GEM CSU</span>
+          <span class="timeline-dates">Oct 2022 &ndash; Jun 2025</span>
+        </div>
+        <h4 class="timeline-role">Principal Insight Developer</h4>
+        <ul class="timeline-bullets">
+          <li>Led Power BI best-practice standards &mdash; semantic model design and report governance</li>
+          <li>Built KPI frameworks tracking healthcare outcomes, patient flow, staffing levels</li>
+          <li>Designed self-service BI datasets enabling non-technical teams to build reports independently</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">SQL</span>
+          <span class="timeline-tag">Azure</span>
+          <span class="timeline-tag">DAX</span>
+        </div>
+      </div>
+
+      <!-- Role 2 -->
+      <div class="timeline-entry animate-on-scroll" data-timeline>
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">The Openwork Partnership</span>
+          <span class="timeline-dates">Mar 2020 &ndash; Oct 2022</span>
+        </div>
+        <h4 class="timeline-role">Senior MI Analyst</h4>
+        <ul class="timeline-bullets">
+          <li>Built 50+ SSRS reports automating manual processes &mdash; saving 40 hours per month</li>
+          <li>Power BI datasets from Azure Data Warehouse, embedded into Dynamics 365</li>
+          <li>Complex SQL stored procedures for Finance audit testing and compliance</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">SSRS</span>
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">Azure DWH</span>
+          <span class="timeline-tag">Dynamics 365</span>
+        </div>
+      </div>
+
+      <!-- Role 3 -->
+      <div class="timeline-entry animate-on-scroll" data-timeline>
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">Good Energy</span>
+          <span class="timeline-dates">Dec 2018 &ndash; Mar 2020</span>
+        </div>
+        <h4 class="timeline-role">BI Developer</h4>
+        <ul class="timeline-bullets">
+          <li>Power BI dashboards for Ofgem, Citizens Advice Bureau, government departments</li>
+          <li>Led data migration to a new CRM, rewriting reports against new data structures</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">SSRS</span>
+          <span class="timeline-tag">Regulatory Reporting</span>
+        </div>
+      </div>
+
+      <!-- Role 4 -->
+      <div class="timeline-entry animate-on-scroll" data-timeline>
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-company">7 Layer Solutions</span>
+          <span class="timeline-dates">Mar 2016 &ndash; Jun 2018</span>
+        </div>
+        <h4 class="timeline-role">Report Developer</h4>
+        <ul class="timeline-bullets">
+          <li>Delivered Power BI dashboards for Retail and Banking clients in Agile consulting</li>
+          <li>International Power BI training delivery to enterprise teams</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="timeline-tag">Power BI</span>
+          <span class="timeline-tag">Agile</span>
+          <span class="timeline-tag">Client Consulting</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills ──────────────────────────────────────── -->
+<section id="skills" style="background: var(--surface);">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2>Skills</h2>
+      <p>The tools and disciplines I work with every day.</p>
+    </div>
+
+    <div class="animate-on-scroll">
+      <div class="skill-band">
+        <div class="skill-category">Core BI</div>
+        <div class="skill-tags">
+          <span class="skill-pill">Power BI</span>
+          <span class="skill-pill">DAX</span>
+          <span class="skill-pill">Power Query (M)</span>
+          <span class="skill-pill">SSRS</span>
+          <span class="skill-pill">SSAS</span>
+          <span class="skill-pill">Tableau</span>
+          <span class="skill-pill">Excel</span>
+        </div>
+      </div>
+
+      <div class="skill-band">
+        <div class="skill-category">Data Engineering</div>
+        <div class="skill-tags">
+          <span class="skill-pill">SQL Server</span>
+          <span class="skill-pill">T-SQL</span>
+          <span class="skill-pill">SSIS</span>
+          <span class="skill-pill">ETL/ELT</span>
+          <span class="skill-pill">Azure Data Factory</span>
+          <span class="skill-pill">Data Warehousing</span>
+          <span class="skill-pill">Star Schema</span>
+        </div>
+      </div>
+
+      <div class="skill-band">
+        <div class="skill-category">Cloud &amp; DevOps</div>
+        <div class="skill-tags">
+          <span class="skill-pill">Azure</span>
+          <span class="skill-pill">Microsoft Fabric</span>
+          <span class="skill-pill">Dynamics 365</span>
+          <span class="skill-pill">Git/GitHub</span>
+          <span class="skill-pill">Azure DevOps</span>
+        </div>
+      </div>
+
+      <div class="skill-band">
+        <div class="skill-category">Languages</div>
+        <div class="skill-tags">
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">DAX</span>
+          <span class="skill-pill">M/Power Query</span>
+          <span class="skill-pill">VBA</span>
+        </div>
+      </div>
+
+      <div class="skill-band">
+        <div class="skill-category">Leadership</div>
+        <div class="skill-tags">
+          <span class="skill-pill">Agile/Scrum</span>
+          <span class="skill-pill">Stakeholder Mgmt</span>
+          <span class="skill-pill">Mentoring</span>
+          <span class="skill-pill">Requirements Elicitation</span>
+        </div>
+      </div>
+
+      <div class="skill-band">
+        <div class="skill-category">Sectors</div>
+        <div class="skill-tags">
+          <span class="skill-pill">NHS/Healthcare</span>
+          <span class="skill-pill">Financial Services</span>
+          <span class="skill-pill">Energy/Utilities</span>
+          <span class="skill-pill">Regulatory Reporting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ────────────────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2>Projects</h2>
+      <p>Side projects and experiments beyond the day job.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card animate-on-scroll">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80&auto=format&fit=crop" alt="Sanquhar Business Directory project thumbnail" class="project-card-img" loading="lazy">
+        <div class="project-card-body">
+          <h4 class="project-card-title">Sanquhar Business Directory</h4>
+          <div class="project-card-tags">
+            <span class="project-card-tag">Data Viz</span>
+            <span class="project-card-tag">Web App</span>
+          </div>
+          <a href="https://businessdirectory-nine.vercel.app/" target="_blank" rel="noopener" class="project-card-link">View Live</a>
+        </div>
+      </div>
+
+      <div class="project-card animate-on-scroll">
+        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&q=80&auto=format&fit=crop" alt="Daily Duel project thumbnail" class="project-card-img" loading="lazy">
+        <div class="project-card-body">
+          <h4 class="project-card-title">Daily Duel</h4>
+          <div class="project-card-tags">
+            <span class="project-card-tag">PostgreSQL</span>
+            <span class="project-card-tag">Game Logic</span>
+          </div>
+          <a href="https://daily-duel.akinyavuz.workers.dev/" target="_blank" rel="noopener" class="project-card-link">View Live</a>
+        </div>
+      </div>
+
+      <div class="project-card animate-on-scroll">
+        <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&q=80&auto=format&fit=crop" alt="Not An Octavia project thumbnail" class="project-card-img" loading="lazy">
+        <div class="project-card-body">
+          <h4 class="project-card-title">Not An Octavia</h4>
+          <div class="project-card-tags">
+            <span class="project-card-tag">ML</span>
+            <span class="project-card-tag">Python</span>
+            <span class="project-card-tag">Scraping</span>
+          </div>
+          <span class="project-card-link" style="color: var(--muted); cursor: default;">Coming Soon</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Testimonials ────────────────────────────────── -->
+<section id="testimonials" style="background: var(--surface);">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2>Testimonials</h2>
+      <p>What colleagues and clients say.</p>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card animate-on-scroll">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-quote">&ldquo;Akin transformed our reporting &mdash; what used to take our team days now runs automatically.&rdquo;</p>
+        <p class="testimonial-author">Sarah Mitchell</p>
+        <p class="testimonial-role">NHS Programme Director</p>
+      </div>
+
+      <div class="testimonial-card animate-on-scroll">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-quote">&ldquo;Clear communicator who translates complex data into actionable insight.&rdquo;</p>
+        <p class="testimonial-author">James Porter</p>
+        <p class="testimonial-role">Head of Finance, Openwork</p>
+      </div>
+
+      <div class="testimonial-card animate-on-scroll">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-quote">&ldquo;Technically excellent and always delivers on time.&rdquo;</p>
+        <p class="testimonial-author">David Chen</p>
+        <p class="testimonial-role">CTO, 7 Layer Solutions</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Certifications ──────────────────────────────── -->
+<section class="certs">
+  <div class="container" style="text-align: center;">
+    <div class="section-heading animate-on-scroll" style="text-align: center;">
+      <h2>Certifications</h2>
+    </div>
+    <div class="certs-list animate-on-scroll">
+      <span class="cert-item">MS Power BI</span>
+      <span class="cert-item">SQL Developer</span>
+      <span class="cert-item">CSM</span>
+      <span class="cert-item">Diploma in Leadership</span>
+      <span class="cert-item">BA (Hons) BIS Northumbria</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA / Contact ───────────────────────────────── -->
+<section id="contact" class="cta-section">
+  <div class="container">
+    <div class="animate-on-scroll">
+      <h2>Let&rsquo;s work together</h2>
+      <p class="cta-description">Available for remote roles. If you need a senior BI professional who delivers results, get in touch.</p>
+    </div>
+
+    <div class="contact-grid animate-on-scroll">
+      <div>
+        <p class="contact-item-label">Email</p>
+        <p class="contact-item-value"><a href="mailto:akinyavuz@outlook.com">akinyavuz@outlook.com</a></p>
+      </div>
+      <div>
+        <p class="contact-item-label">Phone</p>
+        <p class="contact-item-value"><a href="tel:+447949116770">07949 116 770</a></p>
+      </div>
+      <div>
+        <p class="contact-item-label">Location</p>
+        <p class="contact-item-value">Dumfries &amp; Galloway, Scotland</p>
+      </div>
+    </div>
+
+    <div class="animate-on-scroll" style="margin-top: 48px;">
+      <p class="contact-item-label">Status</p>
+      <p class="contact-item-value">Available for remote roles &nbsp;|&nbsp; Target: &pound;50,000+ fully remote</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <p class="footer-copy">&copy; 2026 Akin Yavuz. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Scripts ─────────────────────────────────────── -->
+<script>
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // General scroll animations
+  var scrollObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        scrollObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+    scrollObserver.observe(el);
+  });
+
+  // Timeline dot animations
+  var timelineObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var dot = e.target.querySelector('.timeline-dot');
+        if (dot) {
+          dot.classList.add('filled');
+        }
+        timelineObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('[data-timeline]').forEach(function(el) {
+    timelineObserver.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
