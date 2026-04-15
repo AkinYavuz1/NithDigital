@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   Inbox, Rocket, Ticket,
-  FileText, Star, LogOut, HelpCircle, Gift, FileSignature, Layout, BarChart2, MapPin, Megaphone, Phone, Menu, X, Activity, AlertTriangle, Search, PoundSterling, MessageSquare, BookOpen, TrendingUp,
+  FileText, Star, LogOut, HelpCircle, Gift, FileSignature, Layout, BarChart2, MapPin, Megaphone, Phone, Menu, X, Activity, AlertTriangle, Search, PoundSterling, MessageSquare, BookOpen, TrendingUp, Share2,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase'
@@ -13,12 +13,14 @@ import { createClient } from '@/lib/supabase'
 const NAV_ITEMS = [
   { href: '/admin/finance', icon: PoundSterling, label: 'Finance' },
   { href: '/admin/tradedesk', icon: MessageSquare, label: 'TradeDesk' },
+  { href: '/admin/social', icon: Share2, label: 'Social Media' },
   { href: '/admin/contacts', icon: Inbox, label: 'Contact Submissions' },
   { href: '/admin/launchpad', icon: Rocket, label: 'Launchpad Analytics' },
   { href: '/admin/promo-codes', icon: Ticket, label: 'Promo Codes' },
   { href: '/admin/blog', icon: FileText, label: 'Blog Posts' },
   { href: '/admin/proposals', icon: FileSignature, label: 'Proposals' },
-  { href: '/admin/proposals/pipeline', icon: TrendingUp, label: 'Proposals Pipeline' },
+  { href: '/admin/proposals/pipeline', icon: TrendingUp, label: 'Proposal Tracker' },
+  { href: '/admin/pipeline', icon: TrendingUp, label: 'Sales Pipeline' },
   { href: '/admin/dossier', icon: BookOpen, label: 'Client Dossiers' },
   { href: '/admin/templates', icon: Layout, label: 'Templates' },
   { href: '/admin/testimonials', icon: Star, label: 'Testimonials' },

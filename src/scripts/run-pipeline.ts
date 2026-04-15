@@ -38,15 +38,15 @@ if (fs.existsSync(envPath)) {
 const rawArgs = process.argv.slice(2)
 const getArg = (flag: string) => { const i = rawArgs.indexOf(flag); return i !== -1 ? rawArgs[i + 1] : undefined }
 
-const clientSlug   = getArg('--client-slug')
+function bail(msg: string): never {
+  console.error(msg)
+  process.exit(1)
+}
+
+const clientSlug   = getArg('--client-slug') ?? bail('Usage: run-pipeline.ts --client-slug <slug> [--client-name "Name"] [--existing-url URL] [--stage N]')
 const clientName   = getArg('--client-name')
 const existingUrl  = getArg('--existing-url')
 const startStageRaw = parseInt(getArg('--stage') || '1', 10)
-
-if (!clientSlug) {
-  console.error('Usage: run-pipeline.ts --client-slug <slug> [--client-name "Name"] [--existing-url URL] [--stage N]')
-  process.exit(1)
-}
 
 // ─── Backward compatibility: map old stage numbers to new ─────────────────────
 
