@@ -1,0 +1,239 @@
+{
+  "plumber": [
+    {
+      "url": "https://www.pimlicoplumbers.com/",
+      "name": "Pimlico Plumbers",
+      "standout": "45-year heritage timeline, 24/7 messaging, interactive London borough coverage map, and massive trust signal wall (Gas Safe, NICEIC, CHAS, Trustpilot) — the gold standard for a large trades company site",
+      "usable_as_reference": true,
+      "key_element": "Interactive service selector dropdown ('I need help with...') in the hero — lets visitors self-qualify instantly rather than scrolling through services"
+    },
+    {
+      "url": "https://wpjheating.co.uk/",
+      "name": "WPJ Heating",
+      "standout": "Warm orange gradient brand, Trustpilot 4.8/5 with 1007 reviews, transparent pricing page, and a refreshingly honest note warning customers to beware of providers with 'perfect' 5/5 ratings",
+      "usable_as_reference": true,
+      "key_element": "Triple review badge row (Trustpilot + Google + Checkatrade) in the hero area — immediately answers the trust question before anything else"
+    },
+    {
+      "url": "https://www.aspect.co.uk/",
+      "name": "Aspect Maintenance",
+      "standout": "Covers 24+ trades from one site with postcode availability checker, purple brand stands out in a sea of blue plumber sites, 24/7/365 messaging throughout",
+      "usable_as_reference": true,
+      "key_element": "Postcode-first interaction model — visitor enters postcode before anything else, confirming coverage and creating commitment micro-step"
+    }
+  ],
+  "electrician": [
+    {
+      "url": "https://www.greenelectricaluk.co.uk/",
+      "name": "Green Electrical",
+      "standout": "NICEIC approved, Which? Trusted Trader 4.85/5, covers residential + EV charging + solar — a modern electrician expanding into green energy services with clean design",
+      "usable_as_reference": true,
+      "key_element": "Service diversification layout — separate nav sections for traditional electrical, EV charging, solar PV, and battery storage show how a small electrician can position for the energy transition"
+    },
+    {
+      "url": "https://mdelectricaluk.co.uk/",
+      "name": "MD Electrical",
+      "standout": "Dark, professional colour scheme with hover-reveal project cards, scales from single domestic jobs to large M&E contracts, client logo wall builds commercial credibility",
+      "usable_as_reference": true,
+      "key_element": "Project showcase cards with hover animations — each card reveals a description on hover, turning a portfolio into an interactive experience without extra pages"
+    },
+    {
+      "url": "https://electricianwebsitedesign.co.uk/",
+      "name": "Electrician Website Design (agency example)",
+      "standout": "Meta-example: a site designed specifically to sell electrician websites, so it demonstrates best practices — fast load, mobile-first, clear CTAs, local SEO patterns",
+      "usable_as_reference": false,
+      "key_element": "Useful as a checklist of what electrician clients expect (certifications above fold, click-to-call, area pages) rather than a direct design reference"
+    }
+  ],
+  "builder_construction": [
+    {
+      "url": "https://www.jerichoconstruction.uk/",
+      "name": "Jericho Construction",
+      "standout": "Clean, photography-led layout with masonry grid portfolio, social enterprise story woven throughout ('55% of team on social projects'), Gas Safe + NAPIT badges",
+      "usable_as_reference": true,
+      "key_element": "Social impact narrative as differentiator — the CIC status and community mission turn a standard builder site into something with genuine purpose and emotional resonance"
+    },
+    {
+      "url": "https://gmi.co.uk/",
+      "name": "GMI Construction Group",
+      "standout": "Corporate-grade site with structured case studies, clear metadata and headings for SEO, project filtering by sector (residential, commercial, education)",
+      "usable_as_reference": false,
+      "key_element": "Case study filtering system — while too corporate for most Nith Digital clients, the idea of filtering projects by type/sector is worth borrowing for builders with diverse portfolios"
+    },
+    {
+      "url": "https://nivo.co.uk/best-construction-website-designs-2025/",
+      "name": "Nivo Digital (roundup reference)",
+      "standout": "Comprehensive roundup featuring Longreach Scaffolding (full-width video hero), Jericho Construction, and GMI — useful as a pattern library of what works in UK construction web design",
+      "usable_as_reference": false,
+      "key_element": "Full-width video hero (as seen on Longreach Scaffolding) — showing work in action builds more trust than static photos for construction companies"
+    }
+  ],
+  "landscaper_gardener": [
+    {
+      "url": "https://www.charlotterowe.com/",
+      "name": "Charlotte Rowe Garden Design",
+      "standout": "Asymmetric grid layout where photography is the protagonist, restrained professional language, RHS Chelsea gold medal credentials, SGLD fellowship badge, 250+ projects",
+      "usable_as_reference": true,
+      "key_element": "Photography-as-content approach — images occupy 60-70% of viewport with text anchoring the opposite side, letting garden work speak for itself without marketing hype"
+    },
+    {
+      "url": "https://www.camerongardens.co.uk/",
+      "name": "Cameron Gardens",
+      "standout": "Luxury positioning with Playfair Display serif typography, earth-tone palette (#453a2d), full-screen image slider, House & Garden Top 50 and Country Life Top 100 badges",
+      "usable_as_reference": true,
+      "key_element": "Serif typography for luxury feel — Playfair Display headings on warm brown backgrounds create an aspirational, premium aesthetic that elevates garden design beyond 'just landscaping'"
+    },
+    {
+      "url": "https://gardenbuilders.co.uk/",
+      "name": "The Garden Builders",
+      "standout": "29 years heritage, RHS Chelsea + BALI + SGD award badges, before/after portfolio galleries, sustainability FAQ section",
+      "usable_as_reference": true,
+      "key_element": "Before/after gallery format — showing garden transformations is the most powerful trust signal for landscapers, more convincing than any testimonial"
+    }
+  ],
+  "painter_decorator": [
+    {
+      "url": "https://thegoodpainter.co.uk/",
+      "name": "The Good Painter",
+      "standout": "Warm colour palette (coral CTAs, cream/plum sections), Playfair Display serif headings with Source Sans Pro body, process transparency section, 6-month warranty, Farrow & Ball/Dulux partnerships",
+      "usable_as_reference": true,
+      "key_element": "Alternating background colour sections (cream → taupe → plum) create visual rhythm and break up content without using cards or heavy borders — elegant for service businesses"
+    },
+    {
+      "url": "https://www.gdparvin.com/",
+      "name": "G.D. Parvin Decorators",
+      "standout": "Earthy green palette, personality-driven copy ('Nice People's Favourite Decorators'), Guild of Master Craftsmen badge, 25+ years heritage, 4.95/5 rating from 100 reviews",
+      "usable_as_reference": true,
+      "key_element": "Personality-first branding — the casual, human tone ('since last century!') makes a trades business feel approachable and memorable vs generic corporate decorator sites"
+    },
+    {
+      "url": "https://www.pimlicopainters.com/",
+      "name": "Pimlico Painters and Decorators",
+      "standout": "Clean London-focused decorator site with project portfolio, service area pages for local SEO, Trustpilot integration, 4.1-star rating",
+      "usable_as_reference": true,
+      "key_element": "Area-specific landing pages (Chelsea, Kensington, Battersea) — essential for local SEO, each page targets a postcode area with tailored content"
+    }
+  ],
+  "roofer": [
+    {
+      "url": "https://www.jtcroofing.co.uk/",
+      "name": "JTC Roofing",
+      "standout": "Specialist zinc/metal roofing contractor, navy/teal colour scheme (#19697E), service pages organised by material type (copper, lead, aluminium, zinc), certification badges (VMZINC, CSCS, FTMRC)",
+      "usable_as_reference": true,
+      "key_element": "Material-type navigation — organising services by roofing material rather than generic 'services' page helps specialist roofers demonstrate expertise and improves SEO for specific search terms"
+    },
+    {
+      "url": "https://www.buckstoneroofing.com/",
+      "name": "Buckstone Roofing",
+      "standout": "Family-run Edinburgh roofer since 1989, Sarnafil Roof Assured + British Safety Council memberships, service pages for each roofing type, emergency repair emphasis",
+      "usable_as_reference": true,
+      "key_element": "Emergency responsiveness messaging — testimonials specifically highlight fast response times, which is the #1 concern for roofing customers dealing with leaks or storm damage"
+    },
+    {
+      "url": "https://briggsamasco.co.uk/",
+      "name": "Briggs Amasco",
+      "standout": "UK's leading national commercial roofing company, heritage since 1865, clean corporate design — more corporate than typical Nith Digital client but demonstrates how heritage builds trust",
+      "usable_as_reference": false,
+      "key_element": "Heritage timeline as trust anchor — '160 years of roofing' is the ultimate credibility statement; even a 5-year-old roofer can use a timeline to show growth and milestones"
+    }
+  ],
+  "cleaner": [
+    {
+      "url": "https://housekeep.com/",
+      "name": "Housekeep",
+      "standout": "300,000+ 5-star reviews, postcode search in hero, real cleaner profiles with photos and individual reviews, Guardian/Times press logos, step-by-step process infographic",
+      "usable_as_reference": true,
+      "key_element": "Real staff profiles with individual reviews — showing actual cleaners with their names, photos and customer feedback builds personal trust in a way that generic 'our team' pages never can"
+    },
+    {
+      "url": "https://www.dailypoppins.co.uk/",
+      "name": "Daily Poppins",
+      "standout": "26 years in business, 20,000+ happy customers, red accent brand (#ee413d), playful Mary Poppins brand identity ('practically perfect in every way'), franchise model with branch finder",
+      "usable_as_reference": true,
+      "key_element": "Memorable brand personality — the Mary Poppins reference makes the brand instantly recognisable and shareable, proving that trades/service businesses benefit from creative naming"
+    },
+    {
+      "url": "https://www.thehappyhousecleaning.co.uk/",
+      "name": "The Happy House Cleaning",
+      "standout": "Warm natural palette (golden yellow CTAs, sage green accents, dark green text), Comfortaa serif font for personality, approachable and friendly tone throughout",
+      "usable_as_reference": true,
+      "key_element": "Warm, non-corporate colour palette — golden yellows and sage greens feel domestic and trustworthy rather than clinical, perfect for a service that enters people's homes"
+    }
+  ],
+  "beauty_hair_salon": [
+    {
+      "url": "https://johansford.com/",
+      "name": "Jo Hansford",
+      "standout": "Royal Warrant holder, black-and-white minimalist design, Quicksand typeface at 34px, carousel hero with salon imagery, integrated e-commerce for hair products, Bazaar/Tatler/Glamour press logos",
+      "usable_as_reference": true,
+      "key_element": "Royal Warrant / premium credential as hero anchor — any salon award or industry recognition should be the first thing visitors see, not buried in an 'about' page"
+    },
+    {
+      "url": "https://larrykinghair.com/",
+      "name": "Larry King Hair",
+      "standout": "Sophisticated black/white/neutral palette, dual-purpose site (salon booking + product retail), hover effects on salon location cards, Harper's Bazaar and Evening Standard trust badges",
+      "usable_as_reference": true,
+      "key_element": "Salon-retail integration — combining appointment booking with product e-commerce in one seamless experience creates multiple revenue streams and keeps customers in the brand ecosystem"
+    },
+    {
+      "url": "https://toniandguy.com/",
+      "name": "TONI&GUY",
+      "standout": "60+ years heritage, Superbrands certification, mobile app with 2-click booking, LABEL.M product line integration, education/academy positioning alongside salon services",
+      "usable_as_reference": false,
+      "key_element": "Salon finder with postcode search — for multi-location salons this is essential, but even single-location salons benefit from a prominent location/map section answering 'where are you?'"
+    }
+  ],
+  "restaurant_cafe": [
+    {
+      "url": "https://www.dishoom.com/",
+      "name": "Dishoom",
+      "standout": "Cultural storytelling website — warm beige palette, Cheltenham BT serif typography, poetic hero copy, 25 million meals donated (B-Corp), 11 locations, recipes section turns visitors into fans",
+      "usable_as_reference": true,
+      "key_element": "Narrative-first design — the site reads like a love letter to Bombay rather than a restaurant menu, creating emotional connection before the booking CTA appears"
+    },
+    {
+      "url": "https://sketch.london/",
+      "name": "Sketch London",
+      "standout": "Interactive art-forward website by studio HATO — no interior photography (deliberate surprise), gamified room experiences (grow a carpet, create a soundtrack, design food plating), minimal noir aesthetic",
+      "usable_as_reference": false,
+      "key_element": "Interactive micro-experiences per room — while too avant-garde for most clients, the principle of giving each service/space its own interactive identity is powerful for multi-offering restaurants"
+    },
+    {
+      "url": "https://www.padella.co/",
+      "name": "Padella",
+      "standout": "Ultra-minimal design — three location cards as hero, Oswald + Roboto Condensed typography, founder story ('Tim and Jordan's dream'), honest communication about delays, no booking system (walk-in only)",
+      "usable_as_reference": true,
+      "key_element": "Radical simplicity — proving that a restaurant site only needs location, menu, and story; everything else is noise. Perfect reference for indie cafes and small restaurants"
+    },
+    {
+      "url": "https://thehawksmoor.com/",
+      "name": "Hawksmoor",
+      "standout": "Premium parallax sliders, gold accent (#8f7400) on black for fine-dining feel, Calligraffitti decorative font at 400% for drama, responsive mega menu, Sunday roast voted UK's best twice",
+      "usable_as_reference": true,
+      "key_element": "Gold-on-black colour scheme with oversized decorative typography — instantly communicates premium positioning without saying a word; adaptable for any upscale restaurant or bar"
+    }
+  ],
+  "accountant": [
+    {
+      "url": "https://www.mazumamoney.co.uk/",
+      "name": "Mazuma",
+      "standout": "Anti-corporate accountancy brand — vibrant purple (#6a0dad) with turquoise accents, illustrated character hero ('accounting for you beautiful weirdos'), Castledown custom font, BBC/Sky/Forbes press logos",
+      "usable_as_reference": true,
+      "key_element": "Personality-driven positioning in a boring industry — proves that accountancy doesn't need to look corporate; bold colours and humour attract the exact freelancer/sole trader audience Nith Digital serves"
+    },
+    {
+      "url": "https://www.crunch.co.uk/",
+      "name": "Crunch",
+      "standout": "Animated typing hero cycling through audience types (freelancers, contractors, creatives), gradient text effects (pink/blue/purple), interactive quote builder, Trustpilot 4.5 stars, ACCA/CIOT/ICAEW logos",
+      "usable_as_reference": true,
+      "key_element": "Dynamic audience targeting in hero — the typing animation that cycles through 'for freelancers... for contractors... for creatives' makes every visitor feel the site is speaking directly to them"
+    },
+    {
+      "url": "https://www.taxassist.co.uk/",
+      "name": "TaxAssist Accountants",
+      "standout": "UK's largest small business accountant network (410+ offices), local branch finder, free consultation CTA, franchise model proving the demand for accessible, jargon-free accountancy",
+      "usable_as_reference": true,
+      "key_element": "Branch finder as primary interaction — for any multi-location service business, making 'find your local office' the first action is more effective than generic service descriptions"
+    }
+  ]
+}

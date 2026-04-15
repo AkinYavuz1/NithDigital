@@ -73,5 +73,65 @@
       "typography": "Monospace for code, clean sans for labels",
       "interaction": "Every demo is scroll-driven using only CSS animation-timeline property"
     }
+  },
+  {
+    "url": "https://www.dishoom.com/",
+    "added": "2026-04-15",
+    "category": "restaurant",
+    "what_works": "Cultural storytelling as web design — warm beige palette, Cheltenham BT serif throughout, poetic hero text that reads like a love letter to Bombay, recipe sharing section, B-Corp badge, 25M meals donated counter. Proves a restaurant site can be a cultural platform, not just a reservation tool",
+    "best_for": "Restaurants, cafes, food businesses, any brand with a heritage story to tell",
+    "elements": {
+      "nav": "Clean horizontal with Book a Table as primary CTA, location dropdown",
+      "hero": "Poetic text-led hero with warm-toned food/culture photography",
+      "content": "Sectioned by experience type (cafes, menus, shop, stay), recipes as content marketing",
+      "colour": "Warm beige backgrounds, black text, golden yellow accents for announcements",
+      "typography": "Cheltenham BT serif throughout for classic premium feel",
+      "interaction": "Location-based menu switching, newsletter signup with cultural storytelling"
+    }
+  },
+  {
+    "url": "https://thegoodpainter.co.uk/",
+    "added": "2026-04-15",
+    "category": "trades",
+    "what_works": "Warm colour sectioning (cream → taupe → dark plum) creates visual rhythm without cards or borders. Playfair Display + Source Sans Pro pairing balances elegance with readability. Coral CTAs (#fd5f58) pop against neutral backgrounds. Process transparency section and 6-month warranty build trust. Houzz badge + Dulux/Farrow & Ball partnerships add authority",
+    "best_for": "Painters, decorators, interior trades, any home-service business wanting to feel premium",
+    "elements": {
+      "nav": "Sticky header with phone number and prominent GET A QUOTE button",
+      "hero": "Full-width banner with centred text overlay, key selling propositions (time, standard, budget)",
+      "content": "Alternating background-colour sections, service cards with consistent icon treatment",
+      "colour": "Coral #fd5f58 CTAs, cream #efebe7, taupe #ded9d4, dark plum #442e3a",
+      "typography": "Playfair Display serif for headings, Source Sans Pro for body — sophisticated contrast",
+      "interaction": "Multiple conversion paths (phone, WhatsApp, email, form), 2-hour response promise"
+    }
+  },
+  {
+    "url": "https://www.mazumamoney.co.uk/",
+    "added": "2026-04-15",
+    "category": "professional-services",
+    "what_works": "Anti-corporate accountancy brand that proves boring industries can have bold design. Vibrant purple (#6a0dad) with turquoise accents, illustrated character hero ('accounting for you beautiful weirdos'), custom Castledown font, animated gradient text. BBC/Sky/Forbes press logos. Quote builder completes in under 60 seconds",
+    "best_for": "Accountants, financial services, any professional service wanting to stand out from corporate competitors",
+    "elements": {
+      "nav": "Clean with prominent Get a Quote CTA in navigation bar",
+      "hero": "Illustrated character in quirky armour with bold anti-corporate tagline",
+      "content": "Service cards by business type, testimonials with named clients, award badges",
+      "colour": "Vibrant purple #6a0dad primary, turquoise #08ffc4 accent, white backgrounds",
+      "typography": "Custom Castledown font for headlines, animated gradient text effects",
+      "interaction": "60-second quote builder, animated badge reveals, gradient text animations"
+    }
+  },
+  {
+    "url": "https://www.padella.co/",
+    "added": "2026-04-15",
+    "category": "restaurant",
+    "what_works": "Radical simplicity — the entire site is essentially three location cards, a menu, and a founder story. Proves a restaurant only needs location, menu, and narrative. Oswald + Roboto Condensed typography. No booking system (walk-in only) keeps it honest. Founder story ('Tim and Jordan's dream') adds soul",
+    "best_for": "Small indie restaurants, cafes, takeaways — any food business that doesn't need complexity",
+    "elements": {
+      "nav": "Minimal horizontal: three locations + vouchers + careers",
+      "hero": "Three large food photography cards doubling as location navigation",
+      "content": "Structured menu display with clear pricing, founder narrative section",
+      "colour": "Neutral palette — dark text on light backgrounds, photography provides all colour",
+      "typography": "Oswald bold for headings, Roboto Condensed for body — contemporary and clean",
+      "interaction": "Location cards as primary navigation, social media (Instagram) integration"
+    }
   }
 ]
