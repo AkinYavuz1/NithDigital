@@ -906,19 +906,41 @@ Review the report. Fix any failures. Re-push if needed.
 
 ---
 
-### STAGE 11 — Update Design Archive
+### STAGE 11 — Update Design Archive + GSC Setup
 
-Optionally run Lighthouse CI first to capture scores in the archive entry:
+**Step 1 — Lighthouse CI** (optional, captures scores in archive):
 ```bash
 cd designs/[slug]/scaffold && npx lhci autorun && cd ../../..
 ```
 
-Then update the archive:
+**Step 2 — Update archive:**
 ```bash
 npx ts-node --project tsconfig.json src/scripts/update-archive.ts --client-slug [slug]
 ```
 
-Appends entry to `designs/archive.json` — includes Lighthouse scores if `lhci` ran, so future projects can benchmark against past results.
+Appends entry to `designs/archive.json` — includes Lighthouse scores if `lhci` ran.
+
+**Step 3 — Submit to Google Search Console:**
+```bash
+npx ts-node --project tsconfig.json src/scripts/submit-gsc.ts --client-slug [slug]
+```
+
+Run this as soon as the live URL is known (either staging or custom domain). What it does:
+- Adds the site as a property in GSC (using `GSC_CLIENT_ID/SECRET/REFRESH_TOKEN` from `.env.local`)
+- Submits `/sitemap.xml` to Google
+- Fetches back sitemap status (submitted/indexed counts)
+- Inspects homepage coverage state
+- Writes `designs/[slug]/gsc-setup.json` with full results + direct link to GSC console
+
+**If the site isn't verified yet** (HTTP 403 on sitemap submit), the script will print the manual verification URL. After Akin verifies ownership in GSC, re-run the script — sitemap submission will then succeed.
+
+To check status against the live URL explicitly:
+```bash
+npx ts-node --project tsconfig.json src/scripts/submit-gsc.ts \
+  --client-slug [slug] --url https://[live-domain.com]
+```
+
+**Note:** Nith Ops also runs a monthly sitemap re-submission (`/api/cron/gsc-submit`) for all tracked sites on the 1st of each month at 10:00 UTC. Once the site is added to nith-ops, it's covered automatically.
 
 ---
 
@@ -1082,3 +1104,4 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 | `src/scripts/update-archive.ts` | Update design archive |
 | `src/scripts/check-deploy.js` | Poll Vercel deploy status |
 | `src/scripts/qa-checklist.ts` | Automated QA runner |
+| `src/scripts/submit-gsc.ts` | GSC property + sitemap submission |
