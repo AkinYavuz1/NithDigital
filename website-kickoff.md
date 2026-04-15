@@ -82,11 +82,65 @@ All stages run on **Opus** — no model switching required.
 
 ### STAGE 1 — Discovery
 
-Covers: research, brief gathering, design research, and theme planning.
+Covers: strategic assessment, research, brief gathering, design research, and theme planning.
 
 ---
 
-#### 1A — Research
+#### 1A — Strategic Assessment
+
+**Before anything else**, understand the client's actual situation. This shapes every decision downstream — a 26-year-old joiner starting out needs a completely different site to an established firm targeting architects.
+
+Ask Akin these questions (or pre-fill from what he's already shared):
+
+1. **Who is the client?** Name, age, business name, how long trading
+2. **What do they do?** Specific services, not just the industry
+3. **Where do they work?** Location and service radius
+4. **Who are their customers?** Homeowners? Businesses? Architects? Other trades?
+5. **How do customers find them now?** Word of mouth? Google? Social? Trade directories?
+6. **What's their online presence?** Website? Google Business? Facebook? Reviews? Nothing?
+7. **What's the competition like locally?** Are there 50 joiners in the area or 3?
+8. **Do they have photography?** Professional shots? Phone photos? Nothing yet?
+9. **What's their budget expectation?** (Akin will know this from the sales conversation)
+
+Write the assessment to `designs/[client-slug]/assessment.json`:
+```json
+{
+  "client_name": "",
+  "business_name": "",
+  "owner_age": null,
+  "years_trading": null,
+  "services": [],
+  "location": "",
+  "service_radius": "",
+  "target_customers": "",
+  "how_customers_find_them": "",
+  "online_presence": {
+    "website": null,
+    "google_business": false,
+    "facebook": null,
+    "instagram": null,
+    "reviews_count": 0,
+    "reviews_rating": null
+  },
+  "local_competition": "",
+  "photography_available": "",
+  "strategic_notes": ""
+}
+```
+
+**Then produce a strategic summary** — 3-5 bullet points about what the website actually needs to achieve for this specific client. Examples:
+
+- *"No online presence at all — the site IS the entire digital footprint. Google Business profile should be created alongside the site."*
+- *"No professional photography — design must be typography-led and structure-led, not photo-dependent. Gallery should work with phone shots or be hidden until photos are ready."*
+- *"Local SEO is the biggest win — there's almost no competition for 'joiner in [town]' search terms. Per-area pages will dominate."*
+- *"Young business, no reviews — the site needs to build credibility through process (How We Work), clear service descriptions, and prominent contact details rather than social proof."*
+- *"Established business with 30 years of work — heritage and experience ARE the selling point. Lead with track record."*
+
+These notes directly inform the design constraints in Stage 1D. A client with no photography gets the constraint "design must work without hero images." A client with no reviews gets "How We Work process section instead of testimonials." A client in a competitive area gets per-area SEO pages.
+
+---
+
+#### 1B — Research
 
 **First question:** "Does the client have an existing website? If yes, share the URL."
 
@@ -111,7 +165,7 @@ Deploy a market-research subagent immediately:
 
 ---
 
-#### 1B — References + Brief
+#### 1C — References + Brief
 
 **References come first.** The single most important input for design quality is real websites that capture the right feeling. Before asking about colours or fonts, establish the visual direction.
 
@@ -196,7 +250,7 @@ Once >=7 are covered, write `designs/[client-slug]/brief.json`:
 
 ---
 
-#### 1C — Design Research + Theme Planning
+#### 1D — Design Research + Theme Planning
 
 **Step 1 — Analyse references and archive:**
 
@@ -289,6 +343,42 @@ State explicitly:
 - How each design satisfies the constraints
 - How each design avoids the anti-patterns
 - How each design differs from archive entries
+
+---
+
+#### 1E — Client Proposal
+
+Write a one-page proposal document at `designs/[client-slug]/proposal.md` that Akin can send to the client alongside the designs (or before, to get sign-off on scope).
+
+The proposal should be written in plain English, addressed to the client, and cover:
+
+**1. What we'll build** — 2-3 sentences describing the site (e.g. "A clean, modern website that showcases your joinery work and makes it easy for customers in Dumfries & Galloway to find and contact you.")
+
+**2. Why it matters** — tailored to the client's strategic situation from the assessment. For a client with no online presence: "Right now, when someone searches 'joiner in [town],' you don't appear. This site changes that." For an established business: "Your reputation is built on 20 years of work, but none of that is visible online."
+
+**3. What's included** — bullet list:
+- Custom-designed website (not a template)
+- Mobile-responsive (works on phones and tablets)
+- Contact form with email notifications
+- Google-optimised (SEO) so customers can find you
+- Cookie consent and privacy policy (UK GDPR compliant)
+- Hosted and deployed (nothing for the client to manage)
+- Google Search Console submission
+- [Any client-specific items: gallery, service pages, area pages, etc.]
+
+**4. What we need from you** — bullet list:
+- 5-10 photos of your work (phone photos are fine)
+- Your logo (if you have one — we can work without)
+- Any specific text you want included (testimonials, about you, etc.)
+- Your preferred contact details (phone, email)
+
+**5. Timeline** — "We'll send you 3 design concepts within [X days]. Once you choose a direction, the site will be live within [X days]."
+
+**6. Investment** — Akin fills this in manually based on the project scope.
+
+**7. Next steps** — "Reply to this email with 'Let's go' and we'll get started."
+
+**Tone:** Professional but warm, not corporate. No jargon. Written for a tradesperson, not a marketing director.
 
 ---
 

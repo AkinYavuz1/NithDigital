@@ -1,0 +1,33 @@
+{
+  "client_name": "Oliver Adkin",
+  "business_name": "Adkin Joinery",
+  "owner_age": 26,
+  "years_trading": 4,
+  "services": [
+    "House building",
+    "Hand-made kitchens",
+    "General carpentry"
+  ],
+  "location": "Closeburn, Thornhill, Dumfries and Galloway",
+  "service_radius": "Dumfries and Galloway (Thornhill, Dumfries, Sanquhar, Moffat, Lockerbie and surrounding areas)",
+  "target_customers": "Local homeowners in Dumfries & Galloway — people looking for a reliable local joiner for kitchen fitting, home renovations, and general carpentry",
+  "how_customers_find_them": "Word of mouth only — no online presence at all",
+  "online_presence": {
+    "website": null,
+    "google_business": false,
+    "facebook": null,
+    "instagram": null,
+    "reviews_count": 0,
+    "reviews_rating": null
+  },
+  "local_competition": "Low — most local joiners in rural D&G have no website or have outdated templates. A clean modern site will immediately differentiate.",
+  "photography_available": "Client has phone shots of past work but these won't be available until after initial design approval. Designs must work without professional photography.",
+  "strategic_notes": [
+    "No online presence at all — the site IS the entire digital footprint. Google Business profile should be created alongside the site.",
+    "No professional photography — design must be typography-led and structure-led, not photo-dependent. Gallery should work with placeholder images initially and look good with phone shots later.",
+    "Local SEO is the biggest win — almost no competition for 'joiner in Thornhill', 'carpenter Dumfries and Galloway', 'kitchen fitter Dumfries'. Per-area pages targeting Thornhill, Dumfries, Sanquhar, Moffat, Lockerbie will dominate local search.",
+    "Young business with no reviews — site needs to build credibility through process (How We Work section), clear service descriptions, and prominent contact details. Testimonials section should be designed but can be populated later.",
+    "Young owner (26) — site should feel modern and energetic, not heritage-heavy. No 'established since...' messaging. Focus on quality of work and approachability instead.",
+    "House building is a differentiator — most local joiners do repairs and fitting. Building entire houses is a premium service worth highlighting."
+  ]
+}
