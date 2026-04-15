@@ -1,0 +1,21 @@
+{
+  "client_slug": "joiner-client",
+  "client_name": "Adkin Joinery",
+  "owner": "Oliver Adkin",
+  "completed_stages": ["1A", "1B", "1C", "1D", "1E", "2A", "2B", "2C"],
+  "current_stage": "2D",
+  "waiting_for": "Client feedback on Round 1 designs (3 HTML mockups sent via Loom recording)",
+  "started_at": "2026-04-15",
+  "last_updated": "2026-04-15",
+  "design_direction": "Design 2 (Grain) preferred by Akin, with Design 3 (Workshop) contact form",
+  "notes": [
+    "No professional photography — designs work with Unsplash placeholders",
+    "Gallery will be populated with Oliver's phone shots after design approval",
+    "Proposal sent: Option A (website only £40/mo yr1) vs Option B (website + gallery updates £60/mo yr1)",
+    "Google Business profile setup included for free",
+    "Client folder is joiner-client, not adkin-joinery — rename slug when provisioning"
+  ],
+  "staging_url": null,
+  "vercel_project": null,
+  "live_url": null
+}

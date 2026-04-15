@@ -2,11 +2,35 @@
 
 > **How to use:** Read this file at the start of every new website project session.
 >
-> **Before starting the pipeline**, find design references:
+> **New project** — find design references first:
 > Say: `"Research premium websites for a [industry] — find the best UK sites and adjacent craft/trade businesses I can use as design references"`
->
 > Browse the results, pick 3-5 you like, then start:
 > Say: `"New website for [Client Name]"` (and optionally `"— existing site: https://..."`)
+>
+> **Resume an existing project:**
+> Say: `"Resume website for [Client Name]"` — Claude reads `designs/[client-slug]/pipeline-state.json` and picks up where you left off.
+
+---
+
+## Resuming a Project
+
+When Akin says "Resume website for [Client Name]":
+
+1. Read `designs/[client-slug]/pipeline-state.json`
+2. Read `designs/[client-slug]/brief.json`
+3. Read `designs/[client-slug]/assessment.json`
+4. Read `designs/[client-slug]/copy.json` (if it exists)
+5. Read `designs/[client-slug]/scraped/reference-analysis.json` (if it exists)
+
+Then say:
+> "Resuming [Client Name]. Last stage completed: [stage]. Currently waiting for: [waiting_for]. [Any relevant notes]. Ready to continue — what's the update?"
+
+**Always update `pipeline-state.json`** at the end of each stage or when pausing for client feedback. This file is the handoff between sessions. Include:
+- Which stages are complete
+- What stage we're on
+- What we're waiting for
+- Key decisions made (design direction, pricing agreed, etc.)
+- Any notes the next session needs to know
 
 ---
 
