@@ -4,16 +4,26 @@
   "owner": "Oliver Adkin",
   "completed_stages": ["1A", "1B", "1C", "1D", "1E", "2A", "2B", "2C"],
   "current_stage": "2D",
-  "waiting_for": "Client feedback on Round 1 designs (3 HTML mockups sent via Loom recording)",
+  "waiting_for": "Oliver's response to Loom + pricing message sent 2026-04-15",
   "started_at": "2026-04-15",
   "last_updated": "2026-04-15",
   "design_direction": "Design 2 (Grain) preferred by Akin, with Design 3 (Workshop) contact form",
+  "pricing_sent": {
+    "build": "£20/month x 12 months (£240 total, discounted from £500)",
+    "hosting": "£20/month ongoing (discounted from £40)",
+    "gallery_uploads": "£15/month optional",
+    "total_yr1": "£55/month (drops to £35/month after year 1)",
+    "google_business": "free",
+    "domains": "adkinjoinery.com + adkinjoinery.co.uk — Akin pays first year"
+  },
+  "loom_url": "https://www.loom.com/share/c872a95b62c840e5a27442fb2d3861dd",
   "notes": [
     "No professional photography — designs work with Unsplash placeholders",
     "Gallery will be populated with Oliver's phone shots after design approval",
-    "Proposal sent: Option A (website only £40/mo yr1) vs Option B (website + gallery updates £60/mo yr1)",
-    "Google Business profile setup included for free",
-    "Client folder is joiner-client, not adkin-joinery — rename slug when provisioning"
+    "Placeholder testimonials use 'Recent client' — swap for real ones once Oliver has reviews",
+    "Client folder is joiner-client — rename to adkin-joinery when provisioning",
+    "Domains NOT yet purchased — wait for Oliver's confirmation",
+    "Competitor comparison included in message: cyberspaceunlimited.co.uk vs armstrongjoinery.com"
   ],
   "staging_url": null,
   "vercel_project": null,
