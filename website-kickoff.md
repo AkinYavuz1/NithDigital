@@ -17,7 +17,7 @@ Every website gets its own **private GitHub repo** under the `AkinYavuz1` accoun
 
 ---
 
-### STAGE 1 — Project Start & Research
+### STAGE 1 — Project Start & Research `[model: sonnet]`
 
 **First question:** "Does the client have an existing website? If yes, share the URL."
 
@@ -42,7 +42,7 @@ Deploy a market-research subagent immediately:
 
 ---
 
-### STAGE 2 — Brief Gathering
+### STAGE 2 — Brief Gathering `[model: sonnet]`
 
 **If Akin sent a pre-kickoff form** (Google Form / Typeform / email template), answers may already be on hand — pre-fill and confirm rather than asking from scratch.
 
@@ -87,7 +87,7 @@ Once ≥7 are covered, write `designs/[client-slug]/brief.json`:
 
 ---
 
-### STAGE 3 — Design Research + Theme Planning
+### STAGE 3 — Design Research + Theme Planning `[model: opus]`
 
 Deploy a design-research subagent to:
 1. Read `designs/archive.json` — find same-industry past designs, note their colors/fonts/layouts
@@ -128,7 +128,7 @@ State explicitly how each design differs from archive entries before proceeding.
 
 ---
 
-### STAGE 4 — Generate 3 HTML Mockups
+### STAGE 4 — Generate 3 HTML Mockups `[model: opus]`
 
 Write `design-1.html`, `design-2.html`, `design-3.html` to `designs/[client-slug]/`.
 
@@ -167,7 +167,7 @@ Design [N] of 3 | [Theme Name] | [Personality] | Primary: #hex | Accent: #hex | 
 
 ---
 
-### STAGE 5 — Render PDFs + Present Designs
+### STAGE 5 — Render PDFs + Present Designs `[model: sonnet]`
 
 ```bash
 node src/scripts/generate-design-pdf.js [client-slug]
@@ -182,7 +182,7 @@ Tell Akin:
 
 ---
 
-### STAGE 6 — Generate Copy + Theme JSON
+### STAGE 6 — Generate Copy + Theme JSON `[model: opus]`
 
 Once a design is approved, deploy a copy-writing subagent (or write directly) to produce:
 
@@ -300,7 +300,7 @@ Write `designs/[client-slug]/theme.json` — the approved ThemeConfig object.
 
 ---
 
-### STAGE 7 — Provision GitHub Repo + Vercel Project
+### STAGE 7 — Provision GitHub Repo + Vercel Project `[model: sonnet]`
 
 ```bash
 npx ts-node --project tsconfig.json src/scripts/provision-project.ts \
@@ -326,7 +326,7 @@ Saves `designs/[client-slug]/provision.json` with:
 
 ---
 
-### STAGE 8 — Generate Full Next.js Codebase
+### STAGE 8 — Generate Full Next.js Codebase `[model: opus]`
 
 Write **all files listed below** into `designs/[client-slug]/scaffold/`:
 
@@ -849,7 +849,7 @@ Vercel auto-deploys when files are pushed to GitHub.
 
 ---
 
-### STAGE 9 — Monitor Deployment
+### STAGE 9 — Monitor Deployment `[model: sonnet]`
 
 ```bash
 node src/scripts/check-deploy.js --client-slug [slug]
@@ -862,7 +862,7 @@ Tell Akin:
 
 ---
 
-### STAGE 9.5 — Akin Internal Review
+### STAGE 9.5 — Akin Internal Review `[model: sonnet]`
 
 Before showing the client, Akin reviews the staging URL:
 - [ ] Hero renders correctly at desktop and mobile
@@ -874,7 +874,7 @@ Before showing the client, Akin reviews the staging URL:
 
 If issues: use Stage 12 refinement loop to fix, then re-check.
 
-### STAGE 9.7 — Client Staging Review (recommended)
+### STAGE 9.7 — Client Staging Review (recommended) `[model: sonnet]`
 
 Send the client an email with:
 - Staging URL
@@ -884,7 +884,7 @@ Send the client an email with:
 
 Log client feedback in `designs/[client-slug]/client-feedback.json`. Apply via Stage 12. Once client approves, proceed to Stage 10.
 
-### STAGE 10 — Automated QA
+### STAGE 10 — Automated QA `[model: sonnet]`
 
 ```bash
 npx ts-node --project tsconfig.json src/scripts/qa-checklist.ts \
@@ -906,7 +906,7 @@ Review the report. Fix any failures. Re-push if needed.
 
 ---
 
-### STAGE 11 — Update Design Archive + GSC Setup
+### STAGE 11 — Update Design Archive + GSC Setup `[model: sonnet]`
 
 **Step 1 — Lighthouse CI** (optional, captures scores in archive):
 ```bash
@@ -944,7 +944,7 @@ npx ts-node --project tsconfig.json src/scripts/submit-gsc.ts \
 
 ---
 
-### STAGE 12 — Refinement Loop
+### STAGE 12 — Refinement Loop `[model: opus]`
 
 When Akin requests changes:
 1. Fetch current repo state: `npx ts-node --project tsconfig.json src/scripts/fetch-repo-files.ts --client-slug [slug]`
