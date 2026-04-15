@@ -98,6 +98,17 @@ function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+async function withRetry<T>(fn: () => Promise<T>, attempts = 3, delayMs = 500): Promise<T> {
+  let lastErr: unknown
+  for (let i = 0; i < attempts; i++) {
+    try { return await fn() } catch (err) {
+      lastErr = err
+      if (i < attempts - 1) await sleep(delayMs * Math.pow(2, i))
+    }
+  }
+  throw lastErr
+}
+
 // ─── ESLint check ─────────────────────────────────────────────────────────────
 
 function runEslint(scaffoldDir: string): boolean {
@@ -128,7 +139,7 @@ function runEslint(scaffoldDir: string): boolean {
 
 // ─── CHANGELOG helper ─────────────────────────────────────────────────────────
 
-function appendChangelog(scaffoldDir: string, clientSlug: string, changedFiles: string[], message: string) {
+function appendChangelog(scaffoldDir: string, clientSlug: string, changedFiles: string[], message: string, hours?: number) {
   const changelogPath = path.join(scaffoldDir, 'CHANGELOG.md')
   const date = new Date().toISOString().slice(0, 10)
   const time = new Date().toISOString().slice(11, 16) + ' UTC'
@@ -136,7 +147,8 @@ function appendChangelog(scaffoldDir: string, clientSlug: string, changedFiles: 
     ? changedFiles.join(', ')
     : changedFiles.slice(0, 4).join(', ') + ` +${changedFiles.length - 4} more`
 
-  const entry = `\n## ${date} — ${time}\n**Files:** ${fileList}\n**Change:** ${message}\n`
+  const hoursLine = hours !== undefined ? `\n**Hours:** ${hours} (£${(hours * 35).toFixed(2)} @ £35/hr)` : ''
+  const entry = `\n## ${date} — ${time}\n**Files:** ${fileList}\n**Change:** ${message}${hoursLine}\n`
 
   if (!fs.existsSync(changelogPath)) {
     const header = `# Changelog — ${clientSlug}\n\nAll changes made via Nith Digital pipeline. Post-launch amendments billed at £35/hour.\n`
@@ -222,12 +234,12 @@ async function main() {
   for (const relPath of allFiles) {
     const fullPath = path.join(scaffoldDir, relPath)
     const content = fs.readFileSync(fullPath, 'utf-8')
-    const ok = await pushFile(
+    const ok = await withRetry(() => pushFile(
       github_full_name,
       relPath,
       content,
       `chore: add ${relPath} — Nith Digital scaffold`
-    )
+    ))
 
     if (ok) {
       pushed++

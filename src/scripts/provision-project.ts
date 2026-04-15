@@ -164,6 +164,15 @@ async function main() {
   const projectSlug = slugify(projectName!)
   const repoName = `nith-${clientSlug}-${projectSlug}`.slice(0, 50)
 
+  // Warn if slug is suspiciously truncated (original name longer than slug would suggest)
+  if (clientSlug.length >= 30) {
+    console.warn(`\n⚠ Client slug is long (${clientSlug.length} chars): "${clientSlug}"`)
+    console.warn('  Consider using a shorter name (e.g. "apex-elec" not "apex-electrical-solutions-ltd").')
+    console.warn('  This slug will be used as the designs/ folder and throughout all scripts.')
+    console.warn('  Press Ctrl+C to abort and re-run with a shorter --client name, or wait 5s to continue.')
+    await new Promise(resolve => setTimeout(resolve, 5000))
+  }
+
   console.log(`\nProvisioning project...`)
   console.log(`  Client: ${clientName}`)
   console.log(`  Project: ${projectName}`)

@@ -107,6 +107,8 @@ function checkFileSystem(results: CheckResult[]) {
     'src/app/error.tsx',
     'src/components/Navbar.tsx',
     'src/components/Footer.tsx',
+    'src/components/CookieBanner.tsx',
+    'src/app/privacy/page.tsx',
     'src/lib/env.ts',
     'src/__tests__/site.test.ts',
     '.lighthouserc.json',
@@ -128,7 +130,20 @@ function checkCopy(results: CheckResult[]) {
   }
 
   results.push(check('copy.json exists', true))
-  const copy = JSON.parse(fs.readFileSync(copyPath, 'utf-8')) as Copy
+
+  let copy: Copy
+  try {
+    copy = JSON.parse(fs.readFileSync(copyPath, 'utf-8')) as Copy
+  } catch {
+    results.push(check('copy.json is valid JSON', false, 'parse error'))
+    return
+  }
+
+  // Validate top-level structure
+  const hasStructure = !!(copy.meta && copy.pages && (copy as unknown as Record<string, unknown>).schema)
+  results.push(check('copy.json has required top-level keys (meta, pages, schema)', hasStructure,
+    hasStructure ? '' : 'missing meta, pages, or schema — re-generate copy.json'))
+  if (!hasStructure) return
 
   // Meta title length
   const title = copy.meta?.title || ''
@@ -316,6 +331,21 @@ async function checkStagingUrl(url: string, results: CheckResult[]) {
     results.push(check('OG meta: og:description present', hasOgDesc))
     results.push(check('OG meta: og:image present', hasOgImage))
     results.push(check('JSON-LD schema in rendered HTML', hasJsonLd))
+
+    // FAQPage schema check — only required if copy.json has ≥3 FAQ items
+    if (fs.existsSync(copyPath)) {
+      try {
+        const c = JSON.parse(fs.readFileSync(copyPath, 'utf-8')) as Copy
+        const faqItems = (c as unknown as Record<string, unknown>)['pages'] &&
+          ((c as unknown as Record<string, unknown>)['pages'] as Record<string, unknown>)['faq'] &&
+          ((((c as unknown as Record<string, unknown>)['pages'] as Record<string, unknown>)['faq'] as Record<string, unknown>)['items'] as unknown[])
+        if (Array.isArray(faqItems) && faqItems.length >= 3) {
+          const hasFaqSchema = home.body.includes('FAQPage')
+          results.push(check('FAQPage JSON-LD present (≥3 FAQ items found in copy.json)', hasFaqSchema,
+            hasFaqSchema ? '' : 'add FAQPage schema to page.tsx'))
+        }
+      } catch { /* skip if copy.json unreadable */ }
+    }
 
   } catch (err) {
     results.push(check('Homepage reachable', false, String(err)))

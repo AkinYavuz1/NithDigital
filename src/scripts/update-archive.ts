@@ -174,6 +174,26 @@ async function main() {
   const approvedThemeName = theme?.name || ''
   const approvedThemeIndex = themesProposed.findIndex(t => t.name === approvedThemeName)
 
+  // Read Lighthouse CI scores if available
+  interface LighthouseManifest { summary?: { performance?: number; seo?: number; accessibility?: number } }
+  let lighthouseScores: { performance: number; seo: number; accessibility: number } | null = null
+  const lhManifestPath = path.join(designsDir, 'scaffold', '.lighthouseci', 'manifest.json')
+  if (fs.existsSync(lhManifestPath)) {
+    try {
+      const manifest = JSON.parse(fs.readFileSync(lhManifestPath, 'utf-8')) as LighthouseManifest[]
+      // manifest is an array of runs; take the last run's summary
+      const lastRun = Array.isArray(manifest) ? manifest[manifest.length - 1] : manifest
+      if (lastRun?.summary) {
+        lighthouseScores = {
+          performance: Math.round((lastRun.summary.performance ?? 0) * 100),
+          seo: Math.round((lastRun.summary.seo ?? 0) * 100),
+          accessibility: Math.round((lastRun.summary.accessibility ?? 0) * 100),
+        }
+        console.log(`  Lighthouse scores: perf=${lighthouseScores.performance} seo=${lighthouseScores.seo} a11y=${lighthouseScores.accessibility}`)
+      }
+    } catch { /* skip if manifest unreadable */ }
+  }
+
   const entry = {
     client_slug: clientSlug,
     client_name: brief.client_name || clientSlug,
@@ -189,6 +209,7 @@ async function main() {
     github_full_name: provision?.github_full_name || null,
     staging_url: provision?.staging_url || null,
     live_url: null,
+    lighthouse_scores: lighthouseScores,
     notes: '',
   }
 

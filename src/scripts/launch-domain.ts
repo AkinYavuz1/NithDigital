@@ -58,6 +58,12 @@ if (!clientSlug || !option) {
   process.exit(1)
 }
 
+// Validate client slug format
+if (!/^[a-z0-9-]{1,50}$/.test(clientSlug)) {
+  console.error(`Invalid client slug "${clientSlug}" — must be lowercase alphanumeric with hyphens only (max 50 chars)`)
+  process.exit(1)
+}
+
 if (!VERCEL_TOKEN) {
   console.error('VERCEL_TOKEN not found in .env.local')
   process.exit(1)
@@ -66,6 +72,15 @@ if (!VERCEL_TOKEN) {
 if ((option === 'custom' || option === 'cloudflare') && !customDomain) {
   console.error(`--domain is required for option "${option}"`)
   process.exit(1)
+}
+
+// Validate domain format
+if (customDomain) {
+  const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i
+  if (!domainRegex.test(customDomain)) {
+    console.error(`Invalid domain name "${customDomain}" — must be a valid domain (e.g. example.co.uk)`)
+    process.exit(1)
+  }
 }
 
 // ─── Provision JSON ───────────────────────────────────────────────────────────

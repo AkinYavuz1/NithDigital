@@ -307,6 +307,8 @@ npx ts-node --project tsconfig.json src/scripts/provision-project.ts \
   --client "Client Name" --project "Website"
 ```
 
+**Slug length:** Keep `--client` names concise — slugs are capped at 30 characters before the `nith-` prefix. Use abbreviated names where needed (e.g. `"Apex Electrical"` not `"Apex Electrical Solutions Ltd"`). The script will warn and pause for 5 seconds if the slug is too long.
+
 Creates:
 - Private GitHub repo: `AkinYavuz1/nith-[client-slug]-website`
 - Vercel project linked to that repo (framework: Next.js, build: `npm run build`)
@@ -348,6 +350,8 @@ src/app/loading.tsx                 ← Loading spinner (use LOADING_TEMPLATE)
 src/app/api/contact/route.ts        ← Contact form handler (sends email via Resend using RESEND_API_KEY)
 src/components/Navbar.tsx
 src/components/Footer.tsx
+src/components/CookieBanner.tsx     ← GDPR cookie consent (use COOKIE_BANNER_TEMPLATE, CSS var colours)
+src/app/privacy/page.tsx            ← UK GDPR privacy policy (use PRIVACY_PAGE_TEMPLATE)
 src/lib/env.ts                      ← Env var validation (throws at build time if vars missing)
 src/__tests__/site.test.ts          ← Per-client unit tests (see spec below)
 .lighthouserc.json                  ← Lighthouse CI config targeting staging URL
@@ -382,10 +386,32 @@ import { NextRequest, NextResponse } from 'next/server'
 // Always include: name, email, phone, message in the email body
 ```
 
+**`src/components/CookieBanner.tsx`** — Use `COOKIE_BANNER_TEMPLATE` from `src/lib/site-templates/index.ts`. Import and render in `layout.tsx` below the `<Footer />`.
+
+**`src/app/privacy/page.tsx`** — Use `PRIVACY_PAGE_TEMPLATE`. Replace `[CLIENT_NAME]`, `[CLIENT_EMAIL]`, `[SITE_URL]`, `[LOCATION]`, `[DATE]` with real values from `brief.json` and `copy.json`. This page is required by UK GDPR for any site with a contact form.
+
+**`next.config.ts`** — If `brief.json` has `existing_site_url` set, add the `NEXT_CONFIG_REDIRECTS_COMMENT` stub from `src/lib/site-templates/index.ts` with old URL paths from `site-analysis.json` nav links as comments for Akin to fill in.
+
+**Analytics** — If `brief.json` includes a `ga_measurement_id` field, add `GA4_SCRIPT_TEMPLATE` from `src/lib/site-templates/index.ts` into `layout.tsx` and add `NEXT_PUBLIC_GA_ID=[value]` as an instruction for Akin to set in Vercel environment variables.
+
+**FAQPage schema** — If `copy.json pages.faq.items` has ≥3 items, add a second `<script type="application/ld+json">` block in `page.tsx` with:
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "[question]", "acceptedAnswer": { "@type": "Answer", "text": "[answer]" } }
+  ]
+}
+```
+This enables Google FAQ rich results in SERPs.
+
 **`src/app/layout.tsx` MUST include:**
 - `next/font/google` import for heading + body fonts from `theme.json`
 - JSON-LD LocalBusiness schema using `copy.json` schema fields
 - `generateMetadata()` with OG tags (og:title, og:description, og:image)
+- `import '@/lib/env'` at the top (build-time env var guard)
+- `<CookieBanner />` component below `<Footer />`
 
 **Every page MUST export:**
 ```ts
@@ -702,7 +728,16 @@ npx ts-node --project tsconfig.json src/scripts/qa-checklist.ts \
   --client-slug [slug] --staging-url [url]
 ```
 
-Checks: file completeness, copy quality (meta lengths, no Lorem ipsum, British English), code quality (next/image, next/font, generateMetadata, JSON-LD, sitemap, robots), staging URL health.
+Checks: file completeness, copy quality (meta lengths, no Lorem ipsum, British English), code quality (next/image, next/font, generateMetadata, JSON-LD, sitemap, robots), unit tests, ESLint, staging URL health, FAQPage schema (if ≥3 FAQ items).
+
+**QA Failure Procedure:**
+1. Check which tests failed: `cat designs/[slug]/qa-report.json | jq '.results[] | select(.passed == false)'`
+2. Fix the relevant files in `designs/[slug]/scaffold/`
+3. Push targeted changes: `push-scaffold.ts --client-slug [slug] --files [file1,file2]`
+4. Vercel redeploys automatically — run `check-deploy.js` to confirm
+5. Re-run full QA: `qa-checklist.ts --client-slug [slug] --staging-url [url]`
+
+Note: the previous Vercel deployment stays live until the new one is READY. No rollback action is needed.
 
 Review the report. Fix any failures. Re-push if needed.
 
@@ -710,11 +745,17 @@ Review the report. Fix any failures. Re-push if needed.
 
 ### STAGE 11 — Update Design Archive
 
+Optionally run Lighthouse CI first to capture scores in the archive entry:
+```bash
+cd designs/[slug]/scaffold && npx lhci autorun && cd ../../..
+```
+
+Then update the archive:
 ```bash
 npx ts-node --project tsconfig.json src/scripts/update-archive.ts --client-slug [slug]
 ```
 
-Appends entry to `designs/archive.json` so future projects in the same industry avoid duplicating this design.
+Appends entry to `designs/archive.json` — includes Lighthouse scores if `lhci` ran, so future projects can benchmark against past results.
 
 ---
 
@@ -725,6 +766,13 @@ When Akin requests changes:
 2. Edit the relevant file(s) in `designs/[client-slug]/scaffold/`
 3. Push targeted changes: `npx ts-node --project tsconfig.json src/scripts/push-scaffold.ts --client-slug [slug] --files src/app/page.tsx`
 4. Vercel auto-redeploys — run `check-deploy.js` to confirm
+5. **Append to CHANGELOG.md** — include a `Hours: [N]` line with your honest estimate (round to nearest 0.5h). This feeds billing at £35/hour. Example entry:
+```
+## 2026-04-20 — 14:30 UTC
+**Files:** src/app/page.tsx
+**Change:** Updated hero headline and service descriptions per client feedback
+**Hours:** 0.5 (£17.50 @ £35/hr)
+```
 
 For substantial redesigns: update the HTML mockup first, get approval, then regenerate scaffold files.
 
@@ -800,6 +848,16 @@ State explicitly before generating HTMLs: *"Last [industry] site used [font], [l
 - [ ] `eslint-plugin-jsx-a11y` in `package.json` devDependencies
 - [ ] `.lighthouserc.json` present targeting staging URL
 - [ ] `CHANGELOG.md` exists in scaffold root
+
+### Legal & GDPR
+- [ ] `src/components/CookieBanner.tsx` exists and imported in `layout.tsx`
+- [ ] `src/app/privacy/page.tsx` exists with client name/email/location populated
+- [ ] `CookieBanner` links to `/privacy` page
+- [ ] Contact form privacy notice present (e.g. "We'll only use your details to respond to your enquiry")
+
+### SEO (Rich Results)
+- [ ] FAQPage JSON-LD present in `page.tsx` if ≥3 FAQ items in `copy.json`
+- [ ] Redirects stub in `next.config.ts` if client has `existing_site_url` in brief
 
 ### Copy
 - [ ] No Lorem ipsum

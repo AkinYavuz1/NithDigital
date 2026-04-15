@@ -33,9 +33,10 @@ const getArg = (flag) => {
 
 const clientSlug = getArg('--client-slug')
 const projectIdArg = getArg('--project-id')
+const pingLive = args.includes('--ping-live')
 
 if (!clientSlug && !projectIdArg) {
-  console.error('Usage: check-deploy.js --client-slug <slug> OR --project-id <id>')
+  console.error('Usage: check-deploy.js --client-slug <slug> OR --project-id <id> [--ping-live]')
   process.exit(1)
 }
 
@@ -69,7 +70,38 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+async function pingLiveUrl() {
+  if (!clientSlug) { console.error('--ping-live requires --client-slug'); process.exit(1) }
+  const provisionPath = path.join(process.cwd(), 'designs', clientSlug, 'provision.json')
+  if (!fs.existsSync(provisionPath)) {
+    console.error('provision.json not found'); process.exit(1)
+  }
+  const provision = JSON.parse(fs.readFileSync(provisionPath, 'utf-8'))
+  const liveUrl = provision.live_url || provision.staging_url
+  if (!liveUrl) { console.error('No live_url or staging_url in provision.json'); process.exit(1) }
+
+  console.log(`\nChecking uptime: ${liveUrl}`)
+  try {
+    const res = await fetch(liveUrl, {
+      headers: { 'User-Agent': 'NithDigitalMonitor/1.0' },
+      redirect: 'follow',
+    })
+    if (res.status === 200) {
+      console.log(`  ✓ UP — HTTP ${res.status}`)
+    } else {
+      console.error(`  ✗ DOWN — HTTP ${res.status}`)
+      process.exit(1)
+    }
+  } catch (err) {
+    console.error(`  ✗ UNREACHABLE — ${err}`)
+    process.exit(1)
+  }
+}
+
 async function main() {
+  // --ping-live mode: just check if the live site is up
+  if (pingLive) { await pingLiveUrl(); return }
+
   const projectId = await getProjectId()
   if (!projectId) {
     console.error('No Vercel project ID found. Was the project provisioned?')
@@ -81,6 +113,8 @@ async function main() {
 
   const maxAttempts = 30
   let attempts = 0
+  let consecutiveQueued = 0
+  let lastState = ''
 
   while (attempts < maxAttempts) {
     attempts++
@@ -95,10 +129,27 @@ async function main() {
     const state = deployment.state || deployment.readyState
     const url = deployment.url ? `https://${deployment.url}` : 'unknown'
 
-    console.log(`  [${attempts}/${maxAttempts}] State: ${state} — ${deployment.url || ''}`)
+    // Only log when state changes (less noise)
+    if (state !== lastState) {
+      console.log(`  [${attempts}/${maxAttempts}] State: ${state} — ${deployment.url || ''}`)
+      lastState = state
+    } else {
+      process.stdout.write('.')
+    }
+
+    // Track consecutive QUEUED states
+    if (state === 'QUEUED') {
+      consecutiveQueued++
+      if (consecutiveQueued === 6) {
+        console.log('\n  ⚠ Still queued after 60s — Vercel may be congested or the GitHub push')
+        console.log('    hasn\'t registered yet. Check the Vercel dashboard if this persists.')
+      }
+    } else {
+      consecutiveQueued = 0
+    }
 
     if (state === 'READY') {
-      console.log(`\n✓ Deployment READY!`)
+      console.log(`\n\n✓ Deployment READY!`)
       console.log(`  URL: ${url}`)
 
       // Update provision.json with the actual deployment URL if client-slug provided
@@ -115,15 +166,16 @@ async function main() {
     }
 
     if (state === 'ERROR' || state === 'CANCELED') {
-      console.error(`\n✗ Deployment ${state}`)
+      console.error(`\n\n✗ Deployment ${state}`)
       if (deployment.errorMessage) console.error(`  Error: ${deployment.errorMessage}`)
+      console.error('  Check Vercel dashboard for build logs.')
       process.exit(1)
     }
 
     await sleep(10000)
   }
 
-  console.warn('\n⚠ Timeout: deployment not ready after 5 minutes.')
+  console.warn('\n\n⚠ Timeout: deployment not ready after 5 minutes.')
   console.warn('Check Vercel dashboard manually.')
   process.exit(1)
 }

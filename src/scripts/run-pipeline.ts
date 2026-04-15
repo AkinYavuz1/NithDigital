@@ -175,12 +175,22 @@ async function stage3_designResearch(s: PipelineState) {
 
   console.log('  Claude reads the archive, searches design trends, and plans 3 themes.')
   console.log('  This runs in the Claude session.\n')
+  console.log('  Claude must write: designs/' + clientSlug + '/scraped/design-research.json\n')
 
-  const answer = await ask('  Has Claude completed design research? (yes): ')
-  if (answer !== 'yes' && answer !== 'y') return
+  const researchPath = path.join(designsDir, 'scraped', 'design-research.json')
+  while (true) {
+    const answer = await ask('  Has Claude completed design research? (yes): ')
+    if (answer !== 'yes' && answer !== 'y') continue
+
+    if (!fs.existsSync(researchPath)) {
+      warn('design-research.json not found — Claude must write it to designs/' + clientSlug + '/scraped/design-research.json first')
+      continue
+    }
+    break
+  }
 
   done(s, 3)
-  tick('Stage 3 complete')
+  tick('Stage 3 complete — design-research.json confirmed')
 }
 
 async function stage4_htmlMockups(s: PipelineState) {
@@ -323,7 +333,22 @@ async function stage8_scaffoldAndPush(s: PipelineState) {
   const ok = tsNode('src/scripts/push-scaffold.ts', ['--client-slug', clientSlug])
   if (!ok) { warn('Push failed — check GitHub token and try again with --stage 8'); return }
 
-  tick('All files pushed to GitHub')
+  // Validate push result — block stage completion if any files failed
+  const resultPath = path.join(designsDir, 'scaffold-result.json')
+  if (fs.existsSync(resultPath)) {
+    try {
+      const result = JSON.parse(fs.readFileSync(resultPath, 'utf-8')) as {
+        failed: number; failed_files: string[]; pushed: number; total: number
+      }
+      if (result.failed > 0) {
+        warn(`${result.failed}/${result.total} files failed to push: ${result.failed_files.join(', ')}`)
+        warn('Fix the issue and retry with --stage 8. Stage NOT marked complete.')
+        return
+      }
+      tick(`All ${result.pushed} files pushed to GitHub`)
+    } catch { /* if result file unreadable, proceed */ }
+  }
+
   done(s, 8)
   tick('Stage 8 complete — Vercel is now building')
 }

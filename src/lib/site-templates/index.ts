@@ -534,3 +534,168 @@ export default function ContactForm({ headline, intro, formCta }: {
     </section>
   )
 }`
+
+// ─── Cookie Consent Banner ────────────────────────────────────────────────────
+// Uses CSS variables so it adapts to any client theme.
+// Add to src/components/CookieBanner.tsx and import in layout.tsx.
+
+export const COOKIE_BANNER_TEMPLATE = `'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+
+export default function CookieBanner() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (!localStorage.getItem('cookie-consent')) setVisible(true)
+  }, [])
+
+  const accept = () => {
+    localStorage.setItem('cookie-consent', 'accepted')
+    setVisible(false)
+  }
+
+  if (!visible) return null
+
+  return (
+    <div
+      role="dialog"
+      aria-label="Cookie notice"
+      style={{
+        position: 'fixed',
+        bottom: 24,
+        left: 24,
+        right: 24,
+        maxWidth: 480,
+        background: 'var(--color-primary)',
+        color: '#fff',
+        borderRadius: 10,
+        padding: '16px 20px',
+        zIndex: 9999,
+        boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
+        display: 'flex',
+        gap: 16,
+        alignItems: 'center',
+        flexWrap: 'wrap',
+      }}
+    >
+      <p style={{ fontSize: 13, margin: 0, flex: 1, lineHeight: 1.5 }}>
+        We use cookies to improve your experience.{' '}
+        <Link href="/privacy" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+          Privacy Policy
+        </Link>
+      </p>
+      <button
+        onClick={accept}
+        style={{
+          background: 'var(--color-accent)',
+          color: 'var(--color-primary)',
+          border: 'none',
+          borderRadius: 6,
+          padding: '8px 18px',
+          fontSize: 13,
+          fontWeight: 600,
+          cursor: 'pointer',
+          flexShrink: 0,
+        }}
+      >
+        Accept
+      </button>
+    </div>
+  )
+}`
+
+// ─── Privacy Policy Page ──────────────────────────────────────────────────────
+// UK GDPR compliant template. Replace [CLIENT_NAME], [CLIENT_EMAIL], [SITE_URL].
+// Add to src/app/privacy/page.tsx.
+
+export const PRIVACY_PAGE_TEMPLATE = `import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy | [CLIENT_NAME]',
+  description: 'How [CLIENT_NAME] collects and uses your personal data.',
+  robots: { index: false },
+}
+
+export default function PrivacyPage() {
+  return (
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <h1 className="font-heading text-3xl sm:text-4xl font-bold text-[var(--color-primary)] mb-8">
+        Privacy Policy
+      </h1>
+      <div className="prose prose-slate max-w-none space-y-6 text-[var(--color-text)]">
+        <p className="text-sm text-[var(--color-text-muted)]">Last updated: [DATE]</p>
+
+        <section>
+          <h2 className="font-heading text-xl font-semibold text-[var(--color-primary)] mb-3">Who we are</h2>
+          <p>[CLIENT_NAME] is a business based in [LOCATION], UK. Our website address is [SITE_URL].</p>
+          <p>If you have questions about this policy, contact us at <a href="mailto:[CLIENT_EMAIL]" className="text-[var(--color-accent)] underline">[CLIENT_EMAIL]</a>.</p>
+        </section>
+
+        <section>
+          <h2 className="font-heading text-xl font-semibold text-[var(--color-primary)] mb-3">What data we collect</h2>
+          <p>When you use our contact form, we collect your name, email address, phone number, and message. This data is collected solely to respond to your enquiry.</p>
+          <p>We do not collect payment information, and we do not use tracking cookies beyond those strictly necessary for site functionality.</p>
+        </section>
+
+        <section>
+          <h2 className="font-heading text-xl font-semibold text-[var(--color-primary)] mb-3">How we use your data</h2>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>To respond to your enquiry</li>
+            <li>To provide the services you have requested</li>
+            <li>To comply with our legal obligations</li>
+          </ul>
+          <p className="mt-3">We will never sell or share your personal data with third parties for marketing purposes.</p>
+        </section>
+
+        <section>
+          <h2 className="font-heading text-xl font-semibold text-[var(--color-primary)] mb-3">How long we keep your data</h2>
+          <p>Enquiry data is kept for up to 2 years, after which it is securely deleted. You may request deletion at any time by emailing <a href="mailto:[CLIENT_EMAIL]" className="text-[var(--color-accent)] underline">[CLIENT_EMAIL]</a>.</p>
+        </section>
+
+        <section>
+          <h2 className="font-heading text-xl font-semibold text-[var(--color-primary)] mb-3">Your rights (UK GDPR)</h2>
+          <p>You have the right to: access your data, correct inaccuracies, request deletion, restrict processing, and lodge a complaint with the Information Commissioner&apos;s Office (ICO) at <a href="https://ico.org.uk" className="text-[var(--color-accent)] underline">ico.org.uk</a>.</p>
+        </section>
+
+        <section>
+          <h2 className="font-heading text-xl font-semibold text-[var(--color-primary)] mb-3">Cookies</h2>
+          <p>This site uses a single functional cookie to remember your cookie consent preference. No analytics or advertising cookies are set without your consent.</p>
+        </section>
+      </div>
+    </main>
+  )
+}`
+
+// ─── GA4 Script ───────────────────────────────────────────────────────────────
+// Add to src/app/layout.tsx when brief.json includes ga_measurement_id.
+// Reads NEXT_PUBLIC_GA_ID from environment variables.
+
+export const GA4_SCRIPT_TEMPLATE = `{/* Google Analytics 4 — only loads if NEXT_PUBLIC_GA_ID is set */}
+{process.env.NEXT_PUBLIC_GA_ID && (
+  <>
+    <Script
+      src={\`https://www.googletagmanager.com/gtag/js?id=\${process.env.NEXT_PUBLIC_GA_ID}\`}
+      strategy="afterInteractive"
+    />
+    <Script id="ga4-init" strategy="afterInteractive">
+      {\`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','\${process.env.NEXT_PUBLIC_GA_ID}',{anonymize_ip:true});\`}
+    </Script>
+  </>
+)}`
+
+// ─── Redirects stub for migration clients ────────────────────────────────────
+// Include as a comment in next.config.ts when brief.json has existing_site_url.
+// Akin fills in the old paths from the scraped site-analysis.json nav links.
+
+export const NEXT_CONFIG_REDIRECTS_COMMENT = `
+  // ── SEO Redirects (migration from old site) ──────────────────────────────
+  // Old URL → New URL (301 permanent redirect, preserves link equity)
+  // Populate from designs/[slug]/scraped/site-analysis.json nav links.
+  // async redirects() {
+  //   return [
+  //     { source: '/old-page', destination: '/new-page', permanent: true },
+  //     { source: '/about-us', destination: '/about', permanent: true },
+  //   ]
+  // },`
