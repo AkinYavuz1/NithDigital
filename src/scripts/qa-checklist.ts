@@ -12,6 +12,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as https from 'https'
 import * as http from 'http'
+import { spawnSync } from 'child_process'
 
 // Load .env.local
 const envPath = path.join(process.cwd(), '.env.local')
@@ -93,6 +94,7 @@ function checkFileSystem(results: CheckResult[]) {
     'next.config.ts',
     'tsconfig.json',
     'postcss.config.mjs',
+    '.eslintrc.json',
     'src/app/globals.css',
     'src/app/layout.tsx',
     'src/app/page.tsx',
@@ -101,8 +103,14 @@ function checkFileSystem(results: CheckResult[]) {
     'src/app/contact/page.tsx',
     'src/app/sitemap.ts',
     'src/app/robots.ts',
+    'src/app/not-found.tsx',
+    'src/app/error.tsx',
     'src/components/Navbar.tsx',
     'src/components/Footer.tsx',
+    'src/lib/env.ts',
+    'src/__tests__/site.test.ts',
+    '.lighthouserc.json',
+    'CHANGELOG.md',
   ]
 
   for (const file of requiredFiles) {
@@ -224,6 +232,56 @@ function checkScaffoldCode(results: CheckResult[]) {
   results.push(check('error.tsx exists', hasErrorPage))
 }
 
+function checkUnitTests(results: CheckResult[]) {
+  console.log('\n── Unit Tests ─────────────────────────────────────────────')
+
+  const testFile = path.join(scaffoldDir, 'src', '__tests__', 'site.test.ts')
+  if (!fs.existsSync(testFile)) {
+    results.push(check('site.test.ts exists', false, 'MISSING'))
+    return
+  }
+  results.push(check('site.test.ts exists', true))
+
+  // Check no unresolved placeholders remain in the test file
+  const testContent = fs.readFileSync(testFile, 'utf-8')
+  const hasPlaceholders = /\[CLIENT_NAME\]|\[location_lowercase\]|\[domain_or_staging_url\]|\[copy\.json/.test(testContent)
+  results.push(check('No placeholder values in site.test.ts', !hasPlaceholders,
+    hasPlaceholders ? 'placeholders not substituted' : ''))
+
+  // Run jest against the scaffold test file
+  const jestResult = spawnSync('npx', ['jest', testFile, '--no-coverage', '--passWithNoTests'], {
+    cwd: process.cwd(),
+    encoding: 'utf-8',
+    timeout: 30_000,
+  })
+
+  const passed = jestResult.status === 0
+  const detail = passed ? '' : (jestResult.stdout || jestResult.stderr || '').split('\n')
+    .filter(l => l.includes('✕') || l.includes('FAIL') || l.includes('expect('))
+    .slice(0, 3).join(' | ')
+  results.push(check('Unit tests pass (jest)', passed, detail))
+}
+
+function checkEslint(results: CheckResult[]) {
+  console.log('\n── ESLint (a11y) ──────────────────────────────────────────')
+
+  const eslintConfig = path.join(scaffoldDir, '.eslintrc.json')
+  if (!fs.existsSync(eslintConfig)) {
+    results.push(check('.eslintrc.json exists', false, 'MISSING — skipping lint'))
+    return
+  }
+  results.push(check('.eslintrc.json exists', true))
+
+  // Check jsx-a11y is in devDependencies
+  const pkgPath = path.join(scaffoldDir, 'package.json')
+  if (fs.existsSync(pkgPath)) {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as { devDependencies?: Record<string, string> }
+    const hasPlugin = !!(pkg.devDependencies?.['eslint-plugin-jsx-a11y'])
+    results.push(check('eslint-plugin-jsx-a11y in devDependencies', hasPlugin,
+      hasPlugin ? '' : 'add to devDependencies'))
+  }
+}
+
 async function checkStagingUrl(url: string, results: CheckResult[]) {
   console.log(`\n── Staging URL: ${url} ───────────────────────`)
 
@@ -276,6 +334,8 @@ async function main() {
   checkFileSystem(results)
   checkCopy(results)
   checkScaffoldCode(results)
+  checkUnitTests(results)
+  checkEslint(results)
 
   if (stagingUrl) {
     await checkStagingUrl(stagingUrl, results)

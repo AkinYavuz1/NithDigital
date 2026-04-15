@@ -12,6 +12,7 @@
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { spawnSync } from 'child_process'
 
 // Load .env.local
 const envPath = path.join(process.cwd(), '.env.local')
@@ -97,6 +98,54 @@ function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+// ─── ESLint check ─────────────────────────────────────────────────────────────
+
+function runEslint(scaffoldDir: string): boolean {
+  const eslintConfig = path.join(scaffoldDir, '.eslintrc.json')
+  if (!fs.existsSync(eslintConfig)) {
+    console.log('  ⚠ .eslintrc.json not found — skipping ESLint check')
+    return true // non-blocking if config missing (legacy scaffolds)
+  }
+
+  console.log('\n  Running ESLint (a11y)...')
+  const result = spawnSync(
+    'npx',
+    ['eslint', 'src/', '--ext', '.tsx,.ts', '--max-warnings', '0', '--no-eslintrc', '-c', '.eslintrc.json'],
+    { cwd: scaffoldDir, encoding: 'utf-8', timeout: 30_000 }
+  )
+
+  if (result.status !== 0) {
+    console.error('  ✗ ESLint failed — fix a11y violations before pushing:')
+    const lines = (result.stdout || result.stderr || '').split('\n')
+      .filter(l => l.trim() && !l.includes('npm warn'))
+    lines.slice(0, 20).forEach(l => console.error('    ' + l))
+    return false
+  }
+
+  console.log('  ✓ ESLint passed (no a11y violations)')
+  return true
+}
+
+// ─── CHANGELOG helper ─────────────────────────────────────────────────────────
+
+function appendChangelog(scaffoldDir: string, clientSlug: string, changedFiles: string[], message: string) {
+  const changelogPath = path.join(scaffoldDir, 'CHANGELOG.md')
+  const date = new Date().toISOString().slice(0, 10)
+  const time = new Date().toISOString().slice(11, 16) + ' UTC'
+  const fileList = changedFiles.length <= 4
+    ? changedFiles.join(', ')
+    : changedFiles.slice(0, 4).join(', ') + ` +${changedFiles.length - 4} more`
+
+  const entry = `\n## ${date} — ${time}\n**Files:** ${fileList}\n**Change:** ${message}\n`
+
+  if (!fs.existsSync(changelogPath)) {
+    const header = `# Changelog — ${clientSlug}\n\nAll changes made via Nith Digital pipeline. Post-launch amendments billed at £35/hour.\n`
+    fs.writeFileSync(changelogPath, header + entry)
+  } else {
+    fs.appendFileSync(changelogPath, entry)
+  }
+}
+
 // ─── Collect scaffold files ───────────────────────────────────────────────────
 
 function walkDir(dir: string, baseDir: string): string[] {
@@ -138,6 +187,15 @@ async function main() {
     repo_name: string
   }
   const { github_full_name } = provision
+
+  // Run ESLint before pushing (blocks on a11y violations for full pushes)
+  if (!filesFilter || filesFilter.length === 0) {
+    const eslintOk = runEslint(scaffoldDir)
+    if (!eslintOk) {
+      console.error('\nPush blocked by ESLint violations. Fix the issues above and retry.')
+      process.exit(1)
+    }
+  }
 
   console.log(`\nPushing scaffold to ${github_full_name}...`)
 
@@ -195,6 +253,21 @@ async function main() {
     failed_files: failedFiles,
     files: allFiles,
   }, null, 2))
+
+  // Append to CHANGELOG (after push so only successful pushes are logged)
+  if (pushed > 0) {
+    const successfulFiles = allFiles.filter(f => !failedFiles.includes(f))
+    const isInitialBuild = !filesFilter || filesFilter.length === 0
+    const changeMsg = isInitialBuild
+      ? 'Initial scaffold build — full Next.js site deployed'
+      : `Refinement: updated ${successfulFiles.join(', ')}`
+
+    // Update the CHANGELOG in the scaffold dir so it gets included in the result JSON
+    // The changelog file itself is not re-pushed here (avoid infinite loop); it's
+    // committed locally and pushed on the NEXT refinement cycle or update-archive run.
+    appendChangelog(scaffoldDir, clientSlug!, successfulFiles, changeMsg)
+    console.log(`  ✓ CHANGELOG.md updated locally`)
+  }
 
   console.log(`\n${pushed}/${allFiles.length} files pushed to GitHub`)
   if (failed > 0) {
