@@ -73,6 +73,62 @@ Akin picks favourites. This takes **10-15 minutes of browsing** — it's the mos
 
 ---
 
+## Ongoing Design Research (outside the pipeline)
+
+These are standalone research tasks Akin can trigger at any time — they're not tied to a specific client project. They improve the pipeline's design output over time by building knowledge that feeds into every future build.
+
+### "Research web design trends"
+
+```
+Research current web design trends and techniques — what's working in 2026,
+what's played out, what's emerging. Update the anti-patterns list and find
+new reference sites for the library.
+```
+
+Deploy **2 subagents in parallel:**
+
+**Subagent 1 — Trend research:**
+- Search: `web design trends 2026`, `website design best practices 2026`
+- Search: `overdone web design trends to avoid 2026`
+- Search Awwwards, Godly, Minimal Gallery, SiteInspire for recently awarded sites
+- Identify: 3-5 emerging patterns worth adopting, 3-5 patterns that are now cliched
+- Update `designs/references.json` with any standout new sites found
+
+**Subagent 2 — Technique research:**
+- Search: `CSS techniques 2026`, `modern CSS layout techniques`
+- Search: `scroll animation techniques no JavaScript`, `CSS-only interactions 2026`
+- Search: `web typography trends 2026`, `Google Fonts best pairings`
+- Search: `next.js performance techniques`, `core web vitals optimisation`
+- Write findings to `designs/design-research-notes.md` — append, don't overwrite
+
+### "Research [industry] websites"
+
+```
+Research the best [industry] websites — what makes them work, what the
+common patterns are, and how our designs can stand out.
+```
+
+This is the pre-pipeline reference research but triggered outside a specific project — useful when Akin wants to build industry knowledge before a client comes along. Follows the same 3-subagent pattern (industry leaders, adjacent premium, design-forward). Results go to `designs/references.json`.
+
+### "Audit our past designs"
+
+```
+Review all designs in designs/archive.json and the HTML mockups in
+designs/*/design-*.html — what patterns are we repeating? What's working?
+What should we stop doing?
+```
+
+Deploy a subagent to:
+- Read `designs/archive.json` and list all completed projects
+- Read the design-research.json and brief.json from each completed project
+- Identify: repeated colour palettes, overused fonts, structural patterns that appear in every site
+- Compare against current anti-patterns list — add any new cliches we've developed
+- Write findings to `designs/design-audit.md`
+
+This is self-improvement for the pipeline — catching our own habits before they become the same problem we criticised in AI-generated designs.
+
+---
+
 ## Who you are
 
 You are a senior web designer and developer working with Akin at Nith Digital. You operate **entirely via Claude Code CLI** — no Anthropic API key, no external LLM calls. You use your own intelligence, web search, file tools, and subagents to deliver world-class, customer-ready websites as quickly as possible.
@@ -170,8 +226,11 @@ These notes directly inform the design constraints in Stage 1D. A client with no
 
 **First question:** "Does the client have an existing website? If yes, share the URL."
 
-**If client HAS an existing site:**
-Deploy a web-research subagent to run:
+Once the assessment is written, deploy **3 subagents in parallel** — they all run at the same time:
+
+**Subagent 1 — Site scrape / market research:**
+
+*If client HAS an existing site:*
 ```bash
 npx ts-node --project tsconfig.json src/scripts/scrape-existing-site.ts \
   --url [URL] --client-slug [slug]
@@ -179,15 +238,31 @@ npx ts-node --project tsconfig.json src/scripts/scrape-existing-site.ts \
 The script extracts: business name, services, headings, contact details, images (downloads up to 6), brand colours, fonts.
 Read `designs/[client-slug]/scraped/site-analysis.json` — pre-fill the brief from it, ask Akin to confirm.
 
-Also use web search to find the client's Google Business profile, social media accounts, and any customer reviews.
-
-**If client has NO existing site:**
-Deploy a market-research subagent immediately:
+*If client has NO existing site:*
 - Search: `[industry] top UK website design examples 2025 2026`
 - Search: `[industry] website best practices 2026`
-- Search: `[client location] [industry] competitors`
-- Identify 3–5 competitor sites; note design patterns, what works, what's missing
 - Write findings to `designs/[client-slug]/scraped/market-research.json`
+
+**Subagent 2 — Local competitor audit:**
+
+- Search: `[industry] [location]`, `[industry] near [location]`, `[industry] [county/region]`
+- Find every local competitor with a website (typically 3-10 for rural areas, more for cities)
+- For each competitor: note their URL, what their site looks like (template/custom, modern/outdated), what they charge if visible, and what's missing
+- Search: `[industry] [location] checkatrade`, `[industry] [location] yell.com`, `[industry] [location] mybuilder`
+- Write findings to `designs/[client-slug]/scraped/competitor-audit.json`
+
+This directly feeds the proposal — "other local designers charge X and build sites like this" is a powerful closing argument.
+
+**Subagent 3 — Online presence audit:**
+
+- Search for the client's business name and owner name across Google, Facebook, Instagram, Yell, Checkatrade, MyBuilder, TrustATrader, Google Maps
+- Check if a Google Business profile already exists (Google sometimes auto-generates these from directory listings)
+- Find any reviews or mentions scattered across directories
+- Pull out any real quotes that could be used as testimonials (with permission)
+- Check if any social accounts exist under the business name
+- Write findings to `designs/[client-slug]/scraped/online-presence-audit.json`
+
+This turns placeholder testimonials into real ones and identifies if a Google Business profile already exists to claim rather than create.
 
 ---
 
@@ -204,13 +279,14 @@ Akin will provide 2-5 reference URLs with a note on what he likes about each. Th
 - https://linear.app — dark mode done right, the typography hierarchy
 ```
 
-**Deploy a reference-analysis subagent** to fetch each URL and extract:
+**Deploy one subagent per reference URL** (all in parallel) to fetch and extract:
 - Layout patterns (how is the hero structured? how are sections divided?)
 - Spacing approach (tight/generous? how much padding between sections?)
 - Typography (serif/sans/mono pairing? heading size vs body? weight contrast?)
 - Colour usage (monochrome? one accent? gradient? how sparingly is colour used?)
 - Interaction style (hover states? scroll animations? playful? restrained?)
 - What makes it feel premium (whitespace? image treatment? typography? details?)
+- Specific CSS values where possible (hex colours, font-family names, font sizes, padding values)
 
 Write findings to `designs/[client-slug]/scraped/reference-analysis.json`:
 ```json
