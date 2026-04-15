@@ -182,13 +182,25 @@ For bigger changes, Claude will update the HTML mockup first and ask you to appr
 Once the client has approved the staging site, choose a domain option:
 
 **Option A — Nith Digital subdomain** (fastest, no client action needed)
-> Site goes live at `[client-slug].nithdigital.uk`
+```bash
+npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \
+  --client-slug [slug] --option subdomain
+```
+> Site goes live at `[slug].nithdigital.uk`. Fully automatic — CNAME created in Cloudflare, Vercel verified.
 
 **Option B — Client's own domain at GoDaddy/Namecheap/etc.**
-> Run `/api/launch-domain` to get Vercel DNS records, then send the client a copy-paste DNS guide. Propagation takes up to 48 hours.
+```bash
+npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \
+  --client-slug [slug] --option custom --domain [domain.co.uk]
+```
+> Prints DNS records and writes `designs/[slug]/domain-setup.md` — send that file to the client. Propagation up to 48 hours.
 
-**Option C — Client on Cloudflare**
-> Run `/api/launch-domain` — DNS records are created automatically. Usually live within minutes.
+**Option C — Client on Cloudflare** (fully automatic)
+```bash
+npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \
+  --client-slug [slug] --option cloudflare --domain [domain.co.uk]
+```
+> Looks up the Cloudflare zone automatically, creates A + CNAME records, verifies on Vercel. Usually live within minutes. Pass `--cf-zone-id` if the zone isn't found automatically.
 
 ---
 
@@ -222,6 +234,29 @@ Claude can generate the handover summary automatically — just ask: *"Write the
 ---
 
 ## Quick Reference — All Commands
+
+### Single-command pipeline (recommended)
+
+New client with no existing site:
+```bash
+npx ts-node --project tsconfig.json src/scripts/run-pipeline.ts \
+  --client-slug client-name --client-name "Client Name"
+```
+
+New client with existing site:
+```bash
+npx ts-node --project tsconfig.json src/scripts/run-pipeline.ts \
+  --client-slug client-name --client-name "Client Name" \
+  --existing-url https://clientsite.co.uk
+```
+
+Resume from a specific stage (e.g. after a crash):
+```bash
+npx ts-node --project tsconfig.json src/scripts/run-pipeline.ts \
+  --client-slug client-name --client-name "Client Name" --stage 7
+```
+
+### Individual commands (if you need to run a stage manually)
 
 ```bash
 # Scrape existing site (Stage 1)
@@ -257,6 +292,14 @@ npx ts-node --project tsconfig.json src/scripts/fetch-repo-files.ts \
 # Push specific changed file (Stage 12)
 npx ts-node --project tsconfig.json src/scripts/push-scaffold.ts \
   --client-slug client-name --files src/app/page.tsx
+
+# Launch domain
+npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \
+  --client-slug client-name --option subdomain
+npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \
+  --client-slug client-name --option custom --domain clientsite.co.uk
+npx ts-node --project tsconfig.json src/scripts/launch-domain.ts \
+  --client-slug client-name --option cloudflare --domain clientsite.co.uk
 ```
 
 ---
@@ -266,5 +309,6 @@ npx ts-node --project tsconfig.json src/scripts/push-scaffold.ts \
 - **Never self-edit.** Clients don't touch the code. All changes go through you at £35/hour.
 - **Archive prevents repetition.** Claude reads past designs before proposing new ones — same-industry sites will always look distinct.
 - **Contact forms work.** They send to the client's email via Resend. Make sure `RESEND_API_KEY` is in `.env.local` and the `nap.email` field in `copy.json` is set to the client's email address.
+- **Domain launch needs Cloudflare keys.** For Option A (subdomain) and Option C (client's Cloudflare): add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_NITHDIGITAL_ZONE_ID` to `.env.local`. Option B (manual DNS) needs no extra credentials.
 - **Designs folder is yours.** Everything in `C:\nithdigital\designs\` stays local — PDFs, briefs, copy, scaffold files. The GitHub repo only has the final deployed code.
 - **QA must pass before launch.** Don't skip Stage 10. It catches SEO issues that would take days to diagnose after the fact.
