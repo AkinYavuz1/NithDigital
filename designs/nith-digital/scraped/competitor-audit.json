@@ -1,0 +1,699 @@
+{
+  "audit_date": "2026-04-16",
+  "purpose": "Competitor landscape audit for Nith Digital — web design agency in Dumfries & Galloway",
+  "searches_performed": [
+    "web design Dumfries",
+    "web design Dumfries and Galloway",
+    "website designer near Dumfries",
+    "web design agency south Scotland",
+    "web designer Scottish Borders",
+    "web design Carlisle Cumbria",
+    "web design Ayrshire",
+    "freelance web developer Dumfries"
+  ],
+  "summary": {
+    "total_competitors_found": 14,
+    "direct_dg_competitors": 8,
+    "nearby_competitors": 6,
+    "overall_assessment": "The bar is low. Most D&G competitors have dated websites, zero pricing transparency, weak or absent portfolios, and no testimonials. The two strongest players (Eskdale Solutions and Cold Digital) have clear weaknesses — Eskdale's own site looks mid-2010s, and Cold Digital is actually based in Essex, not D&G. There is a clear gap for a modern, transparent, results-driven agency in D&G. Nith Digital can dominate locally by simply having a polished site with visible pricing, case studies with metrics, and genuine testimonials.",
+    "common_weaknesses": [
+      "No pricing on website (11 of 14 competitors)",
+      "No testimonials or very weak social proof (9 of 14)",
+      "Outdated website design — ironic for design agencies (6 of 14)",
+      "No measurable results or metrics in case studies",
+      "Thin or absent portfolio sections",
+      "No clear differentiation — everyone says 'bespoke websites'",
+      "Template-based sites marketed as custom design",
+      "Stale content — copyright dates from 2017, blogs abandoned"
+    ],
+    "opportunities_for_nith_digital": [
+      "Transparent fixed pricing on the website — almost nobody does this locally",
+      "Case studies with actual business results (traffic, leads, revenue)",
+      "Modern site with scroll animations, micro-interactions — most competitors are static",
+      "Genuine local presence (not an Essex agency with a Dumfries landing page)",
+      "Speed as a differentiator — most competitors have slow WordPress sites",
+      "AI/automation services — only Altitude Design mentions this, and they're in Dalkeith",
+      "Video testimonials from real local businesses",
+      "Mobile-first design emphasis — several competitors have poor mobile experiences"
+    ]
+  },
+  "competitors": [
+    {
+      "name": "Eskdale Solutions",
+      "url": "https://eskdale.net/",
+      "location": "Gretna, Dumfries & Galloway (also Carlisle office)",
+      "region": "D&G / Carlisle",
+      "years_in_business": "19+ years",
+      "services": [
+        "Website design & development",
+        "Graphic design (print & web)",
+        "SEO & digital marketing",
+        "Bespoke software & database development",
+        "CMS & ecommerce",
+        "PPC, social media, email marketing",
+        "Consultancy & training"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing shown anywhere on site",
+      "site_quality": {
+        "design_type": "Template-based (looks like an off-the-shelf theme)",
+        "modern_or_outdated": "Outdated — mid-2010s aesthetic",
+        "quality_rating": 4,
+        "description": "Functional and responsive but dated colour scheme (bright blue background), weak visual hierarchy, generic layout. Ironic for a design agency."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 8,
+        "examples": ["Hayhoe Webb (accounting)", "Dumfries Community Radio", "Balcary House Hotel", "Galloway Activity Centre", "Belladrum Tartan Heart Festival"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "Notable absence of any client testimonials or reviews"
+      },
+      "weaknesses": [
+        "Own website looks dated for a design agency",
+        "No pricing transparency",
+        "No testimonials or social proof",
+        "No clear call-to-action hierarchy",
+        "Blog section underdeveloped (only 2 visible entries)",
+        "No measurable results in case studies"
+      ],
+      "threat_level": "Medium — established name and long track record, but their own site undermines credibility"
+    },
+    {
+      "name": "Webmill",
+      "url": "https://webmill.co.uk/",
+      "location": "Dumfries & Galloway",
+      "region": "D&G",
+      "years_in_business": "20+ years (since 2004)",
+      "services": [
+        "Web design (WordPress)",
+        "WooCommerce / ecommerce",
+        "Podcast production",
+        "Audio/music services",
+        "Graphic & book design",
+        "Digital assistant services"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing — quote-based only",
+      "site_quality": {
+        "design_type": "Custom-configured Astra WordPress theme",
+        "modern_or_outdated": "Modern — clean and professional",
+        "quality_rating": 6,
+        "description": "Clean responsive layout with earth tones, WCAG AA compliance mentioned. Good use of portfolio galleries. Best-looking D&G competitor site."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 6,
+        "examples": ["Travelling Gallery", "James Hake Ceramics (ecommerce)", "Hanging Stones (Andy Goldsworthy)", "DOC Osteopathy", "Women of Steel podcast"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "Testimonials page exists but content not prominently featured"
+      },
+      "weaknesses": [
+        "No pricing shown",
+        "Niche focus on creative arts sector — limited appeal to mainstream business",
+        "No clear call-to-action for consultations",
+        "Portfolio descriptions are brief — no results data",
+        "Limited testimonials visibility"
+      ],
+      "threat_level": "Low-Medium — good quality but very niche (creative arts). Not competing for mainstream business clients"
+    },
+    {
+      "name": "Sensor Studios",
+      "url": "https://www.sensorstudios.com/",
+      "location": "19 Primrose Street, Dumfries, DG2 7AU",
+      "region": "D&G",
+      "years_in_business": "25+ years (since 1999)",
+      "services": [
+        "Brochure websites",
+        "WordPress CMS sites",
+        "Ecommerce solutions",
+        "Logo design",
+        "Hosting & maintenance",
+        "Photography",
+        "Theme installation & responsive redesigns"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing displayed",
+      "site_quality": {
+        "design_type": "Template-based, generic structure",
+        "modern_or_outdated": "Outdated — static, weak visual hierarchy, copyright dated 2017",
+        "quality_rating": 3,
+        "description": "Functional but dated. Basic typography, muted colours, small portfolio images. Feels abandoned — copyright 2017 suggests no updates in years."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 4,
+        "examples": ["Abbey Cottage Tearoom", "Lochmaben Golf Club", "Templand Cottages", "ADSSWS (charity)"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "No testimonials anywhere on site"
+      },
+      "weaknesses": [
+        "Copyright dated 2017 — appears abandoned or unmaintained",
+        "No testimonials",
+        "Portfolio images are tiny with no detail on scope or results",
+        "No clear CTA beyond contact form",
+        "Own site is a poor advertisement for their services",
+        "No blog or content marketing"
+      ],
+      "threat_level": "Low — long-established but site looks neglected. May still get work through reputation/referrals"
+    },
+    {
+      "name": "Cold Digital",
+      "url": "https://thisiscold.com/",
+      "location": "Jupiter Business Center, Basildon, Essex (NOT actually in D&G)",
+      "region": "Essex-based, targeting D&G via landing pages",
+      "years_in_business": "Unknown",
+      "services": [
+        "Custom web design",
+        "Ecommerce",
+        "Portfolio & creative sites",
+        "SEO-friendly web design",
+        "Mobile-optimised design",
+        "Website redesign",
+        "Branding & logo design",
+        "Digital marketing"
+      ],
+      "pricing_visible": true,
+      "pricing_notes": "Starting at £2,000 — pricing calculator available",
+      "site_quality": {
+        "design_type": "Custom-built on Webflow with advanced animations",
+        "modern_or_outdated": "Very modern — smooth animations, gradient borders, Lenis scroll library",
+        "quality_rating": 8,
+        "description": "Professionally executed with view transitions, rotating tabs, sophisticated interaction patterns. Built on Webflow. Technically the best-looking site among competitors."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 9,
+        "examples": ["Vevo", "Dissident", "Yacht Buoy", "Debut Academy", "The Warren Clinic", "Prova Racing"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": true,
+        "count": 9,
+        "notes": "5-star aggregate from 9 reviews in schema markup, but not prominently displayed on page"
+      },
+      "weaknesses": [
+        "NOT ACTUALLY IN D&G — based in Essex, uses geo-targeted landing pages",
+        "No real local presence or knowledge",
+        "Vague service descriptions lacking specifics",
+        "No team information visible",
+        "Case studies lack performance data",
+        "Geographic inconsistency undermines trust"
+      ],
+      "threat_level": "Medium — good site but fake-local. Easy to beat on genuine local credibility"
+    },
+    {
+      "name": "Digital Studio (Digital Social Web)",
+      "url": "https://digitalsocialweb.co.uk/",
+      "location": "Dumfries, Scotland",
+      "region": "D&G",
+      "years_in_business": "Unknown (Scottish company SC683139)",
+      "services": [
+        "Website design & development",
+        "Web & mobile applications (iOS/Android)",
+        "Social media content creation",
+        "IT support",
+        "Cyber security",
+        "Video content creation"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing shown. Offers tiered packages ('Wee Website Package', 'Growing Business Package') but no prices",
+      "site_quality": {
+        "design_type": "Custom-built (Nuxt.js framework)",
+        "modern_or_outdated": "Modern — clean typography, smooth animations, responsive grids",
+        "quality_rating": 7,
+        "description": "Contemporary and professional. Custom-built on Nuxt.js rather than WordPress — technically sophisticated. Good use of whitespace and professional typography."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 4,
+        "examples": ["NHS Smoking Matters Service (video)", "Maddjakallss (artist)", "D&G LGBT+ (mobile app)", "Parents Inclusion Network (website)"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": true,
+        "count": 1,
+        "notes": "One 5-star review from a Headteacher — limited social proof"
+      },
+      "weaknesses": [
+        "No pricing displayed despite having packages",
+        "Only 1 testimonial",
+        "Uses 'we' language but appears to be a one-person operation",
+        "No team information",
+        "Limited portfolio (4 projects)",
+        "No response time guarantees on contact form"
+      ],
+      "threat_level": "Medium — genuinely local, modern site, broad services. Could be a real competitor if they scale"
+    },
+    {
+      "name": "The Internet Design Shop",
+      "url": "https://www.internetdesignshop.co.uk/",
+      "location": "Dumfries, Scotland",
+      "region": "D&G",
+      "years_in_business": "29 years (since January 1997)",
+      "services": [
+        "Web design",
+        "Graphic design",
+        "Photography & multimedia",
+        "Programming & database development",
+        "Ecommerce",
+        "Android apps",
+        "SEO/marketing",
+        "Domain & hosting"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing shown",
+      "site_quality": {
+        "design_type": "Custom-built HTML — never updated",
+        "modern_or_outdated": "Very outdated — late-2000s aesthetic at best",
+        "quality_rating": 2,
+        "description": "Basic HTML with minimal styling, old jQuery, legacy Google Analytics code. Flat navigation, sparse content. A web design agency with a terrible website."
+      },
+      "portfolio": {
+        "exists": false,
+        "count": 0,
+        "examples": [],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": true,
+        "count": 1,
+        "notes": "One brief, vague quote from a London agency — extremely weak social proof"
+      },
+      "weaknesses": [
+        "Own website is embarrassingly outdated for a design agency",
+        "No portfolio whatsoever on homepage",
+        "Effectively no testimonials (1 generic quote)",
+        "No pricing",
+        "Outdated technology stack",
+        "Still lists Flash as a service",
+        "Appears neglected/abandoned"
+      ],
+      "threat_level": "Very Low — despite 29 years in business, their web presence is a liability. May get referral work but not a credible competitor"
+    },
+    {
+      "name": "KA Design (Kerry Annison)",
+      "url": "http://www.kerryannisondesign.co.uk/",
+      "location": "Dumfries & Galloway",
+      "region": "D&G",
+      "years_in_business": "17 years (since 2009)",
+      "services": [
+        "Branding & logo design",
+        "Brochures & packaging",
+        "Web design (WordPress)",
+        "Email marketing",
+        "Social media",
+        "Ongoing support"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing shown",
+      "site_quality": {
+        "design_type": "Template-based or early 2010s custom build",
+        "modern_or_outdated": "Outdated — copyright 2017, basic layout, minimal imagery",
+        "quality_rating": 3,
+        "description": "Simple, functional but uninspiring. Basic layout, minimal imagery, dated aesthetic. Copyright 2017. Incomplete Google Analytics code (placeholder visible in source)."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 4,
+        "examples": ["Michael McConnell Photography (Logo)", "Oaklea Financial Management (Website)", "Ae-Mazing (Website)", "Studio Launch (Poster)"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "No testimonials or reviews of any kind"
+      },
+      "weaknesses": [
+        "Own site is dated — poor advert for a designer",
+        "Only 4 portfolio items",
+        "No testimonials",
+        "No pricing",
+        "Copyright stuck at 2017",
+        "Broken Google Analytics code",
+        "Freelancer — limited capacity"
+      ],
+      "threat_level": "Low — solo freelancer with a dated site and tiny portfolio"
+    },
+    {
+      "name": "CSU Web Design (Cyberspace Unlimited)",
+      "url": "https://cyberspaceunlimited.co.uk/",
+      "location": "Near Dumfries, D&G",
+      "region": "D&G",
+      "years_in_business": "20 years (since 2006)",
+      "services": [
+        "Website design",
+        "Ecommerce websites",
+        "Web hosting"
+      ],
+      "pricing_visible": true,
+      "pricing_notes": "Prices from £499",
+      "site_quality": {
+        "design_type": "Unknown — SSL certificate error prevented full assessment",
+        "modern_or_outdated": "Likely outdated (SSL certificate misconfiguration is a red flag)",
+        "quality_rating": 3,
+        "description": "Could not fully assess — site has SSL certificate issues which is itself a serious problem for a web design company."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": null,
+        "examples": [],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "Could not verify due to SSL issues"
+      },
+      "weaknesses": [
+        "SSL certificate error — critical failing for any web company",
+        "Budget pricing (from £499) suggests template-only work",
+        "Limited service range (just design, ecommerce, hosting)",
+        "No SEO, marketing, or strategy services"
+      ],
+      "threat_level": "Low — broken SSL on own site. Budget competitor only"
+    },
+    {
+      "name": "Altitude Design",
+      "url": "https://altitudedesign.co.uk/",
+      "location": "Dalkeith, Midlothian (serves Dumfries within 50 miles)",
+      "region": "Central Scotland, targeting D&G",
+      "years_in_business": "Unknown",
+      "services": [
+        "Custom website design",
+        "Web applications",
+        "Mobile apps",
+        "Business automation",
+        "AI integration",
+        "AI voice agents",
+        "Rapid prototyping"
+      ],
+      "pricing_visible": true,
+      "pricing_notes": "Starting at £2,500 with transparent fixed pricing. Monthly payment options.",
+      "site_quality": {
+        "design_type": "Custom hand-coded (not template-based)",
+        "modern_or_outdated": "Very modern — smooth animations, gradients, custom illustrations",
+        "quality_rating": 8,
+        "description": "Sophisticated contemporary design. Hand-coded with smooth animations, gradient elements, strategic whitespace, custom iconography. Polished and professional."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 6,
+        "examples": ["Bloc Collective", "NIU Edinburgh", "Arms & Legs", "Morely Trends", "Caofen", "Flex Electric"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "No testimonials visible on the Dumfries landing page"
+      },
+      "weaknesses": [
+        "Not local — based in Dalkeith, 75 miles from Dumfries",
+        "No testimonials",
+        "Appears to be a one-person operation (mentions 'Gavin' as lead developer)",
+        "No case study metrics",
+        "D&G page is a geo-targeted landing page, not genuine local presence"
+      ],
+      "threat_level": "Medium — high-quality site and modern services (AI), but not local. Geo-targeted landing page approach"
+    },
+    {
+      "name": "Carrick Web Design",
+      "url": "http://www.carrick-web-design.co.uk/",
+      "location": "Castle Douglas, Dumfries & Galloway",
+      "region": "D&G",
+      "years_in_business": "24 years (since 2002)",
+      "services": [
+        "Website development & design",
+        "Website maintenance",
+        "Domain registration",
+        "Web hosting",
+        "SEO",
+        "Website redesign"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing shown",
+      "site_quality": {
+        "design_type": "Unknown — SSL certificate mismatch prevented assessment",
+        "modern_or_outdated": "Likely very outdated (HTTP only, SSL misconfigured)",
+        "quality_rating": 2,
+        "description": "SSL certificate doesn't match domain (shows secure-secure.co.uk instead). Using HTTP not HTTPS. Both are critical failings for a web design company in 2026."
+      },
+      "portfolio": {
+        "exists": false,
+        "count": 0,
+        "examples": [],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "Could not verify"
+      },
+      "weaknesses": [
+        "SSL certificate completely broken",
+        "HTTP-only in 2026 — unacceptable for any web company",
+        "Basic services only (no marketing, strategy, branding)",
+        "Appears neglected"
+      ],
+      "threat_level": "Very Low — broken security, HTTP-only. Not a credible competitor"
+    },
+    {
+      "name": "4D Web Design",
+      "url": "https://4dwebdesign.co.uk/",
+      "location": "Carlisle, Cumbria",
+      "region": "Carlisle (cross-border)",
+      "years_in_business": "20+ years",
+      "services": [
+        "Website design",
+        "SEO / SXO / AIO (AI Optimisation)",
+        "Digital marketing",
+        "Graphic design (logos, branding)",
+        "IT managed services",
+        "Web hosting"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "Pricing pages referenced but actual costs not visible",
+      "site_quality": {
+        "design_type": "WordPress + Elementor Pro (template foundation with customisation)",
+        "modern_or_outdated": "Modern — clean layout, lazy-loading, responsive",
+        "quality_rating": 6,
+        "description": "Clean WordPress/Elementor site with good visual hierarchy and extensive portfolio. Professional but relies on stock imagery. Template foundation with customisation."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 30,
+        "examples": ["DK Firewood", "AR Landscapes", "Hydra Jetting", "Safe-Door", "The Star Anise"],
+        "has_metrics": true
+      },
+      "testimonials": {
+        "exists": true,
+        "count": 4,
+        "notes": "Good testimonials including one claiming triple website traffic. Strongest social proof among Carlisle competitors."
+      },
+      "weaknesses": [
+        "Heavy stock imagery",
+        "No clear differentiator — generic 'we build great websites' messaging",
+        "Contact info buried in footer only",
+        "Hero section lacks distinctive visual identity",
+        "Carlisle-based — may not actively target D&G"
+      ],
+      "threat_level": "Medium — solid Carlisle player with good portfolio and testimonials, but cross-border location limits D&G reach"
+    },
+    {
+      "name": "Light Bulb Web Design",
+      "url": "https://www.lightbulbwebdesign.co.uk/",
+      "location": "4 Hamilton Drive, Carlisle, Cumbria, CA2 4QS",
+      "region": "Carlisle (cross-border)",
+      "years_in_business": "12 years (since 2014)",
+      "services": [
+        "Bespoke responsive web design",
+        "SEO",
+        "Logo & brand design",
+        "Copywriting",
+        "Mobile app development",
+        "School/academy website design",
+        "Business photography",
+        "Website consultation"
+      ],
+      "pricing_visible": true,
+      "pricing_notes": "Minimum £14,950+ — premium positioning",
+      "site_quality": {
+        "design_type": "Custom-built (Joomla-based)",
+        "modern_or_outdated": "Modern — clean, professional, strong brand consistency",
+        "quality_rating": 7,
+        "description": "Professional with custom imagery, proprietary 'SHINE RELOADED' methodology branding, AI-optimised content strategy messaging. Strong but not cutting-edge."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 6,
+        "examples": ["XVO Legal", "iLA (solicitors)", "Pike Moor Vets", "Acumenica (accountancy)", "Kingmoor Consulting", "Revqore (SaaS)"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": true,
+        "count": 8,
+        "notes": "Eight 5-star reviews prominently featured. Strongest testimonial game among all competitors."
+      },
+      "weaknesses": [
+        "Very expensive (£14,950+ minimum) — prices out most D&G small businesses",
+        "Carlisle-based — limited D&G presence",
+        "Relies heavily on methodology branding ('SHINE RELOADED') over concrete deliverables",
+        "Blog present but content not visible",
+        "Joomla platform — unusual and potentially limiting"
+      ],
+      "threat_level": "Low for D&G market — premium pricing means different market segment entirely. Not competing for the same clients"
+    },
+    {
+      "name": "Borders Websites",
+      "url": "https://borders.website/",
+      "location": "Scottish Borders",
+      "region": "Scottish Borders (nearby)",
+      "years_in_business": "15+ years (since 2011)",
+      "services": [
+        "Web design & development",
+        "Website hosting & maintenance",
+        "Web accessibility conformance",
+        "Website support",
+        "Ecommerce solutions",
+        "Website evaluation & strategy"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing — contact for quotes",
+      "site_quality": {
+        "design_type": "WordPress + Avada theme (template-based)",
+        "modern_or_outdated": "Modern — clean, responsive, professional colour scheme",
+        "quality_rating": 6,
+        "description": "Clean Avada-based WordPress site with contemporary greens/whites. Professional imagery, good CTAs. Template foundation but well-configured."
+      },
+      "portfolio": {
+        "exists": false,
+        "count": 0,
+        "examples": [],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "No testimonials, no case studies, no client logos — zero social proof"
+      },
+      "weaknesses": [
+        "No portfolio whatsoever — critical failing for a web design agency",
+        "No testimonials or social proof of any kind",
+        "No pricing",
+        "Accessibility focus is good but portfolio absence is disqualifying",
+        "Scottish Borders location — serves different local market"
+      ],
+      "threat_level": "Low — no portfolio = no credibility. Good messaging but nothing to back it up"
+    },
+    {
+      "name": "Black Sheep Digital",
+      "url": "https://blacksheepdigital.uk/",
+      "location": "Burnbank Steading, Scottish Borders (near Kelso/Duns/Melrose)",
+      "region": "Scottish Borders (nearby)",
+      "years_in_business": "Long career (since 1996 in industry), current business newer",
+      "services": [
+        "WordPress web design & development",
+        "Website redesigns",
+        "SEO setup & technical optimisation",
+        "Website hosting & care plans",
+        "Ecommerce & booking systems",
+        "Branding",
+        "Digital consultancy"
+      ],
+      "pricing_visible": false,
+      "pricing_notes": "No pricing displayed",
+      "site_quality": {
+        "design_type": "WordPress + Avada theme with Slider Revolution",
+        "modern_or_outdated": "Modern — clean, good whitespace, responsive, smooth animations",
+        "quality_rating": 6,
+        "description": "Clean Avada-based site with good whitespace and professional typography. Smooth animations. Template foundation but well-executed."
+      },
+      "portfolio": {
+        "exists": true,
+        "count": 4,
+        "examples": ["Border Ceremonies", "Cafe Sia Group", "Tay Country", "Canine Adventures Northumberland"],
+        "has_metrics": false
+      },
+      "testimonials": {
+        "exists": false,
+        "count": 0,
+        "notes": "Uses Steve Jobs and Josh Brewer quotes instead of actual client testimonials — a red flag"
+      },
+      "weaknesses": [
+        "No actual client testimonials — uses celebrity design quotes as filler",
+        "Small portfolio (4 projects)",
+        "No pricing",
+        "Underdeveloped blog (3 posts)",
+        "Contact form not above the fold",
+        "Scottish Borders location — different local market"
+      ],
+      "threat_level": "Low — small operator in Borders, limited portfolio, no social proof"
+    }
+  ],
+  "pricing_landscape": {
+    "budget_tier": {
+      "range": "£299 - £499",
+      "competitors": ["CSU Web Design (from £499)", "StudioRav (£499+VAT)"],
+      "notes": "Template-only work, minimal customisation"
+    },
+    "mid_tier": {
+      "range": "£1,000 - £3,000",
+      "competitors": ["Cold Digital (from £2,000)", "Altitude Design (from £2,500)"],
+      "notes": "Custom design, more services. Neither is actually local to D&G."
+    },
+    "premium_tier": {
+      "range": "£5,000 - £15,000+",
+      "competitors": ["Light Bulb Web Design (£14,950+ minimum)"],
+      "notes": "Carlisle-based, targets larger businesses. Out of range for most D&G SMEs."
+    },
+    "unknown_pricing": {
+      "competitors": ["Eskdale Solutions", "Webmill", "Sensor Studios", "Digital Studio", "Internet Design Shop", "KA Design", "Carrick Web Design", "4D Web Design", "Borders Websites", "Black Sheep Digital"],
+      "notes": "11 of 14 competitors show NO pricing. Massive opportunity for Nith Digital to differentiate with transparent pricing."
+    }
+  },
+  "quality_rankings": {
+    "by_site_quality": [
+      {"rank": 1, "name": "Cold Digital", "score": 8, "note": "Best-looking but based in Essex, not D&G"},
+      {"rank": 2, "name": "Altitude Design", "score": 8, "note": "Hand-coded, modern. Based in Dalkeith."},
+      {"rank": 3, "name": "Digital Studio", "score": 7, "note": "Custom Nuxt.js build. Genuinely local."},
+      {"rank": 4, "name": "Light Bulb Web Design", "score": 7, "note": "Professional but Carlisle-based, premium pricing."},
+      {"rank": 5, "name": "Webmill", "score": 6, "note": "Clean WordPress. Niche creative arts focus."},
+      {"rank": 6, "name": "4D Web Design", "score": 6, "note": "Solid Elementor site. Carlisle."},
+      {"rank": 7, "name": "Borders Websites", "score": 6, "note": "Looks decent but zero portfolio."},
+      {"rank": 8, "name": "Black Sheep Digital", "score": 6, "note": "Clean Avada site. Scottish Borders."},
+      {"rank": 9, "name": "Eskdale Solutions", "score": 4, "note": "Outdated for a 19-year agency."},
+      {"rank": 10, "name": "KA Design", "score": 3, "note": "Dated freelancer site."},
+      {"rank": 11, "name": "Sensor Studios", "score": 3, "note": "Copyright 2017, appears abandoned."},
+      {"rank": 12, "name": "CSU Web Design", "score": 3, "note": "Broken SSL certificate."},
+      {"rank": 13, "name": "The Internet Design Shop", "score": 2, "note": "Late-2000s HTML, still lists Flash."},
+      {"rank": 14, "name": "Carrick Web Design", "score": 2, "note": "Broken SSL, HTTP-only."}
+    ],
+    "by_testimonials": [
+      {"rank": 1, "name": "Light Bulb Web Design", "count": 8, "note": "Best social proof by far"},
+      {"rank": 2, "name": "Cold Digital", "count": 9, "note": "Schema markup but not prominently shown"},
+      {"rank": 3, "name": "4D Web Design", "count": 4, "note": "Includes metric claim (triple traffic)"},
+      {"rank": 4, "name": "Digital Studio", "count": 1, "note": "Only one testimonial"},
+      {"rank": 5, "name": "The Internet Design Shop", "count": 1, "note": "One vague quote"}
+    ]
+  },
+  "strategic_takeaways": {
+    "the_gap": "There is NO genuinely local D&G web design agency that combines a modern website, transparent pricing, strong portfolio with metrics, and real testimonials. The closest is Digital Studio but they have only 1 testimonial and 4 portfolio items.",
+    "weak_local_market": "Of the 8 D&G-based competitors, 5 have websites scoring 4/10 or below. The web design market in D&G is genuinely weak.",
+    "fake_locals": "Cold Digital (Essex) and Altitude Design (Dalkeith) have strong sites but are geo-targeting D&G with landing pages. Easy to beat on local credibility.",
+    "pricing_vacuum": "Almost nobody shows pricing. Transparent pricing would be a massive differentiator.",
+    "no_results_culture": "Zero competitors show measurable business results (traffic increases, lead generation, revenue impact) in their case studies. This is the biggest opportunity.",
+    "wordpress_dominance": "Nearly every competitor uses WordPress. A faster, custom-coded approach (Next.js) would be immediately noticeable in performance.",
+    "recommended_positioning": "Position Nith Digital as: genuinely local, transparent pricing, modern custom-coded sites (not WordPress templates), case studies with real metrics, fast turnaround. The bar is low enough that doing the basics well will dominate."
+  }
+}
