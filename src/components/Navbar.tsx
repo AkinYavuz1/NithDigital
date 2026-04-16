@@ -39,38 +39,14 @@ const TOOLS_GROUPS = [
       { href: '/tools/website-quote', label: 'Website Quote', desc: 'Quick quote for a new website' },
     ],
   },
+  {
+    label: 'Getting Started',
+    items: [
+      { href: '/launchpad', label: 'Startup Launchpad', desc: '10-step checklist to launch your business' },
+      { href: '/os/demo', label: 'Try Business OS', desc: 'Invoicing, expenses, tax & CRM demo' },
+    ],
+  },
 ]
-
-const RESOURCES_ITEMS = [
-  { href: '/launchpad', label: 'Launchpad' },
-  { href: '/os/demo', label: 'Try Business OS' },
-  { href: '/help', label: 'Help Centre' },
-]
-
-function DropdownItem({ href, label, onClick }: { href: string; label: string; onClick: () => void }) {
-  return (
-    <li>
-      <Link
-        href={href}
-        onClick={onClick}
-        style={{
-          display: 'block',
-          padding: '8px 16px',
-          fontSize: 13,
-          color: '#1B2A4A',
-          fontWeight: 500,
-          textDecoration: 'none',
-          whiteSpace: 'nowrap',
-          transition: 'background 0.15s ease',
-        }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(27,42,74,0.06)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-      >
-        {label}
-      </Link>
-    </li>
-  )
-}
 
 function ToolsMegaDropdown({ onClose }: { onClose: () => void }) {
   const [open, setOpen] = useState(false)
@@ -145,43 +121,6 @@ function ToolsMegaDropdown({ onClose }: { onClose: () => void }) {
   )
 }
 
-function Dropdown({ label, items, onClose }: { label: string; items: { href: string; label: string }[]; onClose: () => void }) {
-  const [open, setOpen] = useState(false)
-
-  return (
-    <li style={{ position: 'relative' }}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <button
-        style={{ ...linkStyle, display: 'flex', alignItems: 'center', gap: 4 }}
-        onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-cream)')}
-        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(245,240,230,0.5)')}
-      >
-        {label}
-        <span style={{ fontSize: 10, opacity: 0.6 }}>▼</span>
-      </button>
-      {open && (
-        <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', zIndex: 200, paddingTop: 8 }}>
-          <ul style={{
-            background: '#F5F0E6',
-            borderRadius: 10,
-            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-            listStyle: 'none',
-            margin: 0,
-            padding: '6px 0',
-            minWidth: 200,
-          }}>
-            {items.map(item => (
-              <DropdownItem key={item.href} href={item.href} label={item.label} onClick={() => { setOpen(false); onClose() }} />
-            ))}
-          </ul>
-        </div>
-      )}
-    </li>
-  )
-}
-
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [mobileSection, setMobileSection] = useState<string | null>(null)
@@ -225,7 +164,6 @@ export default function Navbar() {
             </li>
           ))}
           <ToolsMegaDropdown onClose={close} />
-          <Dropdown label="Free Resources" items={RESOURCES_ITEMS} onClose={close} />
         </ul>
 
         <Link href="/book" className="nav-book-btn"
@@ -284,26 +222,6 @@ export default function Navbar() {
                   View all tools →
                 </Link>
               </div>
-            )}
-          </li>
-
-          {/* Mobile Free Resources */}
-          <li>
-            <button onClick={() => setMobileSection(mobileSection === 'resources' ? null : 'resources')}
-              style={{ background: 'none', border: 'none', padding: '10px 0', fontSize: 14, color: 'rgba(245,240,230,0.8)', fontWeight: 500, cursor: 'pointer', width: '100%', textAlign: 'left', display: 'flex', justifyContent: 'space-between' }}>
-              Free Resources <span>{mobileSection === 'resources' ? '▲' : '▼'}</span>
-            </button>
-            {mobileSection === 'resources' && (
-              <ul style={{ listStyle: 'none', margin: 0, padding: '0 0 0 16px' }}>
-                {RESOURCES_ITEMS.map(item => (
-                  <li key={item.href}>
-                    <Link href={item.href} onClick={close}
-                      style={{ display: 'block', padding: '8px 0', fontSize: 13, color: 'rgba(245,240,230,0.6)', textDecoration: 'none' }}>
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
             )}
           </li>
 
