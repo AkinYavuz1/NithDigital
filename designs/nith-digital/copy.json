@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "title": "Nith Digital — Web Design & Development, Scotland",
+    "description": "A digital agency in Dumfries & Galloway building modern websites, dashboards, and apps for small businesses across Scotland. Fast delivery, fair pricing.",
+    "og_title": "Nith Digital — Web Design & Development, Scotland",
+    "og_image": "https://www.nithdigital.uk/og-image.jpg",
+    "keywords": [
+      "web design Scotland",
+      "website design Dumfries and Galloway",
+      "web developer Scotland",
+      "small business website UK",
+      "web design agency Scotland",
+      "website designer near me",
+      "Power BI dashboards Scotland",
+      "SEO services Scotland",
+      "social media management Scotland",
+      "mobile app development Scotland"
+    ]
+  },
+  "nap": {
+    "name": "Nith Digital",
+    "phone": "+44 7404 173024",
+    "email": "hello@nithdigital.uk",
+    "address": "Sanquhar",
+    "postal_code": "DG4",
+    "city": "Dumfries & Galloway",
+    "country": "GB"
+  },
+  "pages": {
+    "home": {
+      "hero_headline": "We build websites that work as hard as you do",
+      "hero_subheading": "A digital agency in Dumfries & Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.",
+      "hero_cta": "See our work",
+      "intro_paragraph": "Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.",
+      "services_intro": "Website design is what we do best — but it's not all we do.",
+      "trust_statement": "10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.",
+      "cta_section_headline": "Ready to talk?",
+      "cta_section_body": "No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.",
+      "cta_button": "Get in touch"
+    },
+    "work": {
+      "headline": "Work",
+      "intro": "Products we've built and shipped. Real things, live in the wild.",
+      "projects": [
+        {
+          "name": "Not an Octavia",
+          "description": "Machine learning model that finds underpriced used cars across the UK. Scans thousands of listings daily using XGBoost, surfaces the best deals, and ranks them by value gap.",
+          "tags": ["Next.js", "TypeScript", "Supabase", "XGBoost", "Groq"],
+          "url": "https://www.notanoctavia.co.uk",
+          "status": "Live"
+        },
+        {
+          "name": "gAIns",
+          "description": "AI-powered gym tracker with a built-in coach. Logs workouts, tracks progress over time, and gives personalised programming advice using conversation.",
+          "tags": ["React", "Vite", "Supabase", "Anthropic API", "Stripe"],
+          "url": null,
+          "status": "In development"
+        },
+        {
+          "name": "Daily Duel",
+          "description": "30 daily mini-games — trivia, puzzles, pattern matching, memory. Fresh challenges every day with leaderboards and streaks.",
+          "tags": ["Next.js", "TypeScript", "Tailwind", "Supabase"],
+          "url": "https://www.dailyduel.co.uk",
+          "status": "Live"
+        },
+        {
+          "name": "Tumble Tots",
+          "description": "Clean, mobile-first website for a local childminding business. Simple, fast, and easy to find on Google.",
+          "tags": ["HTML", "CSS", "JavaScript"],
+          "url": "https://www.tumbletotsdumfries.co.uk",
+          "status": "Live"
+        }
+      ]
+    },
+    "services": {
+      "headline": "Services",
+      "intro": "Everything a small business needs to look professional online and run smarter behind the scenes.",
+      "service_items": [
+        {
+          "name": "Website Design & Development",
+          "description": "Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability. Includes contact forms, Google optimisation, and proper hosting.",
+          "cta": "Start a project"
+        },
+        {
+          "name": "Social Media Management",
+          "description": "Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work. Automated where it makes sense, human where it matters.",
+          "cta": "Learn more"
+        },
+        {
+          "name": "Search Engine Optimisation",
+          "description": "Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it. Technical optimisation, content strategy, and Google Search Console monitoring — not keyword stuffing.",
+          "cta": "Learn more"
+        },
+        {
+          "name": "Data Analytics & Power BI",
+          "description": "Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful — see what's working, what isn't, and where the money goes. Built by someone with a decade in BI.",
+          "cta": "Learn more"
+        },
+        {
+          "name": "Mobile App Development",
+          "description": "Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals — built to solve a specific problem, not to tick a box.",
+          "cta": "Learn more"
+        },
+        {
+          "name": "TradeDesk",
+          "description": "A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically. No app to download, no login to remember. Built for tradespeople who hate admin.",
+          "cta": "Try TradeDesk"
+        }
+      ]
+    },
+    "about": {
+      "headline": "About",
+      "story_paragraph": "Nith Digital is run by a Senior BI Developer based in Sanquhar, Dumfries & Galloway. With over a decade of experience across healthcare, energy, finance, and the public sector, the focus is on building modern digital tools and turning messy data into clear decisions. The business was born from a simple observation: rural Scotland deserves the same quality of digital services as any city. The name comes from the River Nith, which flows right through Sanquhar on its 70-mile journey to the Solway Firth.",
+      "values_intro": "How we work",
+      "values": [
+        "Transparent pricing — you know what it costs before we start",
+        "Direct communication — one person, not a chain of account managers",
+        "Fast delivery — weeks, not months",
+        "No lock-in — you own everything we build"
+      ],
+      "team_intro": "Akin Yavuz — Founder",
+      "qualifications": [
+        "BSc Business Information Systems",
+        "Certified Scrum Master",
+        "MS SQL Developer",
+        "Power BI Analyst",
+        "Diploma in Leadership & Management"
+      ],
+      "career_highlights": [
+        "2014–2016: Technology Consultant",
+        "2016–2018: Data Analyst (Finance)",
+        "2018–2024: BI Developer across healthcare, energy, public sector",
+        "2026: Founded Nith Digital"
+      ],
+      "personal_note": "Four Commonwealth gold medals in competitive powerlifting. Same approach to both disciplines: show up consistently, put in the reps, and don't cut corners."
+    },
+    "contact": {
+      "headline": "Get in touch",
+      "intro": "Whether you need a website, a dashboard, or just want to talk through an idea — drop a message or pick up the phone.",
+      "form_cta": "Send message",
+      "phone_label": "Phone",
+      "email_label": "Email"
+    },
+    "faq": {
+      "intro": "Common questions about working with us",
+      "items": [
+        {
+          "question": "How much does a website cost?",
+          "answer": "A standard business website starts at £500 with a £40/month hosting and support fee. Booking systems start at £750. Custom web apps start at £3,000. We'll give you an exact quote after a 15-minute conversation — no surprises."
+        },
+        {
+          "question": "How long does a website take to build?",
+          "answer": "Most business websites are live within 2-3 weeks from the day we start. Custom apps and more complex projects take 4-8 weeks. We'll give you a timeline upfront and stick to it."
+        },
+        {
+          "question": "Do I need to provide content and images?",
+          "answer": "We handle all the copy and design. If you have photos of your work (even phone photos), send them over — they make a huge difference. If not, we'll source professional imagery that fits your industry."
+        },
+        {
+          "question": "Will my website work on mobile?",
+          "answer": "Every site we build is mobile-first. Over 60% of your visitors will be on their phone, so that's where we start the design. Desktop is the adaptation, not the other way around."
+        },
+        {
+          "question": "Can I update the site myself?",
+          "answer": "We handle all updates for you. If you need a change — new photos, updated text, a new page — just message us. Post-launch changes are billed at £35 per hour, and most small updates take 15-30 minutes."
+        },
+        {
+          "question": "What if I'm not happy with the design?",
+          "answer": "We show you 3 design concepts before building anything. You pick the direction, request changes, and approve a final design. We don't start coding until you're happy with what you see."
+        }
+      ]
+    }
+  },
+  "testimonials": [
+    {
+      "quote": "Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it. No fuss, no jargon — just got on with it.",
+      "name": "Recent client",
+      "location": "Dumfries & Galloway",
+      "rating": 5
+    },
+    {
+      "quote": "We'd been quoted over £3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price — and actually answered the phone when we had questions.",
+      "name": "Recent client",
+      "location": "Ayrshire",
+      "rating": 5
+    },
+    {
+      "quote": "The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds. Should have done it years ago.",
+      "name": "Recent client",
+      "location": "Scotland",
+      "rating": 5
+    }
+  ],
+  "schema": {
+    "type": "ProfessionalService",
+    "name": "Nith Digital",
+    "description": "Digital agency in Dumfries & Galloway, Scotland. Website design, Power BI dashboards, SEO, social media management, and mobile apps for small businesses.",
+    "telephone": "+447404173024",
+    "address": {
+      "street_address": "Sanquhar",
+      "postal_code": "DG4",
+      "locality": "Dumfries & Galloway",
+      "country": "GB"
+    },
+    "geo": {
+      "latitude": "55.3690",
+      "longitude": "-3.9262"
+    },
+    "opening_hours": [
+      { "day": "Monday-Friday", "opens": "09:00", "closes": "17:00" }
+    ],
+    "service_areas": [
+      "Dumfries & Galloway",
+      "Sanquhar",
+      "Dumfries",
+      "Ayrshire",
+      "Scottish Borders",
+      "Glasgow",
+      "Edinburgh",
+      "Scotland",
+      "United Kingdom"
+    ],
+    "price_range": "$$",
+    "same_as": [
+      "https://www.facebook.com/nithdigital",
+      "https://www.linkedin.com/company/nith-digital",
+      "https://github.com/AkinYavuz1"
+    ]
+  },
+  "schema_reviews": {
+    "rating_value": 5.0,
+    "review_count": 0,
+    "review_text": ""
+  },
+  "maps": {
+    "embed_url": "",
+    "latitude": "55.3690",
+    "longitude": "-3.9262"
+  },
+  "social": {
+    "tagline": "Web design & development for small businesses across Scotland",
+    "twitter_bio": "Digital agency in Dumfries & Galloway. Websites, dashboards, apps. Built fast, priced fair.",
+    "google_business_description": "Nith Digital is a web design and development agency based in Sanquhar, Dumfries & Galloway. We build modern websites, Power BI dashboards, and custom apps for small businesses across Scotland and the UK. Transparent pricing from £500, fast delivery, and direct communication — no account managers, no jargon."
+  }
+}
