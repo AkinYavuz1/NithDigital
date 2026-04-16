@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Design 2: Living Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
+
+  /* ── Design label bar ── */
+  .design-label{position:fixed;top:0;left:0;width:100%;z-index:9999;background:#F15533;color:#fff;font:500 12px/1 'Plus Jakarta Sans',sans-serif;text-align:center;padding:10px 0;letter-spacing:.04em}
+
+  /* ── Reset & base ── */
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:#0D0D0D;color:#FFFFFF;line-height:1.55;letter-spacing:-.015em;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* ── Typography scale (1.414) ── */
+  h1{font-size:clamp(48px,7vw,90px);line-height:1.05;letter-spacing:-.02em;font-weight:300}
+  h2{font-size:clamp(32px,4vw,64px);line-height:1.05;letter-spacing:-.02em;font-weight:300}
+  h3{font-size:clamp(23px,2.5vw,45px);line-height:1.05;letter-spacing:-.02em;font-weight:400}
+  h4{font-size:clamp(18px,1.8vw,32px);line-height:1.15;letter-spacing:-.02em;font-weight:400}
+  p{font-size:clamp(15px,1.1vw,18px);color:#7F8183;max-width:580px}
+
+  /* ── Layout ── */
+  .container{max-width:1280px;margin:0 auto;padding:0 48px}
+  section{position:relative;padding:160px 0}
+
+  /* ── Animate on scroll ── */
+  .animate-on-scroll{opacity:0;transform:translateY(48px);transition:opacity .8s cubic-bezier(.35,0,0,1),transform .8s cubic-bezier(.35,0,0,1)}
+  .animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+
+  /* ── Section numbers ── */
+  .section-number{position:absolute;font-size:clamp(120px,20vw,280px);font-weight:500;color:#FFFFFF;opacity:.03;line-height:1;letter-spacing:-.04em;user-select:none;pointer-events:none;transition:opacity 1.2s cubic-bezier(.35,0,0,1),transform 1.2s cubic-bezier(.35,0,0,1);transform:translateY(40px)}
+  .section-number.visible{opacity:.03;transform:translateY(0)}
+  .section-number-label{font-size:clamp(11px,0.8vw,13px);font-weight:500;color:#7F8183;letter-spacing:.15em;text-transform:uppercase;margin-bottom:24px;display:block}
+
+  /* ── Nav ── */
+  nav{position:fixed;top:36px;left:0;width:100%;z-index:100;padding:0 48px;transition:top .4s cubic-bezier(.35,0,0,1)}
+  .nav-inner{display:flex;justify-content:space-between;align-items:center;max-width:1280px;margin:0 auto}
+  .logo{font-size:18px;font-weight:500;letter-spacing:-.02em;color:#fff;text-decoration:none}
+  .logo span{color:#F15533}
+  .nav-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,.15);color:#fff;font:400 14px/1 'Plus Jakarta Sans',sans-serif;padding:14px 28px;border-radius:16px;cursor:pointer;text-decoration:none;height:48px;transition:border-color .4s cubic-bezier(.35,0,0,1),background .4s cubic-bezier(.35,0,0,1)}
+  .nav-btn:hover{border-color:#F15533;background:rgba(241,85,51,.08)}
+
+  /* ── Double-label button ── */
+  .btn-double{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:#F15533;border:none;color:#fff;font:500 15px/1 'Plus Jakarta Sans',sans-serif;padding:18px 36px;border-radius:16px;cursor:pointer;text-decoration:none;height:56px;transition:background .4s cubic-bezier(.35,0,0,1)}
+  .btn-double .btn-text{display:flex;flex-direction:column;align-items:center;transition:transform .4s cubic-bezier(.35,0,0,1)}
+  .btn-double .btn-text span{display:block;height:56px;line-height:56px}
+  .btn-double:hover .btn-text{transform:translateY(-56px)}
+  .btn-double:hover{background:#d94428}
+
+  /* ── Hero ── */
+  .hero{min-height:100vh;display:flex;align-items:flex-end;padding:0 0 120px 0;position:relative}
+  .hero .container{width:100%}
+  .hero-content{opacity:0;animation:heroFadeIn 1.2s cubic-bezier(.35,0,0,1) .2s forwards}
+  @keyframes heroFadeIn{to{opacity:1}}
+  .hero h1{margin-bottom:32px;max-width:900px}
+  .hero p{font-size:clamp(16px,1.2vw,20px);margin-bottom:48px;max-width:560px}
+
+  /* ── Intro section ── */
+  .intro .section-number{top:-40px;left:-2%}
+  .intro-content{max-width:680px}
+  .intro-content p{font-size:clamp(16px,1.3vw,21px);color:#FFFFFF;line-height:1.6;font-weight:300}
+
+  /* ── Portfolio ── */
+  .portfolio .section-number{top:-40px;right:-2%}
+  .portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:64px}
+  .portfolio-card{background:#1A1A1A;border-radius:16px;overflow:hidden;transition:transform .6s cubic-bezier(.35,0,0,1)}
+  .portfolio-card:hover{transform:translateY(-6px)}
+  .portfolio-card:hover .card-video{background-size:200% 200%}
+  .card-video{height:280px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1A1A1A 0%,#2a2a2a 25%,#1A1A1A 50%,#2a2a2a 75%,#1A1A1A 100%);background-size:400% 400%;animation:gradientShift 6s ease infinite;transition:background-size .6s cubic-bezier(.35,0,0,1)}
+  .portfolio-card:nth-child(2) .card-video{animation-delay:-1.5s}
+  .portfolio-card:nth-child(3) .card-video{animation-delay:-3s}
+  .portfolio-card:nth-child(4) .card-video{animation-delay:-4.5s}
+  @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .card-video::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border:2px solid rgba(255,255,255,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .4s cubic-bezier(.35,0,0,1)}
+  .card-video::before{content:'';position:absolute;top:50%;left:52%;transform:translate(-50%,-50%);width:0;height:0;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent rgba(255,255,255,.4);z-index:1}
+  .portfolio-card:hover .card-video::after{border-color:#F15533}
+  .card-info{padding:32px}
+  .card-info h4{margin-bottom:8px;font-weight:400}
+  .card-info p{font-size:14px;color:#7F8183;margin-bottom:16px}
+  .card-status{font-size:12px;font-weight:500;color:#F15533;letter-spacing:.08em;text-transform:uppercase}
+
+  /* ── Services ── */
+  .services .section-number{top:-40px;left:-2%}
+  .services-intro{margin-bottom:64px}
+  .services-list{border-top:1px solid rgba(255,255,255,.06)}
+  .service-item{border-bottom:1px solid rgba(255,255,255,.06);padding:0}
+  .service-header{display:flex;justify-content:space-between;align-items:center;padding:32px 0;cursor:pointer;transition:color .4s cubic-bezier(.35,0,0,1)}
+  .service-header:hover{color:#F15533}
+  .service-header h4{font-weight:400;pointer-events:none}
+  .service-toggle{width:32px;height:32px;position:relative;flex-shrink:0}
+  .service-toggle::before,.service-toggle::after{content:'';position:absolute;background:#7F8183;transition:transform .4s cubic-bezier(.35,0,0,1),background .4s cubic-bezier(.35,0,0,1)}
+  .service-toggle::before{width:16px;height:1.5px;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .service-toggle::after{width:1.5px;height:16px;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .service-item.open .service-toggle::after{transform:translate(-50%,-50%) rotate(90deg)}
+  .service-header:hover .service-toggle::before,.service-header:hover .service-toggle::after{background:#F15533}
+  .service-body{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.35,0,0,1),padding .6s cubic-bezier(.35,0,0,1)}
+  .service-item.open .service-body{max-height:200px;padding-bottom:32px}
+  .service-body p{font-size:15px;color:#7F8183;max-width:600px}
+  .service-number{font-size:13px;color:#7F8183;font-weight:400;margin-right:24px;font-variant-numeric:tabular-nums}
+
+  /* ── About ── */
+  .about .section-number{top:-40px;right:-2%}
+  .about-content{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  .about-text p{font-size:clamp(16px,1.2vw,20px);color:#FFFFFF;line-height:1.6;font-weight:300}
+  .about-image{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5}
+  .about-image img{width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:filter .6s cubic-bezier(.35,0,0,1)}
+  .about-image:hover img{filter:grayscale(0)}
+
+  /* ── Testimonials ── */
+  .testimonials .section-number{top:-40px;left:-2%}
+  .testimonial-list{display:flex;flex-direction:column;gap:96px;margin-top:64px}
+  .testimonial-item{max-width:800px}
+  .testimonial-item:nth-child(even){margin-left:auto}
+  .testimonial-quote{font-size:clamp(22px,2.5vw,36px);font-weight:300;line-height:1.35;letter-spacing:-.02em;color:#FFFFFF;margin-bottom:24px}
+  .testimonial-quote::before{content:'\201C';display:block;font-size:64px;color:#F15533;line-height:1;margin-bottom:8px}
+  .testimonial-author{font-size:14px;color:#7F8183;font-weight:400}
+
+  /* ── FAQ ── */
+  .faq{padding:120px 0}
+  .faq-list{margin-top:48px;border-top:1px solid rgba(255,255,255,.06)}
+  .faq-item{border-bottom:1px solid rgba(255,255,255,.06)}
+  .faq-question{display:flex;justify-content:space-between;align-items:center;padding:28px 0;cursor:pointer;font-size:clamp(16px,1.2vw,20px);font-weight:400;transition:color .4s cubic-bezier(.35,0,0,1)}
+  .faq-question:hover{color:#F15533}
+  .faq-toggle{width:24px;height:24px;position:relative;flex-shrink:0}
+  .faq-toggle::before,.faq-toggle::after{content:'';position:absolute;background:#7F8183;transition:transform .4s cubic-bezier(.35,0,0,1)}
+  .faq-toggle::before{width:14px;height:1.5px;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .faq-toggle::after{width:1.5px;height:14px;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .faq-item.open .faq-toggle::after{transform:translate(-50%,-50%) rotate(90deg)}
+  .faq-answer{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.35,0,0,1),padding .6s cubic-bezier(.35,0,0,1)}
+  .faq-item.open .faq-answer{max-height:160px;padding-bottom:28px}
+  .faq-answer p{font-size:15px;color:#7F8183;max-width:560px}
+
+  /* ── Contact CTA ── */
+  .contact .section-number{top:-40px;right:-2%}
+  .contact-inner{text-align:center;display:flex;flex-direction:column;align-items:center}
+  .contact-inner h2{margin-bottom:24px}
+  .contact-inner p{text-align:center;margin-bottom:48px}
+
+  /* ── Footer ── */
+  footer{padding:64px 0;border-top:1px solid rgba(255,255,255,.06)}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center}
+  .footer-inner p{font-size:13px;color:#7F8183}
+  .footer-links{display:flex;gap:32px}
+  .footer-links a{font-size:13px;color:#7F8183;text-decoration:none;transition:color .4s cubic-bezier(.35,0,0,1)}
+  .footer-links a:hover{color:#F15533}
+
+  /* ── Mobile ── */
+  @media(max-width:768px){
+    .container{padding:0 24px}
+    section{padding:100px 0}
+    nav{padding:0 24px;top:36px}
+    .hero{padding:0 0 80px 0;min-height:90vh}
+    .hero h1{font-size:clamp(36px,10vw,56px)}
+    .portfolio-grid{grid-template-columns:1fr;gap:24px}
+    .card-video{height:200px}
+    .about-content{grid-template-columns:1fr;gap:48px}
+    .about-image{order:-1;aspect-ratio:16/9}
+    .testimonial-item:nth-child(even){margin-left:0}
+    .section-number{font-size:100px!important}
+    .design-label{font-size:10px;padding:8px 12px}
+    .footer-inner{flex-direction:column;gap:24px;text-align:center}
+  }
+
+  /* ── Reduced motion ── */
+  @media(prefers-reduced-motion:reduce){
+    .animate-on-scroll{opacity:1;transform:none;transition:none}
+    .section-number{opacity:.03;transform:none;transition:none}
+    .hero-content{opacity:1;animation:none}
+    .card-video{animation:none}
+    .btn-double .btn-text{transition:none}
+    *{transition-duration:0s!important;animation-duration:0s!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- Design label bar -->
+<div class="design-label">Design 2 of 5 &nbsp;|&nbsp; Living Portfolio &nbsp;|&nbsp; Warm and narrative &nbsp;|&nbsp; Inspired by: makebuild.studio &nbsp;|&nbsp; Fonts: Plus Jakarta Sans &nbsp;|&nbsp; Signature: Video portfolio cards + numbered sections</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">nith<span>.</span></a>
+    <a href="#contact" class="nav-btn">Get in touch</a>
+  </div>
+</nav>
+
+<!-- 01 — Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="section-number-label">01 &mdash; Introduction</span>
+      <h1>We build websites that work as hard as you do</h1>
+      <p>A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+      <a href="#portfolio" class="btn-double">
+        <span class="btn-text">
+          <span>See our work</span>
+          <span>See our work</span>
+        </span>
+      </a>
+    </div>
+  </div>
+  <div class="section-number" style="bottom:0;right:4%">01</div>
+</section>
+
+<!-- Intro -->
+<section class="intro">
+  <div class="section-number">01</div>
+  <div class="container">
+    <div class="intro-content animate-on-scroll">
+      <p>Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 — Portfolio -->
+<section class="portfolio" id="portfolio">
+  <div class="section-number">02</div>
+  <div class="container">
+    <span class="section-number-label animate-on-scroll">02 &mdash; Work</span>
+    <h2 class="animate-on-scroll">Selected projects</h2>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card animate-on-scroll">
+        <div class="card-video"></div>
+        <div class="card-info">
+          <h4>Not an Octavia</h4>
+          <p>Social-first brand identity and website for a car culture community challenging the bland and boring.</p>
+          <span class="card-status">Live</span>
+        </div>
+      </div>
+
+      <div class="portfolio-card animate-on-scroll">
+        <div class="card-video"></div>
+        <div class="card-info">
+          <h4>gAIns</h4>
+          <p>AI-powered personal training app with adaptive workout plans and real-time form feedback.</p>
+          <span class="card-status">In development</span>
+        </div>
+      </div>
+
+      <div class="portfolio-card animate-on-scroll">
+        <div class="card-video"></div>
+        <div class="card-info">
+          <h4>Daily Duel</h4>
+          <p>Head-to-head trivia game with daily challenges, leaderboards, and social sharing baked in.</p>
+          <span class="card-status">In development</span>
+        </div>
+      </div>
+
+      <div class="portfolio-card animate-on-scroll">
+        <div class="card-video"></div>
+        <div class="card-info">
+          <h4>Tumble Tots</h4>
+          <p>Booking and class management platform for a children's gymnastics franchise across Scotland.</p>
+          <span class="card-status">In development</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 03 — Services -->
+<section class="services" id="services">
+  <div class="section-number">03</div>
+  <div class="container">
+    <span class="section-number-label animate-on-scroll">03 &mdash; Services</span>
+    <div class="services-intro animate-on-scroll">
+      <h2>Website design is what we do best&thinsp;&mdash;&thinsp;but it's not all we do.</h2>
+    </div>
+    <div class="services-list">
+
+      <div class="service-item animate-on-scroll">
+        <div class="service-header" onclick="toggleService(this)">
+          <div style="display:flex;align-items:center"><span class="service-number">01</span><h4>Website Design &amp; Development</h4></div>
+          <div class="service-toggle"></div>
+        </div>
+        <div class="service-body">
+          <p>Custom-built sites that load fast, look sharp on every device, and are designed to convert visitors into customers. No templates, no page builders.</p>
+        </div>
+      </div>
+
+      <div class="service-item animate-on-scroll">
+        <div class="service-header" onclick="toggleService(this)">
+          <div style="display:flex;align-items:center"><span class="service-number">02</span><h4>Social Media Management</h4></div>
+          <div class="service-toggle"></div>
+        </div>
+        <div class="service-body">
+          <p>Content strategy, scheduling, and publishing across your channels. We handle the day-to-day so you can focus on the business.</p>
+        </div>
+      </div>
+
+      <div class="service-item animate-on-scroll">
+        <div class="service-header" onclick="toggleService(this)">
+          <div style="display:flex;align-items:center"><span class="service-number">03</span><h4>Search Engine Optimisation</h4></div>
+          <div class="service-toggle"></div>
+        </div>
+        <div class="service-body">
+          <p>Technical SEO, keyword research, and content optimisation grounded in real search data. No smoke and mirrors — just measurable improvement.</p>
+        </div>
+      </div>
+
+      <div class="service-item animate-on-scroll">
+        <div class="service-header" onclick="toggleService(this)">
+          <div style="display:flex;align-items:center"><span class="service-number">04</span><h4>Data Analytics &amp; Power BI</h4></div>
+          <div class="service-toggle"></div>
+        </div>
+        <div class="service-body">
+          <p>Dashboards and reports that actually get used. We turn messy data into clear insight you can act on, built on a decade of BI experience.</p>
+        </div>
+      </div>
+
+      <div class="service-item animate-on-scroll">
+        <div class="service-header" onclick="toggleService(this)">
+          <div style="display:flex;align-items:center"><span class="service-number">05</span><h4>Mobile App Development</h4></div>
+          <div class="service-toggle"></div>
+        </div>
+        <div class="service-body">
+          <p>Cross-platform apps for iOS and Android, from concept through to App Store launch. Built with the same care we put into every website.</p>
+        </div>
+      </div>
+
+      <div class="service-item animate-on-scroll">
+        <div class="service-header" onclick="toggleService(this)">
+          <div style="display:flex;align-items:center"><span class="service-number">06</span><h4>TradeDesk</h4></div>
+          <div class="service-toggle"></div>
+        </div>
+        <div class="service-body">
+          <p>WhatsApp-based expense tracking for sole traders. Snap a photo of a receipt, and we extract the data automatically. Bookkeeping without the app.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 04 — About -->
+<section class="about" id="about">
+  <div class="section-number">04</div>
+  <div class="container">
+    <span class="section-number-label animate-on-scroll">04 &mdash; About</span>
+    <div class="about-content">
+      <div class="about-text animate-on-scroll">
+        <h2 style="margin-bottom:32px">Built different</h2>
+        <p>10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.</p>
+      </div>
+      <div class="about-image animate-on-scroll">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200" alt="Code on screen" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 — Testimonials -->
+<section class="testimonials" id="testimonials">
+  <div class="section-number">05</div>
+  <div class="container">
+    <span class="section-number-label animate-on-scroll">05 &mdash; Testimonials</span>
+    <div class="testimonial-list">
+
+      <div class="testimonial-item animate-on-scroll">
+        <div class="testimonial-quote">Completely transformed our online presence. The site pays for itself every month — we get more enquiries now than we ever did through word of mouth alone.</div>
+        <div class="testimonial-author">Recent client &mdash; Hospitality, Dumfries</div>
+      </div>
+
+      <div class="testimonial-item animate-on-scroll">
+        <div class="testimonial-quote">No messing about. Told them what we needed, got a site that actually works. Wish we'd done it a year ago.</div>
+        <div class="testimonial-author">Recent client &mdash; Trades, Ayrshire</div>
+      </div>
+
+      <div class="testimonial-item animate-on-scroll">
+        <div class="testimonial-quote">They explained everything in plain English and delivered exactly what was promised, on time. Rare in this industry.</div>
+        <div class="testimonial-author">Recent client &mdash; Professional Services, Edinburgh</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <h3 class="animate-on-scroll">Frequently asked questions</h3>
+    <div class="faq-list">
+
+      <div class="faq-item animate-on-scroll">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>How much does a website cost?</span>
+          <div class="faq-toggle"></div>
+        </div>
+        <div class="faq-answer">
+          <p>Sites start at &pound;500 for the build, plus &pound;40 per month for hosting, updates, and support. We'll give you an exact figure after a quick conversation about what you need.</p>
+        </div>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>How long does a website take?</span>
+          <div class="faq-toggle"></div>
+        </div>
+        <div class="faq-answer">
+          <p>Most sites go live in 2&ndash;3 weeks from kickoff. Larger projects with custom features may take a little longer, but we'll agree a timeline upfront.</p>
+        </div>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Can I update the site myself?</span>
+          <div class="faq-toggle"></div>
+        </div>
+        <div class="faq-answer">
+          <p>We handle all updates for you at &pound;35 per hour. No wrestling with a CMS, no accidentally breaking the layout. Just tell us what you need changed and it's done.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 06 — Contact -->
+<section class="contact" id="contact">
+  <div class="section-number">06</div>
+  <div class="container">
+    <div class="contact-inner animate-on-scroll">
+      <span class="section-number-label">06 &mdash; Contact</span>
+      <h2>Ready to talk?</h2>
+      <p>No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+      <a href="#" class="btn-double">
+        <span class="btn-text">
+          <span>Get in touch</span>
+          <span>Get in touch</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <p>&copy; 2026 Nith Digital. Dumfries &amp; Galloway.</p>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Scroll observer ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.animate-on-scroll, .section-number').forEach(el => {
+    observer.observe(el);
+  });
+
+  /* ── Service accordion ── */
+  function toggleService(header) {
+    const item = header.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.service-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* ── FAQ accordion ── */
+  function toggleFaq(question) {
+    const item = question.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* ── Smooth scroll for anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
