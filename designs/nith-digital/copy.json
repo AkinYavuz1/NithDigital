@@ -29,7 +29,7 @@
   "pages": {
     "home": {
       "hero_headline": "Websites for tradespeople and small businesses in Scotland",
-      "hero_subheading": "Custom-built, mobile-friendly websites from £500. Based in Dumfries & Galloway. Live in 2-3 weeks.",
+      "hero_subheading": "Custom-built, mobile-friendly websites from £500. Based in Dumfries & Galloway. Live in 1 week.",
       "hero_cta": "See our work",
       "hero_cta_phone": "07404 173024",
       "intro_paragraph": "Nith Digital builds proper websites for joiners, plumbers, B&Bs, childminders, and local businesses across Dumfries & Galloway and Scotland. Modern design, fair pricing, and someone who actually picks up the phone.",
@@ -48,7 +48,7 @@
           },
           {
             "number": "03",
-            "title": "You're live in 2-3 weeks",
+            "title": "You're live in 1 week",
             "description": "Your site is live, found on Google, and working for you. You own everything — no lock-in, no monthly surprises."
           }
         ]
@@ -56,11 +56,11 @@
       "services_intro": "Website design is what we do best — but it's not all we do.",
       "pricing_headline": "Transparent pricing",
       "pricing_items": [
-        { "service": "Business website", "price": "From £500", "detail": "+ £40/month hosting & support" },
-        { "service": "Booking system", "price": "From £750", "detail": "Online bookings, calendar, confirmations" },
-        { "service": "Power BI dashboard", "price": "£500/day", "detail": "Interactive reporting from your data" },
-        { "service": "Custom web app", "price": "From £3,000", "detail": "Job trackers, portals, directories" }
+        { "service": "Starter website", "price": "£500", "detail": "Perfect for tradespeople and sole traders" },
+        { "service": "Business website", "price": "£800", "detail": "For growing businesses with more to say" },
+        { "service": "Premium website", "price": "£1,200", "detail": "Full-featured site with all the extras" }
       ],
+      "pricing_note": "All plans include £40/month hosting & support. Website builds can be split over the first 12 months at no additional cost.",
       "trust_statement": "10+ years building software across the NHS, energy, and finance. Based in Sanquhar — not London, not a call centre. One person, direct communication, no account managers.",
       "cta_section_headline": "Ready to talk?",
       "cta_section_body": "Call 07404 173024 or drop us a message. No jargon, no pressure — just a straight conversation about what you need and what it'll cost.",
@@ -120,19 +120,9 @@
           "cta": "Learn more"
         },
         {
-          "name": "Data Analytics & Power BI",
-          "description": "Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful — see what's working, what isn't, and where the money goes. Built by someone with a decade in BI.",
+          "name": "Analytics & Software Development",
+          "description": "Turn your spreadsheets into interactive dashboards. Power BI reporting, custom web apps, job trackers, customer portals — built by someone with a decade in data and software.",
           "cta": "Learn more"
-        },
-        {
-          "name": "Mobile App Development",
-          "description": "Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals — built to solve a specific problem, not to tick a box.",
-          "cta": "Learn more"
-        },
-        {
-          "name": "TradeDesk",
-          "description": "A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically. No app to download, no login to remember. Built for tradespeople who hate admin.",
-          "cta": "Try TradeDesk"
         }
       ]
     },
@@ -178,7 +168,7 @@
         },
         {
           "question": "How long does a website take to build?",
-          "answer": "Most business websites are live within 2-3 weeks from the day we start. Custom apps and more complex projects take 4-8 weeks. We'll give you a timeline upfront and stick to it."
+          "answer": "Most business websites are live within 1 week from the day we start. More complex projects take 2-4 weeks. We'll give you a timeline upfront and stick to it."
         },
         {
           "question": "Do I need to provide content and images?",
