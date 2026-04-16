@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Design 10: Warm Pulse v2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+  /* ── Design label ── */
+  .design-label{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(26,26,26,0.92);color:#fff;font:12px/1 'Plus Jakarta Sans',sans-serif;padding:10px 24px;text-align:center;letter-spacing:0.03em;backdrop-filter:blur(8px)}
+  .design-label span{opacity:0.5;margin:0 8px}
+
+  /* ── Colour tokens ── */
+  :root{
+    --bg:#FAF8F5;
+    --surface:#FFFFFF;
+    --text:#1A1A1A;
+    --text-muted:#7A7A7A;
+    --accent:#E85D3A;
+    --accent-hover:#D04E2D;
+    --accent2:#2D7FF9;
+    --accent3:#F5A623;
+    --radius:14px;
+    --max-w:1200px;
+    --pad:max(5vw,24px);
+    --ease:cubic-bezier(.35,0,0,1);
+    --ease2:cubic-bezier(.25,.46,.45,.94);
+  }
+
+  /* ── Reset ── */
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--accent);color:#fff}
+
+  /* ── Cursor trail ── */
+  .trail-dot{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:10000;opacity:0;transition:none;will-change:transform,opacity}
+  body{cursor:auto}
+
+  /* ══════════════════ KOTA LAVA LAMP BACKGROUND ══════════════════ */
+
+  /* Layer 0 — Lava blobs */
+  .lava-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+  .lava-blob{position:absolute;border-radius:50%;will-change:transform;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .lava-blob-1{width:60vw;height:60vw;background:radial-gradient(circle,rgba(232,93,58,0.55) 0%,rgba(232,93,58,0.18) 40%,transparent 65%);top:-20%;left:-15%;filter:blur(45px);animation:lava1 14s infinite}
+  .lava-blob-2{width:55vw;height:55vw;background:radial-gradient(circle,rgba(45,127,249,0.4) 0%,rgba(45,127,249,0.12) 40%,transparent 65%);bottom:-15%;right:-10%;filter:blur(40px);animation:lava2 16s infinite}
+  .lava-blob-3{width:50vw;height:50vw;background:radial-gradient(circle,rgba(245,166,35,0.45) 0%,rgba(245,166,35,0.14) 40%,transparent 65%);top:30%;left:25%;filter:blur(42px);animation:lava3 18s infinite}
+  .lava-blob-4{width:48vw;height:48vw;background:radial-gradient(circle,rgba(168,85,247,0.3) 0%,rgba(168,85,247,0.08) 40%,transparent 65%);top:-5%;right:5%;filter:blur(50px);animation:lava4 15s infinite}
+  .lava-blob-5{width:42vw;height:42vw;background:radial-gradient(circle,rgba(16,185,129,0.25) 0%,rgba(16,185,129,0.06) 40%,transparent 65%);bottom:10%;left:-5%;filter:blur(45px);animation:lava5 20s infinite}
+  .lava-blob-6{width:38vw;height:38vw;background:radial-gradient(circle,rgba(232,93,58,0.35) 0%,rgba(245,166,35,0.1) 40%,transparent 65%);top:55%;right:20%;filter:blur(48px);animation:lava6 12s infinite}
+
+  @keyframes lava1{0%,100%{transform:translate(0,0) scale(1)}20%{transform:translate(25vw,12vh) scale(1.25)}45%{transform:translate(-10vw,22vh) scale(0.85)}70%{transform:translate(20vw,-10vh) scale(1.18)}}
+  @keyframes lava2{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(-22vw,-14vh) scale(1.2)}55%{transform:translate(18vw,-20vh) scale(0.88)}80%{transform:translate(-15vw,12vh) scale(1.12)}}
+  @keyframes lava3{0%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(-28vw,14vh) scale(1.3)}60%{transform:translate(20vw,-16vh) scale(0.78)}85%{transform:translate(-8vw,8vh) scale(1.1)}}
+  @keyframes lava4{0%,100%{transform:translate(0,0) scale(1)}22%{transform:translate(15vw,20vh) scale(1.2)}50%{transform:translate(-25vw,8vh) scale(0.85)}78%{transform:translate(10vw,-18vh) scale(1.15)}}
+  @keyframes lava5{0%,100%{transform:translate(0,0) scale(1)}35%{transform:translate(22vw,-15vh) scale(1.25)}65%{transform:translate(-18vw,18vh) scale(0.82)}90%{transform:translate(12vw,-5vh) scale(1.08)}}
+  @keyframes lava6{0%,100%{transform:translate(0,0) scale(1)}28%{transform:translate(-20vw,-10vh) scale(1.15)}52%{transform:translate(25vw,15vh) scale(0.9)}76%{transform:translate(-12vw,-20vh) scale(1.22)}}
+
+  /* Layer 1 — Noise grain overlay */
+  .noise-overlay{
+    position:fixed;inset:-10rem;z-index:1;pointer-events:none;
+    opacity:0.35;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-repeat:repeat;
+    background-size:256px 256px;
+    animation:grain 1.5s steps(3) infinite;
+  }
+  @keyframes grain{
+    0%,100%{transform:translate3d(0,9rem,0)}
+    25%{transform:translate3d(-5rem,-4rem,0)}
+    50%{transform:translate3d(7rem,2rem,0)}
+    75%{transform:translate3d(-3rem,-7rem,0)}
+  }
+
+  /* Layer 2 — Frosted glass overlay */
+  .frost-overlay{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    backdrop-filter:blur(30px);
+    -webkit-backdrop-filter:blur(30px);
+    background-color:rgba(250,248,245,0.45);
+    z-index:1;pointer-events:none;
+  }
+
+  /* ── Page content sits above all background layers ── */
+  .page{position:relative;z-index:2}
+
+  /* ── Floating CTA ── */
+  .floating-cta{position:fixed;top:24px;right:var(--pad);z-index:100;padding:12px 28px;border-radius:50px;font-size:0.9rem;font-weight:600;background:var(--accent);color:#fff;box-shadow:0 4px 24px rgba(232,93,58,0.35);transition:all 0.4s var(--ease);border:none;text-decoration:none;font-family:inherit}
+  .floating-cta:hover{background:var(--accent-hover);transform:translateY(-2px) scale(1.03);box-shadow:0 8px 32px rgba(232,93,58,0.45)}
+
+  /* ── Logo ── */
+  .page-logo{padding:32px var(--pad) 0;font-size:1.2rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+
+  /* ── Section base ── */
+  .section{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad)}
+
+  /* ══════════════════ HERO ══════════════════ */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px var(--pad) 100px;max-width:var(--max-w);margin:0 auto}
+  .hero-headline{font-size:clamp(2.2rem,7vw,5.5rem);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:var(--text);margin-bottom:28px;min-height:3.2em}
+  .hero-headline .typed-cursor{display:inline-block;width:3px;height:0.85em;background:var(--accent);margin-left:4px;animation:blink-cursor 0.8s step-end infinite;vertical-align:baseline;position:relative;top:0.05em}
+  @keyframes blink-cursor{0%,100%{opacity:1}50%{opacity:0}}
+  .hero-sub{font-size:clamp(1rem,1.3vw,1.25rem);color:var(--text-muted);max-width:55ch;line-height:1.7;margin-bottom:40px;opacity:0;transform:translateY(16px);transition:opacity 0.8s var(--ease) 0.5s,transform 0.8s var(--ease) 0.5s}
+  .hero-sub.show{opacity:1;transform:translateY(0)}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:opacity 0.8s var(--ease) 0.8s,transform 0.8s var(--ease) 0.8s}
+  .hero-ctas.show{opacity:1;transform:translateY(0)}
+  .btn-accent{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-size:0.95rem;font-weight:600;background:var(--accent);color:#fff;transition:all 0.4s var(--ease);position:relative;overflow:hidden}
+  .btn-accent:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.35)}
+  .btn-accent::after{content:'\2192';transition:transform 0.3s var(--ease)}
+  .btn-accent:hover::after{transform:translateX(4px)}
+  .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-size:0.95rem;font-weight:500;border:1.5px solid rgba(26,26,26,0.15);color:var(--text);transition:all 0.4s var(--ease)}
+  .btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-2px)}
+
+  /* ══════════════════ INTRO ══════════════════ */
+  .intro-section{padding:100px 0 120px}
+  .intro-text{font-size:clamp(1.05rem,1.4vw,1.3rem);color:var(--text);max-width:60ch;margin:0 auto;text-align:center;line-height:1.8}
+  .intro-text .highlight{color:var(--accent);font-weight:600}
+
+  /* ══════════════════ PORTFOLIO ══════════════════ */
+  .work-section{padding:80px 0 120px}
+  .section-label{display:flex;align-items:baseline;gap:16px;margin-bottom:60px}
+  .section-num{font-size:clamp(4rem,10vw,8rem);font-weight:700;color:var(--accent);opacity:0.12;line-height:1;letter-spacing:-0.04em}
+  .section-title{font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:600;letter-spacing:-0.02em}
+
+  .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .work-card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.04);transition:transform 0.5s var(--ease),box-shadow 0.5s var(--ease);position:relative;transform-style:preserve-3d;perspective:800px}
+  .work-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
+
+  /* Video placeholder with animated gradient */
+  .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
+  .work-card-video::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,93,58,0.5),rgba(45,127,249,0.4),rgba(245,166,35,0.5),rgba(168,85,247,0.35),rgba(16,185,129,0.3));background-size:400% 400%;animation:video-shimmer 6s ease-in-out infinite;z-index:1}
+  .work-card-video::after{content:'';position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.08) 50%,transparent 70%);background-size:200% 200%;animation:video-shine 3s ease-in-out infinite;z-index:2}
+  @keyframes video-shimmer{0%{background-position:0% 0%}25%{background-position:100% 50%}50%{background-position:50% 100%}75%{background-position:0% 50%}100%{background-position:0% 0%}}
+  @keyframes video-shine{0%,100%{background-position:200% 0%}50%{background-position:-200% 0%}}
+  .work-card-video .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.2);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;transition:all 0.4s var(--ease);z-index:5}
+  .work-card:hover .play-icon{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
+  .play-icon::after{content:'';width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:3px}
+
+  /* Hover reveal overlay */
+  .work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.9) 0%,transparent 60%);opacity:0;transition:opacity 0.5s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;z-index:4}
+  .work-card:hover .work-card-overlay{opacity:1}
+  .work-card-overlay .overlay-tags{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-bottom:8px}
+  .work-card-overlay .overlay-desc{font-size:0.85rem;color:rgba(255,255,255,0.85);line-height:1.5;max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease)}
+  .work-card:hover .overlay-desc{max-height:80px}
+
+  .work-card-info{padding:20px 24px}
+  .work-card-header{display:flex;justify-content:space-between;align-items:center}
+  .work-card-name{font-size:1.1rem;font-weight:600;letter-spacing:-0.01em}
+  .work-card-status{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:4px 10px;border-radius:50px}
+  .status-live{background:rgba(232,93,58,0.1);color:var(--accent)}
+  .status-dev{background:rgba(45,127,249,0.1);color:var(--accent2)}
+  .work-card-desc{font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.55}
+
+  /* ══════════════════ CLIP-PATH IMAGE REVEAL ══════════════════ */
+  .clip-reveal{clip-path:inset(10% 10% 10% 10%);transition:clip-path 1.2s cubic-bezier(0.33,1,0.68,1)}
+  .clip-reveal.revealed{clip-path:inset(0% 0% 0% 0%)}
+
+  /* ══════════════════ PARALLAX IMAGES ══════════════════ */
+  .parallax-img{height:114%;width:100%;object-fit:cover;position:absolute;top:0;left:0;will-change:transform}
+
+  /* ══════════════════ TEXT LINE REVEAL ══════════════════ */
+  .line-mask{overflow:hidden}
+  .line-inner{display:block;transform:translateY(100%);transition:transform 1.2s cubic-bezier(0.33,1,0.68,1)}
+  .line-inner.revealed{transform:translateY(0)}
+
+  /* ══════════════════ SERVICES ══════════════════ */
+  .services-section{padding:80px 0 120px}
+  .service-item{border-bottom:1px solid rgba(0,0,0,0.06);padding:32px 0;display:grid;grid-template-columns:48px 1fr 1.2fr;gap:32px;align-items:start;transition:all 0.5s var(--ease);cursor:default}
+  .service-item:first-child{border-top:1px solid rgba(0,0,0,0.06)}
+  .service-item:hover{padding-left:12px;background:rgba(232,93,58,0.02);border-radius:8px}
+  .service-num{font-size:0.8rem;font-weight:600;color:var(--accent);padding-top:4px}
+  .service-name{font-size:1.15rem;font-weight:600;letter-spacing:-0.01em;padding-top:2px;transition:color 0.3s var(--ease)}
+  .service-item:hover .service-name{color:var(--accent)}
+  .service-desc{font-size:0.9rem;color:var(--text-muted);line-height:1.65;max-height:0;overflow:hidden;transition:max-height 0.6s var(--ease),opacity 0.4s var(--ease);opacity:0}
+  .service-item:hover .service-desc,.service-item.active .service-desc{max-height:120px;opacity:1}
+  .service-arrow{display:inline-block;margin-left:8px;transition:transform 0.3s var(--ease);font-size:0.8em}
+  .service-item:hover .service-arrow{transform:translateX(6px)}
+
+  /* ══════════════════ TRUST ══════════════════ */
+  .trust-section{padding:80px 0 120px;text-align:center}
+  .trust-text{font-size:clamp(1.05rem,1.5vw,1.35rem);max-width:55ch;margin:0 auto;line-height:1.8;color:var(--text)}
+  .trust-text em{color:var(--accent);font-style:normal;font-weight:600}
+
+  /* ══════════════════ TESTIMONIALS ══════════════════ */
+  .testimonials-section{padding:80px 0 120px}
+  .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .testimonial-card{background:var(--surface);border-radius:var(--radius);padding:32px;box-shadow:0 2px 16px rgba(0,0,0,0.03);transition:transform 0.5s var(--ease),box-shadow 0.5s var(--ease);position:relative}
+  .testimonial-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+  .testimonial-card::before{content:'\201C';font-size:4rem;font-weight:700;color:var(--accent);opacity:0.15;line-height:1;position:absolute;top:16px;left:24px}
+  .testimonial-quote{font-size:0.95rem;line-height:1.7;color:var(--text);margin-bottom:20px;position:relative;z-index:1}
+  .testimonial-author{font-size:0.8rem;color:var(--text-muted)}
+
+  /* ══════════════════ FAQ ══════════════════ */
+  .faq-section{padding:80px 0 120px}
+  .faq-item{border-bottom:1px solid rgba(0,0,0,0.06)}
+  .faq-item:first-child{border-top:1px solid rgba(0,0,0,0.06)}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;padding:24px 0;cursor:pointer;font-size:1.05rem;font-weight:500;transition:color 0.3s var(--ease)}
+  .faq-q:hover{color:var(--accent)}
+  .faq-icon{font-size:1.2rem;transition:transform 0.4s var(--ease);color:var(--accent)}
+  .faq-item.open .faq-icon{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease),padding 0.5s var(--ease)}
+  .faq-item.open .faq-a{max-height:200px;padding-bottom:24px}
+  .faq-a-inner{font-size:0.9rem;color:var(--text-muted);line-height:1.7;max-width:60ch}
+
+  /* ══════════════════ CTA ══════════════════ */
+  .cta-section{padding:100px 0 140px;text-align:center}
+  .cta-headline{font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-0.03em;margin-bottom:20px}
+  .cta-body{font-size:1.05rem;color:var(--text-muted);max-width:45ch;margin:0 auto 36px;line-height:1.7}
+
+  /* ══════════════════ FOOTER ══════════════════ */
+  .footer{padding:60px var(--pad) 80px;max-width:var(--max-w);margin:0 auto;display:flex;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.06);font-size:0.85rem;color:var(--text-muted)}
+  .footer a{transition:color 0.3s var(--ease)}
+  .footer a:hover{color:var(--accent)}
+  .footer-left{display:flex;flex-direction:column;gap:6px}
+  .footer-right{display:flex;gap:24px}
+
+  /* ══════════════════ FADE-UP for cards/small elements ══════════════════ */
+  .anim{opacity:0;transform:translateY(32px);transition:opacity 0.7s var(--ease),transform 0.7s var(--ease)}
+  .anim.visible{opacity:1;transform:translateY(0)}
+
+  /* ══════════════════ MOUSE PARALLAX (section numbers only) ══════════════════ */
+  .parallax-layer{transition:transform 0.15s linear;will-change:transform}
+
+  /* ══════════════════ REDUCED MOTION ══════════════════ */
+  @media(prefers-reduced-motion:reduce){
+    .lava-blob,.work-card-video::before,.work-card-video::after{animation:none!important}
+    .noise-overlay{animation:none!important}
+    .anim{opacity:1;transform:none;transition:none}
+    .trail-dot{display:none}
+    .hero-headline .typed-cursor{display:none}
+    .hero-sub,.hero-ctas{opacity:1;transform:none;transition:none}
+    .line-inner{transform:none;transition:none}
+    .clip-reveal{clip-path:none;transition:none}
+    .parallax-img{position:relative!important;height:100%!important}
+  }
+
+  /* ══════════════════ MOBILE ══════════════════ */
+  @media(max-width:768px){
+    .trail-dot{display:none}
+    .floating-cta{top:16px;right:16px;padding:10px 20px;font-size:0.8rem}
+    .hero{padding:120px 20px 80px;min-height:auto}
+    .hero-headline{font-size:clamp(1.8rem,8vw,3rem);min-height:auto}
+    .work-grid{grid-template-columns:1fr}
+    .service-item{grid-template-columns:40px 1fr;gap:16px}
+    .service-desc{grid-column:1/-1;max-height:none;opacity:1}
+    .testimonial-grid{grid-template-columns:1fr}
+    .footer{flex-direction:column;gap:24px}
+    .section-num{font-size:clamp(3rem,15vw,6rem)}
+    .section-label{flex-direction:column;gap:4px}
+    .parallax-img{position:relative!important;height:100%!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- Design label -->
+<div class="design-label">Design 10 <span>|</span> Warm Pulse v2 <span>|</span> KOTA lava bg + Mallard scroll reveals <span>|</span> Plus Jakarta Sans <span>|</span> Coral + Blue + Gold</div>
+
+<!-- Cursor trail -->
+<div id="trail-container"></div>
+
+<!-- ══════════ KOTA LAVA LAMP BACKGROUND ══════════ -->
+<!-- Layer 0: Lava blobs -->
+<div class="lava-canvas">
+  <div class="lava-blob lava-blob-1"></div>
+  <div class="lava-blob lava-blob-2"></div>
+  <div class="lava-blob lava-blob-3"></div>
+  <div class="lava-blob lava-blob-4"></div>
+  <div class="lava-blob lava-blob-5"></div>
+  <div class="lava-blob lava-blob-6"></div>
+</div>
+
+<!-- Layer 1: Noise grain -->
+<div class="noise-overlay"></div>
+
+<!-- Layer 2: Frosted glass -->
+<div class="frost-overlay"></div>
+
+<!-- Floating CTA -->
+<a href="#contact" class="floating-cta" data-cursor-hover>Contact us</a>
+
+<div class="page">
+
+<!-- Logo -->
+<div class="page-logo">Nith Digital</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="hero">
+  <h1 class="hero-headline" id="typed-target"></h1>
+  <p class="hero-sub" id="heroSub">A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+  <div class="hero-ctas" id="heroCtas">
+    <a href="#work" class="btn-accent" data-cursor-hover>See our work</a>
+    <a href="#contact" class="btn-ghost" data-cursor-hover>Get in touch</a>
+  </div>
+</section>
+
+<!-- ══════════ INTRO ══════════ -->
+<section class="intro-section section">
+  <p class="intro-text text-reveal">Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. <span class="highlight">We're neither.</span> Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+</section>
+
+<!-- ══════════ WORK ══════════ -->
+<section class="work-section section" id="work">
+  <div class="section-label">
+    <span class="section-num parallax-layer" data-speed="0.03">01</span>
+    <span class="section-title text-reveal">Work</span>
+  </div>
+  <div class="work-grid">
+    <!-- Card 1 -->
+    <div class="work-card anim" data-tilt>
+      <div class="work-card-video clip-reveal">
+        <img class="parallax-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Not an Octavia — data dashboard" style="opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">Next.js &middot; TypeScript &middot; Supabase &middot; XGBoost &middot; Groq</div>
+          <div class="overlay-desc">Machine learning model that finds underpriced used cars across the UK. Scans thousands of listings daily.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">Not an Octavia</span>
+          <span class="work-card-status status-live">Live</span>
+        </div>
+        <p class="work-card-desc">ML-powered used car deals finder</p>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="work-card anim" data-tilt style="transition-delay:0.1s">
+      <div class="work-card-video clip-reveal">
+        <img class="parallax-img" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="gAIns — gym tracker" style="opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">React &middot; Vite &middot; Supabase &middot; Anthropic API &middot; Stripe</div>
+          <div class="overlay-desc">AI-powered gym tracker with a built-in coach. Logs workouts and gives personalised programming advice.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">gAIns</span>
+          <span class="work-card-status status-dev">In development</span>
+        </div>
+        <p class="work-card-desc">AI gym tracker with built-in coach</p>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="work-card anim" data-tilt style="transition-delay:0.2s">
+      <div class="work-card-video clip-reveal">
+        <img class="parallax-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80" alt="Daily Duel — mini-games" style="opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">Next.js &middot; TypeScript &middot; Tailwind &middot; Supabase</div>
+          <div class="overlay-desc">30 daily mini-games — trivia, puzzles, pattern matching, memory. Fresh challenges every day.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">Daily Duel</span>
+          <span class="work-card-status status-live">Live</span>
+        </div>
+        <p class="work-card-desc">30 daily mini-games with leaderboards</p>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="work-card anim" data-tilt style="transition-delay:0.3s">
+      <div class="work-card-video clip-reveal">
+        <img class="parallax-img" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" alt="Tumble Tots — childminding" style="opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">HTML &middot; CSS &middot; JavaScript</div>
+          <div class="overlay-desc">Clean, mobile-first website for a local childminding business. Simple, fast, easy to find on Google.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">Tumble Tots</span>
+          <span class="work-card-status status-live">Live</span>
+        </div>
+        <p class="work-card-desc">Childminding website — Dumfries</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SERVICES ══════════ -->
+<section class="services-section section" id="services">
+  <div class="section-label">
+    <span class="section-num parallax-layer" data-speed="-0.025">02</span>
+    <span class="section-title text-reveal">Services</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover>
+    <span class="service-num">01</span>
+    <span class="service-name">Website Design &amp; Development <span class="service-arrow">&rarr;</span></span>
+    <span class="service-desc">Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.05s">
+    <span class="service-num">02</span>
+    <span class="service-name">Social Media Management <span class="service-arrow">&rarr;</span></span>
+    <span class="service-desc">Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.1s">
+    <span class="service-num">03</span>
+    <span class="service-name">Search Engine Optimisation <span class="service-arrow">&rarr;</span></span>
+    <span class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.15s">
+    <span class="service-num">04</span>
+    <span class="service-name">Data Analytics &amp; Power BI <span class="service-arrow">&rarr;</span></span>
+    <span class="service-desc">Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.2s">
+    <span class="service-num">05</span>
+    <span class="service-name">Mobile App Development <span class="service-arrow">&rarr;</span></span>
+    <span class="service-desc">Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.25s">
+    <span class="service-num">06</span>
+    <span class="service-name">TradeDesk <span class="service-arrow">&rarr;</span></span>
+    <span class="service-desc">A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically.</span>
+  </div>
+</section>
+
+<!-- ══════════ TRUST ══════════ -->
+<section class="trust-section section">
+  <p class="trust-text text-reveal"><em>10+ years</em> in data, BI, and software across healthcare, energy, finance, and the public sector. <em>Four Commonwealth gold medals</em> in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.</p>
+</section>
+
+<!-- ══════════ TESTIMONIALS ══════════ -->
+<section class="testimonials-section section" id="testimonials">
+  <div class="section-label">
+    <span class="section-num parallax-layer" data-speed="0.02">03</span>
+    <span class="section-title text-reveal">What people say</span>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card anim" data-tilt>
+      <p class="testimonial-quote">Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it. No fuss, no jargon — just got on with it.</p>
+      <p class="testimonial-author">Recent client — Dumfries &amp; Galloway</p>
+    </div>
+    <div class="testimonial-card anim" data-tilt style="transition-delay:0.1s">
+      <p class="testimonial-quote">We'd been quoted over &pound;3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price — and actually answered the phone.</p>
+      <p class="testimonial-author">Recent client — Ayrshire</p>
+    </div>
+    <div class="testimonial-card anim" data-tilt style="transition-delay:0.2s">
+      <p class="testimonial-quote">The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds.</p>
+      <p class="testimonial-author">Recent client — Scotland</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="faq-section section" id="faq">
+  <div class="section-label">
+    <span class="section-num parallax-layer" data-speed="-0.015">04</span>
+    <span class="section-title text-reveal">FAQ</span>
+  </div>
+  <div class="faq-item anim">
+    <div class="faq-q" data-cursor-hover>How much does a website cost? <span class="faq-icon">+</span></div>
+    <div class="faq-a"><p class="faq-a-inner">A standard business website starts at &pound;500 with a &pound;40/month hosting and support fee. Booking systems start at &pound;750. Custom web apps start at &pound;3,000. We'll give you an exact quote after a 15-minute conversation — no surprises.</p></div>
+  </div>
+  <div class="faq-item anim" style="transition-delay:0.05s">
+    <div class="faq-q" data-cursor-hover>How long does a website take to build? <span class="faq-icon">+</span></div>
+    <div class="faq-a"><p class="faq-a-inner">Most business websites are live within 2-3 weeks from the day we start. Custom apps and more complex projects take 4-8 weeks. We'll give you a timeline upfront and stick to it.</p></div>
+  </div>
+  <div class="faq-item anim" style="transition-delay:0.1s">
+    <div class="faq-q" data-cursor-hover>Can I update the site myself? <span class="faq-icon">+</span></div>
+    <div class="faq-a"><p class="faq-a-inner">We handle all updates for you. If you need a change — new photos, updated text, a new page — just message us. Post-launch changes are billed at &pound;35 per hour, and most small updates take 15-30 minutes.</p></div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="cta-section section" id="contact">
+  <h2 class="cta-headline text-reveal">Ready to talk?</h2>
+  <p class="cta-body">No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+  <a href="mailto:hello@nithdigital.uk" class="btn-accent" data-cursor-hover>Get in touch</a>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="footer-left">
+    <span>hello@nithdigital.uk</span>
+    <span>+44 7404 173024</span>
+    <span>Sanquhar, Dumfries &amp; Galloway</span>
+  </div>
+  <div class="footer-right">
+    <a href="https://www.facebook.com/nithdigital" data-cursor-hover>Facebook</a>
+    <a href="https://www.linkedin.com/company/nith-digital" data-cursor-hover>LinkedIn</a>
+    <a href="https://github.com/AkinYavuz1" data-cursor-hover>GitHub</a>
+  </div>
+</footer>
+
+</div><!-- .page -->
+
+<script>
+(function(){
+  /* ── Reduced motion check ── */
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMobile = window.innerWidth <= 768;
+
+  /* ══════════════════════════════════════════════════════
+     TYPEWRITER EFFECT
+     ══════════════════════════════════════════════════════ */
+  var phrases = [
+    'We build websites that work as hard as you do',
+    'Modern websites for Scottish businesses',
+    'Web design that rivals Edinburgh\u2019s top agencies'
+  ];
+  var target = document.getElementById('typed-target');
+  var phraseIdx = 0, charIdx = 0, deleting = false, pauseEnd = 0;
+  var firstPhraseComplete = false;
+
+  function typewrite() {
+    if (reducedMotion) {
+      target.textContent = phrases[0];
+      document.getElementById('heroSub').classList.add('show');
+      document.getElementById('heroCtas').classList.add('show');
+      firstPhraseComplete = true;
+      initTextReveals();
+      return;
+    }
+    var now = Date.now();
+    if (now < pauseEnd) { requestAnimationFrame(typewrite); return; }
+
+    var phrase = phrases[phraseIdx];
+    if (!deleting) {
+      charIdx++;
+      if (charIdx > phrase.length) {
+        pauseEnd = now + 2500;
+        deleting = true;
+        if (phraseIdx === 0 && !firstPhraseComplete) {
+          firstPhraseComplete = true;
+          document.getElementById('heroSub').classList.add('show');
+          document.getElementById('heroCtas').classList.add('show');
+          initTextReveals();
+        }
+        requestAnimationFrame(typewrite);
+        return;
+      }
+    } else {
+      charIdx--;
+      if (charIdx < 0) {
+        charIdx = 0;
+        deleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        pauseEnd = now + 400;
+        requestAnimationFrame(typewrite);
+        return;
+      }
+    }
+    target.innerHTML = phrase.substring(0, charIdx) + '<span class="typed-cursor"></span>';
+    var speed = deleting ? 25 : 55;
+    setTimeout(function(){ requestAnimationFrame(typewrite); }, speed);
+  }
+  typewrite();
+
+  /* ══════════════════════════════════════════════════════
+     MALLARD-STYLE TEXT LINE REVEAL
+     ══════════════════════════════════════════════════════ */
+  function splitIntoLines(el) {
+    /* Preserve any inner HTML (like <span class="highlight">, <em>) by working
+       at the text-node level. Strategy: wrap every "word" (sequence of non-space
+       characters) in its own inline-block span so we can measure offsetTop,
+       but keep rich HTML by using a temporary container. */
+    var html = el.innerHTML.trim();
+
+    /* Insert a marker between words so we can wrap each word while preserving tags.
+       We split on whitespace that is NOT inside an HTML tag. */
+    var words = [];
+    var buffer = '';
+    var inTag = false;
+    for (var i = 0; i < html.length; i++) {
+      var ch = html[i];
+      if (ch === '<') inTag = true;
+      if (ch === '>') { inTag = false; buffer += ch; continue; }
+      if (!inTag && /\s/.test(ch)) {
+        if (buffer.length) { words.push(buffer); buffer = ''; }
+        continue;
+      }
+      buffer += ch;
+    }
+    if (buffer.length) words.push(buffer);
+
+    /* Wrap each word in an inline-block span for measurement */
+    el.innerHTML = words.map(function(w) {
+      return '<span class="tr-word" style="display:inline-block;white-space:pre">' + w + ' </span>';
+    }).join('');
+
+    /* Group words by visual line (same offsetTop) */
+    var spans = el.querySelectorAll('.tr-word');
+    var lines = [];
+    var currentLine = [];
+    var lastTop = -9999;
+
+    spans.forEach(function(span) {
+      var top = span.offsetTop;
+      if (lastTop > -9999 && Math.abs(top - lastTop) > 5) {
+        lines.push(currentLine);
+        currentLine = [];
+      }
+      currentLine.push(span);
+      lastTop = top;
+    });
+    if (currentLine.length) lines.push(currentLine);
+
+    /* Rebuild with line-mask wrappers */
+    el.innerHTML = '';
+    lines.forEach(function(lineWords, idx) {
+      var mask = document.createElement('div');
+      mask.className = 'line-mask';
+      var inner = document.createElement('div');
+      inner.className = 'line-inner';
+      inner.style.transitionDelay = (idx * 0.07) + 's';
+      inner.innerHTML = lineWords.map(function(s) { return s.outerHTML; }).join('');
+      mask.appendChild(inner);
+      el.appendChild(mask);
+    });
+
+    return el;
+  }
+
+  function initTextReveals() {
+    var els = document.querySelectorAll('.text-reveal');
+    if (!els.length) return;
+
+    /* Split all text-reveal elements into lines */
+    els.forEach(function(el) {
+      if (el.getAttribute('data-split-done')) return;
+      splitIntoLines(el);
+      el.setAttribute('data-split-done', '1');
+    });
+
+    if (reducedMotion) {
+      /* Show everything immediately */
+      document.querySelectorAll('.line-inner').forEach(function(inner) {
+        inner.classList.add('revealed');
+      });
+      return;
+    }
+
+    /* Observe each text-reveal element */
+    if ('IntersectionObserver' in window) {
+      var textObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var inners = entry.target.querySelectorAll('.line-inner');
+            inners.forEach(function(inner) {
+              inner.classList.add('revealed');
+            });
+            textObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      els.forEach(function(el) { textObs.observe(el); });
+    } else {
+      document.querySelectorAll('.line-inner').forEach(function(inner) {
+        inner.classList.add('revealed');
+      });
+    }
+  }
+
+  /* For elements outside the hero (which waits for typewriter), init immediately
+     if reduced motion, otherwise wait for typewriter to trigger it */
+  if (reducedMotion) {
+    initTextReveals();
+  }
+
+  /* ══════════════════════════════════════════════════════
+     CURSOR TRAIL — coloured dots that fade behind mouse
+     ══════════════════════════════════════════════════════ */
+  if (!isMobile && !reducedMotion) {
+    var trailContainer = document.getElementById('trail-container');
+    var trailColors = ['#E85D3A','#2D7FF9','#F5A623','#A855F7','#10B981'];
+    var trailIdx = 0;
+    var lastTrailTime = 0;
+
+    document.addEventListener('mousemove', function(e) {
+      var now = Date.now();
+      if (now - lastTrailTime < 30) return;
+      lastTrailTime = now;
+
+      var dot = document.createElement('div');
+      dot.className = 'trail-dot';
+      var color = trailColors[trailIdx % trailColors.length];
+      trailIdx++;
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      dot.style.background = color;
+      dot.style.boxShadow = '0 0 8px ' + color;
+      dot.style.opacity = '0.7';
+      trailContainer.appendChild(dot);
+
+      requestAnimationFrame(function() {
+        dot.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+        dot.style.opacity = '0';
+        dot.style.transform = 'translate(-50%,-50%) scale(2.5)';
+      });
+
+      setTimeout(function() { dot.remove(); }, 900);
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     MOUSE PARALLAX — section numbers only
+     ══════════════════════════════════════════════════════ */
+  if (!isMobile && !reducedMotion) {
+    document.addEventListener('mousemove', function(e) {
+      var mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      var my = (e.clientY / window.innerHeight - 0.5) * 2;
+      document.querySelectorAll('.parallax-layer').forEach(function(el) {
+        var speed = parseFloat(el.getAttribute('data-speed')) || 0.01;
+        var x = mx * speed * 100;
+        var y = my * speed * 100;
+        el.style.transform = 'translate(' + x + 'vw, ' + y + 'vh)';
+      });
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     3D TILT on cards
+     ══════════════════════════════════════════════════════ */
+  if (!isMobile && !reducedMotion) {
+    document.querySelectorAll('[data-tilt]').forEach(function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width - 0.5;
+        var y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = 'perspective(800px) rotateY(' + (x * 6) + 'deg) rotateX(' + (-y * 6) + 'deg) translateY(-6px)';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) translateY(0)';
+      });
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     SCROLL OBSERVER — fade-up for cards & small elements
+     ══════════════════════════════════════════════════════ */
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.anim').forEach(function(el) { obs.observe(el); });
+  } else {
+    document.querySelectorAll('.anim').forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     CLIP-PATH IMAGE REVEAL on scroll
+     ══════════════════════════════════════════════════════ */
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    var clipObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          clipObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.clip-reveal').forEach(function(el) { clipObs.observe(el); });
+  } else {
+    document.querySelectorAll('.clip-reveal').forEach(function(el) { el.classList.add('revealed'); });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     MALLARD-STYLE IMAGE PARALLAX in portfolio
+     ══════════════════════════════════════════════════════ */
+  function initImageParallax() {
+    var items = document.querySelectorAll('.parallax-img');
+    if (!items.length || isMobile || reducedMotion) return;
+
+    function animate() {
+      items.forEach(function(img) {
+        var container = img.parentElement;
+        var rect = container.getBoundingClientRect();
+        var vh = window.innerHeight;
+
+        if (rect.bottom < 0 || rect.top > vh) return;
+
+        var progress = (vh - rect.top) / (vh + rect.height);
+        progress = Math.max(0, Math.min(1, progress));
+
+        var overflow = container.clientHeight - img.clientHeight;
+        var translateY = overflow * (1 - progress) * 1.5;
+
+        img.style.transform = 'translate3d(0,' + translateY.toFixed(2) + 'px,0)';
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  }
+  initImageParallax();
+
+  /* ══════════════════════════════════════════════════════
+     FAQ ACCORDION
+     ══════════════════════════════════════════════════════ */
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = q.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  /* ══════════════════════════════════════════════════════
+     SMOOTH SCROLL
+     ══════════════════════════════════════════════════════ */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var t = document.querySelector(this.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
