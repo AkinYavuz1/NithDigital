@@ -1,0 +1,54 @@
+{
+  "industry": "technology / digital agency",
+  "research_date": "2026-04-16",
+  "reference_common_threads": {
+    "colour": "4 of 5 dark or mixed. 2-3 colours max. One accent used sparingly. No background gradients.",
+    "typography": "All use premium/paid sans-serifs. Heading sizes 8-15vw. Tight negative letter-spacing. Light/regular weight (not bold). Fluid vw-based sizing.",
+    "animation": "Scroll-triggered text reveals universal. Per-word or per-line splitting. Custom easing curves. Slow transitions (0.5-2s). All respect prefers-reduced-motion.",
+    "spacing": "Extremely generous. Section padding 80-168px. Content never cramped. Whitespace IS the premium signal.",
+    "portfolio": "Video/motion standard. Autoplay MP4s or sticky stacking cards. No static screenshots.",
+    "navigation": "Minimal. Logo + CTA visible. Full menu behind hamburger."
+  },
+  "trends_to_adopt": [
+    "Kinetic/motion typography — variable fonts reacting to scroll",
+    "CSS scroll-driven animations (animation-timeline: scroll()) for GPU performance",
+    "View Transitions API for page transitions (Next.js experimental)",
+    "Purposeful micro-interactions — every animation answers a user question",
+    "Serif revival — consider serif accent for editorial gravitas (one reference pairing: display serif + geometric sans)"
+  ],
+  "trends_to_avoid": [
+    "AI-generated stock imagery — use real project screenshots and video captures",
+    "Template-feeling layouts — no 12-column Bootstrap grids",
+    "Decorative animations that don't serve function",
+    "Chatbot widgets and live chat popups"
+  ],
+  "archive_same_industry": [],
+  "archive_differentiation_notes": "No same-industry entries in archive. This is the first digital agency site. Full creative freedom.",
+  "design_constraints": [
+    "Dark mode foundation — all 5 designs must use a dark background as default",
+    "Maximum 3 colours (one dark base, one neutral, one accent) — separation comes from whitespace, not colour changes",
+    "Heading font sizes must use vw units and exceed 6vw on desktop for hero headings",
+    "Navigation must be minimal — logo + one CTA button visible, everything else behind a hamburger menu",
+    "Portfolio section must include motion — either autoplay video thumbnails or scroll-driven card animation, never static image grids",
+    "No section may use a coloured background band — all section separation via whitespace and typography scale",
+    "Transitions must be slow (minimum 0.4s) with custom cubic-bezier easing, not generic ease-in-out"
+  ],
+  "anti_patterns": [
+    "3-column card grid with icon + title + 2-line description (the 'services grid' cliche)",
+    "Gradient overlay on hero image",
+    "'Get Your Free Quote' or 'Click Here' as CTA text",
+    "Pill-shaped tags in a horizontal wrap",
+    "Full-width coloured CTA banner between sections",
+    "Trust badges in a horizontal strip with checkmark icons",
+    "Dark overlay on stock photos",
+    "Hamburger menu sliding in from the right with a full-screen overlay (must be more creative)",
+    "Static screenshot grid for portfolio (must use video or scroll-driven motion)",
+    "Generic ease-in-out or ease transitions (must use custom cubic-bezier curves)",
+    "Bold weight headings (references all use light/regular 300-500 weight)",
+    "Google Fonts body text at default sizing (must use fluid vw/clamp units)",
+    "Horizontal logo strip of client logos",
+    "Section dividers using coloured background bands or horizontal rules",
+    "Stats counter section with big numbers and labels (the '10+ Years / 50+ Clients' cliche)",
+    "Testimonial carousel with quote marks and star ratings in a card"
+  ]
+}

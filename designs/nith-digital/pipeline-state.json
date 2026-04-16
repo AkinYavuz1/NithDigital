@@ -1,0 +1,55 @@
+{
+  "client_name": "Nith Digital",
+  "client_slug": "nith-digital",
+  "current_stage": 1,
+  "stage_status": "complete",
+  "waiting_for": "Akin to confirm and continue to Stage 2",
+  "stages_completed": [
+    {
+      "stage": "1A",
+      "name": "Strategic Assessment",
+      "completed": "2026-04-16",
+      "notes": "Assessment written. Key insight: site IS the proof of capability, portfolio needs motion, D&G competition is very weak."
+    },
+    {
+      "stage": "1B",
+      "name": "Research",
+      "completed": "2026-04-16",
+      "notes": "3 parallel subagents: market research (12 premium agency sites), competitor audit (14 D&G/Borders/Carlisle competitors — bar is extremely low), online presence audit (zero presence beyond website and GitHub)."
+    },
+    {
+      "stage": "1C",
+      "name": "References + Brief",
+      "completed": "2026-04-16",
+      "notes": "5 reference sites analysed: lusion.co, makebuild.studio, michaelpumo.com, kota.co.uk, mallardandclaret.com. Common threads: dark mode, generous whitespace, scroll text reveals, video portfolio, minimal nav. Brief written."
+    },
+    {
+      "stage": "1D",
+      "name": "Design Research + Theme Planning",
+      "completed": "2026-04-16",
+      "notes": "7 design constraints defined. 16 anti-patterns listed. 5 ThemeConfig objects created — one per reference site. Archive is empty so full creative freedom."
+    },
+    {
+      "stage": "1E",
+      "name": "Client Proposal",
+      "completed": "2026-04-16",
+      "notes": "Internal project scope document written."
+    }
+  ],
+  "key_decisions": {
+    "design_count": "5 designs (not the standard 3) — Akin requested more options",
+    "dark_mode": "All designs must be dark mode",
+    "portfolio_motion": "Video thumbnails and/or sticky stacking cards — no static screenshots",
+    "nav_style": "Minimal — logo + CTA visible, hamburger for full menu",
+    "tools_pages": "Keep live and indexed, remove from navigation",
+    "target_market": "Scotland primary (positioning against Glasgow/Edinburgh agencies), UK-wide secondary",
+    "usp": "Websites that rival Edinburgh's top agencies — built faster, priced fairer"
+  },
+  "notes_for_next_session": [
+    "5 ThemeConfig objects are in themes.json — each responds to a different reference site",
+    "Design constraints and anti-patterns are in design-research.json",
+    "Competitor audit saved to memory for cold call reference",
+    "No same-industry entries in archive — full creative freedom",
+    "Akin wants to get the brand right this time for consistency — commit to the chosen direction"
+  ]
+}

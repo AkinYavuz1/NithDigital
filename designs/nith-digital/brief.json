@@ -1,0 +1,68 @@
+{
+  "client_name": "Nith Digital",
+  "business_description": "Digital agency specialising in website design & development, social media management, SEO, data analytics (Power BI), mobile app development, and TradeDesk (WhatsApp expense manager for sole traders). Website design is the core service.",
+  "industry": "technology",
+  "location": "Dumfries & Galloway, Scotland",
+  "service_area": "Scotland primary (targeting Glasgow/Edinburgh market), UK-wide secondary",
+  "target_audience": "Small businesses, tradespeople, local services, and SMEs across Scotland and the UK",
+  "key_services": [
+    "Website Design & Development",
+    "Social Media Management",
+    "SEO",
+    "Data Analytics & Power BI Dashboards",
+    "Mobile App Development",
+    "TradeDesk (WhatsApp Expense Manager)"
+  ],
+  "usp": "Websites that rival Edinburgh's top agencies — built faster, priced fairer. A one-person digital agency with enterprise-level skills, transparent pricing, and proper support.",
+  "tone": "premium, confident, minimal",
+  "pages": [
+    "Home",
+    "Work",
+    "Services",
+    "About",
+    "Contact"
+  ],
+  "features": [
+    "Contact form with email notifications",
+    "Portfolio with video preview thumbnails (autoplay MP4s showing websites scrolling)",
+    "Scroll-triggered text animations",
+    "Sticky stacking project cards or video portfolio grid",
+    "Minimal navigation (logo + CTA visible, full menu behind hamburger)",
+    "Existing tool pages remain live and indexed but removed from navigation"
+  ],
+  "style_notes": "Dark mode foundation. One warm accent colour used sparingly. Premium sans-serif typeface with massive fluid headings. Generous whitespace. Every animation demonstrates what the agency can build. The site IS the portfolio — proof of capability.",
+  "competitors": [
+    { "name": "Digital Studio", "url": "https://www.digitalsocialweb.co.uk", "notes": "Dumfries, modern Nuxt.js, only 4 portfolio items" },
+    { "name": "Eskdale Solutions", "url": "https://www.eskdale.net", "notes": "Gretna/Carlisle, 19 years, poor site, no testimonials" },
+    { "name": "4D Web Design", "url": "https://www.4dwebdesign.co.uk", "notes": "Carlisle, 20+ years, most credible cross-border competitor" }
+  ],
+  "existing_assets": "4 live projects: Not an Octavia (ML used car deals), gAIns (AI gym tracker), Daily Duel (mini-games), Tumble Tots (childminding). Free tools: VAT checker, invoice generator, site audit. No professional photography — portfolio is live project URLs.",
+  "sitemap": [
+    "/",
+    "/work",
+    "/services",
+    "/about",
+    "/contact",
+    "/privacy"
+  ],
+  "color_preferences": "Dark mode. Warm accent (not cold blue). References lean toward coral/peach, electric blue, or hot pink as accents on dark backgrounds.",
+  "brief_summary": "Redesign of Nith Digital's own agency website. Current site is text-heavy with no images, no scroll animations, and inline React styles — reads as a developer side project, not a professional agency. The redesign must establish credibility for cold call follow-ups, showcase portfolio with motion (video thumbnails), and demonstrate the agency's technical capabilities through its own design. Target market is Scottish small businesses, positioning against Glasgow/Edinburgh agencies on quality-to-price ratio. Dark mode, minimal, animation-rich. 5 design proposals requested.",
+  "existing_site_url": "https://www.nithdigital.uk",
+  "scraped_images": [],
+  "design_references": [
+    { "url": "https://www.lusion.co/", "what_works": "Scroll-triggered word-by-word text reveals, image transitions, WebGL 3D background, electric blue accent on dark", "component_notes": "SplitType per-word animation, custom scroll engine with lerp, dot-scale-to-fill CTA hover" },
+    { "url": "https://www.makebuild.studio/", "what_works": "Portfolio cards with autoplay MP4 videos showing websites scrolling, numbered narrative sections, coral accent on white", "component_notes": "HTML5 video autoplay loop muted playsinline, GSAP Flip for showreel, double-label button hover" },
+    { "url": "https://www.michaelpumo.com/", "what_works": "CSS sticky stacking project cards creating slideshow on scroll, dark mode with warm peach accent, no traditional nav", "component_notes": "position:sticky cards, curtain wipe hero reveal, Ken Burns zoom, conic gradient button glow, 2s transitions" },
+    { "url": "https://www.kota.co.uk/", "what_works": "Lava lamp 3D background with frosted glass overlay, extreme typography size variation, animated gradient headings", "component_notes": "Spline 3D sphere + backdrop-filter:blur(30px), PP Neue Montreal + Syne dual sans-serif, Framer Motion" },
+    { "url": "https://www.mallardandclaret.com/", "what_works": "Text moves at different speeds when scrolling (per-line parallax), restrained 3-colour system, massive H1 at 15vw", "component_notes": "GSAP ScrollTrigger + Lenis, per-line translateY with speed multipliers, FK Grotesk Neue, Barba.js page transitions" }
+  ],
+  "design_constraints": [
+    "Dark mode foundation — all 5 designs must use a dark background as default",
+    "Maximum 3 colours (one dark base, one neutral, one accent) — separation comes from whitespace, not colour changes",
+    "Heading font sizes must use vw units and exceed 6vw on desktop for hero headings",
+    "Navigation must be minimal — logo + one CTA button visible, everything else behind a hamburger menu",
+    "Portfolio section must include motion — either autoplay video thumbnails or scroll-driven card animation, never static image grids",
+    "No section may use a coloured background band — all section separation via whitespace and typography scale",
+    "Transitions must be slow (minimum 0.4s) with custom cubic-bezier easing, not generic ease-in-out"
+  ]
+}

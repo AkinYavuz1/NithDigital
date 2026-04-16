@@ -1,0 +1,63 @@
+{
+  "references": [
+    {
+      "url": "https://www.lusion.co/",
+      "what_akin_likes": "The animations are fantastic, great transitions of images, the words appearing more when scrolling is eye-catching",
+      "layout_patterns": "Full viewport hero with 3D WebGL canvas background. 12-column CSS grid. Sections flow: hero > showreel > featured work (2-col project grid) > about > CTA > footer. No max-width constraint — content contained by 5vw padding.",
+      "spacing": "Extremely generous. Base padding: max(5vw, 40px). Project card gaps: 5em between rows. Massive scroll runways for parallax (4200vh for goal section). Global border-radius: 20px desktop, 15px tablet, 10px mobile.",
+      "typography": "Aeonik (sans-serif, 400/500) for body/UI. IBM Plex Mono for metadata labels. Hero title: 2.5vw. Featured title: 8vw. Reel title: 10vw. Tight letter-spacing: -0.02em on display. Line-height: 0.9-1.1 headings, 1.4 body. Uppercase extensively.",
+      "colour_usage": "Primarily black/white with electric blue accent (#1a2ffb). Context-adaptive — page background dynamically shifts to match project colours via data attributes. Neon green (#c1ff00) used once decoratively. Extremely restrained.",
+      "interactions": "SplitType for per-word/per-char scroll reveals (words start translate3d(0,1.5em,0) rotate(15deg), animate to neutral on scroll). CTA dot-scale-to-fill hover (0.5em dot scales 32x to flood button with blue). Custom scroll engine with lerp smoothing. Page transitions via WebGL canvas overlay.",
+      "premium_signals": "Custom Three.js WebGL 3D scenes with GLSL shaders and bloom postprocessing. Full preloader with percentage counter. Per-character text splitting for granular animations. Context-adaptive colour system. Sound toggle. R&D Labs sub-brand."
+    },
+    {
+      "url": "https://www.makebuild.studio/",
+      "what_akin_likes": "Images are more like videos, showing websites scrolling — amazing idea, have to implement this for our portfolio",
+      "layout_patterns": "Full-viewport hero with WebGL animated background (Unicorn Studio). Numbered narrative sections (1, 2, 3...) creating pitch-deck flow. Case studies grid. Container system: large 1600px, medium 1024px, small 768px.",
+      "spacing": "Very generous. Global padding: 4rem. Section padding: 5-7rem. Systematic spacing scale from 0.25rem (tiny) to 10rem (xxhuge). Grid gap: 1.5rem desktop.",
+      "typography": "Single sans-serif: Aktiv Grotesk (Dalton Maag, paid). H1: 5rem/400. H2: 4rem/400/letter-spacing -0.02em. Body: 1rem/400/line-height 1.35/letter-spacing -0.03em. Fluid base: calc(0.8125rem + 0.2083vw).",
+      "colour_usage": "Restrained — single coral accent #F15533 on white. Text: #070D14 near-black. Surface: #F5F7F9 light grey. No gradients. Dark hero, light content. Per-client colour theming system via CSS custom properties.",
+      "interactions": "Portfolio cards use HTML5 <video autoplay loop muted playsinline> showing websites scrolling. GSAP Flip.js for showreel expansion. Double-label button hover (text slides up, replacement slides in). Swiper.js carousels with fade effect.",
+      "premium_signals": "MP4 video thumbnails on portfolio cards — shows work alive. Client logos rotating INSIDE headline text. Live London time/weather in footer. Numbered section labels. GSAP Flip animation. Per-client colour theming. Plausible analytics (not GA)."
+    },
+    {
+      "url": "https://www.michaelpumo.com/",
+      "what_akin_likes": "Scrolling down gives slideshow images — very nice",
+      "layout_patterns": "Full-viewport 2-column hero (text left, portrait right). Bento grid overview section. Single-column sticky stacking project cards. FAQ accordion. No traditional navigation at all.",
+      "spacing": "Very generous. Responsive gutter: clamp(24px, -11.897px + 8.974vw, 80px). Section padding: double-gutter. Inner gutter: 16px. Card gaps: gutter-md clamp(80px-120px).",
+      "typography": "Saans (Displaay, variable font, paid). Light weight 300 for headings — thinner = more premium. Fluid hero: clamp(2.25rem, 1rem + 5.33cqi, 4rem). Body: 16-18px. Max-width: 18ch headlines, 40ch body. text-pretty and text-balance for elegant wrapping.",
+      "colour_usage": "Dark mode default. Black #000 / off-black #111 backgrounds. White text. Warm peach accent #fb8989 for project titles only. Light mode toggle swaps accent to blue #0c8ce9. Monochrome with one warm accent.",
+      "interactions": "CSS sticky stacking cards — each project card has position:sticky, cards stack on scroll like a deck. Curtain wipe hero image reveal (1000ms). Ken Burns zoom-out on portrait. Conic gradient button glow on hover. 2-second default transitions. Tech marquee with pause on hover.",
+      "premium_signals": "Variable font (Saans). Light 300 weight headings. No navigation at all — extremely confident. Curtain wipe + Ken Burns entrance. Square 2160x2160 project images. Container queries (@container). Playful easter eggs (Aussie Mode, typeface switcher)."
+    },
+    {
+      "url": "https://www.kota.co.uk/",
+      "what_akin_likes": "Background is constantly moving like a lava lamp, I like it. Different typography and font sizes is refreshing",
+      "layout_patterns": "Hero with Spline 3D sphere behind frosted glass overlay. Full-viewport sections. Project cards with video autoplay. Services with pastel-coloured cards.",
+      "spacing": "Extremely generous — 10.5rem (168px) between major sections. Container: 0 7% horizontal padding. Prose capped at 68ch max-width.",
+      "typography": "Two sans-serifs: PP Neue Montreal (body, 400/600/700) and Syne (display, 700). Heading sizes span 48px to 160px while body stays 18-24px — a 7-10x ratio. Letter-spacing swings from -30em/1000 tight to 161em/1000 ultra-wide on labels. Line-heights from 0.9 to 1.4. All sizes use clamp() for fluid scaling.",
+      "colour_usage": "Predominantly monochrome (#000, #efefef, #fff) with a signature purple-teal-magenta gradient (linear-gradient(90deg, #633cc9, #3b8392, #cb24cc)) animated on key headings. Accent: #ff34f3 hot pink.",
+      "interactions": "Spline 3D sphere with backdrop-filter: blur(30px) frosted glass overlay = lava lamp effect. Framer Motion for orchestrated scroll reveals. Video autoplay on project cards. Rainbow gradient text animation (3s infinite loop). Cinematic 1.2s hamburger menu open.",
+      "premium_signals": "3D Spline sphere behind frosted glass. Animated gradient headings. Extreme typography size variation (7-10x ratio). PP Neue Montreal + Syne dual sans-serif pairing. Framer Motion orchestration. Video portfolio cards."
+    },
+    {
+      "url": "https://www.mallardandclaret.com/",
+      "what_akin_likes": "The text on the page moves when scrolling — very unique",
+      "layout_patterns": "24-column CSS grid with named columns. Hero: red #fb4d4d background with logo spanning 12 cols + autoplay video. Horizontal-scrolling work showcase. Alternating white/dark section backgrounds. Contact form embedded in footer.",
+      "spacing": "Generous and fluid — viewport-relative units. --spacer: 2vw (desktop). Grid gap: 2rem 2vw. Content never edge-to-edge — always offset by 2-5 columns.",
+      "typography": "Single premium sans-serif: FK Grotesk Neue (self-hosted, paid). H1: max(11.8rem, 14.93vw) with -0.95vw letter-spacing. Body: max(1.4rem, 0.97vw)/line-height 129.5%. Headings weight 500, body 400. Size does the heavy lifting — H1 is 15:1 ratio to body.",
+      "colour_usage": "Extremely restrained 3-colour system: red #fb4d4d, near-black #262626, white #ffffff. Red used ONLY for hero background. Everything else is black/white. No gradients.",
+      "interactions": "GSAP ScrollTrigger + Lenis smooth scroll. Text split into per-line spans — each line gets independent translateY driven by scroll with different speed multipliers = staggered parallax. Image parallax with data-u-scale (1.14x work, 1.09x others). Barba.js page transitions with wipe overlay. Custom cursor with contextual labels.",
+      "premium_signals": "Custom self-hosted font (FK Grotesk Neue). Negative letter-spacing (-0.95vw). Massive H1 at 15vw with sub-100% line-height. 24-column grid (not 12). Lenis smooth scroll. GSAP ScrollTrigger text parallax. Custom cursor. Page wipe transitions via Barba.js. Client list: Adidas, BBC, Vodafone."
+    }
+  ],
+  "common_threads": {
+    "colour": "4 of 5 are dark or mixed dark/light. All use extreme restraint — 2-3 colours max. One accent colour used sparingly. No gradients on backgrounds (KOTA is the exception with animated gradient text).",
+    "typography": "All use premium/paid sans-serif fonts (not Google Fonts). Heading sizes are massive (8-15vw on desktop). Tight negative letter-spacing on display type. Light or regular weight headings (not bold). Fluid vw-based sizing throughout.",
+    "animation": "All use scroll-triggered reveals. Text splitting (per-word or per-line) is universal. Custom easing curves (cubic-bezier, not generic ease-in-out). Transitions are slow and deliberate (0.5-2s). All respect prefers-reduced-motion.",
+    "spacing": "All extremely generous. Section padding: 80-168px. Content never feels cramped. Whitespace IS the premium signal.",
+    "portfolio": "Video/motion in portfolio is standard — either autoplay MP4s (MakeBuild, KOTA) or sticky stacking cards (Pumo). Static screenshots are absent from every reference.",
+    "navigation": "Minimal. One has no nav at all (Pumo). Others use minimal fixed headers with hamburger menus. Nobody has a traditional multi-link horizontal nav bar."
+  },
+  "design_direction_summary": "Dark mode foundation with generous whitespace. One warm accent colour used sparingly. Premium sans-serif typeface with massive fluid headings (8-15vw) and tight letter-spacing. Scroll-triggered text reveals (per-word/per-line with SplitType or similar). Portfolio presented with motion — video thumbnails showing websites scrolling, or sticky stacking cards. Minimal navigation (logo + CTA button visible, full menu behind hamburger). Slow, deliberate transitions with custom easing. The site must feel like a demonstration of the agency's capabilities — every animation is proof of what Nith Digital can build."
+}

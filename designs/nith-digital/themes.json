@@ -1,0 +1,157 @@
+[
+  {
+    "id": "theme-1",
+    "name": "Midnight Signal",
+    "personality": "Confident and cinematic — dark, deliberate, every element earns its place",
+    "inspired_by": "lusion.co — the electric blue accent on black, scroll-triggered word reveals, 3D depth",
+    "colors": {
+      "primary": "#0A0A0F",
+      "secondary": "#141419",
+      "accent": "#2D5BFF",
+      "background": "#0A0A0F",
+      "surface": "#141419",
+      "text": "#F0F1FA",
+      "text_muted": "#6B6D7B"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter"
+    },
+    "typography_scale": {
+      "base": "16px",
+      "scale_ratio": 1.333,
+      "sizes": "16 / 21 / 28 / 38 / 50 / 67px",
+      "heading_line_height": 0.95,
+      "body_line_height": 1.6,
+      "heading_letter_spacing": "-0.03em",
+      "body_letter_spacing": "-0.01em"
+    },
+    "border_radius": "0px",
+    "spacing": "generous",
+    "signature_element": "Per-word scroll reveal — text splits into individual words that translate up and de-rotate (from 15deg) as they enter viewport, staggered with 50ms delays. Combined with a dot-scale-to-fill CTA hover where a small accent dot expands 30x to flood the button background on hover."
+  },
+  {
+    "id": "theme-2",
+    "name": "Living Portfolio",
+    "personality": "Warm and narrative — the portfolio is alive, sections tell a numbered story",
+    "inspired_by": "makebuild.studio — video portfolio cards, numbered narrative sections, single warm accent on dark",
+    "colors": {
+      "primary": "#0D0D0D",
+      "secondary": "#1A1A1A",
+      "accent": "#F15533",
+      "background": "#0D0D0D",
+      "surface": "#1A1A1A",
+      "text": "#FFFFFF",
+      "text_muted": "#7F8183"
+    },
+    "fonts": {
+      "heading": "Plus Jakarta Sans",
+      "body": "Plus Jakarta Sans"
+    },
+    "typography_scale": {
+      "base": "16px",
+      "scale_ratio": 1.414,
+      "sizes": "16 / 23 / 32 / 45 / 64 / 90px",
+      "heading_line_height": 1.05,
+      "body_line_height": 1.55,
+      "heading_letter_spacing": "-0.02em",
+      "body_letter_spacing": "-0.015em"
+    },
+    "border_radius": "16px",
+    "spacing": "generous",
+    "signature_element": "Autoplay MP4 video thumbnails in portfolio cards showing client websites scrolling — each card has a looping muted video overlaid on a static poster image. Section numbers (01, 02, 03...) in large muted type anchor the narrative flow, creating a pitch-deck rhythm."
+  },
+  {
+    "id": "theme-3",
+    "name": "Quiet Depth",
+    "personality": "Restrained and elegant — extreme whitespace, content stacks and reveals like a deck of cards",
+    "inspired_by": "michaelpumo.com — sticky stacking project cards, warm peach accent on black, no traditional nav, slow 2s transitions",
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#111111",
+      "accent": "#FB8989",
+      "background": "#000000",
+      "surface": "#111111",
+      "text": "#FFFFFF",
+      "text_muted": "#808080"
+    },
+    "fonts": {
+      "heading": "DM Sans",
+      "body": "DM Sans"
+    },
+    "typography_scale": {
+      "base": "16px",
+      "scale_ratio": 1.25,
+      "sizes": "16 / 20 / 25 / 31 / 39 / 49px",
+      "heading_line_height": 1.1,
+      "body_line_height": 1.65,
+      "heading_letter_spacing": "-0.02em",
+      "body_letter_spacing": "0"
+    },
+    "border_radius": "8px",
+    "spacing": "generous",
+    "signature_element": "CSS sticky stacking portfolio cards — project cards have position:sticky and stack on top of each other as you scroll, creating a card-deck slideshow. Combined with a curtain-wipe hero reveal where a coloured overlay slides away to expose the hero content, and 2-second default transition durations that make everything feel deliberate and luxurious."
+  },
+  {
+    "id": "theme-4",
+    "name": "Molten Surface",
+    "personality": "Bold and alive — the background breathes, typography commands attention through extreme scale contrast",
+    "inspired_by": "kota.co.uk — lava lamp 3D background with frosted glass, extreme typography size variation, animated gradient accents",
+    "colors": {
+      "primary": "#0B0B0F",
+      "secondary": "#161620",
+      "accent": "#D946EF",
+      "background": "#0B0B0F",
+      "surface": "#161620",
+      "text": "#F8F8F8",
+      "text_muted": "#8B8B9E"
+    },
+    "fonts": {
+      "heading": "Syne",
+      "body": "DM Sans"
+    },
+    "typography_scale": {
+      "base": "18px",
+      "scale_ratio": 1.5,
+      "sizes": "18 / 27 / 41 / 61 / 91 / 137px",
+      "heading_line_height": 0.9,
+      "body_line_height": 1.55,
+      "heading_letter_spacing": "-0.03em",
+      "body_letter_spacing": "0"
+    },
+    "border_radius": "16px",
+    "spacing": "generous",
+    "signature_element": "Animated gradient mesh background — a CSS conic-gradient or radial-gradient that slowly morphs position and hue behind a backdrop-filter:blur(40px) frosted glass overlay, creating a living lava lamp surface. Heading text uses an animated gradient fill (background-clip:text) cycling through purple-teal-magenta on a 6s loop."
+  },
+  {
+    "id": "theme-5",
+    "name": "Parallel Motion",
+    "personality": "Precise and kinetic — text and images move at different speeds, creating layered depth through scroll parallax",
+    "inspired_by": "mallardandclaret.com — per-line text parallax on scroll, massive H1 at 15vw, restrained 3-colour system, 24-column grid precision",
+    "colors": {
+      "primary": "#0E0E0E",
+      "secondary": "#1C1C1C",
+      "accent": "#FF4D4D",
+      "background": "#0E0E0E",
+      "surface": "#1C1C1C",
+      "text": "#FFFFFF",
+      "text_muted": "#666666"
+    },
+    "fonts": {
+      "heading": "Space Grotesk",
+      "body": "Inter"
+    },
+    "typography_scale": {
+      "base": "16px",
+      "scale_ratio": 1.5,
+      "sizes": "16 / 24 / 36 / 54 / 81 / 122px",
+      "heading_line_height": 0.9,
+      "body_line_height": 1.6,
+      "heading_letter_spacing": "-0.04em",
+      "body_letter_spacing": "-0.01em"
+    },
+    "border_radius": "0px",
+    "spacing": "generous",
+    "signature_element": "Per-line scroll parallax — heading text is split into individual lines, each receiving a different translateY speed multiplier driven by scroll position via GSAP ScrollTrigger. As you scroll, line 1 moves slower than line 3, creating a staggered separation/reassembly effect. Combined with image parallax (images scale 1.1x and translate within overflow:hidden containers at differential scroll speeds)."
+  }
+]
