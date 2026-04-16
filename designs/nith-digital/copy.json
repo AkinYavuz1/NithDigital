@@ -28,14 +28,42 @@
   },
   "pages": {
     "home": {
-      "hero_headline": "We build websites that work as hard as you do",
-      "hero_subheading": "A digital agency in Dumfries & Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.",
+      "hero_headline": "Websites for tradespeople and small businesses in Scotland",
+      "hero_subheading": "Custom-built, mobile-friendly websites from £500. Based in Dumfries & Galloway. Live in 2-3 weeks.",
       "hero_cta": "See our work",
-      "intro_paragraph": "Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.",
+      "hero_cta_phone": "07404 173024",
+      "intro_paragraph": "Nith Digital builds proper websites for joiners, plumbers, B&Bs, childminders, and local businesses across Dumfries & Galloway and Scotland. Modern design, fair pricing, and someone who actually picks up the phone.",
+      "how_it_works": {
+        "headline": "How it works",
+        "steps": [
+          {
+            "number": "01",
+            "title": "Tell us about your business",
+            "description": "A 15-minute phone call. What you do, who your customers are, what you need. No forms, no questionnaires."
+          },
+          {
+            "number": "02",
+            "title": "We design and build your site",
+            "description": "You'll see 3 design options before we write a line of code. Pick the one you like, we handle the rest."
+          },
+          {
+            "number": "03",
+            "title": "You're live in 2-3 weeks",
+            "description": "Your site is live, found on Google, and working for you. You own everything — no lock-in, no monthly surprises."
+          }
+        ]
+      },
       "services_intro": "Website design is what we do best — but it's not all we do.",
-      "trust_statement": "10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.",
+      "pricing_headline": "Transparent pricing",
+      "pricing_items": [
+        { "service": "Business website", "price": "From £500", "detail": "+ £40/month hosting & support" },
+        { "service": "Booking system", "price": "From £750", "detail": "Online bookings, calendar, confirmations" },
+        { "service": "Power BI dashboard", "price": "£500/day", "detail": "Interactive reporting from your data" },
+        { "service": "Custom web app", "price": "From £3,000", "detail": "Job trackers, portals, directories" }
+      ],
+      "trust_statement": "10+ years building software across the NHS, energy, and finance. Based in Sanquhar — not London, not a call centre. One person, direct communication, no account managers.",
       "cta_section_headline": "Ready to talk?",
-      "cta_section_body": "No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.",
+      "cta_section_body": "Call 07404 173024 or drop us a message. No jargon, no pressure — just a straight conversation about what you need and what it'll cost.",
       "cta_button": "Get in touch"
     },
     "work": {
