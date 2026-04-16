@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Web Design & Development, Scotland</title>
+<meta name="description" content="A digital agency in Dumfries & Galloway building modern websites, dashboards, and apps for small businesses across Scotland. Fast delivery, fair pricing.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+/* --- Design Label Bar --- */
+.design-label{position:fixed;top:0;left:0;right:0;z-index:9999;background:#D946EF;color:#0B0B0F;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;text-align:center;padding:8px 16px;letter-spacing:0.02em}
+
+/* --- Reset --- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#0B0B0F;color:#F8F8F8;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;font-family:inherit}
+
+/* --- Lava Lamp Background --- */
+.lava-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 50%,rgba(217,70,239,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(59,131,146,0.12) 0%,transparent 50%),radial-gradient(circle at 50% 80%,rgba(203,36,204,0.1) 0%,transparent 50%);background-size:200% 200%,200% 200%,200% 200%;animation:lava-move 15s ease-in-out infinite;z-index:0}
+@keyframes lava-move{0%,100%{background-position:0% 0%,100% 0%,50% 100%}33%{background-position:100% 50%,0% 100%,80% 0%}66%{background-position:50% 100%,50% 0%,0% 50%}}
+.frost-overlay{position:fixed;top:0;left:0;width:100%;height:100%;backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);background:rgba(11,11,15,0.7);z-index:1}
+.page-content{position:relative;z-index:2}
+
+/* --- Gradient Text --- */
+.gradient-text{background:linear-gradient(90deg,#D946EF,#3B8392,#CB24CC);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradient-shift 6s linear infinite}
+@keyframes gradient-shift{0%{background-position:0% center}100%{background-position:200% center}}
+
+/* --- Typography --- */
+h1,h2,h3,h4,h5,h6{font-family:'Syne',sans-serif;line-height:0.9;letter-spacing:-0.03em;font-weight:800}
+h1{font-size:clamp(3.5rem,11vw,137px)}
+h2{font-size:clamp(2.2rem,5vw,91px)}
+h3{font-size:clamp(1.6rem,3.4vw,61px)}
+h4{font-size:clamp(1.3rem,2.3vw,41px)}
+p{color:#F8F8F8}
+.text-muted{color:#8B8B9E}
+
+/* --- Layout --- */
+.container{width:100%;max-width:1280px;margin:0 auto;padding:0 40px}
+section{padding:140px 0}
+
+/* --- Navigation --- */
+.nav{position:fixed;top:36px;left:0;right:0;z-index:100;padding:0 40px}
+.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;background:rgba(22,22,32,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(217,70,239,0.1);border-radius:16px;padding:16px 28px}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.03em}
+.nav-cta{background:linear-gradient(135deg,#D946EF,#3B8392);color:#F8F8F8;font-weight:700;font-size:0.85rem;padding:12px 28px;border-radius:12px;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),opacity 0.4s}
+.nav-cta:hover{transform:scale(1.05);opacity:0.9}
+.nav-hamburger{width:28px;height:20px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
+.nav-hamburger span{display:block;width:100%;height:2px;background:#F8F8F8;border-radius:2px;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)}
+
+/* --- Hero --- */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:140px;padding-bottom:80px}
+.hero-content{max-width:1100px}
+.hero h1{margin-bottom:32px}
+.hero-sub{font-size:clamp(1rem,1.3vw,1.35rem);color:#8B8B9E;max-width:600px;margin-bottom:48px;line-height:1.6}
+.hero-cta{display:inline-block;background:linear-gradient(135deg,#D946EF,#3B8392);color:#F8F8F8;font-weight:700;font-size:1rem;padding:18px 44px;border-radius:16px;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s}
+.hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(217,70,239,0.3)}
+
+/* --- Intro --- */
+.intro-text{font-size:clamp(1.1rem,1.5vw,1.5rem);color:#8B8B9E;max-width:800px;line-height:1.65}
+
+/* --- Services --- */
+.services-list{display:flex;flex-direction:column;gap:0}
+.service-item{padding:48px 0;border-bottom:1px solid rgba(139,139,158,0.15);display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.service-item:first-child{border-top:1px solid rgba(139,139,158,0.15)}
+.service-name{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,61px);font-weight:800;letter-spacing:-0.03em;line-height:0.9;transition:all 0.5s cubic-bezier(0.22,1,0.36,1);-webkit-text-fill-color:#F8F8F8}
+.service-item:hover .service-name{background:linear-gradient(90deg,#D946EF,#3B8392,#CB24CC);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradient-shift 6s linear infinite}
+.service-desc{color:#8B8B9E;font-size:1rem;line-height:1.6;max-width:480px}
+
+/* --- Portfolio --- */
+.portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.portfolio-card{background:rgba(22,22,32,0.5);border:1px solid rgba(139,139,158,0.1);border-radius:16px;overflow:hidden;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1),border-color 0.5s}
+.portfolio-card:hover{transform:translateY(-6px);border-color:rgba(217,70,239,0.3)}
+.portfolio-thumb{height:260px;overflow:hidden;position:relative}
+.portfolio-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.22,1,0.36,1)}
+.portfolio-card:hover .portfolio-thumb img{transform:scale(1.05)}
+.portfolio-gradient-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(217,70,239,0.2),rgba(59,131,146,0.15));mix-blend-mode:overlay;animation:gradient-shift 6s linear infinite;background-size:200% auto}
+.portfolio-info{padding:28px 32px}
+.portfolio-info h4{margin-bottom:10px;font-size:1.5rem}
+.portfolio-info p{color:#8B8B9E;font-size:0.95rem;line-height:1.55;margin-bottom:16px}
+.portfolio-tags{display:flex;flex-wrap:wrap;gap:8px}
+.portfolio-tag{font-size:0.75rem;color:#D946EF;border:1px solid rgba(217,70,239,0.3);padding:4px 12px;border-radius:8px}
+
+/* --- Testimonials --- */
+.testimonials-grid{display:flex;flex-direction:column;gap:80px}
+.testimonial-item{max-width:900px}
+.testimonial-mark{font-family:'Syne',sans-serif;font-size:clamp(4rem,8vw,140px);line-height:0.7;display:block;margin-bottom:16px}
+.testimonial-quote{font-size:clamp(1.15rem,1.6vw,1.55rem);line-height:1.6;color:#F8F8F8;margin-bottom:24px;font-style:italic}
+.testimonial-author{color:#8B8B9E;font-size:0.95rem}
+
+/* --- Trust --- */
+.trust-text{font-size:clamp(1.1rem,1.5vw,1.5rem);color:#8B8B9E;max-width:800px;line-height:1.65}
+
+/* --- FAQ --- */
+.faq-list{display:flex;flex-direction:column;gap:0;max-width:800px}
+.faq-item{border-bottom:1px solid rgba(139,139,158,0.15);overflow:hidden}
+.faq-item:first-child{border-top:1px solid rgba(139,139,158,0.15)}
+.faq-question{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(1.1rem,1.5vw,1.4rem);padding:28px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;transition:color 0.4s}
+.faq-question:hover{color:#D946EF}
+.faq-icon{font-size:1.5rem;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);flex-shrink:0;color:#D946EF}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1),padding 0.5s}
+.faq-answer-inner{padding-bottom:28px;color:#8B8B9E;line-height:1.65;font-size:1rem}
+
+/* --- CTA Section --- */
+.cta-section{text-align:center}
+.cta-section h2{margin-bottom:24px}
+.cta-section p{color:#8B8B9E;font-size:clamp(1rem,1.3vw,1.25rem);max-width:600px;margin:0 auto 48px;line-height:1.6}
+.cta-btn{display:inline-block;background:linear-gradient(135deg,#D946EF,#3B8392);color:#F8F8F8;font-weight:700;font-size:1.05rem;padding:20px 52px;border-radius:16px;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(217,70,239,0.3)}
+
+/* --- Footer --- */
+.footer{padding:60px 0;border-top:1px solid rgba(139,139,158,0.1)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+.footer-copy{color:#8B8B9E;font-size:0.85rem}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:#8B8B9E;font-size:0.85rem;transition:color 0.4s}
+.footer-links a:hover{color:#D946EF}
+
+/* --- Animations --- */
+.animate-on-scroll{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1)}
+.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+.hero-stagger-1{opacity:0;transform:translateY(30px);animation:hero-in 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s forwards}
+.hero-stagger-2{opacity:0;transform:translateY(30px);animation:hero-in 0.8s cubic-bezier(0.22,1,0.36,1) 0.45s forwards}
+.hero-stagger-3{opacity:0;transform:translateY(30px);animation:hero-in 0.8s cubic-bezier(0.22,1,0.36,1) 0.7s forwards}
+@keyframes hero-in{to{opacity:1;transform:translateY(0)}}
+
+/* --- prefers-reduced-motion --- */
+@media(prefers-reduced-motion:reduce){
+  .lava-bg{animation:none}
+  .gradient-text,.service-item:hover .service-name,.portfolio-gradient-overlay{animation:none}
+  .animate-on-scroll{opacity:1;transform:none;transition:none}
+  .hero-stagger-1,.hero-stagger-2,.hero-stagger-3{opacity:1;transform:none;animation:none}
+  .nav-cta,.hero-cta,.cta-btn,.portfolio-card,.portfolio-thumb img{transition:none}
+}
+
+/* --- Mobile --- */
+@media(max-width:768px){
+  .nav{padding:0 20px;top:36px}
+  .nav-inner{padding:14px 20px}
+  .nav-cta{display:none}
+  .container{padding:0 20px}
+  section{padding:80px 0}
+  .hero{padding-top:120px;min-height:auto}
+  h1{font-size:clamp(2.8rem,14vw,5rem)}
+  .service-item{grid-template-columns:1fr;gap:16px;padding:32px 0}
+  .portfolio-grid{grid-template-columns:1fr}
+  .portfolio-thumb{height:200px}
+  .testimonial-mark{font-size:clamp(3rem,12vw,80px)}
+  .footer-inner{flex-direction:column;gap:20px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- Design Label Bar -->
+<div class="design-label">Design 4 of 5 &nbsp;|&nbsp; Molten Surface &nbsp;|&nbsp; Bold and alive &nbsp;|&nbsp; Inspired by: kota.co.uk &nbsp;|&nbsp; Fonts: Syne / DM Sans &nbsp;|&nbsp; Signature: Lava lamp background + gradient text</div>
+
+<!-- Lava Lamp Background -->
+<div class="lava-bg" aria-hidden="true"></div>
+<div class="frost-overlay" aria-hidden="true"></div>
+
+<!-- Page Content -->
+<div class="page-content">
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Nith Digital</a>
+      <a href="#contact" class="nav-cta">Get in touch</a>
+      <div class="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="gradient-text hero-stagger-1">We build websites that work as hard as you&nbsp;do</h1>
+        <p class="hero-sub hero-stagger-2">A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the&nbsp;UK.</p>
+        <a href="#work" class="hero-cta hero-stagger-3">See our work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section>
+    <div class="container">
+      <div class="animate-on-scroll">
+        <p class="intro-text">Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <h2 class="gradient-text animate-on-scroll" style="margin-bottom:20px">Services</h2>
+      <p class="text-muted animate-on-scroll" style="margin-bottom:64px;font-size:1.1rem">Everything a small business needs to look professional online and run smarter behind the scenes.</p>
+      <div class="services-list">
+        <div class="service-item animate-on-scroll">
+          <div class="service-name">Website Design &amp; Development</div>
+          <p class="service-desc">Custom-built, mobile-first websites. Not templates &mdash; every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability.</p>
+        </div>
+        <div class="service-item animate-on-scroll">
+          <div class="service-name">Social Media Management</div>
+          <p class="service-desc">Consistent, professional content across Facebook and Instagram &mdash; scheduled, published, and managed. We handle the posting so you can focus on the work.</p>
+        </div>
+        <div class="service-item animate-on-scroll">
+          <div class="service-name">Search Engine Optimisation</div>
+          <p class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it. Technical optimisation, content strategy, and Google Search Console monitoring.</p>
+        </div>
+        <div class="service-item animate-on-scroll">
+          <div class="service-name">Data Analytics &amp; Power&nbsp;BI</div>
+          <p class="service-desc">Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful &mdash; built by someone with a decade in BI.</p>
+        </div>
+        <div class="service-item animate-on-scroll">
+          <div class="service-name">Mobile App Development</div>
+          <p class="service-desc">Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals &mdash; built to solve a specific problem.</p>
+        </div>
+        <div class="service-item animate-on-scroll">
+          <div class="service-name">TradeDesk</div>
+          <p class="service-desc">A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically. No app to download, no login to remember.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="work">
+    <div class="container">
+      <h2 class="gradient-text animate-on-scroll" style="margin-bottom:20px">Work</h2>
+      <p class="text-muted animate-on-scroll" style="margin-bottom:64px;font-size:1.1rem">Products we've built and shipped. Real things, live in the wild.</p>
+      <div class="portfolio-grid">
+        <div class="portfolio-card animate-on-scroll">
+          <div class="portfolio-thumb">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&q=80" alt="Not an Octavia — car deals dashboard" loading="lazy">
+            <div class="portfolio-gradient-overlay"></div>
+          </div>
+          <div class="portfolio-info">
+            <h4>Not an Octavia</h4>
+            <p>Machine learning model that finds underpriced used cars across the UK. Scans thousands of listings daily using XGBoost, surfaces the best deals.</p>
+            <div class="portfolio-tags"><span class="portfolio-tag">Next.js</span><span class="portfolio-tag">Supabase</span><span class="portfolio-tag">XGBoost</span></div>
+          </div>
+        </div>
+        <div class="portfolio-card animate-on-scroll">
+          <div class="portfolio-thumb">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=640&q=80" alt="gAIns — AI gym tracker" loading="lazy">
+            <div class="portfolio-gradient-overlay"></div>
+          </div>
+          <div class="portfolio-info">
+            <h4>gAIns</h4>
+            <p>AI-powered gym tracker with a built-in coach. Logs workouts, tracks progress over time, and gives personalised programming advice.</p>
+            <div class="portfolio-tags"><span class="portfolio-tag">React</span><span class="portfolio-tag">Supabase</span><span class="portfolio-tag">Anthropic API</span></div>
+          </div>
+        </div>
+        <div class="portfolio-card animate-on-scroll">
+          <div class="portfolio-thumb">
+            <img src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=640&q=80" alt="Daily Duel — mini-games" loading="lazy">
+            <div class="portfolio-gradient-overlay"></div>
+          </div>
+          <div class="portfolio-info">
+            <h4>Daily Duel</h4>
+            <p>30 daily mini-games &mdash; trivia, puzzles, pattern matching, memory. Fresh challenges every day with leaderboards and streaks.</p>
+            <div class="portfolio-tags"><span class="portfolio-tag">Next.js</span><span class="portfolio-tag">TypeScript</span><span class="portfolio-tag">Tailwind</span></div>
+          </div>
+        </div>
+        <div class="portfolio-card animate-on-scroll">
+          <div class="portfolio-thumb">
+            <img src="https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=640&q=80" alt="Tumble Tots — childminding website" loading="lazy">
+            <div class="portfolio-gradient-overlay"></div>
+          </div>
+          <div class="portfolio-info">
+            <h4>Tumble Tots</h4>
+            <p>Clean, mobile-first website for a local childminding business. Simple, fast, and easy to find on Google.</p>
+            <div class="portfolio-tags"><span class="portfolio-tag">HTML</span><span class="portfolio-tag">CSS</span><span class="portfolio-tag">JavaScript</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section>
+    <div class="container">
+      <h2 class="gradient-text animate-on-scroll" style="margin-bottom:64px">What people say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-item animate-on-scroll">
+          <span class="testimonial-mark gradient-text">&ldquo;</span>
+          <p class="testimonial-quote">Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it. No fuss, no jargon &mdash; just got on with it.</p>
+          <p class="testimonial-author">Recent client &mdash; Dumfries &amp; Galloway</p>
+        </div>
+        <div class="testimonial-item animate-on-scroll">
+          <span class="testimonial-mark gradient-text">&ldquo;</span>
+          <p class="testimonial-quote">We'd been quoted over &pound;3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price &mdash; and actually answered the phone when we had questions.</p>
+          <p class="testimonial-author">Recent client &mdash; Ayrshire</p>
+        </div>
+        <div class="testimonial-item animate-on-scroll">
+          <span class="testimonial-mark gradient-text">&ldquo;</span>
+          <p class="testimonial-quote">The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds. Should have done it years ago.</p>
+          <p class="testimonial-author">Recent client &mdash; Scotland</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <section>
+    <div class="container">
+      <div class="animate-on-scroll">
+        <p class="trust-text">10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <h2 class="gradient-text animate-on-scroll" style="margin-bottom:64px">Common questions</h2>
+      <div class="faq-list">
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>How much does a website cost?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">A standard business website starts at &pound;500 with a &pound;40/month hosting and support fee. Booking systems start at &pound;750. Custom web apps start at &pound;3,000. We'll give you an exact quote after a 15-minute conversation &mdash; no surprises.</div></div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>How long does a website take to build?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">Most business websites are live within 2&ndash;3 weeks from the day we start. Custom apps and more complex projects take 4&ndash;8 weeks. We'll give you a timeline upfront and stick to it.</div></div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>Do I need to provide content and images?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">We handle all the copy and design. If you have photos of your work (even phone photos), send them over &mdash; they make a huge difference. If not, we'll source professional imagery that fits your industry.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <h2 class="gradient-text animate-on-scroll">Ready to talk?</h2>
+      <p class="animate-on-scroll">No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+      <a href="mailto:hello@nithdigital.uk" class="cta-btn animate-on-scroll">Get in touch</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-copy">&copy; 2026 Nith Digital. Sanquhar, Dumfries &amp; Galloway.</p>
+        <div class="footer-links">
+          <a href="tel:+447404173024">07404 173024</a>
+          <a href="mailto:hello@nithdigital.uk">hello@nithdigital.uk</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- .page-content -->
+
+<!-- Scroll Observer + FAQ Accordion -->
+<script>
+(function(){
+  // Scroll animation observer
+  var els = document.querySelectorAll('.animate-on-scroll');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function(el) { obs.observe(el); });
+  } else {
+    els.forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = this.parentElement;
+      var answer = item.querySelector('.faq-answer');
+      var isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(function(fi) {
+        fi.classList.remove('open');
+        fi.querySelector('.faq-answer').style.maxHeight = null;
+        fi.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+    q.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
