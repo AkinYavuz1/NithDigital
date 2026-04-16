@@ -1,0 +1,377 @@
+{
+  "meta": {
+    "purpose": "Competitive research for Nith Digital (www.nithdigital.uk) website redesign",
+    "date": "2026-04-16",
+    "focus": "Small/boutique agency and freelancer websites that feel premium — relevant to a 1-person agency in Dumfries & Galloway, Scotland",
+    "search_queries": [
+      "best web design agency website UK 2025 2026",
+      "web design agency website design award winning 2025 2026",
+      "premium web design agency website examples Scotland",
+      "small web agency portfolio website inspiration 2025 2026",
+      "best digital agency websites Awwwards 2025 2026",
+      "freelance web developer portfolio website premium design 2025 2026"
+    ]
+  },
+  "standout_sites": [
+    {
+      "name": "Stckmn",
+      "url": "https://www.stckmn.com/",
+      "location": "Glasgow, Scotland",
+      "team_size": "1 person (solo founder)",
+      "relevance": "HIGHEST — one-man creative studio in Scotland, almost identical positioning to Nith Digital",
+      "what_makes_it_good": {
+        "layout": "Minimalist full-width design with generous whitespace. Fixed navigation with hamburger menu. Content stacked vertically with maximum breathing room between sections.",
+        "typography": "Three premium typefaces: Canada Type Gibson, Freight Display Pro, Halyard Display. Establishes sophisticated hierarchy through font pairing alone.",
+        "colour": "High-contrast black and white palette. White backgrounds with black text, inverted in footer. No accent colour needed — the restraint itself signals confidence.",
+        "animations": "Accordion-style portfolio panels that expand to reveal project details. Minimal animation — lets the work speak.",
+        "overall_feel": "Deliberately sparse. Positions a solo practitioner as thoughtfully selective rather than commercially desperate. 'Award-winning' in primary headline establishes authority immediately."
+      },
+      "portfolio_presentation": "Projects appear as expandable accordion panels with thumbnail images and minimal text overlay. Only 14 curated projects shown — quality over quantity. Image-focused with project labels.",
+      "services_approach": "No dedicated services page. Instead, the hero states 'one-man creative studio with more than one expertise' — branding, print, digital, packaging, visualisation mentioned contextually.",
+      "techniques_worth_borrowing": [
+        "Radical restraint — white space as a premium signal",
+        "Curated portfolio (14 projects, not 50)",
+        "Direct contact info prominently displayed (phone + email)",
+        "Solo positioning framed as a strength: 'one-man studio with more than one expertise'",
+        "Premium typeface pairing to compensate for minimal colour palette",
+        "Accordion portfolio keeps page clean while allowing depth"
+      ]
+    },
+    {
+      "name": "Freytag Anderson",
+      "url": "https://www.freytaganderson.com/",
+      "location": "Glasgow, Scotland (Southblock, Merchant City)",
+      "team_size": "~5 people",
+      "relevance": "HIGH — small Scottish studio, 4x Scottish Design Agency of the Year, premium brand positioning",
+      "what_makes_it_good": {
+        "layout": "Full-screen scroll-triggered sections with sticky positioning. Each project takes full viewport height. Immersive, editorial pacing.",
+        "typography": "Bold, confident headline typography. 'Hello. We're Freytag Anderson' — conversational yet authoritative. Clean sans-serif throughout.",
+        "colour": "Dark backgrounds with white text for high contrast. Minimalist palette lets project imagery provide all the colour.",
+        "animations": "Lazy-loaded video backgrounds that activate on scroll. Performance-optimised — only the first video loads initially. Smooth vertical parallax between project sections.",
+        "overall_feel": "Magazine-editorial. Each scroll reveals a new full-bleed project like turning pages. Feels like a curated exhibition, not a website."
+      },
+      "portfolio_presentation": "Homepage IS the portfolio — each section is a project (Highland Soap Co., Intune CBD Soda, Lucky Liqueurs, etc.) with full-width hero imagery and a single arrow link to case study. Separate project archive on subdomain for deep browsing.",
+      "services_approach": "Three pillars: Strategy (positioning, naming, consulting), Design (visual identity, packaging, websites), Content (film, photography, social). Clean taxonomy, not a cluttered list.",
+      "techniques_worth_borrowing": [
+        "Homepage as portfolio — no separate 'work' page needed",
+        "Full-viewport project sections with sticky scroll",
+        "Lazy-loaded videos for performance without sacrificing impact",
+        "'A team, not a machine' messaging — humanises a small studio",
+        "Credentials in sub-headline: D&AD Pencil, 22 Scottish Design Awards",
+        "Project archive on subdomain keeps main site clean"
+      ]
+    },
+    {
+      "name": "The Lonely Pixel",
+      "url": "https://www.thelonelypixel.co.uk/",
+      "location": "UK (remote)",
+      "team_size": "1 person (Chris Robinson, solo freelancer)",
+      "relevance": "HIGH — solo freelancer with a site that punches way above its weight class",
+      "what_makes_it_good": {
+        "layout": "Vertical scrolling with sticky navigation and layered content sections. Glassmorphism (frosted glass) effects throughout. Multi-step contact form with conditional reveals.",
+        "typography": "CircularXXWeb font family with CSS clamp() for responsive scaling. Animated underlines and gradient highlights on key text. Sophisticated sizing system.",
+        "colour": "Deep purple (#39007d) through magenta to coral-red gradients. Teal/cyan accents (#2bcea7, #01ffc5). Rich, warm palette that avoids the typical cold-tech feel.",
+        "animations": "Marquee scrolling text loops. Stacking cards with sticky parallax. Split-word headline animations. Gradient background reveals on hover. Cubic-bezier easing throughout.",
+        "overall_feel": "Immersive and rich without being overwhelming. Proves a solo freelancer can have a site that rivals large agencies."
+      },
+      "portfolio_presentation": "Featured work section uses asymmetric 40/60 column splits. Layered images with interactive hover states that scale and translate. Grid transforms on interaction.",
+      "services_approach": "Grid cards with icon backgrounds and smooth hover elevation. Categorised service offerings. Each card links to detail page.",
+      "techniques_worth_borrowing": [
+        "Glassmorphism (backdrop-filter blur) for depth without clutter",
+        "Split-word headline animations for hero impact",
+        "Built-in accessibility features: ADHD focus mode, high contrast toggle",
+        "Gradient colour palette instead of flat colours — feels more premium",
+        "Stacking card sections with parallax depth",
+        "Multi-step contact form (not just a basic form)",
+        "Marquee scrolling for social proof / client logos"
+      ]
+    },
+    {
+      "name": "Unseen Studio",
+      "url": "https://unseen.co/",
+      "location": "Bristol & London, UK",
+      "team_size": "Small studio (exact number not disclosed)",
+      "relevance": "MEDIUM-HIGH — Awwwards Studio of the Year, aspirational benchmark for what premium looks like",
+      "what_makes_it_good": {
+        "layout": "Immersive, almost game-like experience. 3D spatial grid system where projects have x/y/z coordinates. Audio toggle for sound-enabled browsing.",
+        "typography": "Neue Montreal (sans-serif) paired with Saol Display (serif). The serif/sans combination is a masterclass in font pairing.",
+        "colour": "Alternates between dark (#212121) and warm light backgrounds (#efded9, #f3efe5) depending on project context. No single palette — adapts per section.",
+        "animations": "3D cube rotations with preserve-3d. WebGL particle systems. Water simulations. Optical flow experiments. Video layering at varying Z-depths for parallax.",
+        "overall_feel": "Boundary-pushing. The most technically ambitious site in this research. Sets the upper limit of what's possible."
+      },
+      "portfolio_presentation": "Projects exist in a 3D spatial environment. Each project has category filters (Branding, Digital, Motion, Experiment), cover images with attached videos/3D models, and hover states with sound toggles. External links to live work.",
+      "services_approach": "Three areas: Branding, Digital Experiences, Motion Production. Described through editorial copy rather than bullet lists.",
+      "techniques_worth_borrowing": [
+        "Serif + sans-serif font pairing (Saol Display + Neue Montreal)",
+        "Context-adaptive colour palette (dark/warm/light per section)",
+        "Audio as an experience layer (optional, not forced)",
+        "Category filtering on portfolio",
+        "Loading sequence as a design moment (animated cube intro)",
+        "The concept that the site itself IS the portfolio piece"
+      ]
+    },
+    {
+      "name": "MadeByShape",
+      "url": "https://madebyshape.co.uk/",
+      "location": "Manchester, UK",
+      "team_size": "~10 people (deliberately chose not to scale up)",
+      "relevance": "HIGH — small agency that intentionally stays small; very relevant philosophy for Nith Digital",
+      "what_makes_it_good": {
+        "layout": "Modern modular layout with dark mode toggle (auto-detects user preference via prefers-color-scheme). Custom cursor with drag interactions. Clean card-based portfolio grid.",
+        "typography": "Clean sans-serif with strong hierarchy. Headlines are bold and punchy. Body text is well-spaced for readability.",
+        "colour": "Light and dark mode support. Dark mode uses deep backgrounds with high-contrast text. Light mode is clean white with subtle greys.",
+        "animations": "GSAP ScrollTrigger for scroll-triggered reveals. Parallax effects on images responding to mouse movement. Smooth video modals via Vimeo. Swiper carousels for testimonials.",
+        "overall_feel": "Refined and intentional. The dark/light toggle shows attention to user preference. Everything feels considered, not templated."
+      },
+      "portfolio_presentation": "Project cards with multiple service tags (Branding, Website, SEO, Shopify). Recent projects include Gary Neville, Sketch Studios. Award credentials prominently displayed. Testimonials integrated alongside work.",
+      "services_approach": "Web Design, Craft CMS, Branding, SEO, Shopify, Craft Commerce. Each gets a dedicated page with case study examples inline.",
+      "techniques_worth_borrowing": [
+        "Dark/light mode toggle with prefers-color-scheme auto-detection",
+        "Custom cursor interactions (adds premium tactile feel)",
+        "GSAP + ScrollTrigger for scroll-driven animations",
+        "Mouse-responsive parallax on portfolio images",
+        "Deliberately staying small framed as a philosophy, not a limitation",
+        "Service tags on portfolio cards for at-a-glance categorisation",
+        "WebP image delivery via CDN for performance"
+      ]
+    },
+    {
+      "name": "Fat Cow Media",
+      "url": "https://www.fatcowmedia.co.uk/",
+      "location": "London, UK",
+      "team_size": "Small (founder Steve Sharp identified; exact size not stated)",
+      "relevance": "MEDIUM-HIGH — dark theme with sophisticated SVG animations, good example of small agency punching above weight",
+      "what_makes_it_good": {
+        "layout": "Clean hierarchical navigation. Dark, sophisticated backgrounds with animated SVG hero. Grid-based portfolio. Prominent 5.0 Google rating badge.",
+        "typography": "Bold headline treatments with animated text reveals (6-second fadeIn). Well-structured hierarchy from hero to body sections.",
+        "colour": "Dark palette: black backgrounds with white typography. Accent colours emerge through SVG animations cycling through the hue spectrum. Creates an organic, living feel.",
+        "animations": "Simplex noise algorithm generating fluid SVG animations. Custom spline animation on quote path element that responds to mouse hover (noise acceleration from 0.005 to 0.01). Intersection Observer triggers animations only when visible. Lazy-loaded images via lozad.",
+        "overall_feel": "Dark and sophisticated with living, breathing SVG backgrounds. The generative noise animations feel unique and bespoke rather than template-driven."
+      },
+      "portfolio_presentation": "Recent projects in grid format with client logos and titles (Snowed-In Productions, 60Forty Films, Vaultex). Links to individual case studies.",
+      "services_approach": "Four core service cards: Web Design, SEO, Reputation Management, Branding. Brief descriptions with links to dedicated service pages. Sector specialisations listed separately (law, finance, healthcare, education).",
+      "techniques_worth_borrowing": [
+        "Simplex noise SVG animations for unique, non-template hero backgrounds",
+        "Mouse-interactive SVG elements (speed changes on hover)",
+        "Intersection Observer for performance-friendly animation triggers",
+        "5-star Google rating as prominent social proof",
+        "Sector-specific service pages (not just generic 'web design')",
+        "Reduced-motion media query support for accessibility",
+        "Dark theme done right — not just 'black background' but layered and alive"
+      ]
+    },
+    {
+      "name": "Robb Owen",
+      "url": "https://robbowen.digital/",
+      "location": "Abergavenny, South Wales, UK",
+      "team_size": "1 person (independent creative developer)",
+      "relevance": "HIGH — solo developer in rural UK with a premium, restrained portfolio. Closest parallel to Nith Digital's situation.",
+      "what_makes_it_good": {
+        "layout": "Clean minimal structure with sticky navigation. Work, About, Writing sections. Prominent 'Hire me' CTA. Geometric pattern elements (diagonal stripes, dot motifs) add texture without overwhelming.",
+        "typography": "Restrained and readable. Clear hierarchy through sizing rather than weight. Geographic specificity in intro: 'from Abergavenny, South Wales' — roots the brand in place.",
+        "colour": "Soft blue background (#f4f9fc), electric purple accents (#7f00e0), muted cyan (#aadcec). Gentle, approachable palette that doesn't try too hard.",
+        "animations": "Minimal — lets content breathe. Hover states and subtle transitions only. The restraint is the technique.",
+        "overall_feel": "Substance over flash. Confident understatement. A solo developer who doesn't need to prove anything — the work and credentials speak."
+      },
+      "portfolio_presentation": "Selective display: highlights only accomplished work. Features a VS Code theme with 2 million downloads as a credibility marker. Open-source projects (Tornis, Rekishi) demonstrate technical depth.",
+      "services_approach": "No traditional services page. Instead, a capabilities statement: 'interaction design to scaleable design systems, single-page apps to something more experimental with WebGL' — signals range without a boring list.",
+      "techniques_worth_borrowing": [
+        "Geographic specificity as a brand anchor ('from Abergavenny, South Wales')",
+        "Open-source contributions as credibility signals",
+        "Capability statement instead of services list",
+        "Minimal animation — restraint as a conscious design choice",
+        "Geometric patterns for visual texture on minimal layouts",
+        "Selective portfolio: fewer projects, higher impact",
+        "Rural UK location framed as authentic, not a disadvantage"
+      ]
+    },
+    {
+      "name": "Bryn Taylor",
+      "url": "https://www.bryntaylor.co.uk/",
+      "location": "Copenhagen (UK-origin, works worldwide)",
+      "team_size": "1 person (freelance product & website designer)",
+      "relevance": "MEDIUM-HIGH — solo designer with premium client roster (Monzo, Mastercard, Pleo). Shows how to project authority as an individual.",
+      "what_makes_it_good": {
+        "layout": "12-column grid system with responsive breakdowns. Clean navigation: Work, Writing, About, Services, Contact, Templates. Email CTA in header.",
+        "typography": "Neue Montreal (regular + medium weights). Clean, modern, highly readable. Size variations create hierarchy without needing multiple typefaces.",
+        "colour": "Sophisticated neutral palette with dynamically cycling accent colours via CSS custom properties. Subtle gradient background in hero that shifts.",
+        "animations": "Logo rotation + scale on hover. Navigation links use skew transforms on hover. Active states scale to 0.94. Micro-interactions throughout — nothing large-scale.",
+        "overall_feel": "Senior-level confidence communicated through restraint. The client logos do the heavy lifting. Everything else stays out of the way."
+      },
+      "portfolio_presentation": "Split into 'Work' (6 case studies: Pleo, Cornerfold, Kernel, Monzo) and 'Ventures' (side projects: A1 gallery, templates, Freelance Things). 20+ client testimonials in a scrolling carousel with profile images.",
+      "services_approach": "Five service categories as cards with background images: Website Design, Digital Product Design, Webflow Development, Framer Development, Icon Design. Each links to a category page.",
+      "techniques_worth_borrowing": [
+        "Client logo carousel in hero for instant credibility",
+        "Work/Ventures split — shows commercial and personal projects separately",
+        "20+ testimonials with real photos and names",
+        "Service categories as visual cards, not text lists",
+        "Dynamic accent colour cycling via CSS custom properties",
+        "Skew micro-interactions on navigation (subtle but premium feel)",
+        "Single typeface (Neue Montreal) used across entire site for cohesion"
+      ]
+    },
+    {
+      "name": "SOZO Design",
+      "url": "https://sozodesign.co.uk/",
+      "location": "UK",
+      "team_size": "Small boutique agency (described as 'team of ambitious digital specialists')",
+      "relevance": "MEDIUM — interesting for sustainability angle and results-driven case study presentation",
+      "what_makes_it_good": {
+        "layout": "Clean structure with sticky navigation. 'Eco Mode' toggle reflecting B Corp certification. Prominent 'Book meeting' CTA. Modular content blocks.",
+        "typography": "System inheritance fonts for performance optimisation. Clean, functional hierarchy prioritising readability over decorative type.",
+        "colour": "Neutral palette with purple accents (#9476f2). Minimal colour use — the animated gradient blobs provide visual interest without a complex palette.",
+        "animations": "Animated gradient blobs using CSS keyframes with translate3d transforms. GPU-accelerated for smooth performance. Flowing, organic shapes in hero.",
+        "overall_feel": "Purpose-driven premium. Won 'Best Sustainable Web Design' at 2025 W3 Awards. The eco-mode toggle is a genuine differentiator."
+      },
+      "portfolio_presentation": "Case studies led by measurable results: 'Revenue Growth +143%', 'New Customer Growth +166%'. Organised by client outcomes rather than service types. Results-first, visuals second.",
+      "services_approach": "Three pillars: Create (branding, Shopify, AI agents), Grow (SEO, AIO/AI search optimisation, performance marketing), Convert (CRO, behaviour analysis). Modern service taxonomy including AI.",
+      "techniques_worth_borrowing": [
+        "Eco Mode toggle — differentiator and conversation starter",
+        "Results-led case studies (numbers first, not just pretty screenshots)",
+        "Animated gradient blobs for organic hero background",
+        "B Corp / sustainability positioning as a premium signal",
+        "AI search optimisation (AIO) as a listed service — forward-looking",
+        "System fonts for genuine performance (not just perceived)",
+        "Three-pillar service framework: Create / Grow / Convert"
+      ]
+    },
+    {
+      "name": "Creatomatic",
+      "url": "https://www.creatomatic.co.uk/",
+      "location": "Scotland",
+      "team_size": "Small agency",
+      "relevance": "MEDIUM — Scottish agency with 'human-made digital' philosophy, relevant local competitor",
+      "what_makes_it_good": {
+        "layout": "Clean modern layout with expandable dropdown navigation. 'Start a Project' CTA in header. Full-width sections with breathing room.",
+        "typography": "Variable font technology with Wix Madefor Display and Newsreader. Responsive scaling from 0.90vw to 11vw — enormous range for drama.",
+        "colour": "Dark navy/charcoal (#151D36) as primary. Vibrant pink accent (#FF438F). High contrast for readability. Sophisticated but not cold.",
+        "animations": "Smooth navigation transitions. Interactive lightbox galleries. Hover effects on portfolio items. Subtle throughout.",
+        "overall_feel": "Approachable and warm. 'A creative digital agency built by good folk' — human-first messaging that builds trust."
+      },
+      "portfolio_presentation": "Grid gallery with project filtering by category (Web Design & Development, Brand & Identity, Digital Marketing). Each project has descriptive title and category tags.",
+      "services_approach": "Four main offerings in dropdown navigation: Websites, SuperControl (booking integrations — niche), Brand & Identity, Digital Marketing. Brief copy for each.",
+      "techniques_worth_borrowing": [
+        "'Built by good folk' — warm, human positioning",
+        "Variable font scaling (0.90vw to 11vw) for dramatic headlines",
+        "Dark navy + pink accent colour pairing",
+        "Category filtering on portfolio grid",
+        "Niche service listing (SuperControl) shows specialisation",
+        "Project inquiry form as primary CTA, not generic contact"
+      ]
+    },
+    {
+      "name": "ThunderClap",
+      "url": "https://www.thethunderclap.com/",
+      "location": "UK / remote",
+      "team_size": "~8-12 people",
+      "relevance": "MEDIUM — good example of conversion-focused agency site with strong scroll animations and B2B positioning",
+      "what_makes_it_good": {
+        "layout": "Clean modular structure. Dark background with green accents. Dropdown menus with clip-path polygon animations. Video hero with consultation CTA.",
+        "typography": "SplitType library splits headlines into lines for staggered reveal animations. Modern sans-serif. Bold, direct copywriting: 'Your website doesn't have to suck.'",
+        "colour": "Near-black backgrounds with green accents (dark sea green). White text for contrast. Feels authoritative and tech-forward.",
+        "animations": "GSAP ScrollTrigger at 60-85% viewport thresholds. SplitType text reveals. Clip-path polygon menu expansions. Infinite marquee logo carousels. Video hover states on portfolio cards. Cookie-based modal timing.",
+        "overall_feel": "Conversion-machine. Every section has a CTA. Process transparency (10-week timeline). Stats-heavy ('144+ websites, 50% demo increase'). The site sells."
+      },
+      "portfolio_presentation": "Four featured project cards. Desktop hover hides image and triggers video playback. Projects categorised as SaaS with brief descriptions and external links.",
+      "services_approach": "Four pillars: Messaging, Branding, Website Design, Website Development. Icon + title + 'Learn more' link. Arrow animations on hover.",
+      "techniques_worth_borrowing": [
+        "SplitType text animation library for headline reveals",
+        "GSAP ScrollTrigger with specific viewport thresholds",
+        "Clip-path polygon animations for menu transitions",
+        "Video-on-hover for portfolio cards",
+        "Process timeline transparency (10-week visual)",
+        "Stats badges as social proof: '144+ websites built'",
+        "Direct, bold copywriting — not corporate speak"
+      ]
+    },
+    {
+      "name": "Primal Space",
+      "url": "https://www.primalspace.co.uk/",
+      "location": "Edinburgh, Scotland",
+      "team_size": "Small agency",
+      "relevance": "MEDIUM — Edinburgh digital agency, local Scottish competitor reference",
+      "what_makes_it_good": {
+        "layout": "Full-width template with responsive breakpoints. Hero section includes an overlaid contact form on the right — integrates lead capture directly into the landing.",
+        "typography": "Ibarra Real Nova (serif) for headings, Manrope (sans-serif) for body. Serif headings + sans body creates editorial, premium feel.",
+        "colour": "Gold/amber accent (#e0a240) with black text on white/light grey backgrounds. Dark sections use full black. The gold feels premium and distinctive.",
+        "animations": "Box shadows on service cards for depth. Lazy-loading images. Video overlay functionality. Subtle, performance-focused.",
+        "overall_feel": "Professional and grounded. The gold accent colour is distinctive — stands out from the typical blue/purple/green agency palette."
+      },
+      "portfolio_presentation": "Not heavily featured on homepage. Services and lead capture prioritised over portfolio display.",
+      "services_approach": "Grid layout with equal-height service cards. Consistent spacing, shadow effects, positioned CTAs at base of each card.",
+      "techniques_worth_borrowing": [
+        "Serif heading + sans-serif body font pairing (editorial feel)",
+        "Gold/amber as accent colour — distinctive and premium",
+        "Contact form embedded in hero section (reduces friction)",
+        "Service cards with consistent shadow depth and CTA placement",
+        "Lazy-loading for performance without sacrificing visual quality"
+      ]
+    }
+  ],
+  "key_trends_2025_2026": {
+    "design_patterns": [
+      "Dark themes with sophisticated accent colours (not just 'dark mode')",
+      "Generous whitespace as a premium signal",
+      "Full-viewport project sections with scroll-triggered reveals",
+      "Glassmorphism and backdrop-filter effects for depth",
+      "Variable fonts with dramatic size scaling (vw units for headlines)",
+      "Serif + sans-serif font pairing for editorial sophistication",
+      "Custom cursors and micro-interactions on hover",
+      "Animated gradient blobs / generative SVG backgrounds"
+    ],
+    "portfolio_presentation_patterns": [
+      "Results-led case studies (metrics before screenshots)",
+      "Video-on-hover for portfolio cards",
+      "Category filtering (Branding, Web, Digital)",
+      "Selective curation: 6-14 projects, not 50+",
+      "Full-bleed hero images per project",
+      "Accordion or expandable panels for clean browsing"
+    ],
+    "technology_stack_trends": [
+      "GSAP + ScrollTrigger for scroll-driven animations",
+      "SplitType for text animation",
+      "Webflow, Framer, or Next.js as build platforms",
+      "WebP/AVIF image delivery via CDN",
+      "Intersection Observer for performance-friendly animation triggers",
+      "prefers-color-scheme for automatic dark/light mode",
+      "CSS clamp() for responsive typography"
+    ],
+    "messaging_patterns": [
+      "Geographic specificity as brand anchor (city/region in intro)",
+      "Small team framed as strength, not limitation",
+      "Conversational tone in hero: 'Hello. We're...' rather than corporate speak",
+      "Capabilities statement over services list",
+      "Client logos as instant credibility in hero section",
+      "Direct contact info (phone + email) prominently placed"
+    ]
+  },
+  "recommendations_for_nith_digital": {
+    "most_relevant_references": [
+      "Stckmn (Glasgow, 1 person) — closest positioning match",
+      "Robb Owen (rural Wales, 1 person) — closest situation match",
+      "Freytag Anderson (Glasgow, 5 people) — aspirational Scottish benchmark",
+      "MadeByShape (Manchester, 10 people) — 'intentionally small' philosophy",
+      "The Lonely Pixel (UK, 1 person) — proves solo can feel premium"
+    ],
+    "suggested_design_direction": {
+      "theme": "Dark with warm accent (not cold/corporate). Consider dark navy (#151D36) or near-black with a warm accent like amber, coral, or the Dumfries landscape greens.",
+      "typography": "Serif + sans-serif pairing for editorial feel. One premium display font for headlines, one clean sans for body. Consider Neue Montreal, or pair a serif like Saol Display with a geometric sans.",
+      "layout": "Full-viewport hero with animated text reveal. Portfolio as homepage (Freytag Anderson model). Maximum whitespace. Mobile-first.",
+      "animations": "GSAP ScrollTrigger for scroll-driven reveals. SplitType for headline animations. Subtle parallax on portfolio images. Nothing excessive — restraint is premium.",
+      "portfolio": "6-8 curated projects maximum. Results-led (metrics + screenshots). Video-on-hover for case study cards. Category tags visible.",
+      "services": "Three-pillar framework (like Freytag Anderson or SOZO). Not a long list. Each pillar gets a brief description, not a page.",
+      "hero_messaging": "Geographic specificity: 'A digital agency in Dumfries & Galloway, Scotland.' Conversational, direct. No buzzwords. Let the work prove the capability.",
+      "social_proof": "Client logos if available. Google rating badge. Testimonials with real names and photos. Stats: number of sites built, years in business."
+    },
+    "things_to_avoid": [
+      "Generic stock photography",
+      "Blue/teal colour schemes (overused in agency space)",
+      "Long services pages with bullet point lists",
+      "Team page with forced 'fun' photos (solo operator doesn't need this)",
+      "Cluttered navigation with too many pages",
+      "Template-looking layouts (Elementor/WordPress generic patterns)",
+      "Corporate language: 'solutions', 'leverage', 'synergy'",
+      "Showing every project ever done — curate ruthlessly"
+    ]
+  }
+}
