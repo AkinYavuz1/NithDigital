@@ -31,14 +31,11 @@
   /* ── Reset ── */
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;font-size:16px}
-  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
   ::selection{background:var(--accent);color:#fff}
 
-  /* ── Cursor trail ── */
-  .trail-dot{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:10000;opacity:0;transition:none;will-change:transform,opacity}
-  body{cursor:auto}
 
   /* ══════════════════ KOTA LAVA LAMP BACKGROUND ══════════════════ */
 
@@ -119,6 +116,7 @@
   .intro-text .highlight{color:var(--accent);font-weight:600}
 
   /* ══════════════════ PORTFOLIO ══════════════════ */
+  .work-wrap{background:var(--bg);position:relative;z-index:3}
   .work-section{padding:80px 0 120px}
   .section-label{display:flex;align-items:baseline;gap:16px;margin-bottom:60px}
   .section-num{font-size:clamp(4rem,10vw,8rem);font-weight:700;color:var(--accent);opacity:0.12;line-height:1;letter-spacing:-0.04em}
@@ -249,7 +247,7 @@
     .lava-blob,.work-card-video::before,.work-card-video::after{animation:none!important}
     .noise-overlay{animation:none!important}
     .anim{opacity:1;transform:none;transition:none}
-    .trail-dot{display:none}
+
     .hero-headline .typed-cursor{display:none}
     .hero-sub,.hero-ctas{opacity:1;transform:none;transition:none}
     .line-inner{transform:none;transition:none}
@@ -267,8 +265,8 @@
 
   /* ══════════════════ MOBILE ══════════════════ */
   @media(max-width:768px){
-    body{cursor:auto}
-    .trail-dot{display:none}
+
+
 
     /* Layout */
     .section{padding:0 20px}
@@ -349,9 +347,6 @@
 <!-- Design label -->
 <div class="design-label">Design 10 <span>|</span> Warm Pulse v2 <span>|</span> KOTA lava bg + Mallard scroll reveals <span>|</span> Plus Jakarta Sans <span>|</span> Coral + Blue + Gold</div>
 
-<!-- Cursor trail -->
-<div id="trail-container"></div>
-
 <!-- ══════════ KOTA LAVA LAMP BACKGROUND ══════════ -->
 <!-- Layer 0: Lava blobs -->
 <div class="lava-canvas">
@@ -370,7 +365,7 @@
 <div class="frost-overlay"></div>
 
 <!-- Floating CTA -->
-<a href="#contact" class="floating-cta" data-cursor-hover>Contact us</a>
+<a href="#contact" class="floating-cta">Contact us</a>
 
 <div class="page">
 
@@ -442,6 +437,7 @@
 </section>
 
 <!-- ══════════ WORK ══════════ -->
+<div class="work-wrap">
 <section class="work-section section" id="work">
   <div class="section-label">
     <span class="section-num parallax-layer" data-speed="0.03">01</span>
@@ -522,6 +518,7 @@
     </div>
   </div>
 </section>
+</div><!-- .work-wrap -->
 
 <!-- ══════════ SERVICES ══════════ -->
 <section class="services-section section" id="services">
@@ -529,17 +526,17 @@
     <span class="section-num parallax-layer" data-speed="-0.025">02</span>
     <span class="section-title text-reveal">Services</span>
   </div>
-  <div class="service-item anim" data-cursor-hover>
+  <div class="service-item anim">
     <span class="service-num">01</span>
     <span class="service-name">Website Design &amp; Development <span class="service-arrow">&rarr;</span></span>
     <span class="service-desc">Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability.</span>
   </div>
-  <div class="service-item anim" data-cursor-hover style="transition-delay:0.05s">
+  <div class="service-item anim" style="transition-delay:0.05s">
     <span class="service-num">02</span>
     <span class="service-name">Social Media Management <span class="service-arrow">&rarr;</span></span>
     <span class="service-desc">Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work.</span>
   </div>
-  <div class="service-item anim" data-cursor-hover style="transition-delay:0.1s">
+  <div class="service-item anim" style="transition-delay:0.1s">
     <span class="service-num">03</span>
     <span class="service-name">Search Engine Optimisation <span class="service-arrow">&rarr;</span></span>
     <span class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it.</span>
@@ -585,15 +582,15 @@
     <span class="section-title text-reveal">FAQ</span>
   </div>
   <div class="faq-item anim">
-    <div class="faq-q" data-cursor-hover>How much does a website cost? <span class="faq-icon">+</span></div>
+    <div class="faq-q">How much does a website cost? <span class="faq-icon">+</span></div>
     <div class="faq-a"><p class="faq-a-inner">Starter websites are &pound;500, business sites &pound;800, and premium sites &pound;1,200. All include &pound;40/month hosting and support. You can split the build cost over 12 months at no extra charge. We'll give you an exact quote after a 15-minute phone call — no surprises.</p></div>
   </div>
   <div class="faq-item anim" style="transition-delay:0.05s">
-    <div class="faq-q" data-cursor-hover>How long does a website take to build? <span class="faq-icon">+</span></div>
+    <div class="faq-q">How long does a website take to build? <span class="faq-icon">+</span></div>
     <div class="faq-a"><p class="faq-a-inner">Most business websites are live within 1 week from the day we start. More complex projects take 2-4 weeks. We'll give you a timeline upfront and stick to it.</p></div>
   </div>
   <div class="faq-item anim" style="transition-delay:0.1s">
-    <div class="faq-q" data-cursor-hover>Can I update the site myself? <span class="faq-icon">+</span></div>
+    <div class="faq-q">Can I update the site myself? <span class="faq-icon">+</span></div>
     <div class="faq-a"><p class="faq-a-inner">We handle all updates for you. If you need a change — new photos, updated text, a new page — just message us. Post-launch changes are billed at &pound;35 per hour, and most small updates take 15-30 minutes.</p></div>
   </div>
 </section>
@@ -616,9 +613,9 @@
     <span>Sanquhar, Dumfries &amp; Galloway</span>
   </div>
   <div class="footer-right">
-    <a href="https://www.facebook.com/nithdigital" data-cursor-hover>Facebook</a>
-    <a href="https://www.linkedin.com/company/nith-digital" data-cursor-hover>LinkedIn</a>
-    <a href="https://github.com/AkinYavuz1" data-cursor-hover>GitHub</a>
+    <a href="https://www.facebook.com/nithdigital">Facebook</a>
+    <a href="https://www.linkedin.com/company/nith-digital">LinkedIn</a>
+    <a href="https://github.com/AkinYavuz1">GitHub</a>
   </div>
 </footer>
 
@@ -796,41 +793,6 @@
      if reduced motion, otherwise wait for typewriter to trigger it */
   if (reducedMotion) {
     initTextReveals();
-  }
-
-  /* ══════════════════════════════════════════════════════
-     CURSOR TRAIL — coloured dots that fade behind mouse
-     ══════════════════════════════════════════════════════ */
-  if (!isMobile && !reducedMotion) {
-    var trailContainer = document.getElementById('trail-container');
-    var trailColors = ['#E85D3A','#2D7FF9','#F5A623','#A855F7','#10B981'];
-    var trailIdx = 0;
-    var lastTrailTime = 0;
-
-    document.addEventListener('mousemove', function(e) {
-      var now = Date.now();
-      if (now - lastTrailTime < 30) return;
-      lastTrailTime = now;
-
-      var dot = document.createElement('div');
-      dot.className = 'trail-dot';
-      var color = trailColors[trailIdx % trailColors.length];
-      trailIdx++;
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-      dot.style.background = color;
-      dot.style.boxShadow = '0 0 8px ' + color;
-      dot.style.opacity = '0.7';
-      trailContainer.appendChild(dot);
-
-      requestAnimationFrame(function() {
-        dot.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
-        dot.style.opacity = '0';
-        dot.style.transform = 'translate(-50%,-50%) scale(2.5)';
-      });
-
-      setTimeout(function() { dot.remove(); }, 900);
-    });
   }
 
   /* ══════════════════════════════════════════════════════
