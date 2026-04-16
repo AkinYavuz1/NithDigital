@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Design 6: Warm Current</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+  /* ── Design label bar ── */
+  .design-label {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(26,26,26,0.92); color: #fff;
+    font: 12px/1 'Plus Jakarta Sans', sans-serif;
+    padding: 10px 24px; text-align: center;
+    letter-spacing: 0.03em; backdrop-filter: blur(8px);
+  }
+  .design-label span { opacity: 0.5; margin: 0 8px; }
+
+  /* ── Reset & base ── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #1A1A1A; background: #FAFAF8;
+    line-height: 1.6; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ── Tokens ── */
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --text: #1A1A1A;
+    --text-muted: #6B6B6B;
+    --accent: #E85D3A;
+    --accent-hover: #D14E2E;
+    --radius: 12px;
+    --max-w: 1240px;
+    --side-pad: max(5vw, 24px);
+  }
+
+  /* ── Warm fluid background ── */
+  .warm-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg); z-index: 0; pointer-events: none;
+  }
+  .warm-bg::before, .warm-bg::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: drift 20s ease-in-out infinite;
+  }
+  .warm-bg::before {
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(232,93,58,0.12) 0%, transparent 70%);
+    top: -10%; left: -10%;
+    animation-duration: 25s;
+  }
+  .warm-bg::after {
+    width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(255,183,120,0.1) 0%, transparent 70%);
+    bottom: -10%; right: -10%;
+    animation-duration: 18s;
+    animation-delay: -8s;
+  }
+  .warm-blob-3 {
+    position: fixed;
+    width: 45vw; height: 45vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,200,150,0.08) 0%, transparent 70%);
+    filter: blur(60px);
+    top: 30%; left: 30%;
+    animation: drift 22s ease-in-out infinite;
+    animation-delay: -5s;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(10vw, 5vh) scale(1.1); }
+    50% { transform: translate(-5vw, 10vh) scale(0.95); }
+    75% { transform: translate(8vw, -5vh) scale(1.05); }
+  }
+
+  /* ── Sticky nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px var(--side-pad);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(250,250,248,0.85);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.4s cubic-bezier(.35,0,0,1);
+  }
+  .nav-logo {
+    font-size: 1.15rem; font-weight: 600;
+    letter-spacing: -0.02em; color: var(--text);
+  }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 22px; border-radius: 8px;
+    font-size: 0.875rem; font-weight: 500;
+    background: var(--accent); color: #fff;
+    transition: background 0.3s ease;
+    cursor: pointer; border: none;
+  }
+  .nav-cta:hover { background: var(--accent-hover); }
+  .hamburger {
+    width: 24px; height: 18px; display: flex; flex-direction: column;
+    justify-content: space-between; cursor: pointer; background: none;
+    border: none; padding: 0;
+  }
+  .hamburger span {
+    display: block; width: 100%; height: 2px; background: var(--text);
+    border-radius: 1px; transition: transform 0.3s ease;
+  }
+
+  /* ── Section wrapper ── */
+  .section {
+    position: relative; z-index: 1;
+    padding: 0 var(--side-pad);
+  }
+  .section-inner {
+    max-width: var(--max-w); margin: 0 auto;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 80px; padding-bottom: 60px;
+  }
+  .hero-content { max-width: 900px; }
+  .hero h1 {
+    font-size: clamp(2.8rem, 7.5vw, 6rem);
+    font-weight: 500; line-height: 1.05;
+    letter-spacing: -0.02em; color: var(--text);
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(24px);
+    animation: heroFadeIn 0.8s cubic-bezier(.35,0,0,1) 0.15s forwards;
+  }
+  .hero p {
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+    color: var(--text-muted); max-width: 58ch;
+    line-height: 1.65; margin-bottom: 40px;
+    opacity: 0; transform: translateY(20px);
+    animation: heroFadeIn 0.8s cubic-bezier(.35,0,0,1) 0.35s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; transform: translateY(20px);
+    animation: heroFadeIn 0.8s cubic-bezier(.35,0,0,1) 0.55s forwards;
+  }
+  @keyframes heroFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .btn-accent {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 32px; border-radius: 8px;
+    font-size: 1rem; font-weight: 500;
+    background: var(--accent); color: #fff;
+    border: none; cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .btn-accent:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 32px; border-radius: 8px;
+    font-size: 1rem; font-weight: 500;
+    background: transparent; color: var(--text);
+    border: 1.5px solid rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  }
+  .btn-ghost:hover {
+    background: var(--accent); color: #fff;
+    border-color: var(--accent); transform: translateY(-1px);
+  }
+
+  /* ── Intro ── */
+  .intro { padding-top: 100px; padding-bottom: 100px; }
+  .intro-text {
+    max-width: 60ch; margin: 0 auto;
+    text-align: center;
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    color: var(--text); line-height: 1.7;
+  }
+
+  /* ── Numbered section headings ── */
+  .section-header {
+    display: flex; align-items: baseline; gap: 18px;
+    margin-bottom: 60px;
+  }
+  .section-num {
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    font-weight: 500; color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 500; line-height: 1.1;
+    letter-spacing: -0.02em; color: var(--text);
+  }
+
+  /* ── Portfolio (numbered narrative) ── */
+  .portfolio { padding-top: 60px; padding-bottom: 100px; }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .portfolio-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
+    transition: transform 0.4s cubic-bezier(.35,0,0,1), box-shadow 0.4s ease;
+  }
+  .portfolio-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06), 0 20px 48px rgba(0,0,0,0.08);
+  }
+  .portfolio-img {
+    width: 100%; height: 240px;
+    object-fit: cover;
+    filter: saturate(0.9) brightness(1.02);
+  }
+  .portfolio-img-wrap {
+    position: relative; overflow: hidden;
+  }
+  .portfolio-img-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,200,150,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .portfolio-info { padding: 28px; }
+  .portfolio-status {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 4px 0; margin-bottom: 10px;
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+    color: var(--accent);
+  }
+  .portfolio-status.dev { color: var(--text-muted); border-color: var(--text-muted); }
+  .portfolio-name {
+    font-size: 1.3rem; font-weight: 500;
+    letter-spacing: -0.01em; margin-bottom: 6px;
+    color: var(--text);
+  }
+  .portfolio-desc {
+    font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;
+  }
+
+  /* ── Services (flowing 2-col layout with hairlines) ── */
+  .services { padding-top: 60px; padding-bottom: 100px; }
+  .services-intro {
+    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+    color: var(--text-muted); max-width: 50ch;
+    margin-bottom: 56px; line-height: 1.6;
+  }
+  .service-row {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 40px;
+    padding: 40px 0;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    align-items: start;
+  }
+  .service-row:last-child {
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+  .service-name {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-weight: 500; line-height: 1.2;
+    letter-spacing: -0.01em; color: var(--text);
+  }
+  .service-desc {
+    font-size: 0.95rem; color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ── Trust / About ── */
+  .trust { padding-top: 80px; padding-bottom: 80px; }
+  .trust-inner {
+    max-width: 880px; margin: 0 auto;
+    text-align: center;
+  }
+  .trust-quote {
+    font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+    font-weight: 500; line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--text);
+    position: relative;
+  }
+  .trust-quote::before {
+    content: '\201C';
+    display: block;
+    font-size: 4rem; line-height: 1;
+    color: var(--accent); opacity: 0.35;
+    margin-bottom: 12px;
+  }
+
+  /* ── Testimonials ── */
+  .testimonials { padding-top: 60px; padding-bottom: 100px; }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .testimonial-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 6px 20px rgba(0,0,0,0.04);
+  }
+  .testimonial-text {
+    font-size: 0.95rem; line-height: 1.65;
+    color: var(--text); margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testimonial-attr {
+    font-size: 0.82rem; color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* ── FAQ accordion ── */
+  .faq { padding-top: 60px; padding-bottom: 100px; }
+  .faq-list { max-width: 720px; }
+  .faq-item {
+    border-top: 1px solid rgba(0,0,0,0.07);
+  }
+  .faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.07); }
+  .faq-question {
+    width: 100%; background: none; border: none;
+    padding: 24px 0; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: inherit;
+    font-size: 1.05rem; font-weight: 500;
+    color: var(--text); text-align: left;
+    transition: color 0.2s ease;
+  }
+  .faq-question:hover { color: var(--accent); }
+  .faq-icon {
+    width: 20px; height: 20px; flex-shrink: 0; margin-left: 16px;
+    transition: transform 0.35s cubic-bezier(.35,0,0,1);
+    color: var(--text-muted);
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(.35,0,0,1), padding 0.35s ease;
+  }
+  .faq-item.open .faq-answer { max-height: 200px; }
+  .faq-answer-inner {
+    padding-bottom: 24px;
+    font-size: 0.93rem; color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ── Final CTA ── */
+  .final-cta {
+    padding-top: 80px; padding-bottom: 120px;
+    text-align: center;
+  }
+  .final-cta h2 {
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    font-weight: 500; line-height: 1.1;
+    letter-spacing: -0.02em; color: var(--text);
+    margin-bottom: 20px;
+  }
+  .final-cta p {
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    color: var(--text-muted);
+    max-width: 52ch; margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  /* ── Footer ── */
+  footer {
+    position: relative; z-index: 1;
+    padding: 48px var(--side-pad);
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .footer-inner {
+    max-width: var(--max-w); margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-brand { font-weight: 500; font-size: 0.95rem; color: var(--text); }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a {
+    font-size: 0.85rem; color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy {
+    width: 100%; text-align: center;
+    font-size: 0.8rem; color: var(--text-muted);
+    margin-top: 24px; opacity: 0.65;
+  }
+
+  /* ── Scroll animation ── */
+  .animate-on-scroll {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(.35,0,0,1), transform 0.7s cubic-bezier(.35,0,0,1);
+  }
+  .animate-on-scroll.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+  .animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+  .animate-on-scroll.delay-3 { transition-delay: 0.3s; }
+  .animate-on-scroll.delay-4 { transition-delay: 0.4s; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .service-row { grid-template-columns: 1fr; gap: 12px; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; }
+    .btn-accent, .btn-ghost { width: 100%; justify-content: center; }
+    .section-header { flex-direction: column; gap: 8px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+    .nav-cta { padding: 8px 16px; font-size: 0.8rem; }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .warm-bg::before, .warm-bg::after, .warm-blob-3 {
+      animation: none !important;
+    }
+    .animate-on-scroll {
+      opacity: 1; transform: none;
+      transition: none !important;
+    }
+    .hero h1, .hero p, .hero-ctas {
+      opacity: 1; transform: none;
+      animation: none !important;
+    }
+    *, *::before, *::after {
+      transition-duration: 0s !important;
+      animation-duration: 0s !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Design label -->
+<div class="design-label">
+  Design 6 of 8 <span>|</span> Warm Current <span>|</span> Light, warm, and alive <span>|</span> Fonts: Plus Jakarta Sans <span>|</span> Signature: Warm fluid background blobs + sticky nav
+</div>
+
+<!-- Warm fluid background -->
+<div class="warm-bg"></div>
+<div class="warm-blob-3"></div>
+
+<!-- Sticky nav -->
+<nav>
+  <a href="#" class="nav-logo">Nith Digital</a>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Get in touch</a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ────────────────── HERO ────────────────── -->
+<section class="section hero">
+  <div class="section-inner">
+    <div class="hero-content">
+      <h1>We build websites that work as hard as you do</h1>
+      <p>A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+      <div class="hero-ctas">
+        <a href="#work" class="btn-accent">See our work</a>
+        <a href="#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── INTRO ────────────────── -->
+<section class="section intro">
+  <div class="section-inner">
+    <p class="intro-text animate-on-scroll">Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+  </div>
+</section>
+
+<!-- ────────────────── WORK / PORTFOLIO ────────────────── -->
+<section class="section portfolio" id="work">
+  <div class="section-inner">
+    <div class="section-header animate-on-scroll">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Work</h2>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card animate-on-scroll delay-1">
+        <div class="portfolio-img-wrap">
+          <img class="portfolio-img" src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=720&h=480&fit=crop&auto=format" alt="Not an Octavia project">
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-status">Live</span>
+          <h3 class="portfolio-name">Not an Octavia</h3>
+          <p class="portfolio-desc">ML-powered used car search. Aggregates listings and applies machine learning to surface the best deals, instantly.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card animate-on-scroll delay-2">
+        <div class="portfolio-img-wrap">
+          <img class="portfolio-img" src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=720&h=480&fit=crop&auto=format" alt="gAIns project">
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-status dev">In development</span>
+          <h3 class="portfolio-name">gAIns</h3>
+          <p class="portfolio-desc">AI-powered gym tracker. Logs workouts, tracks progress, and adapts programming based on real performance data.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card animate-on-scroll delay-3">
+        <div class="portfolio-img-wrap">
+          <img class="portfolio-img" src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=720&h=480&fit=crop&auto=format" alt="Daily Duel project">
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-status">Live</span>
+          <h3 class="portfolio-name">Daily Duel</h3>
+          <p class="portfolio-desc">30 daily mini-games. Quick, competitive challenges designed for short bursts of play — one new game every day.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card animate-on-scroll delay-4">
+        <div class="portfolio-img-wrap">
+          <img class="portfolio-img" src="https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?w=720&h=480&fit=crop&auto=format" alt="Tumble Tots project">
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-status">Live</span>
+          <h3 class="portfolio-name">Tumble Tots</h3>
+          <p class="portfolio-desc">Childminding business website. Clean, friendly design with an enquiry form, gallery, and all the info parents need.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── SERVICES ────────────────── -->
+<section class="section services" id="services">
+  <div class="section-inner">
+    <div class="section-header animate-on-scroll">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Services</h2>
+    </div>
+    <p class="services-intro animate-on-scroll">Website design is what we do best — but it's not all we do.</p>
+
+    <div class="service-row animate-on-scroll">
+      <h3 class="service-name">Website Design &amp; Development</h3>
+      <p class="service-desc">Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability.</p>
+    </div>
+
+    <div class="service-row animate-on-scroll">
+      <h3 class="service-name">Social Media Management</h3>
+      <p class="service-desc">Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work.</p>
+    </div>
+
+    <div class="service-row animate-on-scroll">
+      <h3 class="service-name">Search Engine Optimisation</h3>
+      <p class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it.</p>
+    </div>
+
+    <div class="service-row animate-on-scroll">
+      <h3 class="service-name">Data Analytics &amp; Power BI</h3>
+      <p class="service-desc">Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful.</p>
+    </div>
+
+    <div class="service-row animate-on-scroll">
+      <h3 class="service-name">Mobile App Development</h3>
+      <p class="service-desc">Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals.</p>
+    </div>
+
+    <div class="service-row animate-on-scroll">
+      <h3 class="service-name">TradeDesk</h3>
+      <p class="service-desc">A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ────────────────── TRUST / ABOUT ────────────────── -->
+<section class="section trust">
+  <div class="section-inner">
+    <div class="section-header animate-on-scroll">
+      <span class="section-num">03</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="trust-inner animate-on-scroll">
+      <blockquote class="trust-quote">
+        10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── TESTIMONIALS ────────────────── -->
+<section class="section testimonials">
+  <div class="section-inner">
+    <div class="section-header animate-on-scroll">
+      <span class="section-num">04</span>
+      <h2 class="section-title">What clients say</h2>
+    </div>
+    <div class="testimonial-grid">
+
+      <div class="testimonial-card animate-on-scroll delay-1">
+        <p class="testimonial-text">"Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it."</p>
+        <p class="testimonial-attr">Recent client, D&amp;G</p>
+      </div>
+
+      <div class="testimonial-card animate-on-scroll delay-2">
+        <p class="testimonial-text">"We'd been quoted over £3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price."</p>
+        <p class="testimonial-attr">Recent client, Ayrshire</p>
+      </div>
+
+      <div class="testimonial-card animate-on-scroll delay-3">
+        <p class="testimonial-text">"The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds."</p>
+        <p class="testimonial-attr">Recent client, Scotland</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── FAQ ────────────────── -->
+<section class="section faq">
+  <div class="section-inner">
+    <div class="section-header animate-on-scroll">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Questions</h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question" aria-expanded="false">
+          How much does a website cost?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Websites start at £500 for the build plus £40 per month for hosting, maintenance, and updates. No hidden costs, no surprise invoices.</p>
+        </div>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question" aria-expanded="false">
+          How long does a website take?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">Most sites go live in two to three weeks from the first conversation. Complex builds with custom features may take longer — we'll tell you upfront.</p>
+        </div>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question" aria-expanded="false">
+          Can I update the site myself?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p class="faq-answer-inner">We handle all updates for you at £35 per hour. Send us what you need changed and we'll get it done — usually within 24 hours.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── FINAL CTA ────────────────── -->
+<section class="section final-cta" id="contact">
+  <div class="section-inner">
+    <h2 class="animate-on-scroll">Ready to talk?</h2>
+    <p class="animate-on-scroll delay-1">No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+    <div class="animate-on-scroll delay-2">
+      <a href="mailto:hello@nithdigital.com" class="btn-accent">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── FOOTER ────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-brand">Nith Digital</span>
+    <div class="footer-links">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Nith Digital. Dumfries &amp; Galloway.</p>
+  </div>
+</footer>
+
+<!-- ────────────────── SCRIPTS ────────────────── -->
+<script>
+  // Scroll reveal with IntersectionObserver
+  document.addEventListener('DOMContentLoaded', function() {
+    var targets = document.querySelectorAll('.animate-on-scroll');
+    if (!targets.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    targets.forEach(function(el) { observer.observe(el); });
+  });
+
+  // FAQ accordion
+  document.addEventListener('DOMContentLoaded', function() {
+    var items = document.querySelectorAll('.faq-item');
+    items.forEach(function(item) {
+      var btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', function() {
+        var isOpen = item.classList.contains('open');
+        // Close all
+        items.forEach(function(i) {
+          i.classList.remove('open');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        // Open clicked (if it was closed)
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
