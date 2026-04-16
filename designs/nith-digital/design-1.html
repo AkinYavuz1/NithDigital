@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Midnight Signal</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0A0A0F;
+  --surface: #141419;
+  --accent: #2D5BFF;
+  --text: #F0F1FA;
+  --text-muted: #6B6D7B;
+  --ease: cubic-bezier(.35,0,0,1);
+  --radius: 0px;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--primary); color: var(--text); line-height: 1.6; letter-spacing: -0.01em; overflow-x: hidden; }
+
+/* --- Design Label Bar --- */
+.design-label {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+  background: var(--accent); color: #fff; text-align: center;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+  padding: 6px 16px; line-height: 1.4;
+}
+
+/* --- Navigation --- */
+nav {
+  position: fixed; top: 28px; left: 0; width: 100%; z-index: 900;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 48px;
+  background: rgba(10,10,15,0.85); backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.4s var(--ease);
+}
+.nav-logo { font-size: 18px; font-weight: 500; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 24px; }
+.hamburger {
+  width: 28px; height: 20px; display: flex; flex-direction: column;
+  justify-content: space-between; cursor: pointer; background: none; border: none; padding: 0;
+}
+.hamburger span { display: block; width: 100%; height: 2px; background: var(--text); transition: all 0.4s var(--ease); }
+.cta-btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 28px; border: 1px solid rgba(240,241,250,0.15);
+  background: transparent; color: var(--text); font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 400; letter-spacing: -0.01em;
+  cursor: pointer; overflow: hidden; text-decoration: none;
+  transition: border-color 0.4s var(--ease);
+}
+.cta-btn .dot {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); left: 12px; top: 50%; transform: translateY(-50%);
+  transition: transform 0.5s var(--ease);
+  pointer-events: none; z-index: 0;
+}
+.cta-btn .btn-text { position: relative; z-index: 1; transition: color 0.4s var(--ease); padding-left: 8px; }
+.cta-btn:hover .dot { transform: translateY(-50%) scale(30); }
+.cta-btn:hover .btn-text { color: #fff; }
+.cta-btn:hover { border-color: var(--accent); }
+
+/* --- Sections --- */
+section { padding: 0 48px; }
+.section-spacer { height: 160px; }
+.section-spacer-sm { height: 100px; }
+
+/* --- Hero --- */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: flex-end; padding-bottom: 80px; padding-top: 140px;
+}
+.hero-headline {
+  font-size: clamp(2.5rem, 8vw, 8rem); font-weight: 300;
+  line-height: 0.95; letter-spacing: -0.03em;
+  max-width: 1100px; margin-bottom: 40px;
+}
+.hero-sub {
+  font-size: clamp(1rem, 1.3vw, 1.3rem); font-weight: 300;
+  color: var(--text-muted); max-width: 580px; margin-bottom: 48px;
+  line-height: 1.6;
+}
+.hero-cta-row { display: flex; align-items: center; gap: 32px; }
+.hero-scroll-hint {
+  font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 400;
+}
+/* Hero load animation */
+.hero-animate { opacity: 0; transform: translateY(32px); animation: heroFadeIn 0.6s ease-out forwards; }
+.hero-animate:nth-child(2) { animation-delay: 0.12s; }
+.hero-animate:nth-child(3) { animation-delay: 0.24s; }
+.hero-animate:nth-child(4) { animation-delay: 0.36s; }
+@keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+/* --- Intro --- */
+.intro-text {
+  font-size: clamp(1.1rem, 1.8vw, 1.65rem); font-weight: 300;
+  line-height: 1.55; letter-spacing: -0.015em;
+  max-width: 820px; color: var(--text);
+}
+.intro-text .accent { color: var(--accent); }
+
+/* --- Services --- */
+.services-heading {
+  font-size: clamp(1rem, 1.3vw, 1.3rem); font-weight: 400;
+  color: var(--text-muted); margin-bottom: 64px; letter-spacing: -0.01em;
+}
+.service-item {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 36px 0; border-bottom: 1px solid rgba(240,241,250,0.06);
+  cursor: default;
+  transition: padding-left 0.4s var(--ease);
+}
+.service-item:first-child { border-top: 1px solid rgba(240,241,250,0.06); }
+.service-item:hover { padding-left: 16px; }
+.service-name {
+  font-size: clamp(1.4rem, 3vw, 2.35rem); font-weight: 300;
+  letter-spacing: -0.03em; line-height: 0.95;
+  transition: color 0.4s var(--ease);
+}
+.service-item:hover .service-name { color: var(--accent); }
+.service-number { font-size: 14px; color: var(--text-muted); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+/* --- Portfolio --- */
+.portfolio-label {
+  font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 48px; font-weight: 400;
+}
+.project {
+  margin-bottom: 120px; position: relative;
+}
+.project-video {
+  width: 100%; aspect-ratio: 16/9; background: var(--surface);
+  position: relative; overflow: hidden;
+}
+.project-video::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10,10,15,0.7) 100%);
+}
+.project-video img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) saturate(0.7); }
+.project-info { padding-top: 24px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+.project-title { font-size: clamp(1.2rem, 2vw, 1.75rem); font-weight: 400; letter-spacing: -0.02em; }
+.project-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.project-status {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent); font-weight: 500;
+}
+.project-stack { font-size: 13px; color: var(--text-muted); font-weight: 300; }
+
+/* --- Pull Quote (testimonials) --- */
+.pull-quote {
+  max-width: 900px; padding: 80px 0;
+}
+.pull-quote-text {
+  font-size: clamp(1.3rem, 2.5vw, 2rem); font-weight: 300;
+  line-height: 1.45; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 24px;
+}
+.pull-quote-attr {
+  font-size: 14px; color: var(--text-muted); font-weight: 400;
+}
+.pull-quote-attr span { color: var(--accent); }
+
+/* --- Trust --- */
+.trust-text {
+  font-size: clamp(1rem, 1.4vw, 1.3rem); font-weight: 300;
+  line-height: 1.65; color: var(--text-muted); max-width: 720px;
+}
+
+/* --- FAQ --- */
+.faq-heading {
+  font-size: clamp(1.5rem, 3vw, 2.35rem); font-weight: 300;
+  letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 64px;
+}
+.faq-item { border-bottom: 1px solid rgba(240,241,250,0.06); }
+.faq-item:first-child { border-top: 1px solid rgba(240,241,250,0.06); }
+.faq-question {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 0; cursor: pointer; background: none; border: none;
+  width: 100%; text-align: left; color: var(--text); font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 1.4vw, 1.2rem); font-weight: 400; letter-spacing: -0.01em;
+}
+.faq-icon {
+  font-size: 24px; font-weight: 300; color: var(--text-muted);
+  transition: transform 0.4s var(--ease), color 0.4s var(--ease);
+  flex-shrink: 0; margin-left: 24px;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); color: var(--accent); }
+.faq-answer {
+  max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease), padding 0.5s var(--ease);
+}
+.faq-item.open .faq-answer { max-height: 300px; }
+.faq-answer-inner {
+  padding-bottom: 28px; font-size: 15px; line-height: 1.65;
+  color: var(--text-muted); font-weight: 300; max-width: 680px;
+}
+
+/* --- Final CTA --- */
+.final-cta { padding-top: 160px; padding-bottom: 160px; }
+.final-cta-headline {
+  font-size: clamp(2rem, 5vw, 4.2rem); font-weight: 300;
+  letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 28px;
+}
+.final-cta-body {
+  font-size: clamp(1rem, 1.3vw, 1.2rem); font-weight: 300;
+  color: var(--text-muted); max-width: 520px; margin-bottom: 48px; line-height: 1.6;
+}
+.cta-btn-lg {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  padding: 18px 40px; border: 1px solid rgba(240,241,250,0.15);
+  background: transparent; color: var(--text); font-family: 'Inter', sans-serif;
+  font-size: 16px; font-weight: 400; letter-spacing: -0.01em;
+  cursor: pointer; overflow: hidden; text-decoration: none;
+  transition: border-color 0.4s var(--ease);
+}
+.cta-btn-lg .dot {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); left: 18px; top: 50%; transform: translateY(-50%);
+  transition: transform 0.5s var(--ease); pointer-events: none; z-index: 0;
+}
+.cta-btn-lg .btn-text { position: relative; z-index: 1; transition: color 0.4s var(--ease); padding-left: 8px; }
+.cta-btn-lg:hover .dot { transform: translateY(-50%) scale(30); }
+.cta-btn-lg:hover .btn-text { color: #fff; }
+.cta-btn-lg:hover { border-color: var(--accent); }
+
+/* --- Footer --- */
+footer {
+  padding: 48px; display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(240,241,250,0.06); flex-wrap: wrap; gap: 16px;
+}
+.footer-left { font-size: 14px; color: var(--text-muted); font-weight: 300; }
+.footer-right { font-size: 13px; color: var(--text-muted); font-weight: 300; }
+
+/* --- Scroll Animations --- */
+.animate-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+.word { display: inline-block; opacity: 0; transform: translateY(1.5em) rotate(8deg); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); transform-origin: left bottom; margin-right: 0.25em; }
+.word-visible { opacity: 1; transform: translateY(0) rotate(0deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll, .word { opacity: 1; transform: none; transition: none; }
+  .hero-animate { opacity: 1; transform: none; animation: none; }
+}
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  section { padding: 0 24px; }
+  nav { padding: 20px 24px; top: 28px; }
+  .hero { padding-bottom: 60px; padding-top: 120px; }
+  .section-spacer { height: 100px; }
+  .section-spacer-sm { height: 64px; }
+  .service-item { flex-direction: column; gap: 8px; }
+  .project { margin-bottom: 80px; }
+  .project-info { flex-direction: column; }
+  .project-meta { align-items: flex-start; }
+  .pull-quote { padding: 48px 0; }
+  .final-cta { padding-top: 100px; padding-bottom: 100px; }
+  footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+  .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Design Label Bar -->
+<div class="design-label">Design 1 of 5 &nbsp;|&nbsp; Midnight Signal &nbsp;|&nbsp; Confident and cinematic &nbsp;|&nbsp; Inspired by: lusion.co &nbsp;|&nbsp; Fonts: Inter/Inter &nbsp;|&nbsp; Signature: Per-word scroll reveal + dot-scale CTA hover</div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">Nith Digital</a>
+  <div class="nav-right">
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#contact" class="cta-btn">
+      <span class="dot"></span>
+      <span class="btn-text">Get in touch</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 class="hero-headline hero-animate word-reveal">We build websites that work as hard as you do</h1>
+  <p class="hero-sub hero-animate">A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+  <div class="hero-cta-row hero-animate">
+    <a href="#portfolio" class="cta-btn">
+      <span class="dot"></span>
+      <span class="btn-text">See our work</span>
+    </a>
+    <span class="hero-scroll-hint">Scroll to explore</span>
+  </div>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- Intro -->
+<section class="animate-on-scroll">
+  <p class="intro-text">Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- Testimonial 1 -->
+<section class="pull-quote animate-on-scroll">
+  <p class="pull-quote-text">"Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it."</p>
+  <p class="pull-quote-attr"><span>Recent client</span> &mdash; D&amp;G</p>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- Services -->
+<section>
+  <p class="services-heading animate-on-scroll">Website design is what we do best — but it's not all we do.</p>
+  <div class="animate-on-scroll">
+    <div class="service-item"><span class="service-name">Website Design &amp; Development</span><span class="service-number">01</span></div>
+    <div class="service-item"><span class="service-name">Social Media Management</span><span class="service-number">02</span></div>
+    <div class="service-item"><span class="service-name">Search Engine Optimisation</span><span class="service-number">03</span></div>
+    <div class="service-item"><span class="service-name">Data Analytics &amp; Power BI</span><span class="service-number">04</span></div>
+    <div class="service-item"><span class="service-name">Mobile App Development</span><span class="service-number">05</span></div>
+    <div class="service-item"><span class="service-name">TradeDesk</span><span class="service-number">06</span></div>
+  </div>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- Portfolio -->
+<section>
+  <p class="portfolio-label animate-on-scroll">Selected work</p>
+
+  <div class="project animate-on-scroll">
+    <div class="project-video">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200" alt="Not an Octavia project" loading="lazy">
+    </div>
+    <div class="project-info">
+      <span class="project-title">Not an Octavia — ML used car deals</span>
+      <div class="project-meta">
+        <span class="project-status">Live</span>
+        <span class="project-stack">Next.js, TypeScript, Supabase, XGBoost</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project animate-on-scroll">
+    <div class="project-video">
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200" alt="gAIns project" loading="lazy">
+    </div>
+    <div class="project-info">
+      <span class="project-title">gAIns — AI gym tracker</span>
+      <div class="project-meta">
+        <span class="project-status">In development</span>
+        <span class="project-stack">React, Vite, Supabase, Anthropic API</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonial 2 woven into flow -->
+  <div class="pull-quote animate-on-scroll">
+    <p class="pull-quote-text">"We'd been quoted over &pound;3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price."</p>
+    <p class="pull-quote-attr"><span>Recent client</span> &mdash; Ayrshire</p>
+  </div>
+
+  <div class="project animate-on-scroll">
+    <div class="project-video">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200" alt="Daily Duel project" loading="lazy">
+    </div>
+    <div class="project-info">
+      <span class="project-title">Daily Duel — 30 daily mini-games</span>
+      <div class="project-meta">
+        <span class="project-status">Live</span>
+        <span class="project-stack">Next.js, TypeScript, Tailwind</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project animate-on-scroll">
+    <div class="project-video">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200" alt="Tumble Tots project" loading="lazy">
+    </div>
+    <div class="project-info">
+      <span class="project-title">Tumble Tots — Childminding website</span>
+      <div class="project-meta">
+        <span class="project-status">Live</span>
+        <span class="project-stack">HTML, CSS, JavaScript</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- Trust -->
+<section>
+  <div class="word-reveal animate-on-scroll">
+    <p class="trust-text">10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.</p>
+  </div>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- Testimonial 3 -->
+<section class="pull-quote animate-on-scroll">
+  <p class="pull-quote-text">"The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds."</p>
+  <p class="pull-quote-attr"><span>Recent client</span> &mdash; Scotland</p>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- FAQ -->
+<section>
+  <h2 class="faq-heading word-reveal animate-on-scroll">Questions you probably have</h2>
+
+  <div class="animate-on-scroll">
+    <div class="faq-item">
+      <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+        How much does a website cost?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">A standard business website starts at &pound;500 with a &pound;40/month hosting and support fee. Booking systems start at &pound;750. Custom web apps start at &pound;3,000. We'll give you an exact quote after a 15-minute conversation — no surprises.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+        How long does a website take to build?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Most business websites are live within 2-3 weeks from the day we start. Custom apps take 4-8 weeks. We'll give you a timeline upfront and stick to it.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+        Can I update the site myself?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">We handle all updates for you. Post-launch changes are billed at &pound;35 per hour, and most small updates take 15-30 minutes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-spacer"></div>
+
+<!-- Final CTA -->
+<section class="final-cta" id="contact">
+  <h2 class="final-cta-headline word-reveal animate-on-scroll">Ready to talk?</h2>
+  <p class="final-cta-body animate-on-scroll">No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+  <div class="animate-on-scroll">
+    <a href="#" class="cta-btn-lg">
+      <span class="dot"></span>
+      <span class="btn-text">Get in touch</span>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-left">&copy; 2026 Nith Digital</span>
+  <span class="footer-right">Dumfries &amp; Galloway, Scotland</span>
+</footer>
+
+<!-- Scripts -->
+<script>
+(function() {
+  // Split word-reveal headings into individual word spans
+  document.querySelectorAll('.word-reveal').forEach(function(el) {
+    // Handle elements that contain child elements (like p tags)
+    var targets = el.querySelectorAll('h1, h2, p');
+    if (targets.length === 0) targets = [el];
+    targets.forEach(function(target) {
+      var text = target.textContent;
+      var words = text.split(/\s+/).filter(function(w) { return w.length > 0; });
+      target.innerHTML = words.map(function(w) {
+        return '<span class="word">' + w + '</span>';
+      }).join(' ');
+    });
+  });
+
+  // For the hero headline specifically (it has word-reveal class directly)
+  var heroH1 = document.querySelector('.hero-headline.word-reveal');
+  if (heroH1) {
+    // Hero words animate on load, not scroll
+    setTimeout(function() {
+      heroH1.querySelectorAll('.word').forEach(function(w, i) {
+        w.style.transitionDelay = (i * 0.05) + 's';
+        w.classList.add('word-visible');
+      });
+    }, 200);
+  }
+})();
+</script>
+
+<script>
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Section fade-up observer
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.animate-on-scroll').forEach(function(el) { observer.observe(el); });
+
+  // Word reveal observer
+  var wordObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.word').forEach(function(w, i) {
+          w.style.transitionDelay = (i * 0.05) + 's';
+          w.classList.add('word-visible');
+        });
+        wordObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.word-reveal').forEach(function(el) {
+    // Skip the hero headline (already handled on load)
+    if (!el.classList.contains('hero-headline')) {
+      wordObserver.observe(el);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
