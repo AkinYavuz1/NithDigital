@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Design 5: Parallel Motion</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  /* ── Design Label Bar ── */
+  .design-label{position:fixed;top:0;left:0;right:0;z-index:9999;background:#FF4D4D;color:#0E0E0E;font:500 12px/1 'Inter',sans-serif;text-align:center;padding:8px 16px;letter-spacing:0.02em}
+
+  /* ── Reset & Base ── */
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:#0E0E0E;color:#FFFFFF;line-height:1.6;letter-spacing:-0.01em;overflow-x:hidden;padding-top:32px}
+  img{display:block;max-width:100%}
+  a{color:#FF4D4D;text-decoration:none;transition:opacity 0.4s cubic-bezier(.25,.46,.45,.94)}
+  a:hover{opacity:0.7}
+
+  /* ── Typography Scale ── */
+  h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:0.9;letter-spacing:-0.04em;color:#FFFFFF}
+  h1{font-size:clamp(54px,15vw,220px)}
+  h2{font-size:clamp(36px,5vw,81px)}
+  h3{font-size:36px}
+  h4{font-size:24px}
+  p{color:#FFFFFF}
+  .text-muted{color:#666666}
+
+  /* ── Layout ── */
+  .container{max-width:1440px;margin:0 auto;padding:0 48px}
+  section{padding:160px 0}
+
+  /* ── Nav ── */
+  nav{position:fixed;top:32px;left:0;right:0;z-index:100;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:difference}
+  .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#FFFFFF;letter-spacing:-0.04em}
+  .nav-right{display:flex;align-items:center;gap:32px}
+  .nav-cta{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#FFFFFF;border:1px solid #FFFFFF;padding:10px 24px;transition:all 0.4s cubic-bezier(.25,.46,.45,.94)}
+  .nav-cta:hover{background:#FFFFFF;color:#0E0E0E;opacity:1}
+  .hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer}
+  .hamburger span{display:block;width:24px;height:2px;background:#FFFFFF;transition:transform 0.4s cubic-bezier(.25,.46,.45,.94)}
+
+  /* ── Parallax Lines ── */
+  .parallax-line{display:block;will-change:transform;transition:transform 0.1s linear}
+
+  /* ── Hero ── */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;padding-bottom:80px}
+  .hero-headline{margin-bottom:48px}
+  .hero-sub{max-width:560px;font-size:18px;line-height:1.6;color:#666666;margin-bottom:40px}
+  .hero-cta{display:inline-block;font-family:'Inter',sans-serif;font-size:16px;font-weight:500;color:#FF4D4D;border:1px solid #FF4D4D;padding:16px 40px;transition:all 0.4s cubic-bezier(.25,.46,.45,.94)}
+  .hero-cta:hover{background:#FF4D4D;color:#0E0E0E;opacity:1}
+
+  /* ── Intro ── */
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .intro-heading{font-size:clamp(36px,4vw,54px)}
+  .intro-body{font-size:18px;color:#666666;max-width:520px}
+
+  /* ── Services ── */
+  .service-item{display:grid;grid-template-columns:60px 280px 1fr;gap:32px;align-items:baseline;padding:40px 0;border-bottom:1px solid #1C1C1C}
+  .service-item:first-child{border-top:1px solid #1C1C1C}
+  .service-num{font-family:'Space Grotesk',sans-serif;font-size:16px;color:#666666;font-weight:500}
+  .service-name{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;letter-spacing:-0.04em;line-height:1}
+  .service-desc{font-size:16px;color:#666666;line-height:1.6}
+
+  /* ── Portfolio ── */
+  .portfolio-item{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:160px}
+  .portfolio-item:nth-child(even){direction:rtl}
+  .portfolio-item:nth-child(even)>*{direction:ltr}
+  .img-parallax-container{overflow:hidden;position:relative;height:500px}
+  .img-parallax{width:100%;height:110%;object-fit:cover;will-change:transform;position:absolute;top:-5%;left:0}
+  .portfolio-label{font-size:14px;color:#666666;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px}
+  .portfolio-title{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;letter-spacing:-0.04em;line-height:0.9;margin-bottom:24px}
+  .portfolio-desc{font-size:16px;color:#666666;line-height:1.6}
+
+  /* ── Trust ── */
+  .trust{text-align:center}
+  .trust p{max-width:640px;margin:0 auto;font-size:18px;color:#666666}
+
+  /* ── Testimonials ── */
+  .testimonial-card{text-align:center;padding:80px 0;border-bottom:1px solid #1C1C1C}
+  .testimonial-card:first-child{border-top:1px solid #1C1C1C}
+  .testimonial-quote{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3vw,36px);font-weight:500;letter-spacing:-0.04em;line-height:1.2;max-width:800px;margin:0 auto 32px}
+  .testimonial-author{font-size:14px;color:#666666}
+
+  /* ── FAQ ── */
+  .faq-item{border-bottom:1px solid #1C1C1C;padding:32px 0;cursor:pointer}
+  .faq-item:first-child{border-top:1px solid #1C1C1C}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.04em}
+  .faq-q span{font-size:24px;transition:transform 0.4s cubic-bezier(.25,.46,.45,.94);color:#666666}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(.25,.46,.45,.94),padding 0.5s cubic-bezier(.25,.46,.45,.94);padding-top:0}
+  .faq-a p{font-size:16px;color:#666666;line-height:1.6;max-width:640px}
+  .faq-item.open .faq-a{max-height:300px;padding-top:24px}
+  .faq-item.open .faq-q span{transform:rotate(45deg)}
+
+  /* ── CTA Section ── */
+  .cta-section{text-align:center}
+  .cta-massive{font-size:clamp(48px,10vw,150px);margin-bottom:40px}
+  .cta-btn{display:inline-block;font-family:'Inter',sans-serif;font-size:16px;font-weight:500;color:#0E0E0E;background:#FF4D4D;padding:18px 48px;transition:all 0.4s cubic-bezier(.25,.46,.45,.94)}
+  .cta-btn:hover{opacity:0.85}
+
+  /* ── Footer ── */
+  footer{padding:80px 0;border-top:1px solid #1C1C1C}
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .footer-left{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.04em}
+  .footer-right{text-align:right;font-size:14px;color:#666666;line-height:2}
+
+  /* ── Animate on Scroll ── */
+  .animate-on-scroll{opacity:0;transform:translateY(40px);transition:opacity 0.8s cubic-bezier(.25,.46,.45,.94),transform 0.8s cubic-bezier(.25,.46,.45,.94)}
+  .animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+  .slide-left{opacity:0;transform:translateX(-60px);transition:opacity 0.8s cubic-bezier(.25,.46,.45,.94),transform 0.8s cubic-bezier(.25,.46,.45,.94)}
+  .slide-left.visible{opacity:1;transform:translateX(0)}
+
+  /* ── Hero entrance ── */
+  .hero-fade{opacity:0;transform:translateY(30px);animation:heroIn 1s cubic-bezier(.25,.46,.45,.94) 0.3s forwards}
+  .hero-fade-delay{opacity:0;transform:translateY(20px);animation:heroIn 1s cubic-bezier(.25,.46,.45,.94) 0.8s forwards}
+  @keyframes heroIn{to{opacity:1;transform:translateY(0)}}
+
+  /* ── Reduced Motion ── */
+  @media(prefers-reduced-motion:reduce){
+    .parallax-line{transition:none!important}
+    .img-parallax{will-change:auto!important}
+    .animate-on-scroll,.slide-left{opacity:1;transform:none;transition:none}
+    .hero-fade,.hero-fade-delay{opacity:1;transform:none;animation:none}
+  }
+
+  /* ── Mobile ── */
+  @media(max-width:768px){
+    .container{padding:0 24px}
+    nav{padding:24px}
+    section{padding:100px 0}
+    h1{font-size:clamp(40px,12vw,80px)}
+    .intro-grid{grid-template-columns:1fr;gap:32px}
+    .service-item{grid-template-columns:40px 1fr;gap:16px}
+    .service-desc{grid-column:1/-1}
+    .service-name{font-size:24px}
+    .portfolio-item,.portfolio-item:nth-child(even){grid-template-columns:1fr;direction:ltr;gap:32px;margin-bottom:100px}
+    .portfolio-item:nth-child(even)>*{direction:ltr}
+    .img-parallax-container{height:300px}
+    .footer-grid{grid-template-columns:1fr;gap:24px}
+    .footer-right{text-align:left}
+    .nav-cta{display:none}
+    .cta-massive{font-size:clamp(36px,10vw,80px)}
+  }
+</style>
+</head>
+<body>
+
+<!-- Design Label -->
+<div class="design-label">Design 5 of 5 &ensp;|&ensp; Parallel Motion &ensp;|&ensp; Precise and kinetic &ensp;|&ensp; Inspired by: mallardandclaret.com &ensp;|&ensp; Fonts: Space Grotesk / Inter &ensp;|&ensp; Signature: Per-line scroll parallax</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">Nith Digital</div>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Get in touch</a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1 class="hero-headline parallax-text hero-fade">
+      <span class="parallax-line">We build websites</span>
+      <span class="parallax-line">that work as hard</span>
+      <span class="parallax-line">as you do</span>
+    </h1>
+    <p class="hero-sub hero-fade-delay">A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+    <a href="#portfolio" class="hero-cta hero-fade-delay">See our work</a>
+  </div>
+</section>
+
+<!-- Intro -->
+<section class="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <h2 class="intro-heading parallax-text animate-on-scroll">
+        <span class="parallax-line">Not a template.</span>
+        <span class="parallax-line">Not a city agency.</span>
+      </h2>
+      <p class="intro-body animate-on-scroll">Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services">
+  <div class="container">
+    <h2 class="animate-on-scroll" style="margin-bottom:64px">What we do</h2>
+    <div class="service-item slide-left">
+      <span class="service-num">01</span>
+      <h3 class="service-name">Website Design &amp; Build</h3>
+      <p class="service-desc">Bespoke websites designed around your business — not squeezed into a theme. Fast, accessible, and built to convert visitors into customers.</p>
+    </div>
+    <div class="service-item slide-left">
+      <span class="service-num">02</span>
+      <h3 class="service-name">Dashboards &amp; Web Apps</h3>
+      <p class="service-desc">Internal tools, client portals, booking systems — anything your team uses daily, built to save hours of manual work every week.</p>
+    </div>
+    <div class="service-item slide-left">
+      <span class="service-num">03</span>
+      <h3 class="service-name">SEO &amp; Google Rankings</h3>
+      <p class="service-desc">We structure every page for search from day one. Technical SEO, content strategy, and monthly reporting so you actually know what's working.</p>
+    </div>
+    <div class="service-item slide-left">
+      <span class="service-num">04</span>
+      <h3 class="service-name">Social Media Management</h3>
+      <p class="service-desc">Consistent posting, professional visuals, and real engagement — so your social channels actually support your business instead of gathering dust.</p>
+    </div>
+    <div class="service-item slide-left">
+      <span class="service-num">05</span>
+      <h3 class="service-name">Hosting &amp; Maintenance</h3>
+      <p class="service-desc">We keep your site fast, secure, and up to date. SSL, backups, uptime monitoring, and same-day fixes when something breaks.</p>
+    </div>
+    <div class="service-item slide-left">
+      <span class="service-num">06</span>
+      <h3 class="service-name">Analytics &amp; Reporting</h3>
+      <p class="service-desc">Know exactly where your visitors come from and what they do. Clear monthly reports with actions — not vanity metrics.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio" class="portfolio">
+  <div class="container">
+    <h2 class="animate-on-scroll" style="margin-bottom:80px">Selected work</h2>
+
+    <div class="portfolio-item animate-on-scroll">
+      <div class="img-parallax-container">
+        <img class="img-parallax" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200" alt="Tech product showcase">
+      </div>
+      <div>
+        <p class="portfolio-label">Web Design &amp; Development</p>
+        <h3 class="portfolio-title">E-commerce Platform Redesign</h3>
+        <p class="portfolio-desc">A full rebuild for a Scottish retailer — migrating from a clunky Shopify theme to a blazing-fast custom storefront. Conversion rate up 40% in the first quarter.</p>
+      </div>
+    </div>
+
+    <div class="portfolio-item animate-on-scroll">
+      <div class="img-parallax-container">
+        <img class="img-parallax" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200" alt="Developer workspace">
+      </div>
+      <div>
+        <p class="portfolio-label">Dashboard &amp; Internal Tools</p>
+        <h3 class="portfolio-title">Operations Dashboard</h3>
+        <p class="portfolio-desc">Real-time KPI dashboard for a logistics company. Replaced three spreadsheets and a whiteboard with one screen the whole team checks every morning.</p>
+      </div>
+    </div>
+
+    <div class="portfolio-item animate-on-scroll">
+      <div class="img-parallax-container">
+        <img class="img-parallax" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200" alt="Analytics and data">
+      </div>
+      <div>
+        <p class="portfolio-label">SEO &amp; Content Strategy</p>
+        <h3 class="portfolio-title">Organic Traffic Growth</h3>
+        <p class="portfolio-desc">Twelve months of technical SEO and content work for a D&amp;G tradesperson. From page 4 to position 3 for their core keyword — enquiries doubled.</p>
+      </div>
+    </div>
+
+    <div class="portfolio-item animate-on-scroll">
+      <div class="img-parallax-container">
+        <img class="img-parallax" src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200" alt="Data visualisation">
+      </div>
+      <div>
+        <p class="portfolio-label">Analytics &amp; Reporting</p>
+        <h3 class="portfolio-title">Client Reporting Portal</h3>
+        <p class="portfolio-desc">A self-service reporting portal so clients check their own stats instead of waiting for a monthly PDF. Built in a weekend, used every day since.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust -->
+<section class="trust">
+  <div class="container">
+    <h2 class="animate-on-scroll" style="margin-bottom:32px">Built on trust</h2>
+    <p class="animate-on-scroll">No contracts longer than 30 days. No hidden fees. No jargon-filled reports designed to confuse you into staying. We keep clients because the work speaks for itself — not because they're locked in.</p>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container">
+    <div class="testimonial-card animate-on-scroll">
+      <p class="testimonial-quote parallax-text"><span class="parallax-line">"They replaced our old site in two weeks flat.</span> <span class="parallax-line">Enquiries went up the same month.</span> <span class="parallax-line">Best money we've spent this year."</span></p>
+      <p class="testimonial-author">Recent client &mdash; Dumfries &amp; Galloway</p>
+    </div>
+    <div class="testimonial-card animate-on-scroll">
+      <p class="testimonial-quote parallax-text"><span class="parallax-line">"We'd been quoted ten grand by an agency in Glasgow.</span> <span class="parallax-line">Nith Digital delivered something better</span> <span class="parallax-line">for a fraction of that."</span></p>
+      <p class="testimonial-author">Recent client &mdash; Ayrshire</p>
+    </div>
+    <div class="testimonial-card animate-on-scroll">
+      <p class="testimonial-quote parallax-text"><span class="parallax-line">"I actually understand my website now.</span> <span class="parallax-line">They explained everything without talking</span> <span class="parallax-line">down to me. Rare in this industry."</span></p>
+      <p class="testimonial-author">Recent client &mdash; Scottish Borders</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <h2 class="animate-on-scroll" style="margin-bottom:64px">Common questions</h2>
+    <div class="faq-item animate-on-scroll">
+      <div class="faq-q">How long does a website take? <span>+</span></div>
+      <div class="faq-a"><p>Most sites launch within two to four weeks. We don't disappear for months — you'll see progress every few days and can give feedback as we go.</p></div>
+    </div>
+    <div class="faq-item animate-on-scroll">
+      <div class="faq-q">What does it cost? <span>+</span></div>
+      <div class="faq-a"><p>A typical small-business website starts from around £800. Dashboards and apps depend on complexity — we'll give you a fixed quote upfront with no surprises.</p></div>
+    </div>
+    <div class="faq-item animate-on-scroll">
+      <div class="faq-q">Do you work with businesses outside Scotland? <span>+</span></div>
+      <div class="faq-a"><p>Yes. We're based in Dumfries &amp; Galloway but work with clients across the UK. Everything's done remotely — phone, video call, and screen-share.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div class="container">
+    <h2 class="cta-massive parallax-text">
+      <span class="parallax-line">Ready</span>
+      <span class="parallax-line">to talk?</span>
+    </h2>
+    <a href="tel:+441234567890" class="cta-btn hero-fade-delay">Get in touch</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-left">Nith Digital</div>
+      <div class="footer-right">
+        Dumfries &amp; Galloway, Scotland<br>
+        <a href="mailto:hello@nithdigital.com">hello@nithdigital.com</a><br>
+        &copy; 2026 Nith Digital. All rights reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ── Scroll Observer for fade-in ── */
+  const observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  },{threshold:0.15});
+
+  document.querySelectorAll('.animate-on-scroll, .slide-left').forEach(function(el){
+    observer.observe(el);
+  });
+
+  /* ── FAQ Accordion ── */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    item.querySelector('.faq-q').addEventListener('click',function(){
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(f){f.classList.remove('open')});
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── Per-line Scroll Parallax (SIGNATURE) ── */
+  var parallaxHeadings = document.querySelectorAll('.parallax-text');
+
+  function updateParallax(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var scrollY = window.scrollY;
+    parallaxHeadings.forEach(function(heading){
+      var lines = heading.querySelectorAll('.parallax-line');
+      var rect = heading.getBoundingClientRect();
+      var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      lines.forEach(function(line, i){
+        var speed = 0.3 + (i * 0.25);
+        var offset = (progress - 0.5) * speed * 80;
+        line.style.transform = 'translateY(' + offset + 'px)';
+      });
+    });
+  }
+
+  /* ── Image Parallax ── */
+  var imgContainers = document.querySelectorAll('.img-parallax-container');
+
+  function updateImageParallax(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    imgContainers.forEach(function(container){
+      var img = container.querySelector('.img-parallax');
+      if(!img) return;
+      var rect = container.getBoundingClientRect();
+      var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      var offset = (progress - 0.5) * -60;
+      img.style.transform = 'translateY(' + offset + 'px)';
+    });
+  }
+
+  /* ── Stagger service slide-in ── */
+  var serviceObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var items = entry.target.parentElement.querySelectorAll('.service-item');
+        items.forEach(function(item, idx){
+          setTimeout(function(){
+            item.classList.add('visible');
+          }, idx * 100);
+        });
+        serviceObserver.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.1});
+
+  var firstService = document.querySelector('.service-item');
+  if(firstService) serviceObserver.observe(firstService);
+
+  /* ── Scroll listener ── */
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      requestAnimationFrame(function(){
+        updateParallax();
+        updateImageParallax();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  /* Initial call */
+  updateParallax();
+  updateImageParallax();
+})();
+</script>
+</body>
+</html>
