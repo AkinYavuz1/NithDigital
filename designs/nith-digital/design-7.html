@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Design 7: Clean Slate</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&display=swap');
+
+  /* ── Design label bar ── */
+  .design-label{position:fixed;bottom:0;left:0;width:100%;background:#0E0E0E;color:#888;font:12px/1 'Inter',sans-serif;padding:8px 24px;z-index:9999;display:flex;gap:16px;flex-wrap:wrap;align-items:center;border-top:1px solid #333}
+  .design-label span{white-space:nowrap}
+  .design-label strong{color:#E85D3A}
+
+  /* ── Reset ── */
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#0E0E0E;line-height:1.6;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+
+  /* ── Typography ── */
+  h1,h2,h3,h4,h5,h6{font-family:'Space Grotesk',sans-serif;font-weight:500;letter-spacing:-0.04em;line-height:0.9}
+  .muted{color:#888888}
+
+  /* ── Utility ── */
+  .wrap{max-width:1440px;margin:0 auto;padding:0 max(5vw,24px)}
+
+  /* ── Transitions ── */
+  .anim{opacity:0;transform:translateY(32px);transition:opacity 0.5s cubic-bezier(.25,.46,.45,.94),transform 0.5s cubic-bezier(.25,.46,.45,.94)}
+  .anim.visible{opacity:1;transform:translateY(0)}
+  .anim-left{opacity:0;transform:translateX(-40px);transition:opacity 0.5s cubic-bezier(.25,.46,.45,.94),transform 0.5s cubic-bezier(.25,.46,.45,.94)}
+  .anim-left.visible{opacity:1;transform:translateX(0)}
+
+  @media(prefers-reduced-motion:reduce){
+    .anim,.anim-left{opacity:1;transform:none;transition:none}
+  }
+
+  /* ── Sticky Nav ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px max(5vw,24px);background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+  .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:600;letter-spacing:-0.03em;color:#0E0E0E;text-decoration:none;transition:opacity 0.5s cubic-bezier(.25,.46,.45,.94)}
+  .nav-logo:hover{opacity:0.6}
+  .nav-links{display:flex;align-items:center;gap:32px}
+  .nav-links a{font-size:0.875rem;font-weight:400;color:#888;text-decoration:none;transition:color 0.3s;position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#E85D3A;transition:width 0.3s cubic-bezier(.25,.46,.45,.94)}
+  .nav-links a:hover{color:#0E0E0E}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+  .nav-links a.active{color:#0E0E0E}
+  .nav-cta{font-family:'Inter',sans-serif;font-size:0.875rem;font-weight:500;color:#FFF;background:#0E0E0E;border:none;padding:10px 24px;border-radius:0;cursor:pointer;text-decoration:none;transition:background 0.3s cubic-bezier(.25,.46,.45,.94)}
+  .nav-cta:hover{background:#333}
+  .nav-hamburger{display:none;background:none;border:none;cursor:pointer;width:28px;height:20px;position:relative;flex-direction:column;justify-content:space-between}
+  .nav-hamburger span{display:block;width:100%;height:2px;background:#0E0E0E;transition:all 0.3s cubic-bezier(.25,.46,.45,.94)}
+
+  /* ── Hero ── */
+  .hero{padding:30vh max(5vw,24px) 120px;max-width:1440px;margin:0 auto}
+  .hero-headline{font-size:clamp(3rem,12vw,12rem);line-height:0.9;letter-spacing:-0.04em;font-family:'Space Grotesk',sans-serif;font-weight:500;color:#0E0E0E;margin-bottom:40px}
+  .hero-sub{font-size:clamp(1rem,1.2vw,1.25rem);color:#888;max-width:540px;line-height:1.6;margin-bottom:48px}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+  .btn-primary{font-family:'Inter',sans-serif;font-size:0.9375rem;font-weight:500;color:#FFF;background:#0E0E0E;border:none;padding:14px 32px;border-radius:0;cursor:pointer;text-decoration:none;transition:background 0.3s cubic-bezier(.25,.46,.45,.94)}
+  .btn-primary:hover{background:#333}
+  .btn-outline{font-family:'Inter',sans-serif;font-size:0.9375rem;font-weight:500;color:#0E0E0E;background:transparent;border:1.5px solid #0E0E0E;padding:13px 32px;border-radius:0;cursor:pointer;text-decoration:none;transition:all 0.3s cubic-bezier(.25,.46,.45,.94)}
+  .btn-outline:hover{background:#0E0E0E;color:#FFF}
+
+  /* ── Portfolio — Sticky stacking cards ── */
+  .portfolio{padding:160px 0 0}
+  .portfolio-header{padding:0 max(5vw,24px);max-width:1440px;margin:0 auto 64px}
+  .portfolio-header h2{font-size:clamp(2rem,5vw,5rem);line-height:0.9}
+  .portfolio-cards{position:relative}
+  .portfolio-card{position:sticky;top:80px;width:100%;background:#F5F5F3;border-radius:0;overflow:hidden;margin-bottom:40px}
+  .portfolio-card:nth-child(1){z-index:4}
+  .portfolio-card:nth-child(2){z-index:3;top:100px}
+  .portfolio-card:nth-child(3){z-index:2;top:120px}
+  .portfolio-card:nth-child(4){z-index:1;top:140px}
+  .portfolio-card-inner{display:grid;grid-template-columns:1.2fr 1fr;max-width:1440px;margin:0 auto;padding:max(5vw,24px)}
+  .portfolio-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:0}
+  .portfolio-card-content{display:flex;flex-direction:column;justify-content:center;padding:0 0 0 max(3vw,24px)}
+  .portfolio-card-content h3{font-size:clamp(1.5rem,3vw,3rem);margin-bottom:16px;line-height:0.95}
+  .portfolio-card-content p{color:#888;font-size:1rem;line-height:1.6;margin-bottom:16px}
+  .portfolio-card-tags{font-size:0.875rem;color:#888;font-style:italic}
+
+  /* ── Intro / About ── */
+  .intro{padding:160px max(5vw,24px);max-width:1440px;margin:0 auto;display:grid;grid-template-columns:1fr 1px 1fr;gap:max(4vw,32px);align-items:start}
+  .intro-heading{font-size:clamp(2rem,6vw,6rem);line-height:0.9}
+  .intro-divider{width:1px;height:100%;background:#ddd;justify-self:center}
+  .intro-body{font-size:clamp(1rem,1.1vw,1.125rem);color:#555;line-height:1.7;padding-top:12px}
+
+  /* ── Services ── */
+  .services{padding:160px max(5vw,24px) 80px;max-width:1440px;margin:0 auto}
+  .services-header{margin-bottom:64px}
+  .services-header h2{font-size:clamp(2rem,5vw,5rem);line-height:0.9;margin-bottom:16px}
+  .services-header p{color:#888;font-size:1rem}
+  .service-row{display:grid;grid-template-columns:80px 1fr 1.5fr;gap:24px;align-items:baseline;padding:28px 0;border-top:1px solid #ddd;transition:transform 0.5s cubic-bezier(.25,.46,.45,.94);cursor:default}
+  .service-row:last-child{border-bottom:1px solid #ddd}
+  .service-row:hover{transform:translateX(8px)}
+  .service-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(1rem,1.5vw,1.5rem);color:#ccc;font-weight:500}
+  .service-name{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2vw,2rem);font-weight:500;letter-spacing:-0.03em;line-height:1.1}
+  .service-desc{font-size:0.9375rem;color:#888;line-height:1.6}
+
+  /* ── Trust / Pull Quote ── */
+  .trust{padding:160px max(5vw,24px);text-align:center;max-width:1080px;margin:0 auto}
+  .trust-quote{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.4rem,2.5vw,2.5rem);font-weight:500;letter-spacing:-0.03em;line-height:1.3;color:#0E0E0E}
+  .trust-quote .coral-line{display:inline;background-image:linear-gradient(#E85D3A,#E85D3A);background-size:100% 2px;background-position:0 100%;background-repeat:no-repeat;padding-bottom:2px}
+
+  /* ── Testimonials ── */
+  .testimonials{padding:160px max(5vw,24px);max-width:1440px;margin:0 auto}
+  .testimonials-header{margin-bottom:64px}
+  .testimonials-header h2{font-size:clamp(2rem,4vw,4rem);line-height:0.9}
+  .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:max(3vw,32px)}
+  .testimonial-item q{display:block;font-size:1rem;line-height:1.7;color:#0E0E0E;margin-bottom:20px;quotes:"\201C" "\201D"}
+  .testimonial-item q::before{content:open-quote}
+  .testimonial-item q::after{content:close-quote}
+  .testimonial-meta{font-size:0.875rem;color:#888}
+
+  /* ── FAQ ── */
+  .faq{padding:160px max(5vw,24px) 80px;max-width:900px;margin:0 auto}
+  .faq-header{margin-bottom:64px}
+  .faq-header h2{font-size:clamp(2rem,4vw,4rem);line-height:0.9}
+  .faq-item{border-top:1px solid #ddd;padding:0}
+  .faq-item:last-child{border-bottom:1px solid #ddd}
+  .faq-question{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:24px 0;font-family:'Space Grotesk',sans-serif;font-size:clamp(1rem,1.3vw,1.25rem);font-weight:500;letter-spacing:-0.02em;color:#0E0E0E;text-align:left;transition:color 0.3s}
+  .faq-question:hover{color:#888}
+  .faq-icon{font-size:1.5rem;font-weight:300;color:#888;transition:transform 0.3s cubic-bezier(.25,.46,.45,.94)}
+  .faq-item.open .faq-icon{transform:rotate(45deg)}
+  .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(.25,.46,.45,.94),padding 0.5s cubic-bezier(.25,.46,.45,.94)}
+  .faq-item.open .faq-answer{max-height:300px;padding-bottom:24px}
+  .faq-answer p{font-size:0.9375rem;color:#888;line-height:1.7}
+
+  /* ── CTA ── */
+  .cta-section{padding:160px max(5vw,24px);text-align:center;max-width:1440px;margin:0 auto}
+  .cta-section h2{font-size:clamp(3rem,8vw,8rem);line-height:0.9;margin-bottom:24px}
+  .cta-section p{font-size:clamp(1rem,1.1vw,1.125rem);color:#888;max-width:520px;margin:0 auto 48px;line-height:1.6}
+
+  /* ── Footer ── */
+  footer{padding:64px max(5vw,24px);max-width:1440px;margin:0 auto;border-top:1px solid #ddd;display:grid;grid-template-columns:1fr 1fr;gap:48px;font-size:0.875rem;color:#888;padding-bottom:80px}
+  footer a{color:#888;text-decoration:none;transition:color 0.3s}
+  footer a:hover{color:#0E0E0E}
+  .footer-contact{display:flex;flex-direction:column;gap:8px}
+  .footer-contact .footer-name{font-family:'Space Grotesk',sans-serif;font-size:1.125rem;font-weight:500;color:#0E0E0E;letter-spacing:-0.02em;margin-bottom:8px}
+  .footer-nav{display:flex;flex-direction:column;gap:8px;text-align:right}
+
+  /* ── Mobile ── */
+  @media(max-width:768px){
+    nav{padding:12px 20px}
+    .nav-links{display:none}
+    .nav-hamburger{display:flex}
+    .hero{padding:24vh 20px 80px}
+    .hero-headline{font-size:clamp(2.5rem,14vw,6rem)}
+    .portfolio-card-inner{grid-template-columns:1fr;gap:24px}
+    .portfolio-card-content{padding:0}
+    .portfolio-card{top:72px!important;margin-bottom:24px}
+    .intro{grid-template-columns:1fr;gap:32px;padding:100px 20px}
+    .intro-divider{width:100%;height:1px}
+    .service-row{grid-template-columns:60px 1fr;gap:12px}
+    .service-desc{grid-column:1/-1}
+    .testimonials-grid{grid-template-columns:1fr;gap:48px}
+    footer{grid-template-columns:1fr;gap:32px}
+    .footer-nav{text-align:left}
+    .services{padding:100px 20px 60px}
+    .trust{padding:100px 20px}
+    .testimonials{padding:100px 20px}
+    .faq{padding:100px 20px 60px}
+    .cta-section{padding:100px 20px}
+    footer{padding:48px 20px 80px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Design label -->
+<div class="design-label">
+  <span><strong>Design 7 of 8</strong></span>
+  <span>Clean Slate</span>
+  <span>Sharp and editorial</span>
+  <span>Fonts: Space Grotesk / Inter</span>
+  <span>Signature: Extreme typographic scale, no accent colour</span>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">Nith Digital</a>
+  <div class="nav-links">
+    <a href="#work" class="active">Work</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact" class="nav-cta">Get in touch</a>
+  </div>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 class="hero-headline anim">We build websites that work as hard as you do</h1>
+  <p class="hero-sub anim" style="transition-delay:0.15s">A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+  <div class="hero-actions anim" style="transition-delay:0.3s">
+    <a href="#work" class="btn-primary">See our work</a>
+    <a href="#contact" class="btn-outline">Get in touch</a>
+  </div>
+</section>
+
+<!-- Portfolio — Sticky stacking cards -->
+<section class="portfolio" id="work">
+  <div class="portfolio-header">
+    <h2 class="anim">Work</h2>
+  </div>
+  <div class="portfolio-cards">
+
+    <div class="portfolio-card">
+      <div class="portfolio-card-inner">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200" alt="Analytics dashboard on screen" class="portfolio-card-img" loading="lazy">
+        <div class="portfolio-card-content">
+          <h3>Not an Octavia</h3>
+          <p>Machine learning model that finds underpriced used cars across the UK. Scans thousands of listings daily using XGBoost, surfaces the best deals, and ranks them by value gap.</p>
+          <span class="portfolio-card-tags">Next.js, TypeScript, Supabase, XGBoost, Groq</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-card">
+      <div class="portfolio-card-inner">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200" alt="Data dashboard on monitor" class="portfolio-card-img" loading="lazy">
+        <div class="portfolio-card-content">
+          <h3>gAIns</h3>
+          <p>AI-powered gym tracker with a built-in coach. Logs workouts, tracks progress over time, and gives personalised programming advice using conversation.</p>
+          <span class="portfolio-card-tags">React, Vite, Supabase, Anthropic API, Stripe</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-card">
+      <div class="portfolio-card-inner">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200" alt="Bright laptop workspace" class="portfolio-card-img" loading="lazy">
+        <div class="portfolio-card-content">
+          <h3>Daily Duel</h3>
+          <p>30 daily mini-games — trivia, puzzles, pattern matching, memory. Fresh challenges every day with leaderboards and streaks.</p>
+          <span class="portfolio-card-tags">Next.js, TypeScript, Tailwind, Supabase</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-card">
+      <div class="portfolio-card-inner">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200" alt="Team working at desk" class="portfolio-card-img" loading="lazy">
+        <div class="portfolio-card-content">
+          <h3>Tumble Tots</h3>
+          <p>Clean, mobile-first website for a local childminding business. Simple, fast, and easy to find on Google.</p>
+          <span class="portfolio-card-tags">HTML, CSS, JavaScript</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Intro / About -->
+<section class="intro" id="about">
+  <h2 class="intro-heading anim">About us</h2>
+  <div class="intro-divider"></div>
+  <div class="intro-body anim" style="transition-delay:0.1s">
+    <p>Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months.</p>
+    <br>
+    <p>We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="services-header">
+    <h2 class="anim">Services</h2>
+    <p class="anim muted" style="transition-delay:0.1s">Everything a small business needs to look professional online and run smarter behind the scenes.</p>
+  </div>
+
+  <div class="service-row anim-left" style="transition-delay:0s">
+    <span class="service-num">01</span>
+    <span class="service-name">Website Design &amp; Development</span>
+    <span class="service-desc">Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability.</span>
+  </div>
+  <div class="service-row anim-left" style="transition-delay:0.1s">
+    <span class="service-num">02</span>
+    <span class="service-name">Social Media Management</span>
+    <span class="service-desc">Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work.</span>
+  </div>
+  <div class="service-row anim-left" style="transition-delay:0.2s">
+    <span class="service-num">03</span>
+    <span class="service-name">Search Engine Optimisation</span>
+    <span class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it. Technical optimisation, content strategy, and Google Search Console monitoring.</span>
+  </div>
+  <div class="service-row anim-left" style="transition-delay:0.3s">
+    <span class="service-num">04</span>
+    <span class="service-name">Data Analytics &amp; Power BI</span>
+    <span class="service-desc">Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful — built by someone with a decade in BI.</span>
+  </div>
+  <div class="service-row anim-left" style="transition-delay:0.4s">
+    <span class="service-num">05</span>
+    <span class="service-name">Mobile App Development</span>
+    <span class="service-desc">Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals — built to solve a specific problem.</span>
+  </div>
+  <div class="service-row anim-left" style="transition-delay:0.5s">
+    <span class="service-num">06</span>
+    <span class="service-name">TradeDesk</span>
+    <span class="service-desc">A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically. No app to download, no login to remember.</span>
+  </div>
+</section>
+
+<!-- Trust / Pull Quote -->
+<section class="trust">
+  <p class="trust-quote anim">10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the <span class="coral-line">reps</span>, don't cut corners.</p>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header">
+    <h2 class="anim">What clients say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-item anim" style="transition-delay:0s">
+      <q>Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it. No fuss, no jargon — just got on with it.</q>
+      <p class="testimonial-meta">— Recent client, Dumfries &amp; Galloway</p>
+    </div>
+    <div class="testimonial-item anim" style="transition-delay:0.1s">
+      <q>We'd been quoted over &pound;3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price — and actually answered the phone when we had questions.</q>
+      <p class="testimonial-meta">— Recent client, Ayrshire</p>
+    </div>
+    <div class="testimonial-item anim" style="transition-delay:0.2s">
+      <q>The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds. Should have done it years ago.</q>
+      <p class="testimonial-meta">— Recent client, Scotland</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-header">
+    <h2 class="anim">FAQ</h2>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      <span>How much does a website cost?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>A standard business website starts at &pound;500 with a &pound;40/month hosting and support fee. Booking systems start at &pound;750. Custom web apps start at &pound;3,000. We'll give you an exact quote after a 15-minute conversation — no surprises.</p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      <span>How long does a website take to build?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>Most business websites are live within 2-3 weeks from the day we start. Custom apps and more complex projects take 4-8 weeks. We'll give you a timeline upfront and stick to it.</p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      <span>Do I need to provide content and images?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-answer">
+      <p>We handle all the copy and design. If you have photos of your work (even phone photos), send them over — they make a huge difference. If not, we'll source professional imagery that fits your industry.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2 class="anim">Ready to talk?</h2>
+  <p class="anim" style="transition-delay:0.1s">No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+  <a href="mailto:hello@nithdigital.uk" class="btn-primary anim" style="transition-delay:0.2s">Get in touch</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-contact">
+    <span class="footer-name">Nith Digital</span>
+    <span>Sanquhar, Dumfries &amp; Galloway</span>
+    <a href="tel:+447404173024">07404 173024</a>
+    <a href="mailto:hello@nithdigital.uk">hello@nithdigital.uk</a>
+  </div>
+  <div class="footer-nav">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Scroll-triggered animations
+  var els = document.querySelectorAll('.anim, .anim-left');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el) { observer.observe(el); });
+  } else {
+    els.forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Active nav link on scroll
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  window.addEventListener('scroll', function() {
+    var scrollY = window.scrollY + 120;
+    sections.forEach(function(section) {
+      var top = section.offsetTop;
+      var height = section.offsetHeight;
+      var id = section.getAttribute('id');
+      if (scrollY >= top && scrollY < top + height) {
+        navLinks.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
