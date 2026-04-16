@@ -257,22 +257,90 @@
     .parallax-img{position:relative!important;height:100%!important}
   }
 
+  /* ══════════════════ TABLET ══════════════════ */
+  @media(max-width:1024px){
+    .work-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .steps-grid{gap:20px}
+    .pricing-grid{gap:20px}
+    .hero-headline{font-size:clamp(2rem,6vw,4rem)}
+  }
+
   /* ══════════════════ MOBILE ══════════════════ */
   @media(max-width:768px){
+    body{cursor:auto}
     .trail-dot{display:none}
+
+    /* Layout */
+    .section{padding:0 20px}
     .floating-cta{top:16px;right:16px;padding:10px 20px;font-size:0.8rem}
-    .hero{padding:120px 20px 80px;min-height:auto}
-    .hero-headline{font-size:clamp(1.8rem,8vw,3rem);min-height:auto}
-    .work-grid{grid-template-columns:1fr}
-    .steps-grid{grid-template-columns:1fr}
-    .pricing-grid{grid-template-columns:1fr}
-    .service-item{grid-template-columns:40px 1fr;gap:16px}
-    .service-desc{grid-column:1/-1;max-height:none;opacity:1}
-    .testimonial-grid{grid-template-columns:1fr}
-    .footer{flex-direction:column;gap:24px}
-    .section-num{font-size:clamp(3rem,15vw,6rem)}
-    .section-label{flex-direction:column;gap:4px}
+    .page-logo{padding:24px 20px 0;font-size:1.1rem}
+
+    /* Hero */
+    .hero{padding:100px 20px 60px;min-height:auto}
+    .hero-headline{font-size:clamp(1.6rem,7vw,2.5rem);min-height:2.8em;line-height:1.15;letter-spacing:-0.02em}
+    .hero-sub{font-size:1rem;max-width:100%;margin-bottom:28px}
+    .hero-ctas{flex-direction:column;gap:12px}
+    .hero-ctas a{text-align:center;justify-content:center;width:100%}
+
+    /* Intro */
+    .intro-section{padding:60px 0 80px}
+    .intro-text{font-size:1rem;text-align:left}
+
+    /* How it works */
+    .how-section{padding:60px 0 80px}
+    .steps-grid{grid-template-columns:1fr;gap:20px;margin-top:32px}
+    .step-card{padding:24px}
+    .step-num{font-size:2rem}
+
+    /* Pricing */
+    .pricing-section{padding:40px 0 80px}
+    .pricing-grid{grid-template-columns:1fr;gap:20px;margin-top:32px}
+    .pricing-card{padding:28px 24px}
+    .pricing-price{font-size:1.8rem}
+    .pricing-card.featured::before{top:-10px;font-size:0.65rem}
+
+    /* Work */
+    .work-section{padding:60px 0 80px}
+    .work-grid{grid-template-columns:1fr;gap:24px}
+    .work-card-video{aspect-ratio:4/3}
     .parallax-img{position:relative!important;height:100%!important}
+    .work-card-overlay{opacity:1}
+    .work-card-overlay .overlay-desc{max-height:80px}
+
+    /* Services */
+    .services-section{padding:60px 0 80px}
+    .service-item{grid-template-columns:36px 1fr;gap:12px;padding:24px 0}
+    .service-desc{grid-column:1/-1;max-height:none;opacity:1}
+
+    /* Trust */
+    .trust-section{padding:60px 0 80px;text-align:left}
+    .trust-text{font-size:1rem}
+
+    /* Testimonials */
+    .testimonials-section{padding:60px 0 80px}
+    .testimonial-grid{grid-template-columns:1fr;gap:20px}
+    .testimonial-card{padding:24px}
+
+    /* FAQ */
+    .faq-section{padding:60px 0 80px}
+    .faq-q{font-size:0.95rem;padding:20px 0}
+
+    /* CTA */
+    .cta-section{padding:60px 0 100px}
+    .cta-headline{font-size:clamp(1.5rem,6vw,2.5rem)}
+    .cta-body{font-size:0.95rem}
+
+    /* Footer */
+    .footer{flex-direction:column;gap:24px;padding:40px 20px 60px}
+
+    /* Section labels */
+    .section-num{font-size:clamp(2.5rem,12vw,5rem)}
+    .section-label{flex-direction:column;gap:4px;margin-bottom:32px}
+
+    /* Lava blobs — smaller and less intense on mobile */
+    .lava-blob{filter:blur(60px)!important}
+    .lava-blob-1,.lava-blob-2,.lava-blob-3{width:80vw!important;height:80vw!important}
+    .lava-blob-4,.lava-blob-5,.lava-blob-6{display:none}
   }
 </style>
 </head>
