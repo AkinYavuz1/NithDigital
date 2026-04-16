@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Design 3: Quiet Depth</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap');
+
+  /* ── Design label bar ── */
+  .design-label{position:fixed;top:0;left:0;width:100%;background:#1a1a1a;color:#808080;font:12px/1 'DM Sans',sans-serif;padding:8px 24px;z-index:9999;display:flex;gap:16px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #222}
+  .design-label span{white-space:nowrap}
+  .design-label strong{color:#FB8989}
+
+  /* ── Reset ── */
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:#000;color:#fff;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+  /* ── Curtain wipe ── */
+  .curtain{position:fixed;top:0;left:0;width:100%;height:100%;background:#FB8989;z-index:1000;animation:curtain-wipe 1.5s cubic-bezier(.35,0,0,1) .3s forwards}
+  @keyframes curtain-wipe{0%{transform:translateY(0)}100%{transform:translateY(-100%)}}
+
+  /* ── Typography scale 1.25 ── */
+  .t-49{font-size:clamp(2rem,3.06vw,3.06rem)}
+  .t-39{font-size:clamp(1.6rem,2.44vw,2.44rem)}
+  .t-31{font-size:clamp(1.3rem,1.95vw,1.95rem)}
+  .t-25{font-size:clamp(1.1rem,1.56vw,1.56rem)}
+  .t-20{font-size:clamp(1rem,1.25vw,1.25rem)}
+  .t-16{font-size:1rem}
+
+  h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;line-height:1.1;letter-spacing:-0.02em;font-weight:500}
+
+  /* ── Utility ── */
+  .muted{color:#808080}
+  .accent{color:#FB8989}
+  .container{max-width:1200px;margin:0 auto;padding:0 clamp(24px,4vw,64px)}
+
+  /* ── Transitions: everything 2s ── */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 2s cubic-bezier(.35,0,0,1),transform 2s cubic-bezier(.35,0,0,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ── Nav ── */
+  .nav{position:fixed;top:32px;left:0;width:100%;z-index:100;padding:0 clamp(24px,4vw,64px);display:flex;justify-content:space-between;align-items:center}
+  .nav-logo{font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;color:#fff;text-decoration:none;transition:opacity 2s cubic-bezier(.35,0,0,1)}
+  .nav-logo:hover{opacity:.6}
+  .nav-cta{font-size:.875rem;font-weight:500;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.2);padding:10px 24px;border-radius:8px;cursor:pointer;text-decoration:none;transition:all 2s cubic-bezier(.35,0,0,1)}
+  .nav-cta:hover{background:#FB8989;border-color:#FB8989;color:#000}
+  .nav-hamburger{display:none;background:none;border:none;cursor:pointer;width:32px;height:24px;position:relative;flex-direction:column;justify-content:space-between}
+  .nav-hamburger span{display:block;width:100%;height:2px;background:#fff;transition:all 2s cubic-bezier(.35,0,0,1)}
+
+  /* ── Hero ── */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:160px clamp(24px,4vw,64px) 80px}
+  .hero h1{font-size:clamp(2.5rem,8vw,8vw);font-weight:300;line-height:1;letter-spacing:-0.04em;max-width:14ch}
+  .hero-sub{margin-top:32px;font-size:clamp(1rem,1.25vw,1.25rem);color:#808080;max-width:48ch;line-height:1.65}
+  .hero-btn{display:inline-block;margin-top:48px;font-size:1rem;font-weight:500;color:#fff;border:1px solid rgba(255,255,255,.2);padding:16px 40px;border-radius:8px;text-decoration:none;transition:all 2s cubic-bezier(.35,0,0,1)}
+  .hero-btn:hover{background:#FB8989;border-color:#FB8989;color:#000}
+
+  /* ── Intro ── */
+  .intro{padding:160px clamp(24px,4vw,64px);display:flex;justify-content:center}
+  .intro p{max-width:40ch;text-align:center;font-size:clamp(1.2rem,1.5vw,1.5rem);line-height:1.65;color:#ccc}
+
+  /* ── Portfolio — sticky stacking ── */
+  .portfolio{padding:80px 0 0}
+  .portfolio-header{padding:0 clamp(24px,4vw,64px) 80px;text-align:center}
+  .portfolio-header h2{font-size:clamp(1.6rem,2.44vw,2.44rem);font-weight:300}
+  .portfolio-header p{color:#808080;margin-top:16px;max-width:40ch;margin-left:auto;margin-right:auto}
+  .portfolio-stack{position:relative;padding:0 clamp(24px,4vw,64px)}
+  .project-card{position:sticky;top:5vh;background:#111;border-radius:8px;padding:clamp(32px,4vw,64px);margin-bottom:40px;transition:transform 2s cubic-bezier(.35,0,0,1),box-shadow 2s cubic-bezier(.35,0,0,1);overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;min-height:60vh}
+  .project-card:nth-child(2){top:7vh}
+  .project-card:nth-child(3){top:9vh}
+  .project-card:nth-child(4){top:11vh}
+  .project-info h3{font-size:clamp(1.6rem,2.44vw,2.44rem);font-weight:500;color:#FB8989;margin-bottom:16px}
+  .project-info p{color:#ccc;line-height:1.65;margin-bottom:24px}
+  .project-tags{color:#808080;font-size:.875rem;line-height:2}
+  .project-tags span{margin-right:16px}
+  .project-status{display:inline-block;margin-top:12px;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:#808080}
+  .project-image{width:100%;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#1a1a1a}
+  .project-image img{width:100%;height:100%;object-fit:cover;transition:transform 2s cubic-bezier(.35,0,0,1);filter:brightness(.85)}
+  .project-card:hover .project-image img{transform:scale(1.03)}
+
+  /* ── Services ── */
+  .services{padding:200px clamp(24px,4vw,64px)}
+  .services-header{margin-bottom:80px}
+  .services-header h2{font-size:clamp(1.6rem,2.44vw,2.44rem);font-weight:300}
+  .services-header p{color:#808080;margin-top:12px}
+  .service-item{padding:48px 0;border-top:1px solid #1a1a1a}
+  .service-item:last-child{border-bottom:1px solid #1a1a1a}
+  .service-name{font-size:clamp(1.1rem,1.56vw,1.56rem);font-weight:500;margin-bottom:12px}
+  .service-desc{color:#808080;max-width:60ch;line-height:1.65}
+
+  /* ── Trust ── */
+  .trust{padding:160px clamp(24px,4vw,64px);text-align:center}
+  .trust p{max-width:50ch;margin:0 auto;font-size:clamp(1rem,1.25vw,1.25rem);color:#ccc;line-height:1.65}
+
+  /* ── Testimonials ── */
+  .testimonials{padding:80px clamp(24px,4vw,64px)}
+  .testimonial{min-height:60vh;display:flex;flex-direction:column;justify-content:center;max-width:700px;padding:80px 0}
+  .testimonial:nth-child(even){margin-left:auto}
+  .testimonial blockquote{font-size:clamp(1.4rem,2rem,2rem);font-weight:300;line-height:1.5;letter-spacing:-0.01em;color:#fff}
+  .testimonial blockquote::before{content:"\201C";display:block;font-size:4rem;color:#FB8989;line-height:1;margin-bottom:16px}
+  .testimonial cite{display:block;margin-top:32px;font-style:normal;font-size:.875rem;color:#808080}
+
+  /* ── FAQ ── */
+  .faq{padding:160px clamp(24px,4vw,64px)}
+  .faq h2{font-size:clamp(1.6rem,2.44vw,2.44rem);font-weight:300;margin-bottom:64px;text-align:center}
+  .faq-item{border-top:1px solid #1a1a1a;padding:0}
+  .faq-item:last-child{border-bottom:1px solid #1a1a1a}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;width:100%;padding:28px 0;cursor:pointer;background:none;border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:clamp(1rem,1.25vw,1.25rem);text-align:left;gap:16px;transition:color 2s cubic-bezier(.35,0,0,1)}
+  .faq-q:hover{color:#FB8989}
+  .faq-toggle{font-size:1.5rem;font-weight:300;flex-shrink:0;transition:transform 2s cubic-bezier(.35,0,0,1);color:#808080}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height 2s cubic-bezier(.35,0,0,1),padding 2s cubic-bezier(.35,0,0,1)}
+  .faq-item.open .faq-a{max-height:300px;padding-bottom:28px}
+  .faq-item.open .faq-toggle{transform:rotate(45deg)}
+  .faq-a p{color:#808080;line-height:1.65;max-width:60ch}
+
+  /* ── CTA ── */
+  .cta-section{padding:200px clamp(24px,4vw,64px);text-align:center}
+  .cta-section h2{font-size:clamp(1.6rem,2.44vw,2.44rem);font-weight:300;margin-bottom:20px}
+  .cta-section p{color:#808080;max-width:48ch;margin:0 auto 48px;line-height:1.65}
+  .cta-section a{display:inline-block;font-size:1rem;font-weight:500;color:#000;background:#FB8989;padding:16px 48px;border-radius:8px;text-decoration:none;transition:all 2s cubic-bezier(.35,0,0,1)}
+  .cta-section a:hover{background:#fff;color:#000}
+
+  /* ── Footer ── */
+  footer{padding:120px clamp(24px,4vw,64px) 80px;text-align:center}
+  footer p{color:#808080;font-size:.875rem;line-height:2}
+  footer a{color:#808080;text-decoration:none;transition:color 2s cubic-bezier(.35,0,0,1)}
+  footer a:hover{color:#FB8989}
+
+  /* ── Reduced motion ── */
+  @media(prefers-reduced-motion:reduce){
+    .curtain{animation:none;display:none}
+    .reveal{opacity:1;transform:none;transition:none}
+    *{transition-duration:0s !important;animation-duration:0s !important}
+  }
+
+  /* ── Mobile ── */
+  @media(max-width:768px){
+    .design-label{font-size:10px;padding:6px 16px}
+    .nav{top:28px;padding:0 20px}
+    .nav-cta{display:none}
+    .nav-hamburger{display:flex}
+    .hero{padding:140px 20px 60px}
+    .hero h1{font-size:clamp(2.2rem,12vw,4rem)}
+    .hero-sub{font-size:1rem}
+    .intro{padding:100px 20px}
+    .portfolio-stack{padding:0 16px}
+    .project-card{grid-template-columns:1fr;min-height:auto;padding:32px 24px;gap:24px}
+    .project-card,.project-card:nth-child(2),.project-card:nth-child(3),.project-card:nth-child(4){top:3vh}
+    .project-image{order:-1}
+    .services{padding:120px 20px}
+    .trust{padding:100px 20px}
+    .testimonials{padding:40px 20px}
+    .testimonial{min-height:auto;padding:60px 0}
+    .testimonial:nth-child(even){margin-left:0}
+    .faq{padding:100px 20px}
+    .cta-section{padding:120px 20px}
+    footer{padding:80px 20px 60px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Design label -->
+<div class="design-label">
+  <span><strong>Design 3 of 5</strong></span>
+  <span>Quiet Depth</span>
+  <span>Restrained and elegant</span>
+  <span>Inspired by: michaelpumo.com</span>
+  <span>Fonts: DM Sans</span>
+  <span>Signature: Sticky stacking cards + curtain-wipe reveal</span>
+</div>
+
+<!-- Curtain wipe overlay -->
+<div class="curtain" aria-hidden="true"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#" class="nav-logo">Nith Digital</a>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 class="reveal">We build websites that work as hard as you do</h1>
+  <p class="hero-sub reveal">A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+  <a href="#portfolio" class="hero-btn reveal">See our work</a>
+</section>
+
+<!-- Intro -->
+<section class="intro">
+  <p class="reveal">Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. We're neither. Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+</section>
+
+<!-- Portfolio — sticky stacking cards -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header reveal">
+    <h2>Work</h2>
+    <p>Products we've built and shipped. Real things, live in the wild.</p>
+  </div>
+  <div class="portfolio-stack">
+
+    <article class="project-card">
+      <div class="project-info">
+        <h3>Not an Octavia</h3>
+        <p>Machine learning model that finds underpriced used cars across the UK. Scans thousands of listings daily using XGBoost, surfaces the best deals, and ranks them by value gap.</p>
+        <div class="project-tags">
+          <span>Next.js</span><span>TypeScript</span><span>Supabase</span><span>XGBoost</span><span>Groq</span>
+        </div>
+        <span class="project-status">Live</span>
+      </div>
+      <div class="project-image">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Not an Octavia project" loading="lazy">
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-info">
+        <h3>gAIns</h3>
+        <p>AI-powered gym tracker with a built-in coach. Logs workouts, tracks progress over time, and gives personalised programming advice using conversation.</p>
+        <div class="project-tags">
+          <span>React</span><span>Vite</span><span>Supabase</span><span>Anthropic API</span><span>Stripe</span>
+        </div>
+        <span class="project-status">In development</span>
+      </div>
+      <div class="project-image">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80" alt="gAIns project" loading="lazy">
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-info">
+        <h3>Daily Duel</h3>
+        <p>30 daily mini-games — trivia, puzzles, pattern matching, memory. Fresh challenges every day with leaderboards and streaks.</p>
+        <div class="project-tags">
+          <span>Next.js</span><span>TypeScript</span><span>Tailwind</span><span>Supabase</span>
+        </div>
+        <span class="project-status">Live</span>
+      </div>
+      <div class="project-image">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80" alt="Daily Duel project" loading="lazy">
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-info">
+        <h3>Tumble Tots</h3>
+        <p>Clean, mobile-first website for a local childminding business. Simple, fast, and easy to find on Google.</p>
+        <div class="project-tags">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span>
+        </div>
+        <span class="project-status">Live</span>
+      </div>
+      <div class="project-image">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" alt="Tumble Tots project" loading="lazy">
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <h2>Services</h2>
+    <p class="muted">Website design is what we do best — but it's not all we do.</p>
+  </div>
+
+  <div class="service-item reveal">
+    <h3 class="service-name">Website Design &amp; Development</h3>
+    <p class="service-desc">Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability. Includes contact forms, Google optimisation, and proper hosting.</p>
+  </div>
+  <div class="service-item reveal">
+    <h3 class="service-name">Social Media Management</h3>
+    <p class="service-desc">Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work. Automated where it makes sense, human where it matters.</p>
+  </div>
+  <div class="service-item reveal">
+    <h3 class="service-name">Search Engine Optimisation</h3>
+    <p class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it. Technical optimisation, content strategy, and Google Search Console monitoring — not keyword stuffing.</p>
+  </div>
+  <div class="service-item reveal">
+    <h3 class="service-name">Data Analytics &amp; Power BI</h3>
+    <p class="service-desc">Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful — see what's working, what isn't, and where the money goes. Built by someone with a decade in BI.</p>
+  </div>
+  <div class="service-item reveal">
+    <h3 class="service-name">Mobile App Development</h3>
+    <p class="service-desc">Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals — built to solve a specific problem, not to tick a box.</p>
+  </div>
+  <div class="service-item reveal">
+    <h3 class="service-name">TradeDesk</h3>
+    <p class="service-desc">A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically. No app to download, no login to remember. Built for tradespeople who hate admin.</p>
+  </div>
+</section>
+
+<!-- Trust -->
+<section class="trust">
+  <p class="reveal">10+ years in data, BI, and software across healthcare, energy, finance, and the public sector. Four Commonwealth gold medals in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.</p>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="testimonial reveal">
+    <blockquote>Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it. No fuss, no jargon — just got on with it.</blockquote>
+    <cite>Recent client — Dumfries &amp; Galloway</cite>
+  </div>
+  <div class="testimonial reveal">
+    <blockquote>We'd been quoted over &pound;3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price — and actually answered the phone when we had questions.</blockquote>
+    <cite>Recent client — Ayrshire</cite>
+  </div>
+  <div class="testimonial reveal">
+    <blockquote>The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds. Should have done it years ago.</blockquote>
+    <cite>Recent client — Scotland</cite>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <h2 class="reveal">Common questions</h2>
+
+  <div class="faq-item reveal">
+    <button class="faq-q" aria-expanded="false">
+      <span>How much does a website cost?</span>
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a" role="region">
+      <p>A standard business website starts at &pound;500 with a &pound;40/month hosting and support fee. Booking systems start at &pound;750. Custom web apps start at &pound;3,000. We'll give you an exact quote after a 15-minute conversation — no surprises.</p>
+    </div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q" aria-expanded="false">
+      <span>How long does a website take to build?</span>
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a" role="region">
+      <p>Most business websites are live within 2-3 weeks from the day we start. Custom apps and more complex projects take 4-8 weeks. We'll give you a timeline upfront and stick to it.</p>
+    </div>
+  </div>
+  <div class="faq-item reveal">
+    <button class="faq-q" aria-expanded="false">
+      <span>Do I need to provide content and images?</span>
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a" role="region">
+      <p>We handle all the copy and design. If you have photos of your work (even phone photos), send them over — they make a huge difference. If not, we'll source professional imagery that fits your industry.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2 class="reveal">Ready to talk?</h2>
+  <p class="reveal">No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+  <a href="mailto:hello@nithdigital.uk" class="reveal">Get in touch</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p><a href="mailto:hello@nithdigital.uk">hello@nithdigital.uk</a></p>
+  <p><a href="tel:+447404173024">07404 173024</a></p>
+  <p>Sanquhar, Dumfries &amp; Galloway</p>
+</footer>
+
+<script>
+  // Scroll-reveal observer
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els=document.querySelectorAll('.reveal');
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    },{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){obs.observe(el);});
+  })();
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var item=this.parentElement;
+      var open=item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(function(i){
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded','false');
+      });
+      if(!open){
+        item.classList.add('open');
+        this.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  // Remove curtain from DOM after animation
+  var curtain=document.querySelector('.curtain');
+  if(curtain){
+    curtain.addEventListener('animationend',function(){
+      curtain.remove();
+    });
+  }
+</script>
+</body>
+</html>
