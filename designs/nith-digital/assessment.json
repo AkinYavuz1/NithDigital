@@ -1,0 +1,29 @@
+{
+  "client_name": "Akin Yavuz",
+  "business_name": "Nith Digital",
+  "owner_age": null,
+  "years_trading": 0,
+  "services": [
+    "Website design & development",
+    "Social media management",
+    "SEO",
+    "TradeDesk (WhatsApp expense manager for sole traders)",
+    "Mobile app development",
+    "Data analytics & Power BI dashboards"
+  ],
+  "location": "Dumfries & Galloway, Scotland",
+  "service_radius": "Scotland primary, UK-wide secondary",
+  "target_customers": "Small businesses — tradespeople, local services, SMEs",
+  "how_customers_find_them": "Cold calling (business is 10 days old), no inbound yet",
+  "online_presence": {
+    "website": "https://www.nithdigital.uk",
+    "google_business": false,
+    "facebook": null,
+    "instagram": null,
+    "reviews_count": 0,
+    "reviews_rating": null
+  },
+  "local_competition": "Few digital agencies in Dumfries & Galloway — most competitors are Edinburgh/Glasgow based or national template factories",
+  "photography_available": "No professional photography. Portfolio consists of live project URLs — Not an Octavia, gAIns, Daily Duel, Tumble Tots. No screenshots or mockups currently.",
+  "strategic_notes": "This is the agency's own site — the redesign IS the proof of capability. Every design decision must demonstrate what Nith Digital sells. The current site has zero images, text-only project cards, no scroll animations, inline React styles, and a flat visual hierarchy. It reads as a developer side project, not a professional agency. The site needs to convert cold call follow-ups into trust. Website design is the lead service; other services (Power BI, TradeDesk, social media, apps, SEO) are secondary but need proper pages. Portfolio must be visual — browser mockups, screenshots, interaction demos. Google Business profile should be created alongside the redesign."
+}

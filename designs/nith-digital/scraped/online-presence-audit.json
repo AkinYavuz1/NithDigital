@@ -1,0 +1,252 @@
+{
+  "audit_date": "2026-04-16",
+  "business": {
+    "name": "Nith Digital",
+    "owner": "Akin Yavuz",
+    "domain": "nithdigital.uk",
+    "location": "Sanquhar, Dumfries & Galloway, Scotland",
+    "email": "hello@nithdigital.uk",
+    "phone": "+44 7404 173024"
+  },
+
+  "website": {
+    "status": "LIVE",
+    "url": "https://www.nithdigital.uk",
+    "hosting": "Vercel",
+    "framework": "Next.js (TypeScript)",
+    "ssl": true,
+    "pages_found": [
+      "/ (homepage)",
+      "/blog (categories: Starting a Business, Tax & Finance, Marketing, Websites & Digital, Local Business)"
+    ],
+    "services_listed": [
+      "Business Websites — modern, mobile-first for tradespeople, B&Bs, local businesses",
+      "Dashboards & Reporting — Power BI dashboards from spreadsheets",
+      "Booking & Scheduling Tools — online 24/7 customer booking systems",
+      "Custom Apps & Tools — bespoke job tracking and customer management"
+    ],
+    "pricing_visible": "£500 (basic website/BI dashboard) to £3,500 (MVP/prototype)",
+    "design_notes": {
+      "colour_scheme": "Dark navy (#1B2A4A), cream (#F5F0E6), gold accent (#D4A84B)",
+      "typography": "Modern serif display fonts",
+      "layout": "Clean, professional, mobile-responsive grid",
+      "animations": "Subtle hover animations on portfolio cards"
+    },
+    "portfolio_projects": [
+      "Not an Octavia — ML car site",
+      "gAIns — AI gym app",
+      "Tumble Tots — childminding website"
+    ],
+    "credentials_displayed": [
+      "10+ years in data/BI",
+      "4 industry sectors",
+      "3 products shipped",
+      "4x Commonwealth gold medals",
+      "BSc, Certified Scrum Master, MS SQL Developer, Power BI Analyst"
+    ],
+    "free_tools": [
+      "VAT Threshold Checker",
+      "Invoice Generator",
+      "Site Audit"
+    ],
+    "location_pages": "Multiple Dumfries & Galloway town pages",
+    "testimonials": false,
+    "blog_posts_visible": false,
+    "contact_form": true,
+    "free_consultation_cta": true
+  },
+
+  "google_business_profile": {
+    "status": "NOT_FOUND",
+    "notes": "No Google Business Profile found for 'Nith Digital' in any search. Not indexed on Google Maps. This is a critical gap for local SEO in Dumfries & Galloway.",
+    "recommendation": "CREATE — highest priority. Claim/verify a Google Business Profile with Sanquhar address, service-area business covering all of D&G. Add photos, services, and request reviews from existing clients."
+  },
+
+  "facebook": {
+    "status": "NOT_FOUND",
+    "url_checked": "https://www.facebook.com/nithdigital",
+    "notes": "No Facebook page found for Nith Digital. The URL returned no content. No search results reference a Nith Digital Facebook page in Dumfries or Scotland.",
+    "recommendation": "CREATE — important for local trust signals and social proof. Many D&G small businesses use Facebook as primary discovery channel."
+  },
+
+  "instagram": {
+    "status": "UNKNOWN",
+    "handle_checked": "@nithdigital",
+    "notes": "Instagram profile could not be confirmed via web search or fetch (Instagram blocks external scraping). No indexed references to @nithdigital on Instagram found anywhere.",
+    "recommendation": "CHECK directly in Instagram app. If not claimed, CREATE and reserve the handle. Use for portfolio showcases, before/after website builds, local D&G content."
+  },
+
+  "linkedin": {
+    "personal_profile": {
+      "status": "NOT_FOUND_IN_SEARCH",
+      "notes": "No LinkedIn profile found for 'Akin Yavuz' connected to Nith Digital, Dumfries, or Scotland in web search results. A profile for 'Akin Yavuz' at CAR2U (Northumbria University) was found but may be outdated or a different person.",
+      "recommendation": "UPDATE or CREATE personal LinkedIn profile clearly stating: Founder at Nith Digital, Sanquhar, Scotland. Senior BI Developer background. Link to nithdigital.uk."
+    },
+    "company_page": {
+      "status": "NOT_FOUND",
+      "notes": "No LinkedIn company page found for Nith Digital.",
+      "recommendation": "CREATE — LinkedIn company page for Nith Digital. Important for B2B credibility, especially for dashboard/BI services."
+    }
+  },
+
+  "twitter_x": {
+    "status": "NOT_FOUND",
+    "handle_checked": "@nithdigital",
+    "notes": "X/Twitter returned error code 50 (user not found) for @nithdigital. No tweets or account found referencing Nith Digital.",
+    "recommendation": "LOW PRIORITY — reserve the handle but X is less important for local Scottish web design than Google, Facebook, and LinkedIn."
+  },
+
+  "github": {
+    "status": "EXISTS",
+    "profile_url": "https://github.com/AkinYavuz1",
+    "public_repos": 6,
+    "repositories": [
+      {
+        "name": "NithDigital",
+        "language": "TypeScript",
+        "description": "Websites, Data & Apps for Dumfries & Galloway"
+      },
+      {
+        "name": "tumbletots",
+        "language": "HTML",
+        "description": "6-page static website for a registered childminder"
+      },
+      {
+        "name": "gymtracker",
+        "language": "JavaScript",
+        "description": null
+      },
+      {
+        "name": "nith-ops",
+        "language": "TypeScript",
+        "description": "Private operations dashboard"
+      },
+      {
+        "name": "businessdirectory",
+        "language": "TypeScript",
+        "description": "Sanquhar & DG4 local business directory"
+      },
+      {
+        "name": "portfolio",
+        "language": "HTML",
+        "description": "Personal portfolio site"
+      }
+    ],
+    "notes": "Active GitHub presence with relevant repos. NithDigital main repo is public. No bio visible. Profile could be enriched with avatar, bio, and links.",
+    "recommendation": "ENHANCE — add profile bio, avatar, link to nithdigital.uk. Consider making client repos private if not already."
+  },
+
+  "companies_house": {
+    "status": "NOT_REGISTERED_AS_NITH_DIGITAL",
+    "notes": "No company registered as 'Nith Digital' or 'Nith Digital Ltd' on Companies House. A 'NITH LTD' (company 15558158) exists but is based in Dagenham, London — retail/financial intermediation, unrelated. Business likely operates as sole trader under Akin Yavuz's name.",
+    "recommendation": "No action needed unless wanting Ltd status. Sole trader is fine for current scale."
+  },
+
+  "directory_listings": {
+    "yell": { "status": "NOT_FOUND" },
+    "bark": { "status": "NOT_FOUND" },
+    "checkatrade": { "status": "NOT_FOUND" },
+    "peopleperhour": { "status": "NOT_FOUND" },
+    "freeindex": { "status": "NOT_FOUND" },
+    "thomson_local": { "status": "NOT_FOUND" },
+    "cylex_uk": { "status": "NOT_FOUND" },
+    "hotfrog": { "status": "NOT_FOUND" },
+    "clutch": { "status": "NOT_FOUND" },
+    "designrush": { "status": "NOT_FOUND" },
+    "sortlist": { "status": "NOT_FOUND" },
+    "notes": "Zero directory listings found across all major UK business directories and agency listing platforms.",
+    "recommendation": "CREATE listings on at least: Yell.com, FreeIndex, Google Business Profile (covered above). Consider Bark and PeoplePerHour for lead generation. Clutch/DesignRush for agency credibility."
+  },
+
+  "review_platforms": {
+    "trustpilot": {
+      "status": "NOT_FOUND",
+      "url_checked": "https://uk.trustpilot.com/review/nithdigital.uk",
+      "notes": "404 — no Trustpilot profile exists for nithdigital.uk"
+    },
+    "google_reviews": {
+      "status": "NOT_FOUND",
+      "notes": "No Google Business Profile means no Google reviews possible"
+    },
+    "facebook_reviews": {
+      "status": "NOT_FOUND",
+      "notes": "No Facebook page means no Facebook reviews"
+    },
+    "recommendation": "After creating Google Business Profile and Trustpilot page, actively request reviews from existing clients (Tumble Tots, etc.)."
+  },
+
+  "mentions_and_press": {
+    "status": "NONE_FOUND",
+    "notes": "No press mentions, blog features, awards, or third-party references to Nith Digital found anywhere on the web. The business has essentially zero external footprint beyond its own website and GitHub.",
+    "recommendation": "Seek local press coverage (Dumfries & Galloway Standard, DGWGO). Submit to Scottish business awards. Guest post on local business blogs."
+  },
+
+  "seo_observations": {
+    "domain_indexed": "Website is live and fetchable but does not appear in search results for key terms like 'web design Dumfries and Galloway', 'Nith Digital', or 'nithdigital.uk'.",
+    "competitors_ranking": [
+      "The Internet Design Shop (internetdesignshop.co.uk)",
+      "CSU Web Design (cyberspaceunlimited.co.uk)",
+      "Webmill (webmill.co.uk)",
+      "Cold Digital (thisiscold.com)",
+      "David & George (davidandgeorge.co.uk)",
+      "NJ Website Design (nathonjones.com)",
+      "Web Design Dumfries (webdesigndumfries.com)"
+    ],
+    "notes": "Nith Digital does not appear in any 'web design Scotland' or 'web design Dumfries and Galloway' search results. The location-specific town pages on the site are a good SEO strategy but are not yet ranking. The domain nithdigital.uk is also not being confused with nithdigital.com (a Singapore-based agency) — they are completely separate businesses.",
+    "recommendation": "Focus on: (1) Google Business Profile for local pack, (2) directory citations for domain authority, (3) blog content targeting 'web design [D&G town]' keywords, (4) backlinks from local businesses/organisations."
+  },
+
+  "competitor_confusion": {
+    "nithdigital_com": {
+      "name": "NITH Digital Solutions Pte. Ltd.",
+      "location": "Singapore",
+      "founded": 2022,
+      "services": "ERP customisation, system integration, mobile apps, web apps, grant applications",
+      "notes": "Completely separate business. Singapore-based SME digital agency. Shares name similarity but different domain (.com vs .uk), different geography, different services. Not a direct competitor but could cause brand confusion in generic searches."
+    }
+  },
+
+  "summary": {
+    "total_platforms_checked": 20,
+    "platforms_with_presence": 2,
+    "platforms_present": ["Website (nithdigital.uk)", "GitHub (AkinYavuz1)"],
+    "platforms_absent": [
+      "Google Business Profile",
+      "Facebook",
+      "Instagram",
+      "LinkedIn (personal)",
+      "LinkedIn (company)",
+      "Twitter/X",
+      "Trustpilot",
+      "Yell",
+      "Bark",
+      "Checkatrade",
+      "PeoplePerHour",
+      "FreeIndex",
+      "Thomson Local",
+      "Clutch",
+      "DesignRush",
+      "Sortlist",
+      "Any press/mentions"
+    ],
+    "critical_gaps": [
+      "No Google Business Profile — cannot appear in local search/maps",
+      "No reviews anywhere — zero social proof for prospective clients",
+      "No social media presence — invisible on Facebook, Instagram, LinkedIn",
+      "No directory citations — hurts domain authority and local SEO",
+      "Website not ranking for any target keywords"
+    ],
+    "priority_actions": [
+      "1. Create and verify Google Business Profile (immediate)",
+      "2. Create Facebook business page with portfolio + reviews (immediate)",
+      "3. Create/update LinkedIn personal profile + company page (immediate)",
+      "4. Claim @nithdigital on Instagram, start posting portfolio work (this week)",
+      "5. Create Trustpilot profile, request reviews from existing clients (this week)",
+      "6. Submit to Yell, FreeIndex, Bark, PeoplePerHour (this week)",
+      "7. Reserve @nithdigital on X/Twitter (low priority)",
+      "8. Pursue local press coverage and backlinks (ongoing)",
+      "9. Publish blog content targeting local keywords (ongoing)",
+      "10. Enhance GitHub profile with bio, avatar, website link (quick win)"
+    ]
+  }
+}
