@@ -25,19 +25,11 @@
   /* ── Layout ── */
   .container{max-width:1440px;margin:0 auto;padding:0 max(5vw,24px)}
 
-  /* ── Sticky Nav ── */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px max(5vw,24px);display:flex;justify-content:space-between;align-items:center;transition:background 0.5s cubic-bezier(.35,0,0,1),border-color 0.5s cubic-bezier(.35,0,0,1)}
-  nav .nav-logo{font-size:20px;font-weight:500;color:#FFFFFF;letter-spacing:-0.02em;transition:color 0.5s cubic-bezier(.35,0,0,1)}
-  nav .nav-right{display:flex;align-items:center;gap:24px}
-  nav .nav-cta{font-size:14px;font-weight:500;color:#FFFFFF;border:1px solid rgba(255,255,255,0.3);padding:10px 24px;border-radius:8px;transition:all 0.5s cubic-bezier(.35,0,0,1)}
-  nav .nav-cta:hover{background:rgba(255,255,255,0.1)}
-  nav .hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer}
-  nav .hamburger span{display:block;width:22px;height:2px;background:#FFFFFF;transition:all 0.5s cubic-bezier(.35,0,0,1)}
-  nav.scrolled{background:rgba(250,249,247,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06)}
-  nav.scrolled .nav-logo{color:#1A1A1A}
-  nav.scrolled .nav-cta{background:#E85D3A;color:#fff;border-color:#E85D3A}
-  nav.scrolled .nav-cta:hover{opacity:0.85}
-  nav.scrolled .hamburger span{background:#1A1A1A}
+  /* ── Floating CTA ── */
+  .floating-cta{position:fixed;top:24px;right:max(5vw,24px);z-index:100;display:inline-flex;align-items:center;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;background:#E85D3A;color:#fff;box-shadow:0 4px 20px rgba(232,93,58,0.3);transition:background 0.4s cubic-bezier(.35,0,0,1),transform 0.4s cubic-bezier(.35,0,0,1),box-shadow 0.4s cubic-bezier(.35,0,0,1);cursor:pointer;border:none;text-decoration:none;font-family:'DM Sans',sans-serif}
+  .floating-cta:hover{background:#D14E2E;transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.4)}
+  /* ── Static logo ── */
+  .page-logo{position:absolute;top:24px;left:max(5vw,24px);z-index:10;font-size:20px;font-weight:500;color:#FFFFFF;letter-spacing:-0.02em}
 
   /* ── Animate on Scroll ── */
   .animate-on-scroll{opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(.35,0,0,1),transform 0.7s cubic-bezier(.35,0,0,1)}
@@ -162,8 +154,7 @@
 
   /* ── Mobile ── */
   @media(max-width:768px){
-    nav{padding:14px 20px}
-    nav .nav-cta{display:none}
+    .floating-cta{padding:10px 18px;font-size:13px;top:16px;right:16px}
     .hero{padding:120px 0 80px;min-height:auto}
     .hero h1{font-size:clamp(32px,10vw,56px)}
     .hero-sub{font-size:16px}
@@ -194,16 +185,11 @@
 <!-- Design Label Bar -->
 <div class="design-label">Design 8 of 8 &nbsp;|&nbsp; Day &amp; Night &nbsp;|&nbsp; Confident yet approachable &nbsp;|&nbsp; Fonts: DM Sans &nbsp;|&nbsp; Signature: Dark hero/portfolio, light everything else</div>
 
-<!-- Navigation -->
-<nav>
-  <a href="#" class="nav-logo">Nith Digital</a>
-  <div class="nav-right">
-    <a href="#contact" class="nav-cta">Get in touch</a>
-    <div class="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-</nav>
+<!-- Floating CTA -->
+<a href="#contact" class="floating-cta">Contact us</a>
+
+<!-- Static logo on dark hero -->
+<div class="page-logo">Nith Digital</div>
 
 <!-- ═══════════════ DARK: Hero ═══════════════ -->
 <section class="hero">
@@ -414,12 +400,6 @@
 <!-- Scripts -->
 <script>
 (function(){
-  /* ── Nav scroll transition ── */
-  window.addEventListener('scroll', function() {
-    var nav = document.querySelector('nav');
-    nav.classList.toggle('scrolled', window.scrollY > 100);
-  });
-
   /* ── Scroll animation observer ── */
   var els = document.querySelectorAll('.animate-on-scroll');
   if ('IntersectionObserver' in window) {

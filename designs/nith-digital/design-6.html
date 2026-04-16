@@ -88,39 +88,29 @@
     75% { transform: translate(8vw, -5vh) scale(1.05); }
   }
 
-  /* ── Sticky nav ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 16px var(--side-pad);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(250,250,248,0.85);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    display: flex; justify-content: space-between; align-items: center;
-    transition: all 0.4s cubic-bezier(.35,0,0,1);
-  }
-  .nav-logo {
-    font-size: 1.15rem; font-weight: 600;
-    letter-spacing: -0.02em; color: var(--text);
-  }
-  .nav-right { display: flex; align-items: center; gap: 20px; }
-  .nav-cta {
+  /* ── Floating CTA ── */
+  .floating-cta {
+    position: fixed; top: 24px; right: var(--side-pad); z-index: 100;
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 22px; border-radius: 8px;
+    padding: 12px 24px; border-radius: 50px;
     font-size: 0.875rem; font-weight: 500;
     background: var(--accent); color: #fff;
-    transition: background 0.3s ease;
-    cursor: pointer; border: none;
+    box-shadow: 0 4px 20px rgba(232,93,58,0.3);
+    transition: background 0.4s cubic-bezier(.35,0,0,1), transform 0.4s cubic-bezier(.35,0,0,1), box-shadow 0.4s cubic-bezier(.35,0,0,1);
+    cursor: pointer; border: none; text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  .nav-cta:hover { background: var(--accent-hover); }
-  .hamburger {
-    width: 24px; height: 18px; display: flex; flex-direction: column;
-    justify-content: space-between; cursor: pointer; background: none;
-    border: none; padding: 0;
+  .floating-cta:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(232,93,58,0.4);
   }
-  .hamburger span {
-    display: block; width: 100%; height: 2px; background: var(--text);
-    border-radius: 1px; transition: transform 0.3s ease;
+  /* ── Static logo ── */
+  .page-logo {
+    padding: 32px var(--side-pad) 0;
+    font-size: 1.15rem; font-weight: 600;
+    letter-spacing: -0.02em; color: var(--text);
+    position: relative; z-index: 2;
   }
 
   /* ── Section wrapper ── */
@@ -434,7 +424,7 @@
     .section-header { flex-direction: column; gap: 8px; }
     .footer-inner { flex-direction: column; text-align: center; }
     .footer-links { justify-content: center; }
-    .nav-cta { padding: 8px 16px; font-size: 0.8rem; }
+    .floating-cta { padding: 10px 18px; font-size: 0.8rem; }
   }
 
   /* ── Reduced motion ── */
@@ -461,23 +451,18 @@
 
 <!-- Design label -->
 <div class="design-label">
-  Design 6 of 8 <span>|</span> Warm Current <span>|</span> Light, warm, and alive <span>|</span> Fonts: Plus Jakarta Sans <span>|</span> Signature: Warm fluid background blobs + sticky nav
+  Design 6 of 8 <span>|</span> Warm Current <span>|</span> Light, warm, and alive <span>|</span> Fonts: Plus Jakarta Sans <span>|</span> Signature: Warm fluid background blobs + floating CTA
 </div>
 
 <!-- Warm fluid background -->
 <div class="warm-bg"></div>
 <div class="warm-blob-3"></div>
 
-<!-- Sticky nav -->
-<nav>
-  <a href="#" class="nav-logo">Nith Digital</a>
-  <div class="nav-right">
-    <a href="#contact" class="nav-cta">Get in touch</a>
-    <button class="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+<!-- Floating CTA -->
+<a href="#contact" class="floating-cta">Contact us</a>
+
+<!-- Static logo -->
+<div class="page-logo">Nith Digital</div>
 
 <!-- ────────────────── HERO ────────────────── -->
 <section class="section hero">
