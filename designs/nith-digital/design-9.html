@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nith Digital — Design 9: Warm Pulse</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+  /* ── Design label ── */
+  .design-label{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(26,26,26,0.92);color:#fff;font:12px/1 'Plus Jakarta Sans',sans-serif;padding:10px 24px;text-align:center;letter-spacing:0.03em;backdrop-filter:blur(8px)}
+  .design-label span{opacity:0.5;margin:0 8px}
+
+  /* ── Colour tokens (swap these for palette variations) ── */
+  :root{
+    --bg:#FAF8F5;
+    --surface:#FFFFFF;
+    --text:#1A1A1A;
+    --text-muted:#7A7A7A;
+    --accent:#E85D3A;
+    --accent-hover:#D04E2D;
+    --accent2:#2D7FF9;
+    --accent3:#F5A623;
+    --radius:14px;
+    --max-w:1200px;
+    --pad:max(5vw,24px);
+    --ease:cubic-bezier(.35,0,0,1);
+    --ease2:cubic-bezier(.25,.46,.45,.94);
+  }
+
+  /* ── Reset ── */
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--accent);color:#fff}
+
+  /* ── Custom cursor ── */
+  .cursor{position:fixed;top:0;left:0;width:16px;height:16px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;z-index:10000;transition:width 0.3s var(--ease),height 0.3s var(--ease),border-color 0.3s var(--ease),background 0.3s var(--ease),transform 0.1s linear;transform:translate(-50%,-50%)}
+  .cursor.hover{width:48px;height:48px;border-color:var(--accent2);background:rgba(45,127,249,0.08)}
+  .cursor.click{width:36px;height:36px;border-color:var(--accent3)}
+  .cursor-dot{position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:10001;transform:translate(-50%,-50%);transition:opacity 0.3s}
+
+  /* ── Animated background — KOTA-level ── */
+  .bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .blob-1{width:70vw;height:70vw;background:radial-gradient(circle,rgba(232,93,58,0.18) 0%,transparent 70%);top:-20%;left:-15%;animation:blob1 22s infinite}
+  .blob-2{width:55vw;height:55vw;background:radial-gradient(circle,rgba(45,127,249,0.12) 0%,transparent 70%);bottom:-15%;right:-10%;animation:blob2 18s infinite}
+  .blob-3{width:50vw;height:50vw;background:radial-gradient(circle,rgba(245,166,35,0.1) 0%,transparent 70%);top:40%;left:40%;animation:blob3 25s infinite}
+  .blob-4{width:40vw;height:40vw;background:radial-gradient(circle,rgba(232,93,58,0.08) 0%,transparent 70%);top:10%;right:20%;animation:blob4 20s infinite}
+  .blob-5{width:35vw;height:35vw;background:radial-gradient(circle,rgba(45,127,249,0.06) 0%,transparent 70%);bottom:10%;left:10%;animation:blob5 28s infinite}
+  @keyframes blob1{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(12vw,8vh) scale(1.15)}50%{transform:translate(-5vw,15vh) scale(0.9)}75%{transform:translate(10vw,-5vh) scale(1.1)}}
+  @keyframes blob2{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(-8vw,-6vh) scale(1.1)}50%{transform:translate(10vw,-12vh) scale(0.95)}75%{transform:translate(-5vw,8vh) scale(1.05)}}
+  @keyframes blob3{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-15vw,8vh) scale(1.2)}66%{transform:translate(10vw,-10vh) scale(0.85)}}
+  @keyframes blob4{0%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(8vw,12vh) scale(1.1)}60%{transform:translate(-12vw,5vh) scale(0.95)}}
+  @keyframes blob5{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(10vw,-8vh) scale(1.15)}70%{transform:translate(-8vw,10vh) scale(0.9)}}
+
+  /* ── Page content ── */
+  .page{position:relative;z-index:2}
+
+  /* ── Floating CTA ── */
+  .floating-cta{position:fixed;top:24px;right:var(--pad);z-index:100;padding:12px 28px;border-radius:50px;font-size:0.9rem;font-weight:600;background:var(--accent);color:#fff;box-shadow:0 4px 24px rgba(232,93,58,0.35);transition:all 0.4s var(--ease);border:none;text-decoration:none;font-family:inherit}
+  .floating-cta:hover{background:var(--accent-hover);transform:translateY(-2px) scale(1.03);box-shadow:0 8px 32px rgba(232,93,58,0.45)}
+
+  /* ── Logo ── */
+  .page-logo{padding:32px var(--pad) 0;font-size:1.2rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+
+  /* ── Section base ── */
+  .section{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad)}
+
+  /* ══════════════════ HERO ══════════════════ */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px var(--pad) 100px;max-width:var(--max-w);margin:0 auto}
+  .hero-headline{font-size:clamp(2.2rem,7vw,5.5rem);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:var(--text);margin-bottom:28px;min-height:3.2em}
+  .hero-headline .typed-cursor{display:inline-block;width:3px;height:0.85em;background:var(--accent);margin-left:4px;animation:blink-cursor 0.8s step-end infinite;vertical-align:baseline;position:relative;top:0.05em}
+  @keyframes blink-cursor{0%,100%{opacity:1}50%{opacity:0}}
+  .hero-sub{font-size:clamp(1rem,1.3vw,1.25rem);color:var(--text-muted);max-width:55ch;line-height:1.7;margin-bottom:40px;opacity:0;transform:translateY(16px);transition:opacity 0.8s var(--ease) 0.5s,transform 0.8s var(--ease) 0.5s}
+  .hero-sub.show{opacity:1;transform:translateY(0)}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:opacity 0.8s var(--ease) 0.8s,transform 0.8s var(--ease) 0.8s}
+  .hero-ctas.show{opacity:1;transform:translateY(0)}
+  .btn-accent{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-size:0.95rem;font-weight:600;background:var(--accent);color:#fff;transition:all 0.4s var(--ease);position:relative;overflow:hidden}
+  .btn-accent:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.35)}
+  .btn-accent::after{content:'→';transition:transform 0.3s var(--ease)}
+  .btn-accent:hover::after{transform:translateX(4px)}
+  .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-size:0.95rem;font-weight:500;border:1.5px solid rgba(26,26,26,0.15);color:var(--text);transition:all 0.4s var(--ease)}
+  .btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-2px)}
+
+  /* ══════════════════ INTRO ══════════════════ */
+  .intro-section{padding:100px 0 120px}
+  .intro-text{font-size:clamp(1.05rem,1.4vw,1.3rem);color:var(--text);max-width:60ch;margin:0 auto;text-align:center;line-height:1.8}
+  .intro-text .highlight{color:var(--accent);font-weight:600}
+
+  /* ══════════════════ PORTFOLIO ══════════════════ */
+  .work-section{padding:80px 0 120px}
+  .section-label{display:flex;align-items:baseline;gap:16px;margin-bottom:60px}
+  .section-num{font-size:clamp(4rem,10vw,8rem);font-weight:700;color:var(--accent);opacity:0.12;line-height:1;letter-spacing:-0.04em}
+  .section-title{font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:600;letter-spacing:-0.02em}
+
+  .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .work-card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.04);transition:transform 0.5s var(--ease),box-shadow 0.5s var(--ease);position:relative;transform-style:preserve-3d;perspective:800px}
+  .work-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
+
+  /* Video placeholder with animated gradient */
+  .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1A1A1A}
+  .work-card-video::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,93,58,0.15),rgba(45,127,249,0.1),rgba(245,166,35,0.08));background-size:300% 300%;animation:video-shimmer 8s ease-in-out infinite}
+  @keyframes video-shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .work-card-video .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;transition:all 0.4s var(--ease)}
+  .work-card:hover .play-icon{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
+  .play-icon::after{content:'';width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:3px}
+  /* Hover reveal overlay */
+  .work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.9) 0%,transparent 60%);opacity:0;transition:opacity 0.5s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+  .work-card:hover .work-card-overlay{opacity:1}
+  .work-card-overlay .overlay-tags{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-bottom:8px}
+  .work-card-overlay .overlay-desc{font-size:0.85rem;color:rgba(255,255,255,0.85);line-height:1.5;max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease)}
+  .work-card:hover .overlay-desc{max-height:80px}
+
+  .work-card-info{padding:20px 24px}
+  .work-card-header{display:flex;justify-content:space-between;align-items:center}
+  .work-card-name{font-size:1.1rem;font-weight:600;letter-spacing:-0.01em}
+  .work-card-status{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:4px 10px;border-radius:50px}
+  .status-live{background:rgba(232,93,58,0.1);color:var(--accent)}
+  .status-dev{background:rgba(45,127,249,0.1);color:var(--accent2)}
+  .work-card-desc{font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.55}
+
+  /* ══════════════════ SERVICES ══════════════════ */
+  .services-section{padding:80px 0 120px}
+  .service-item{border-bottom:1px solid rgba(0,0,0,0.06);padding:32px 0;display:grid;grid-template-columns:48px 1fr 1.2fr;gap:32px;align-items:start;transition:all 0.5s var(--ease);cursor:default}
+  .service-item:first-child{border-top:1px solid rgba(0,0,0,0.06)}
+  .service-item:hover{padding-left:12px;background:rgba(232,93,58,0.02);border-radius:8px}
+  .service-num{font-size:0.8rem;font-weight:600;color:var(--accent);padding-top:4px}
+  .service-name{font-size:1.15rem;font-weight:600;letter-spacing:-0.01em;padding-top:2px;transition:color 0.3s var(--ease)}
+  .service-item:hover .service-name{color:var(--accent)}
+  .service-desc{font-size:0.9rem;color:var(--text-muted);line-height:1.65;max-height:0;overflow:hidden;transition:max-height 0.6s var(--ease),opacity 0.4s var(--ease);opacity:0}
+  .service-item:hover .service-desc,.service-item.active .service-desc{max-height:120px;opacity:1}
+  .service-arrow{display:inline-block;margin-left:8px;transition:transform 0.3s var(--ease);font-size:0.8em}
+  .service-item:hover .service-arrow{transform:translateX(6px)}
+
+  /* ══════════════════ TRUST ══════════════════ */
+  .trust-section{padding:80px 0 120px;text-align:center}
+  .trust-text{font-size:clamp(1.05rem,1.5vw,1.35rem);max-width:55ch;margin:0 auto;line-height:1.8;color:var(--text)}
+  .trust-text em{color:var(--accent);font-style:normal;font-weight:600}
+
+  /* ══════════════════ TESTIMONIALS ══════════════════ */
+  .testimonials-section{padding:80px 0 120px}
+  .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .testimonial-card{background:var(--surface);border-radius:var(--radius);padding:32px;box-shadow:0 2px 16px rgba(0,0,0,0.03);transition:transform 0.5s var(--ease),box-shadow 0.5s var(--ease);position:relative}
+  .testimonial-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+  .testimonial-card::before{content:'"';font-size:4rem;font-weight:700;color:var(--accent);opacity:0.15;line-height:1;position:absolute;top:16px;left:24px}
+  .testimonial-quote{font-size:0.95rem;line-height:1.7;color:var(--text);margin-bottom:20px;position:relative;z-index:1}
+  .testimonial-author{font-size:0.8rem;color:var(--text-muted)}
+
+  /* ══════════════════ FAQ ══════════════════ */
+  .faq-section{padding:80px 0 120px}
+  .faq-item{border-bottom:1px solid rgba(0,0,0,0.06)}
+  .faq-item:first-child{border-top:1px solid rgba(0,0,0,0.06)}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;padding:24px 0;cursor:pointer;font-size:1.05rem;font-weight:500;transition:color 0.3s var(--ease)}
+  .faq-q:hover{color:var(--accent)}
+  .faq-icon{font-size:1.2rem;transition:transform 0.4s var(--ease);color:var(--accent)}
+  .faq-item.open .faq-icon{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease),padding 0.5s var(--ease)}
+  .faq-item.open .faq-a{max-height:200px;padding-bottom:24px}
+  .faq-a-inner{font-size:0.9rem;color:var(--text-muted);line-height:1.7;max-width:60ch}
+
+  /* ══════════════════ CTA ══════════════════ */
+  .cta-section{padding:100px 0 140px;text-align:center}
+  .cta-headline{font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-0.03em;margin-bottom:20px}
+  .cta-body{font-size:1.05rem;color:var(--text-muted);max-width:45ch;margin:0 auto 36px;line-height:1.7}
+
+  /* ══════════════════ FOOTER ══════════════════ */
+  .footer{padding:60px var(--pad) 80px;max-width:var(--max-w);margin:0 auto;display:flex;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.06);font-size:0.85rem;color:var(--text-muted)}
+  .footer a{transition:color 0.3s var(--ease)}
+  .footer a:hover{color:var(--accent)}
+  .footer-left{display:flex;flex-direction:column;gap:6px}
+  .footer-right{display:flex;gap:24px}
+
+  /* ══════════════════ SCROLL ANIMATION ══════════════════ */
+  .anim{opacity:0;transform:translateY(32px);transition:opacity 0.7s var(--ease),transform 0.7s var(--ease)}
+  .anim.visible{opacity:1;transform:translateY(0)}
+
+  /* ══════════════════ MOUSE PARALLAX ══════════════════ */
+  .parallax-layer{transition:transform 0.15s linear;will-change:transform}
+
+  /* ══════════════════ REDUCED MOTION ══════════════════ */
+  @media(prefers-reduced-motion:reduce){
+    .blob,.work-card-video::before{animation:none!important}
+    .anim{opacity:1;transform:none;transition:none}
+    .cursor,.cursor-dot{display:none}
+    body{cursor:auto}
+    .hero-headline .typed-cursor{display:none}
+    .hero-sub,.hero-ctas{opacity:1;transform:none;transition:none}
+  }
+
+  /* ══════════════════ MOBILE ══════════════════ */
+  @media(max-width:768px){
+    .cursor,.cursor-dot{display:none}
+    body{cursor:auto}
+    .floating-cta{top:16px;right:16px;padding:10px 20px;font-size:0.8rem}
+    .hero{padding:120px 20px 80px;min-height:auto}
+    .hero-headline{font-size:clamp(1.8rem,8vw,3rem);min-height:auto}
+    .work-grid{grid-template-columns:1fr}
+    .service-item{grid-template-columns:40px 1fr;gap:16px}
+    .service-desc{grid-column:1/-1;max-height:none;opacity:1}
+    .testimonial-grid{grid-template-columns:1fr}
+    .footer{flex-direction:column;gap:24px}
+    .section-num{font-size:clamp(3rem,15vw,6rem)}
+    .section-label{flex-direction:column;gap:4px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Design label -->
+<div class="design-label">Design 9 <span>|</span> Warm Pulse <span>|</span> Light, warm, interactive <span>|</span> Plus Jakarta Sans <span>|</span> Coral + Blue + Gold accents</div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Animated background -->
+<div class="bg-canvas" id="bgCanvas">
+  <div class="blob blob-1 parallax-layer" data-speed="0.02"></div>
+  <div class="blob blob-2 parallax-layer" data-speed="-0.015"></div>
+  <div class="blob blob-3 parallax-layer" data-speed="0.01"></div>
+  <div class="blob blob-4 parallax-layer" data-speed="-0.02"></div>
+  <div class="blob blob-5 parallax-layer" data-speed="0.018"></div>
+</div>
+
+<!-- Floating CTA -->
+<a href="#contact" class="floating-cta" data-cursor-hover>Contact us</a>
+
+<div class="page">
+
+<!-- Logo -->
+<div class="page-logo">Nith Digital</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="hero">
+  <h1 class="hero-headline" id="typed-target"></h1>
+  <p class="hero-sub" id="heroSub">A digital agency in Dumfries &amp; Galloway. Modern websites, dashboards, and apps for small businesses across Scotland and the UK.</p>
+  <div class="hero-ctas" id="heroCtas">
+    <a href="#work" class="btn-accent" data-cursor-hover>See our work</a>
+    <a href="#contact" class="btn-ghost" data-cursor-hover>Get in touch</a>
+  </div>
+</section>
+
+<!-- ══════════ INTRO ══════════ -->
+<section class="intro-section section anim">
+  <p class="intro-text">Most small businesses in Scotland are stuck between two bad options: a cheap template that looks like everyone else, or a city agency that charges five figures and takes six months. <span class="highlight">We're neither.</span> Nith Digital builds custom websites with the polish of an Edinburgh studio and the directness of someone who actually picks up the phone.</p>
+</section>
+
+<!-- ══════════ WORK ══════════ -->
+<section class="work-section section" id="work">
+  <div class="section-label anim">
+    <span class="section-num parallax-layer" data-speed="0.03">01</span>
+    <span class="section-title">Work</span>
+  </div>
+  <div class="work-grid">
+    <!-- Card 1 -->
+    <div class="work-card anim" data-tilt>
+      <div class="work-card-video">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Not an Octavia — data dashboard" style="width:100%;height:100%;object-fit:cover;opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">Next.js &middot; TypeScript &middot; Supabase &middot; XGBoost &middot; Groq</div>
+          <div class="overlay-desc">Machine learning model that finds underpriced used cars across the UK. Scans thousands of listings daily.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">Not an Octavia</span>
+          <span class="work-card-status status-live">Live</span>
+        </div>
+        <p class="work-card-desc">ML-powered used car deals finder</p>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="work-card anim" data-tilt style="transition-delay:0.1s">
+      <div class="work-card-video">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="gAIns — gym tracker" style="width:100%;height:100%;object-fit:cover;opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">React &middot; Vite &middot; Supabase &middot; Anthropic API &middot; Stripe</div>
+          <div class="overlay-desc">AI-powered gym tracker with a built-in coach. Logs workouts and gives personalised programming advice.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">gAIns</span>
+          <span class="work-card-status status-dev">In development</span>
+        </div>
+        <p class="work-card-desc">AI gym tracker with built-in coach</p>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="work-card anim" data-tilt style="transition-delay:0.2s">
+      <div class="work-card-video">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80" alt="Daily Duel — mini-games" style="width:100%;height:100%;object-fit:cover;opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">Next.js &middot; TypeScript &middot; Tailwind &middot; Supabase</div>
+          <div class="overlay-desc">30 daily mini-games — trivia, puzzles, pattern matching, memory. Fresh challenges every day.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">Daily Duel</span>
+          <span class="work-card-status status-live">Live</span>
+        </div>
+        <p class="work-card-desc">30 daily mini-games with leaderboards</p>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="work-card anim" data-tilt style="transition-delay:0.3s">
+      <div class="work-card-video">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" alt="Tumble Tots — childminding" style="width:100%;height:100%;object-fit:cover;opacity:0.4">
+        <div class="play-icon"></div>
+        <div class="work-card-overlay">
+          <div class="overlay-tags">HTML &middot; CSS &middot; JavaScript</div>
+          <div class="overlay-desc">Clean, mobile-first website for a local childminding business. Simple, fast, easy to find on Google.</div>
+        </div>
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-header">
+          <span class="work-card-name">Tumble Tots</span>
+          <span class="work-card-status status-live">Live</span>
+        </div>
+        <p class="work-card-desc">Childminding website — Dumfries</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SERVICES ══════════ -->
+<section class="services-section section" id="services">
+  <div class="section-label anim">
+    <span class="section-num parallax-layer" data-speed="-0.025">02</span>
+    <span class="section-title">Services</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover>
+    <span class="service-num">01</span>
+    <span class="service-name">Website Design &amp; Development <span class="service-arrow">→</span></span>
+    <span class="service-desc">Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.05s">
+    <span class="service-num">02</span>
+    <span class="service-name">Social Media Management <span class="service-arrow">→</span></span>
+    <span class="service-desc">Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.1s">
+    <span class="service-num">03</span>
+    <span class="service-name">Search Engine Optimisation <span class="service-arrow">→</span></span>
+    <span class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.15s">
+    <span class="service-num">04</span>
+    <span class="service-name">Data Analytics &amp; Power BI <span class="service-arrow">→</span></span>
+    <span class="service-desc">Turn your spreadsheets into interactive dashboards. Power BI reporting that makes your data actually useful.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.2s">
+    <span class="service-num">05</span>
+    <span class="service-name">Mobile App Development <span class="service-arrow">→</span></span>
+    <span class="service-desc">Custom mobile apps for businesses that need more than a website. Booking systems, job trackers, customer portals.</span>
+  </div>
+  <div class="service-item anim" data-cursor-hover style="transition-delay:0.25s">
+    <span class="service-num">06</span>
+    <span class="service-name">TradeDesk <span class="service-arrow">→</span></span>
+    <span class="service-desc">A WhatsApp-based expense manager for sole traders. Snap a photo of a receipt, send it via WhatsApp, and it's logged automatically.</span>
+  </div>
+</section>
+
+<!-- ══════════ TRUST ══════════ -->
+<section class="trust-section section anim">
+  <p class="trust-text"><em>10+ years</em> in data, BI, and software across healthcare, energy, finance, and the public sector. <em>Four Commonwealth gold medals</em> in competitive powerlifting. Same approach to both: show up, put in the reps, don't cut corners.</p>
+</section>
+
+<!-- ══════════ TESTIMONIALS ══════════ -->
+<section class="testimonials-section section" id="testimonials">
+  <div class="section-label anim">
+    <span class="section-num parallax-layer" data-speed="0.02">03</span>
+    <span class="section-title">What people say</span>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card anim" data-tilt>
+      <p class="testimonial-quote">Akin built our website in under two weeks. Clean design, works perfectly on mobile, and we're already getting enquiries through it. No fuss, no jargon — just got on with it.</p>
+      <p class="testimonial-author">Recent client — Dumfries &amp; Galloway</p>
+    </div>
+    <div class="testimonial-card anim" data-tilt style="transition-delay:0.1s">
+      <p class="testimonial-quote">We'd been quoted over £3,000 by a Glasgow agency for something half as good. Nith Digital delivered a better site for a fraction of the price — and actually answered the phone.</p>
+      <p class="testimonial-author">Recent client — Ayrshire</p>
+    </div>
+    <div class="testimonial-card anim" data-tilt style="transition-delay:0.2s">
+      <p class="testimonial-quote">The dashboard Akin built completely changed how we look at our numbers. What used to take a full day of spreadsheet work now takes 30 seconds.</p>
+      <p class="testimonial-author">Recent client — Scotland</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="faq-section section" id="faq">
+  <div class="section-label anim">
+    <span class="section-num parallax-layer" data-speed="-0.015">04</span>
+    <span class="section-title">FAQ</span>
+  </div>
+  <div class="faq-item anim">
+    <div class="faq-q" data-cursor-hover>How much does a website cost? <span class="faq-icon">+</span></div>
+    <div class="faq-a"><p class="faq-a-inner">A standard business website starts at £500 with a £40/month hosting and support fee. Booking systems start at £750. Custom web apps start at £3,000. We'll give you an exact quote after a 15-minute conversation — no surprises.</p></div>
+  </div>
+  <div class="faq-item anim" style="transition-delay:0.05s">
+    <div class="faq-q" data-cursor-hover>How long does a website take to build? <span class="faq-icon">+</span></div>
+    <div class="faq-a"><p class="faq-a-inner">Most business websites are live within 2-3 weeks from the day we start. Custom apps and more complex projects take 4-8 weeks. We'll give you a timeline upfront and stick to it.</p></div>
+  </div>
+  <div class="faq-item anim" style="transition-delay:0.1s">
+    <div class="faq-q" data-cursor-hover>Can I update the site myself? <span class="faq-icon">+</span></div>
+    <div class="faq-a"><p class="faq-a-inner">We handle all updates for you. If you need a change — new photos, updated text, a new page — just message us. Post-launch changes are billed at £35 per hour, and most small updates take 15-30 minutes.</p></div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="cta-section section anim" id="contact">
+  <h2 class="cta-headline">Ready to talk?</h2>
+  <p class="cta-body">No jargon, no pressure, no 47-page proposal. Just a straight conversation about what you need and what it'll cost.</p>
+  <a href="mailto:hello@nithdigital.uk" class="btn-accent" data-cursor-hover>Get in touch</a>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="footer-left">
+    <span>hello@nithdigital.uk</span>
+    <span>+44 7404 173024</span>
+    <span>Sanquhar, Dumfries &amp; Galloway</span>
+  </div>
+  <div class="footer-right">
+    <a href="https://www.facebook.com/nithdigital" data-cursor-hover>Facebook</a>
+    <a href="https://www.linkedin.com/company/nith-digital" data-cursor-hover>LinkedIn</a>
+    <a href="https://github.com/AkinYavuz1" data-cursor-hover>GitHub</a>
+  </div>
+</footer>
+
+</div><!-- .page -->
+
+<script>
+(function(){
+  /* ── Reduced motion check ── */
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMobile = window.innerWidth <= 768;
+
+  /* ── TYPEWRITER EFFECT ── */
+  var phrases = [
+    'We build websites that work as hard as you do',
+    'Modern websites for Scottish businesses',
+    'Web design that rivals Edinburgh\u2019s top agencies'
+  ];
+  var target = document.getElementById('typed-target');
+  var phraseIdx = 0, charIdx = 0, deleting = false, pauseEnd = 0;
+
+  function typewrite() {
+    if (reducedMotion) {
+      target.textContent = phrases[0];
+      document.getElementById('heroSub').classList.add('show');
+      document.getElementById('heroCtas').classList.add('show');
+      return;
+    }
+    var now = Date.now();
+    if (now < pauseEnd) { requestAnimationFrame(typewrite); return; }
+
+    var phrase = phrases[phraseIdx];
+    if (!deleting) {
+      charIdx++;
+      if (charIdx > phrase.length) {
+        pauseEnd = now + 2500;
+        deleting = true;
+        // Show sub elements after first phrase types
+        if (phraseIdx === 0) {
+          document.getElementById('heroSub').classList.add('show');
+          document.getElementById('heroCtas').classList.add('show');
+        }
+        requestAnimationFrame(typewrite);
+        return;
+      }
+    } else {
+      charIdx--;
+      if (charIdx < 0) {
+        charIdx = 0;
+        deleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        pauseEnd = now + 400;
+        requestAnimationFrame(typewrite);
+        return;
+      }
+    }
+    target.innerHTML = phrase.substring(0, charIdx) + '<span class="typed-cursor"></span>';
+    var speed = deleting ? 25 : 55;
+    setTimeout(function(){ requestAnimationFrame(typewrite); }, speed);
+  }
+  typewrite();
+
+  /* ── CUSTOM CURSOR ── */
+  if (!isMobile && !reducedMotion) {
+    var cursor = document.getElementById('cursor');
+    var dot = document.getElementById('cursorDot');
+    var cx = 0, cy = 0, dx = 0, dy = 0;
+
+    document.addEventListener('mousemove', function(e) {
+      cx = e.clientX; cy = e.clientY;
+      dot.style.left = cx + 'px';
+      dot.style.top = cy + 'px';
+    });
+
+    function animateCursor() {
+      dx += (cx - dx) * 0.12;
+      dy += (cy - dy) * 0.12;
+      cursor.style.left = dx + 'px';
+      cursor.style.top = dy + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.querySelectorAll('[data-cursor-hover], a, button').forEach(function(el) {
+      el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
+      el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+    });
+    document.addEventListener('mousedown', function() { cursor.classList.add('click'); });
+    document.addEventListener('mouseup', function() { cursor.classList.remove('click'); });
+  }
+
+  /* ── MOUSE PARALLAX on background blobs ── */
+  if (!isMobile && !reducedMotion) {
+    document.addEventListener('mousemove', function(e) {
+      var mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      var my = (e.clientY / window.innerHeight - 0.5) * 2;
+      document.querySelectorAll('.parallax-layer').forEach(function(el) {
+        var speed = parseFloat(el.getAttribute('data-speed')) || 0.01;
+        var x = mx * speed * 100;
+        var y = my * speed * 100;
+        el.style.transform = el.style.transform.replace(/translate\([^)]*\)/g, '') || '';
+        el.style.transform = 'translate(' + x + 'vw, ' + y + 'vh) ' + el.style.transform;
+      });
+    });
+  }
+
+  /* ── 3D TILT on cards ── */
+  if (!isMobile && !reducedMotion) {
+    document.querySelectorAll('[data-tilt]').forEach(function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width - 0.5;
+        var y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = 'perspective(800px) rotateY(' + (x * 6) + 'deg) rotateX(' + (-y * 6) + 'deg) translateY(-6px)';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) translateY(0)';
+      });
+    });
+  }
+
+  /* ── SCROLL OBSERVER ── */
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.anim').forEach(function(el) { obs.observe(el); });
+  } else {
+    document.querySelectorAll('.anim').forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  /* ── FAQ ACCORDION ── */
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = q.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── SMOOTH SCROLL ── */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var t = document.querySelector(this.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
