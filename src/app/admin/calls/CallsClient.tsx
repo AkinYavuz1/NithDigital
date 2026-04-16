@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { Phone, RefreshCw, ChevronDown, ChevronUp, CheckCircle, XCircle, MessageSquare, Clock } from 'lucide-react'
+import { Phone, RefreshCw, ChevronDown, ChevronUp, CheckCircle, XCircle, MessageSquare, Clock, Ban } from 'lucide-react'
 
 interface Prospect {
   id: string
@@ -64,8 +64,6 @@ export default function CallsClient() {
   const [expanded, setExpanded] = useState<string | null>(null)
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null)
   const [actioning, setActioning] = useState<string | null>(null)
-  const [generatingScript, setGeneratingScript] = useState<string | null>(null)
-  const [scripts, setScripts] = useState<Record<string, string>>({})
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -112,40 +110,6 @@ export default function CallsClient() {
 
   const activeList = tab === 'mobiles' ? filteredMobiles : filteredLandlines
 
-  const generateScript = async (id: string) => {
-    setGeneratingScript(id)
-    const res = await fetch('/api/admin/generate-draft', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id, type: 'call' }),
-    })
-    const data = await res.json()
-    setGeneratingScript(null)
-    if (data.draft) {
-      setScripts(prev => ({ ...prev, [id]: data.draft }))
-      showToast('Call script generated')
-    } else {
-      showToast('Failed to generate script', false)
-    }
-  }
-
-  const markEmailed = async (id: string) => {
-    setActioning(id)
-    const res = await fetch('/api/admin/prospects-outreach', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'mark_emailed', id }),
-    })
-    const data = await res.json()
-    setActioning(null)
-    if (data.ok) {
-      setProspects(prev => prev.filter(p => p.id !== id))
-      showToast('Marked as emailed — call reminder set for 7 days')
-    } else {
-      showToast('Failed to update', false)
-    }
-  }
-
   const markCalled = async (id: string) => {
     setActioning(id)
     const res = await fetch('/api/admin/prospects-calls', {
@@ -175,6 +139,23 @@ export default function CallsClient() {
     if (data.ok) {
       setProspects(prev => prev.filter(p => p.id !== id))
       showToast('Marked as not interested')
+    } else {
+      showToast('Failed to update', false)
+    }
+  }
+
+  const markNotWorth = async (id: string) => {
+    setActioning(id)
+    const res = await fetch('/api/admin/prospects-calls', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'mark_not_worth', id }),
+    })
+    const data = await res.json()
+    setActioning(null)
+    if (data.ok) {
+      setProspects(prev => prev.filter(p => p.id !== id))
+      showToast('Removed from call list')
     } else {
       showToast('Failed to update', false)
     }
@@ -352,12 +333,12 @@ export default function CallsClient() {
 
                   {/* Actions */}
                   <button
-                    onClick={() => markEmailed(p.id)}
+                    onClick={() => markNotWorth(p.id)}
                     disabled={actioning === p.id}
-                    title="Email sent — set 7-day call reminder"
-                    style={{ fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 6, flexShrink: 0, background: 'rgba(139,92,246,0.1)', color: '#6d28d9', border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer' }}
+                    title="Not worth contacting — remove from list"
+                    style={{ fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 6, flexShrink: 0, background: 'rgba(107,114,128,0.08)', color: '#6b7280', border: '1px solid rgba(107,114,128,0.2)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
                   >
-                    ✉ Emailed
+                    <Ban size={11} /> Not worth
                   </button>
                   <button
                     onClick={() => markCalled(p.id)}
@@ -427,21 +408,6 @@ export default function CallsClient() {
                         <strong>Notes:</strong> {p.notes}
                       </div>
                     )}
-                    {/* Call script */}
-                    <div style={{ marginTop: 14 }}>
-                      <button
-                        onClick={() => generateScript(p.id)}
-                        disabled={generatingScript === p.id}
-                        style={{ fontSize: 12, fontWeight: 600, padding: '5px 12px', borderRadius: 6, border: '1px solid #1B2A4A', background: 'transparent', color: '#1B2A4A', cursor: 'pointer', opacity: generatingScript === p.id ? 0.6 : 1 }}
-                      >
-                        {generatingScript === p.id ? 'Generating...' : (scripts[p.id] || (p as any).call_script) ? 'Regenerate script' : '✦ Generate call script'}
-                      </button>
-                      {(scripts[p.id] || (p as any).call_script) && (
-                        <pre style={{ marginTop: 10, padding: '12px 14px', background: '#F8F9FA', border: '1px solid #E5E9EF', borderRadius: 6, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: '#1B2A4A', fontFamily: 'inherit' }}>
-                          {scripts[p.id] || (p as any).call_script}
-                        </pre>
-                      )}
-                    </div>
                   </div>
                 )}
               </div>
