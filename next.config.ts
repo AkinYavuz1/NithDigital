@@ -46,6 +46,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/webdesign/:path*',
+        destination: '/web-design/:path*',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {
