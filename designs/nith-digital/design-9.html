@@ -36,25 +36,23 @@
   img{display:block;max-width:100%}
   ::selection{background:var(--accent);color:#fff}
 
-  /* ── Custom cursor ── */
-  .cursor{position:fixed;top:0;left:0;width:16px;height:16px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;z-index:10000;transition:width 0.3s var(--ease),height 0.3s var(--ease),border-color 0.3s var(--ease),background 0.3s var(--ease),transform 0.1s linear;transform:translate(-50%,-50%)}
-  .cursor.hover{width:48px;height:48px;border-color:var(--accent2);background:rgba(45,127,249,0.08)}
-  .cursor.click{width:36px;height:36px;border-color:var(--accent3)}
-  .cursor-dot{position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:10001;transform:translate(-50%,-50%);transition:opacity 0.3s}
+  /* ── Cursor trail ── */
+  .trail-dot{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:10000;opacity:0;transition:none;will-change:transform,opacity}
+  body{cursor:auto}
 
   /* ── Animated background — KOTA-level ── */
   .bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
-  .blob{position:absolute;border-radius:50%;filter:blur(100px);will-change:transform;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
-  .blob-1{width:70vw;height:70vw;background:radial-gradient(circle,rgba(232,93,58,0.18) 0%,transparent 70%);top:-20%;left:-15%;animation:blob1 22s infinite}
-  .blob-2{width:55vw;height:55vw;background:radial-gradient(circle,rgba(45,127,249,0.12) 0%,transparent 70%);bottom:-15%;right:-10%;animation:blob2 18s infinite}
-  .blob-3{width:50vw;height:50vw;background:radial-gradient(circle,rgba(245,166,35,0.1) 0%,transparent 70%);top:40%;left:40%;animation:blob3 25s infinite}
-  .blob-4{width:40vw;height:40vw;background:radial-gradient(circle,rgba(232,93,58,0.08) 0%,transparent 70%);top:10%;right:20%;animation:blob4 20s infinite}
-  .blob-5{width:35vw;height:35vw;background:radial-gradient(circle,rgba(45,127,249,0.06) 0%,transparent 70%);bottom:10%;left:10%;animation:blob5 28s infinite}
-  @keyframes blob1{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(12vw,8vh) scale(1.15)}50%{transform:translate(-5vw,15vh) scale(0.9)}75%{transform:translate(10vw,-5vh) scale(1.1)}}
-  @keyframes blob2{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(-8vw,-6vh) scale(1.1)}50%{transform:translate(10vw,-12vh) scale(0.95)}75%{transform:translate(-5vw,8vh) scale(1.05)}}
-  @keyframes blob3{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-15vw,8vh) scale(1.2)}66%{transform:translate(10vw,-10vh) scale(0.85)}}
-  @keyframes blob4{0%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(8vw,12vh) scale(1.1)}60%{transform:translate(-12vw,5vh) scale(0.95)}}
-  @keyframes blob5{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(10vw,-8vh) scale(1.15)}70%{transform:translate(-8vw,10vh) scale(0.9)}}
+  .blob{position:absolute;border-radius:50%;filter:blur(60px);will-change:transform;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .blob-1{width:65vw;height:65vw;background:radial-gradient(circle,rgba(232,93,58,0.45) 0%,rgba(232,93,58,0.08) 50%,transparent 70%);top:-15%;left:-10%;animation:blob1 18s infinite}
+  .blob-2{width:55vw;height:55vw;background:radial-gradient(circle,rgba(45,127,249,0.35) 0%,rgba(45,127,249,0.06) 50%,transparent 70%);bottom:-10%;right:-5%;animation:blob2 15s infinite}
+  .blob-3{width:50vw;height:50vw;background:radial-gradient(circle,rgba(245,166,35,0.35) 0%,rgba(245,166,35,0.06) 50%,transparent 70%);top:35%;left:35%;animation:blob3 20s infinite}
+  .blob-4{width:45vw;height:45vw;background:radial-gradient(circle,rgba(168,85,247,0.25) 0%,rgba(168,85,247,0.04) 50%,transparent 70%);top:5%;right:15%;animation:blob4 22s infinite}
+  .blob-5{width:40vw;height:40vw;background:radial-gradient(circle,rgba(16,185,129,0.2) 0%,rgba(16,185,129,0.03) 50%,transparent 70%);bottom:15%;left:5%;animation:blob5 25s infinite}
+  @keyframes blob1{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(15vw,10vh) scale(1.2)}50%{transform:translate(-8vw,18vh) scale(0.85)}75%{transform:translate(12vw,-8vh) scale(1.15)}}
+  @keyframes blob2{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(-12vw,-8vh) scale(1.15)}50%{transform:translate(14vw,-15vh) scale(0.9)}75%{transform:translate(-8vw,10vh) scale(1.1)}}
+  @keyframes blob3{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-18vw,10vh) scale(1.25)}66%{transform:translate(12vw,-12vh) scale(0.8)}}
+  @keyframes blob4{0%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(10vw,15vh) scale(1.15)}60%{transform:translate(-15vw,6vh) scale(0.9)}}
+  @keyframes blob5{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(12vw,-10vh) scale(1.2)}70%{transform:translate(-10vw,12vh) scale(0.85)}}
 
   /* ── Page content ── */
   .page{position:relative;z-index:2}
@@ -101,14 +99,16 @@
   .work-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
 
   /* Video placeholder with animated gradient */
-  .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1A1A1A}
-  .work-card-video::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,93,58,0.15),rgba(45,127,249,0.1),rgba(245,166,35,0.08));background-size:300% 300%;animation:video-shimmer 8s ease-in-out infinite}
-  @keyframes video-shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-  .work-card-video .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;transition:all 0.4s var(--ease)}
+  .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
+  .work-card-video::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,93,58,0.5),rgba(45,127,249,0.4),rgba(245,166,35,0.5),rgba(168,85,247,0.35),rgba(16,185,129,0.3));background-size:400% 400%;animation:video-shimmer 6s ease-in-out infinite;z-index:1}
+  .work-card-video::after{content:'';position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.08) 50%,transparent 70%);background-size:200% 200%;animation:video-shine 3s ease-in-out infinite;z-index:2}
+  @keyframes video-shimmer{0%{background-position:0% 0%}25%{background-position:100% 50%}50%{background-position:50% 100%}75%{background-position:0% 50%}100%{background-position:0% 0%}}
+  @keyframes video-shine{0%,100%{background-position:200% 0%}50%{background-position:-200% 0%}}
+  .work-card-video .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.2);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;transition:all 0.4s var(--ease);z-index:5}
   .work-card:hover .play-icon{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
   .play-icon::after{content:'';width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:3px}
   /* Hover reveal overlay */
-  .work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.9) 0%,transparent 60%);opacity:0;transition:opacity 0.5s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+  .work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.9) 0%,transparent 60%);opacity:0;transition:opacity 0.5s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;z-index:4}
   .work-card:hover .work-card-overlay{opacity:1}
   .work-card-overlay .overlay-tags{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-bottom:8px}
   .work-card-overlay .overlay-desc{font-size:0.85rem;color:rgba(255,255,255,0.85);line-height:1.5;max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease)}
@@ -182,18 +182,16 @@
 
   /* ══════════════════ REDUCED MOTION ══════════════════ */
   @media(prefers-reduced-motion:reduce){
-    .blob,.work-card-video::before{animation:none!important}
+    .blob,.work-card-video::before,.work-card-video::after{animation:none!important}
     .anim{opacity:1;transform:none;transition:none}
-    .cursor,.cursor-dot{display:none}
-    body{cursor:auto}
+    .trail-dot{display:none}
     .hero-headline .typed-cursor{display:none}
     .hero-sub,.hero-ctas{opacity:1;transform:none;transition:none}
   }
 
   /* ══════════════════ MOBILE ══════════════════ */
   @media(max-width:768px){
-    .cursor,.cursor-dot{display:none}
-    body{cursor:auto}
+    .trail-dot{display:none}
     .floating-cta{top:16px;right:16px;padding:10px 20px;font-size:0.8rem}
     .hero{padding:120px 20px 80px;min-height:auto}
     .hero-headline{font-size:clamp(1.8rem,8vw,3rem);min-height:auto}
@@ -212,9 +210,8 @@
 <!-- Design label -->
 <div class="design-label">Design 9 <span>|</span> Warm Pulse <span>|</span> Light, warm, interactive <span>|</span> Plus Jakarta Sans <span>|</span> Coral + Blue + Gold accents</div>
 
-<!-- Custom cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-dot" id="cursorDot"></div>
+<!-- Cursor trail -->
+<div id="trail-container"></div>
 
 <!-- Animated background -->
 <div class="bg-canvas" id="bgCanvas">
@@ -494,33 +491,38 @@
   }
   typewrite();
 
-  /* ── CUSTOM CURSOR ── */
+  /* ── CURSOR TRAIL — coloured dots that fade behind the mouse ── */
   if (!isMobile && !reducedMotion) {
-    var cursor = document.getElementById('cursor');
-    var dot = document.getElementById('cursorDot');
-    var cx = 0, cy = 0, dx = 0, dy = 0;
+    var trailContainer = document.getElementById('trail-container');
+    var trailColors = ['#E85D3A','#2D7FF9','#F5A623','#A855F7','#10B981'];
+    var trailIdx = 0;
+    var lastTrailTime = 0;
 
     document.addEventListener('mousemove', function(e) {
-      cx = e.clientX; cy = e.clientY;
-      dot.style.left = cx + 'px';
-      dot.style.top = cy + 'px';
-    });
+      var now = Date.now();
+      if (now - lastTrailTime < 30) return; // throttle: one dot every 30ms
+      lastTrailTime = now;
 
-    function animateCursor() {
-      dx += (cx - dx) * 0.12;
-      dy += (cy - dy) * 0.12;
-      cursor.style.left = dx + 'px';
-      cursor.style.top = dy + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
+      var dot = document.createElement('div');
+      dot.className = 'trail-dot';
+      var color = trailColors[trailIdx % trailColors.length];
+      trailIdx++;
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      dot.style.background = color;
+      dot.style.boxShadow = '0 0 8px ' + color;
+      dot.style.opacity = '0.7';
+      trailContainer.appendChild(dot);
 
-    document.querySelectorAll('[data-cursor-hover], a, button').forEach(function(el) {
-      el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
-      el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+      // Animate: expand and fade out
+      requestAnimationFrame(function() {
+        dot.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+        dot.style.opacity = '0';
+        dot.style.transform = 'translate(-50%,-50%) scale(2.5)';
+      });
+
+      setTimeout(function() { dot.remove(); }, 900);
     });
-    document.addEventListener('mousedown', function() { cursor.classList.add('click'); });
-    document.addEventListener('mouseup', function() { cursor.classList.remove('click'); });
   }
 
   /* ── MOUSE PARALLAX on background blobs ── */
