@@ -682,7 +682,7 @@
     </div>
   </form>
 
-  <p class="contact-phone scroll-select" style="text-align:center;margin-top:28px;font-size:0.95rem;color:var(--text-muted)">Prefer to talk? Call 07404 173024</p>
+  <p class="contact-phone scroll-select" style="text-align:center;margin-top:28px;font-size:0.95rem;color:var(--text-muted)">Prefer to talk? Call <a href="tel:+447404173024" style="color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px">07404 173024</a></p>
 
   <div class="map-wrap">
     <iframe src="https://maps.google.com/maps?q=55.3802589,-3.9226708&z=10&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1041,12 +1041,26 @@
      SCROLL SELECT — text highlights like a drag selection
      ══════════════════════════════════════════════════════ */
   document.querySelectorAll('.scroll-select').forEach(function(el) {
-    var fullText = el.textContent;
-    // Wrap each character in a span for granular control
-    el.innerHTML = fullText.split('').map(function(ch) {
-      if (ch === ' ') return '<span class="ss-char"> </span>';
-      return '<span class="ss-char">' + ch + '</span>';
-    }).join('');
+    // Split text nodes into characters, keep element nodes (links) whole
+    var nodes = Array.prototype.slice.call(el.childNodes);
+    el.innerHTML = '';
+    nodes.forEach(function(node) {
+      if (node.nodeType === 3) {
+        // Text node — split into characters
+        node.textContent.split('').forEach(function(ch) {
+          var span = document.createElement('span');
+          span.className = 'ss-char';
+          span.textContent = ch;
+          el.appendChild(span);
+        });
+      } else if (node.nodeType === 1) {
+        // Element node (e.g. <a>) — wrap whole in ss-char
+        var wrapper = document.createElement('span');
+        wrapper.className = 'ss-char';
+        wrapper.appendChild(node.cloneNode(true));
+        el.appendChild(wrapper);
+      }
+    });
 
     var chars = el.querySelectorAll('.ss-char');
 
