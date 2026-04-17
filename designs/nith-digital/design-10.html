@@ -175,14 +175,14 @@
 
   /* ══════════════════ SERVICES ══════════════════ */
   .services-section{padding:80px 0 120px}
-  .service-item{border-bottom:1px solid rgba(0,0,0,0.06);padding:32px 0;display:grid;grid-template-columns:48px 1fr 1.2fr;gap:32px;align-items:start;transition:all 0.5s var(--ease);cursor:default}
+  .service-item{border-bottom:1px solid rgba(0,0,0,0.06);padding:32px 0;display:grid;grid-template-columns:48px 1fr 1.2fr;gap:32px;align-items:start;transition:all 0.5s var(--ease);cursor:pointer}
   .service-item:first-child{border-top:1px solid rgba(0,0,0,0.06)}
-  .service-item:hover{padding-left:12px;background:rgba(232,93,58,0.02);border-radius:8px}
+  .service-item.active{padding-left:12px;background:rgba(232,93,58,0.02);border-radius:8px}
   .service-num{font-size:0.8rem;font-weight:600;color:var(--accent);padding-top:4px}
   .service-name{font-size:1.15rem;font-weight:600;letter-spacing:-0.01em;padding-top:2px;transition:color 0.3s var(--ease)}
-  .service-item:hover .service-name{color:var(--accent)}
+  .service-item.active .service-name{color:var(--accent)}
   .service-desc{font-size:0.9rem;color:var(--text-muted);line-height:1.65;max-height:0;overflow:hidden;transition:max-height 0.6s var(--ease),opacity 0.4s var(--ease);opacity:0}
-  .service-item:hover .service-desc,.service-item.active .service-desc{max-height:120px;opacity:1}
+  .service-item.active .service-desc{max-height:120px;opacity:1}
   .service-arrow{display:inline-block;margin-left:8px;transition:transform 0.3s var(--ease);font-size:0.8em}
   .service-item:hover .service-arrow{transform:translateX(6px)}
 
@@ -976,6 +976,17 @@
     animate();
   }
   initImageParallax();
+
+  /* ══════════════════════════════════════════════════════
+     SERVICE ITEM TOGGLE
+     ══════════════════════════════════════════════════════ */
+  document.querySelectorAll('.service-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var wasActive = item.classList.contains('active');
+      document.querySelectorAll('.service-item').forEach(function(i) { i.classList.remove('active'); });
+      if (!wasActive) item.classList.add('active');
+    });
+  });
 
   /* ══════════════════════════════════════════════════════
      NAVBAR SCROLL STATE
