@@ -2,13 +2,11 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import Logo from './Logo'
 
 const NAV_LINKS = [
   { label: 'Work', href: '/#work' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Services', href: '/#services' },
-  { label: 'Tools', href: '/tools' },
 ]
 
 export default function Navbar() {
@@ -46,12 +44,10 @@ export default function Navbar() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
             textDecoration: 'none',
             flexShrink: 0,
           }}
         >
-          <Logo size={28} />
           <span
             style={{
               fontSize: '1.1rem',
