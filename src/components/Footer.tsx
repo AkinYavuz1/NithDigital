@@ -84,8 +84,6 @@ export default function Footer() {
           <a href="mailto:hello@nithdigital.uk" style={{ color: 'inherit' }}>hello@nithdigital.uk</a>
           <a href="tel:+447404173024" style={{ color: 'inherit' }}>+44 7404 173024</a>
           <span>Sanquhar, Dumfries &amp; Galloway</span>
-        </div>
-        <div style={{ display: 'flex', gap: 20, fontSize: 13, color: '#7A7A7A' }}>
           {SOCIAL_LINKS.map(s => (
             <a key={s.label} href={s.href} rel="noopener noreferrer" aria-label={s.label} className="nd-footer-link" style={{ color: 'inherit' }}>
               {s.label}
@@ -232,9 +230,14 @@ export default function Footer() {
               </span>
             </span>
           </span>
-          <Link href="/privacy" className="nd-footer-link" style={{ color: '#7A7A7A', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
-            Privacy Policy
-          </Link>
+          <span style={{ display: 'flex', gap: 16 }}>
+            <Link href="/privacy" className="nd-footer-link" style={{ color: '#7A7A7A', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="nd-footer-link" style={{ color: '#7A7A7A', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
+              Terms &amp; Conditions
+            </Link>
+          </span>
         </div>
       </div>
 
