@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nith Digital — Design 10: Warm Pulse v2</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
@@ -190,8 +191,8 @@
   .service-item.active .service-name{color:var(--accent)}
   .service-desc{font-size:0.9rem;color:var(--text-muted);line-height:1.65;max-height:0;overflow:hidden;transition:max-height 0.6s var(--ease),opacity 0.4s var(--ease);opacity:0}
   .service-item.active .service-desc{max-height:120px;opacity:1}
-  .service-arrow{display:inline-block;margin-left:8px;transition:transform 0.3s var(--ease);font-size:0.8em}
-  .service-item:hover .service-arrow{transform:translateX(6px)}
+  .service-arrow{display:inline-block;margin-left:8px;transition:transform 0.4s var(--ease);font-size:0.9em;color:var(--accent)}
+  .service-item.active .service-arrow{transform:rotate(45deg)}
 
   /* ══════════════════ TRUST ══════════════════ */
   .trust-section{padding:80px 0 120px;text-align:center}
@@ -460,7 +461,7 @@
 
 <!-- ══════════ INTRO ══════════ -->
 <section class="intro-section section">
-  <p class="intro-text anim">Nith Digital builds websites for tradesmen and local businesses across Dumfries &amp; Galloway and Scotland. <span class="highlight">Modern design, fair pricing,</span> and one point of contact from start to finish.</p>
+  <p class="intro-text anim">Websites that look like they cost thousands. <span class="highlight">Built in a week. Priced for real businesses.</span></p>
 </section>
 
 <!-- ══════════ HOW IT WORKS ══════════ -->
@@ -603,29 +604,29 @@
   </div>
   <div class="service-item anim">
     <span class="service-num">01</span>
-    <span class="service-name">Website Design &amp; Development <span class="service-arrow">&rarr;</span></span>
+    <span class="service-name">Website Design &amp; Development <span class="service-arrow">+</span></span>
     <span class="service-desc">Custom-built, mobile-first websites. Not templates — every site is designed from scratch for your business, your customers, and your location. Built on Next.js for speed, SEO, and reliability.</span>
   </div>
   <div class="service-item anim" style="transition-delay:0.05s">
     <span class="service-num">02</span>
-    <span class="service-name">Social Media Management <span class="service-arrow">&rarr;</span></span>
+    <span class="service-name">Social Media Management <span class="service-arrow">+</span></span>
     <span class="service-desc">Consistent, professional content across Facebook and Instagram — scheduled, published, and managed. We handle the posting so you can focus on the work.</span>
   </div>
   <div class="service-item anim" style="transition-delay:0.1s">
     <span class="service-num">03</span>
-    <span class="service-name">Search Engine Optimisation <span class="service-arrow">&rarr;</span></span>
+    <span class="service-name">Search Engine Optimisation <span class="service-arrow">+</span></span>
     <span class="service-desc">Get found on Google. Local SEO that puts you in front of customers searching for what you do, where you do it.</span>
   </div>
   <div class="service-item anim" style="transition-delay:0.15s">
     <span class="service-num">04</span>
-    <span class="service-name">Analytics &amp; Software Development <span class="service-arrow">&rarr;</span></span>
+    <span class="service-name">Analytics &amp; Software Development <span class="service-arrow">+</span></span>
     <span class="service-desc">Turn your spreadsheets into interactive dashboards. Power BI reporting, custom web apps, job trackers, customer portals — built by someone with a decade in data and software.</span>
   </div>
 </section>
 
 <!-- ══════════ TRUST ══════════ -->
 <section class="trust-section section">
-  <p class="trust-text text-reveal">Built by one person with 10 years in enterprise software. <em>Not an agency</em> — a direct line to the person writing your code.</p>
+  <p class="trust-text text-reveal">10 years building software for the NHS, energy, and finance. <em>Now one call away in Dumfries &amp; Galloway.</em></p>
 </section>
 
 
@@ -655,6 +656,14 @@
         <label for="cf-email">Email address</label>
         <input type="email" id="cf-email" name="email" placeholder="Your email address" required>
       </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="cf-phone">Phone number</label>
+        <input type="tel" id="cf-phone" name="phone" placeholder="Your phone number (optional)">
+      </div>
+      <div class="form-field"></div>
     </div>
 
     <div class="form-field">
@@ -755,9 +764,9 @@
      TYPEWRITER EFFECT
      ══════════════════════════════════════════════════════ */
   var phrases = [
-    'Websites for tradespeople and small businesses in Scotland',
-    'Custom websites from \u00a3500. Live in 1 week.',
-    'Modern design, fair pricing, based in Dumfries \u0026 Galloway'
+    'Websites that actually get you customers',
+    'Your site, live in 1 week. From \u00a3500.',
+    'Designed in Dumfries \u0026 Galloway. Built for Scotland.'
   ];
   var target = document.getElementById('typed-target');
   var phraseIdx = 0, charIdx = 0, deleting = false, pauseEnd = 0;
