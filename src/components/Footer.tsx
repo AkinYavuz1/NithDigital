@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const SOCIAL_LINKS = [
-  { label: 'Facebook', href: 'https://www.facebook.com/nithdigital' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/nith-digital' },
+  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61572337490238&locale=en_GB' },
 ]
 
 const LINKS = [
