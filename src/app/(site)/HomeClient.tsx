@@ -231,9 +231,17 @@ export default function HomeClient() {
     }
     setFormSending(true)
     try {
-      await fetch('/api/notify-contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-      setFormSent(true)
-    } catch { /* swallow */ }
+      const res = await fetch('/api/notify-contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      if (res.ok) {
+        setFormSent(true)
+      } else {
+        console.error('Contact form error:', await res.text())
+        alert('Something went wrong. Please try calling us on 07404 173024.')
+      }
+    } catch (err) {
+      console.error('Contact form error:', err)
+      alert('Something went wrong. Please try calling us on 07404 173024.')
+    }
     setFormSending(false)
   }, [selectedPill])
 
