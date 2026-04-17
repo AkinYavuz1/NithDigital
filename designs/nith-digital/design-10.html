@@ -98,8 +98,8 @@
   .nav-cta:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.4)}
 
   /* ── Full-width map ── */
-  .map-section{width:100%;height:450px;position:relative}
-  .map-section iframe{width:100%;height:100%;border:none;display:block}
+  .map-section{width:100%;height:450px;position:relative;overflow:hidden}
+  .map-section iframe{width:calc(100% + 2px);height:calc(100% + 80px);border:none;display:block;position:absolute;top:0;left:-1px;filter:grayscale(80%) sepia(30%) contrast(0.9)}
 
   /* ── Section base ── */
   .section{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad)}
