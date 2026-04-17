@@ -84,12 +84,18 @@
   /* ── Page content sits above all background layers ── */
   .page{position:relative;z-index:2}
 
-  /* ── Floating CTA ── */
-  .floating-cta{position:fixed;top:24px;right:var(--pad);z-index:100;padding:12px 28px;border-radius:50px;font-size:0.9rem;font-weight:600;background:var(--accent);color:#fff;box-shadow:0 4px 24px rgba(232,93,58,0.35);transition:all 0.4s var(--ease);border:none;text-decoration:none;font-family:inherit}
-  .floating-cta:hover{background:var(--accent-hover);transform:translateY(-2px) scale(1.03);box-shadow:0 8px 32px rgba(232,93,58,0.45)}
-
-  /* ── Logo ── */
-  .page-logo{padding:32px var(--pad) 0;font-size:1.2rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+  /* ── Navbar ── */
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px var(--pad);transition:background 0.4s var(--ease),box-shadow 0.4s var(--ease),padding 0.4s var(--ease)}
+  .navbar.scrolled{background:rgba(250,248,245,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 12px rgba(0,0,0,0.06);padding:14px var(--pad)}
+  .nav-logo{font-size:1.2rem;font-weight:700;letter-spacing:-0.02em;color:var(--text);text-decoration:none;transition:opacity 0.3s var(--ease)}
+  .nav-logo:hover{opacity:0.7}
+  .nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+  .nav-links a{font-size:0.9rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.3s var(--ease);position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--accent);transition:width 0.3s var(--ease)}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a:hover::after{width:100%}
+  .nav-cta{padding:10px 24px;border-radius:50px;font-size:0.85rem;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;transition:all 0.4s var(--ease);box-shadow:0 4px 20px rgba(232,93,58,0.3)}
+  .nav-cta:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.4)}
 
   /* ── Section base ── */
   .section{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad)}
@@ -288,10 +294,15 @@
 
 
 
+    /* Navbar */
+    .navbar{padding:16px 20px}
+    .navbar.scrolled{padding:12px 20px}
+    .nav-links{gap:16px}
+    .nav-links a{font-size:0.8rem}
+    .nav-cta{padding:8px 18px;font-size:0.8rem}
+
     /* Layout */
     .section{padding:0 20px}
-    .floating-cta{top:16px;right:16px;padding:10px 20px;font-size:0.8rem}
-    .page-logo{padding:24px 20px 0;font-size:1.1rem}
 
     /* Hero */
     .hero{padding:100px 20px 60px;min-height:auto}
@@ -390,13 +401,19 @@
 <!-- Layer 2: Frosted glass -->
 <div class="frost-overlay"></div>
 
-<!-- Floating CTA -->
-<a href="#contact" class="floating-cta">Contact us</a>
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <a href="#hero" class="nav-logo">Nith Digital</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Contact us</a></li>
+  </ul>
+</nav>
 
 <div class="page">
-
-<!-- Logo -->
-<div class="page-logo">Nith Digital</div>
 
 <!-- ══════════ HERO ══════════ -->
 <section class="hero" id="hero">
@@ -929,6 +946,18 @@
       if (!wasOpen) item.classList.add('open');
     });
   });
+
+  /* ══════════════════════════════════════════════════════
+     NAVBAR SCROLL STATE
+     ══════════════════════════════════════════════════════ */
+  var navbar = document.getElementById('navbar');
+  var lastScroll = 0;
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    if (y > 60) { navbar.classList.add('scrolled'); }
+    else { navbar.classList.remove('scrolled'); }
+    lastScroll = y;
+  }, { passive: true });
 
   /* ══════════════════════════════════════════════════════
      SERVICE PILL SELECTION
