@@ -223,10 +223,30 @@
   .faq-item.open .faq-a{max-height:200px;padding-bottom:24px}
   .faq-a-inner{font-size:0.9rem;color:var(--text-muted);line-height:1.7;max-width:60ch}
 
-  /* ══════════════════ CTA ══════════════════ */
-  .cta-section{padding:100px 0 140px;text-align:center}
-  .cta-headline{font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-0.03em;margin-bottom:20px}
-  .cta-body{font-size:1.05rem;color:var(--text-muted);max-width:45ch;margin:0 auto 36px;line-height:1.7}
+  /* ══════════════════ CONTACT FORM ══════════════════ */
+  .contact-section{padding:100px 0 140px}
+  .contact-headline{font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-0.03em;margin-bottom:12px}
+  .contact-sub{font-size:1.05rem;color:var(--text-muted);max-width:50ch;line-height:1.7;margin-bottom:48px}
+  .contact-form{background:var(--surface);border-radius:var(--radius);padding:48px;box-shadow:0 2px 24px rgba(0,0,0,0.04)}
+  .form-group-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:16px;display:block}
+  .service-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+  .service-pill{padding:10px 22px;border-radius:50px;font-size:0.9rem;font-weight:500;border:1.5px solid rgba(0,0,0,0.1);background:transparent;color:var(--text);cursor:pointer;transition:all 0.3s var(--ease);font-family:inherit}
+  .service-pill:hover{border-color:var(--accent);color:var(--accent)}
+  .service-pill.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:40px}
+  .form-field{display:flex;flex-direction:column;gap:8px}
+  .form-field label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted)}
+  .form-field input,.form-field textarea{border:none;border-bottom:1.5px solid rgba(0,0,0,0.1);background:transparent;padding:12px 0;font-size:1rem;font-family:inherit;color:var(--text);outline:none;transition:border-color 0.3s var(--ease);line-height:1.6;resize:vertical}
+  .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(0,0,0,0.25)}
+  .form-field input:focus,.form-field textarea:focus{border-bottom-color:var(--accent)}
+  .form-field textarea{min-height:120px}
+  .form-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:36px;flex-wrap:wrap;gap:16px}
+  .form-privacy{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+  .form-privacy a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+  .form-submit{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:50px;font-size:0.95rem;font-weight:600;background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:inherit;transition:all 0.4s var(--ease)}
+  .form-submit:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.35)}
+  .form-submit::after{content:'\2192';transition:transform 0.3s var(--ease)}
+  .form-submit:hover::after{transform:translateX(4px)}
 
   /* ══════════════════ FOOTER ══════════════════ */
   .footer{padding:60px var(--pad) 80px;max-width:var(--max-w);margin:0 auto;display:flex;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.06);font-size:0.85rem;color:var(--text-muted)}
@@ -323,10 +343,16 @@
     .faq-section{padding:60px 0 80px}
     .faq-q{font-size:0.95rem;padding:20px 0}
 
-    /* CTA */
-    .cta-section{padding:60px 0 100px}
-    .cta-headline{font-size:clamp(1.5rem,6vw,2.5rem)}
-    .cta-body{font-size:0.95rem}
+    /* Contact form */
+    .contact-section{padding:60px 0 80px}
+    .contact-headline{font-size:clamp(1.5rem,6vw,2.5rem)}
+    .contact-sub{font-size:0.95rem;margin-bottom:32px}
+    .contact-form{padding:28px 20px}
+    .form-row{grid-template-columns:1fr;gap:28px}
+    .service-pills{gap:8px}
+    .service-pill{padding:8px 18px;font-size:0.85rem}
+    .form-bottom{flex-direction:column;align-items:stretch}
+    .form-submit{width:100%;justify-content:center}
 
     /* Footer */
     .footer{flex-direction:column;gap:24px;padding:40px 20px 60px}
@@ -574,14 +600,41 @@
   </div>
 </section>
 
-<!-- ══════════ CTA ══════════ -->
-<section class="cta-section section" id="contact">
-  <h2 class="cta-headline text-reveal">Ready to talk?</h2>
-  <p class="cta-body">Call 07404 173024 or drop us a message. No jargon, no pressure — just a straight conversation about what you need and what it'll cost.</p>
-  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-    <a href="tel:+447404173024" class="btn-accent">07404 173024</a>
-    <a href="mailto:hello@nithdigital.uk" class="btn-ghost">hello@nithdigital.uk</a>
-  </div>
+<!-- ══════════ CONTACT FORM ══════════ -->
+<section class="contact-section section" id="contact">
+  <h2 class="contact-headline text-reveal">Get in touch</h2>
+  <p class="contact-sub">Tell us a bit about your project and we'll get back to you within 24 hours.</p>
+
+  <form class="contact-form anim" onsubmit="return false;">
+    <span class="form-group-label">What do you need?</span>
+    <div class="service-pills">
+      <button type="button" class="service-pill selected" onclick="selectPill(this)">Website</button>
+      <button type="button" class="service-pill" onclick="selectPill(this)">Social media</button>
+      <button type="button" class="service-pill" onclick="selectPill(this)">SEO</button>
+      <button type="button" class="service-pill" onclick="selectPill(this)">Something else</button>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="cf-name">Full name</label>
+        <input type="text" id="cf-name" name="name" placeholder="What's your name?" required>
+      </div>
+      <div class="form-field">
+        <label for="cf-email">Email address</label>
+        <input type="email" id="cf-email" name="email" placeholder="Your email address" required>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="cf-message">Message</label>
+      <textarea id="cf-message" name="message" placeholder="Tell us about your project&hellip;" required></textarea>
+    </div>
+
+    <div class="form-bottom">
+      <button type="submit" class="form-submit">Send message</button>
+      <p class="form-privacy">By sending, you agree to our <a href="/privacy">privacy policy</a>.</p>
+    </div>
+  </form>
 </section>
 
 <!-- ══════════ FOOTER ══════════ -->
@@ -876,6 +929,14 @@
       if (!wasOpen) item.classList.add('open');
     });
   });
+
+  /* ══════════════════════════════════════════════════════
+     SERVICE PILL SELECTION
+     ══════════════════════════════════════════════════════ */
+  window.selectPill = function(el) {
+    el.parentElement.querySelectorAll('.service-pill').forEach(function(p) { p.classList.remove('selected'); });
+    el.classList.add('selected');
+  };
 
   /* ══════════════════════════════════════════════════════
      SMOOTH SCROLL
