@@ -307,8 +307,10 @@
     .nav-cta{padding:6px 12px;font-size:0.7rem;white-space:nowrap}
 
     /* Layout — 16px margins on all content */
-    .section{padding:0 16px}
-    .work-wrap{padding:0 16px}
+    .section{padding-left:16px!important;padding-right:16px!important}
+    .work-wrap{padding-left:16px;padding-right:16px}
+    .hero{padding-left:16px!important;padding-right:16px!important}
+    .footer{padding-left:16px!important;padding-right:16px!important}
 
     /* Hero */
     .hero{padding:80px 16px 40px;min-height:auto}
@@ -318,17 +320,17 @@
     .hero-ctas a{text-align:center;justify-content:center;width:100%}
 
     /* Intro */
-    .intro-section{padding:32px 0 48px}
+    .intro-section{padding-top:32px;padding-bottom:48px}
     .intro-text{font-size:0.9rem;text-align:left}
 
     /* How it works */
-    .how-section{padding:32px 0 48px}
-    .steps-grid{grid-template-columns:1fr;gap:12px;margin-top:20px}
+    .how-section{padding-top:32px;padding-bottom:48px}
+    .steps-grid{grid-template-columns:1fr;gap:12px;margin-top:20px;overflow:hidden}
     .step-card{padding:20px}
     .step-num{font-size:1.6rem}
 
     /* Work */
-    .work-section{padding:32px 0 48px}
+    .work-section{padding-top:32px;padding-bottom:48px}
     .work-grid{grid-template-columns:1fr;gap:12px}
     .work-card-video{aspect-ratio:16/10}
     .parallax-img{position:relative!important;height:100%!important}
@@ -336,25 +338,25 @@
     .work-card-overlay .overlay-desc{max-height:80px}
 
     /* Pricing */
-    .pricing-section{padding:32px 0 48px}
-    .pricing-grid{grid-template-columns:1fr;gap:12px;margin-top:20px;max-width:100%}
+    .pricing-section{padding-top:32px;padding-bottom:48px}
+    .pricing-grid{grid-template-columns:1fr;gap:12px;margin-top:20px;max-width:100%;overflow:hidden}
     .pricing-card{padding:24px 20px}
     .pricing-price{font-size:1.6rem}
 
     /* Services — collapsed by default on mobile */
-    .services-section{padding:32px 0 48px}
+    .services-section{padding-top:32px;padding-bottom:48px}
     .service-item{grid-template-columns:28px 1fr;gap:8px;padding:18px 0}
     .service-desc{grid-column:1/-1;max-height:0;opacity:0}
     .service-item.active .service-desc{max-height:200px;opacity:1}
     .service-name{font-size:1rem}
 
     /* Trust */
-    .trust-section{padding:32px 0 48px;text-align:left}
+    .trust-section{padding-top:32px;padding-bottom:48px;text-align:left}
     .trust-text{font-size:0.9rem;line-height:1.7}
 
     /* Built with */
-    .tech-section{padding:32px 0 48px}
-    .tech-grid{grid-template-columns:repeat(3,1fr);gap:10px}
+    .tech-section{padding-top:32px;padding-bottom:48px}
+    .tech-grid{grid-template-columns:repeat(3,1fr);gap:10px;overflow:hidden}
     .tech-item{padding:14px 6px}
     .tech-name{font-size:0.75rem}
     .tech-desc{font-size:0.6rem}
@@ -362,7 +364,7 @@
     .tech-logo{height:32px;margin-bottom:8px}
 
     /* Contact form */
-    .contact-section{padding:32px 0 48px}
+    .contact-section{padding-top:32px;padding-bottom:48px}
     .contact-sub{font-size:0.85rem;margin-bottom:20px}
     .contact-form{padding:20px 16px}
     .form-row{grid-template-columns:1fr;gap:20px}
