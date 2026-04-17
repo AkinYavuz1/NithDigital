@@ -431,7 +431,6 @@
     <li><a href="#work">Work</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#tech">Built with</a></li>
     <li><a href="#contact" class="nav-cta">Contact us</a></li>
   </ul>
 </nav>
@@ -619,10 +618,54 @@
 </section>
 
 
+<!-- ══════════ CONTACT FORM ══════════ -->
+<section class="contact-section section" id="contact">
+  <div class="section-label">
+    <span class="section-num parallax-layer" data-speed="0.02">05</span>
+    <span class="section-title text-reveal">Get in touch</span>
+  </div>
+  <p class="contact-sub">Tell us a bit about your project and we'll get back to you within 24 hours.</p>
+
+  <form class="contact-form anim" onsubmit="return false;">
+    <span class="form-group-label">What do you need?</span>
+    <div class="service-pills">
+      <button type="button" class="service-pill selected" onclick="selectPill(this)">Website</button>
+      <button type="button" class="service-pill" onclick="selectPill(this)">Social media</button>
+      <button type="button" class="service-pill" onclick="selectPill(this)">SEO</button>
+      <button type="button" class="service-pill" onclick="selectPill(this)">Something else</button>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="cf-name">Full name</label>
+        <input type="text" id="cf-name" name="name" placeholder="What's your name?" required>
+      </div>
+      <div class="form-field">
+        <label for="cf-email">Email address</label>
+        <input type="email" id="cf-email" name="email" placeholder="Your email address" required>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="cf-message">Message</label>
+      <textarea id="cf-message" name="message" placeholder="Tell us about your project&hellip;" required></textarea>
+    </div>
+
+    <div class="form-bottom">
+      <button type="submit" class="form-submit">Send message</button>
+      <p class="form-privacy">By sending, you agree to our <a href="/privacy">privacy policy</a>.</p>
+    </div>
+  </form>
+
+  <div class="map-wrap">
+    <iframe src="https://maps.google.com/maps?q=55.3802589,-3.9226708&z=9&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
 <!-- ══════════ BUILT WITH ══════════ -->
 <section class="tech-section section" id="tech">
   <div class="section-label">
-    <span class="section-num parallax-layer" data-speed="0.02" data-speed="-0.015">05</span>
+    <span class="section-num parallax-layer" data-speed="0.02">06</span>
     <span class="section-title text-reveal">Built with</span>
   </div>
   <div class="tech-grid">
@@ -668,50 +711,6 @@
       <span class="tech-name">Resend</span>
       <span class="tech-desc">Email delivery</span>
     </div>
-  </div>
-</section>
-
-<!-- ══════════ CONTACT FORM ══════════ -->
-<section class="contact-section section" id="contact">
-  <div class="section-label">
-    <span class="section-num parallax-layer" data-speed="0.02" data-speed="0.02">06</span>
-    <span class="section-title text-reveal">Get in touch</span>
-  </div>
-  <p class="contact-sub">Tell us a bit about your project and we'll get back to you within 24 hours.</p>
-
-  <form class="contact-form anim" onsubmit="return false;">
-    <span class="form-group-label">What do you need?</span>
-    <div class="service-pills">
-      <button type="button" class="service-pill selected" onclick="selectPill(this)">Website</button>
-      <button type="button" class="service-pill" onclick="selectPill(this)">Social media</button>
-      <button type="button" class="service-pill" onclick="selectPill(this)">SEO</button>
-      <button type="button" class="service-pill" onclick="selectPill(this)">Something else</button>
-    </div>
-
-    <div class="form-row">
-      <div class="form-field">
-        <label for="cf-name">Full name</label>
-        <input type="text" id="cf-name" name="name" placeholder="What's your name?" required>
-      </div>
-      <div class="form-field">
-        <label for="cf-email">Email address</label>
-        <input type="email" id="cf-email" name="email" placeholder="Your email address" required>
-      </div>
-    </div>
-
-    <div class="form-field">
-      <label for="cf-message">Message</label>
-      <textarea id="cf-message" name="message" placeholder="Tell us about your project&hellip;" required></textarea>
-    </div>
-
-    <div class="form-bottom">
-      <button type="submit" class="form-submit">Send message</button>
-      <p class="form-privacy">By sending, you agree to our <a href="/privacy">privacy policy</a>.</p>
-    </div>
-  </form>
-
-  <div class="map-wrap">
-    <iframe src="https://maps.google.com/maps?q=55.3802589,-3.9226708&z=9&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </section>
 
