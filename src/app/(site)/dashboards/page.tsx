@@ -176,16 +176,16 @@ export default async function DashboardsPage() {
       ))}
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0 52px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 52px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Data Analytics · Dumfries & Galloway
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 36,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.25,
@@ -194,11 +194,11 @@ export default async function DashboardsPage() {
           >
             The Digital Health of<br />Dumfries & Galloway Businesses
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.75)', maxWidth: 560, marginBottom: 8, lineHeight: 1.75 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.75)', maxWidth: 560, marginBottom: 8, lineHeight: 1.75 }}>
             We surveyed over {displayTotal.toLocaleString()} businesses across {townCount}+ towns and villages —
             from Stranraer to Moffat, Dumfries to Sanquhar — across 13 sectors.
           </p>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.75)', maxWidth: 560, marginBottom: 32, lineHeight: 1.75 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.75)', maxWidth: 560, marginBottom: 32, lineHeight: 1.75 }}>
             What we found is an opportunity. Most local businesses are invisible online. This is what the data looks like.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -207,8 +207,8 @@ export default async function DashboardsPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -223,11 +223,11 @@ export default async function DashboardsPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -238,7 +238,7 @@ export default async function DashboardsPage() {
       </section>
 
       {/* ── KPI cards ───────────────────────────────────────────────────── */}
-      <section style={{ background: '#F5F0E6', padding: '48px 0' }}>
+      <section style={{ background: '#FAF8F5', padding: '48px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }} className="kpi-grid">
             {[
@@ -251,8 +251,8 @@ export default async function DashboardsPage() {
                 key={stat.label}
                 style={{
                   background: '#fff',
-                  border: '1px solid rgba(27,42,74,0.1)',
-                  borderTop: '3px solid #D4A84B',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderTop: '3px solid #E85D3A',
                   borderRadius: '0 0 8px 8px',
                   padding: '24px 20px',
                   textAlign: 'center',
@@ -262,7 +262,7 @@ export default async function DashboardsPage() {
                   style={{
                     fontFamily: 'var(--font-display)',
                     fontSize: 42,
-                    color: '#1B2A4A',
+                    color: '#1A1A1A',
                     fontWeight: 400,
                     lineHeight: 1,
                     marginBottom: 10,
@@ -270,7 +270,7 @@ export default async function DashboardsPage() {
                 >
                   {stat.value}
                 </div>
-                <div style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.5 }}>{stat.label}</div>
+                <div style={{ fontSize: 13, color: '#7A7A7A', lineHeight: 1.5 }}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -283,10 +283,10 @@ export default async function DashboardsPage() {
 
           {/* Sector volume */}
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 6, color: '#1B2A4A' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 6, color: '#1A1A1A' }}>
               Businesses surveyed by sector
             </h2>
-            <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 24, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 24, lineHeight: 1.6 }}>
               Counts rounded to nearest 5 to protect individual business data.
             </p>
             <SectorBarChart data={sectorCounts} />
@@ -294,10 +294,10 @@ export default async function DashboardsPage() {
 
           {/* Digital need by sector */}
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 6, color: '#1B2A4A' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 6, color: '#1A1A1A' }}>
               Digital need by sector
             </h2>
-            <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 24, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 24, lineHeight: 1.6 }}>
               Average digital need score (1–10) across surveyed businesses in each sector. Higher = greater opportunity.
             </p>
             <NeedBarChart data={sectorNeeds} />
@@ -310,14 +310,14 @@ export default async function DashboardsPage() {
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px 0' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }} className="donut-grid">
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 12, color: '#1B2A4A' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 12, color: '#1A1A1A' }}>
               Website status across all sectors
             </h2>
-            <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.75, marginBottom: 16 }}>
+            <p style={{ fontSize: 14, color: '#7A7A7A', lineHeight: 1.75, marginBottom: 16 }}>
               A working website is the foundation of online visibility — yet a significant proportion of D&G businesses
               either have none, or have a site that's broken, parked, or still showing a placeholder.
             </p>
-            <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.75 }}>
+            <p style={{ fontSize: 14, color: '#7A7A7A', lineHeight: 1.75 }}>
               For customers who search before they spend, an invisible business is a missed business.
               This is the gap our work addresses.
             </p>
@@ -329,20 +329,20 @@ export default async function DashboardsPage() {
       </section>
 
       {/* ── Vignettes ───────────────────────────────────────────────────── */}
-      <section style={{ background: '#1B2A4A', margin: '56px 0 0', padding: '56px 0' }}>
+      <section style={{ background: '#1A1A1A', margin: '56px 0 0', padding: '56px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           <h2
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 24,
               fontWeight: 400,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               marginBottom: 8,
             }}
           >
             What we actually found
           </h2>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', marginBottom: 36, maxWidth: 560, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', marginBottom: 36, maxWidth: 560, lineHeight: 1.7 }}>
             These are anonymised observations drawn directly from our survey data. No business names, no contact details — just the patterns.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }} className="vignette-grid">
@@ -350,20 +350,20 @@ export default async function DashboardsPage() {
               <div
                 key={v.sector}
                 style={{
-                  background: 'rgba(245,240,230,0.06)',
-                  border: '1px solid rgba(245,240,230,0.12)',
-                  borderLeft: '3px solid #D4A84B',
+                  background: 'rgba(250,248,245,0.06)',
+                  border: '1px solid rgba(250,248,245,0.12)',
+                  borderLeft: '3px solid #E85D3A',
                   borderRadius: '0 8px 8px 0',
                   padding: '24px 20px',
                 }}
               >
-                <div style={{ fontSize: 11, letterSpacing: '1px', textTransform: 'uppercase', color: '#D4A84B', fontWeight: 600, marginBottom: 12 }}>
+                <div style={{ fontSize: 11, letterSpacing: '1px', textTransform: 'uppercase', color: '#E85D3A', fontWeight: 600, marginBottom: 12 }}>
                   {v.sector}
                 </div>
-                <p style={{ fontSize: 14, fontStyle: 'italic', color: 'rgba(245,240,230,0.8)', lineHeight: 1.75, marginBottom: 16 }}>
+                <p style={{ fontSize: 14, fontStyle: 'italic', color: 'rgba(250,248,245,0.8)', lineHeight: 1.75, marginBottom: 16 }}>
                   &ldquo;{v.quote}&rdquo;
                 </p>
-                <p style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600, margin: 0 }}>
+                <p style={{ fontSize: 12, color: '#E85D3A', fontWeight: 600, margin: 0 }}>
                   This is the kind of gap we look for.
                 </p>
               </div>
@@ -374,10 +374,10 @@ export default async function DashboardsPage() {
 
       {/* ── Services ────────────────────────────────────────────────────── */}
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px 0' }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
           We build dashboards like this for your business
         </h2>
-        <p style={{ fontSize: 15, color: '#5A6A7A', marginBottom: 32, maxWidth: 640, lineHeight: 1.75 }}>
+        <p style={{ fontSize: 15, color: '#7A7A7A', marginBottom: 32, maxWidth: 640, lineHeight: 1.75 }}>
           The charts above were produced using the same tools and techniques we apply to client data every day —
           data analytics, Power BI, and custom reporting. If you want to understand your own business numbers this clearly, this is what we do.
         </p>
@@ -387,14 +387,14 @@ export default async function DashboardsPage() {
               key={s.title}
               style={{
                 padding: 24,
-                border: '1px solid rgba(27,42,74,0.1)',
-                borderLeft: '3px solid #D4A84B',
+                border: '1px solid rgba(0,0,0,0.1)',
+                borderLeft: '3px solid #E85D3A',
                 borderRadius: '0 8px 8px 0',
               }}
             >
-              <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 8, color: '#1B2A4A' }}>{s.title}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.65, color: '#5A6A7A', marginBottom: 12 }}>{s.desc}</p>
-              <Link href={s.href} style={{ fontSize: 12, fontWeight: 600, color: '#D4A84B', textDecoration: 'none' }}>
+              <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 8, color: '#1A1A1A' }}>{s.title}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.65, color: '#7A7A7A', marginBottom: 12 }}>{s.desc}</p>
+              <Link href={s.href} style={{ fontSize: 12, fontWeight: 600, color: '#E85D3A', textDecoration: 'none' }}>
                 Learn more →
               </Link>
             </div>
@@ -402,11 +402,11 @@ export default async function DashboardsPage() {
         </div>
 
         {/* CTA */}
-        <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '44px 48px', textAlign: 'center', color: '#F5F0E6', marginBottom: 0 }}>
+        <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '44px 48px', textAlign: 'center', color: '#FAF8F5', marginBottom: 0 }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8 }}>
             Want your business data to look this good?
           </h2>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', marginBottom: 24, maxWidth: 460, margin: '0 auto 24px' }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', marginBottom: 24, maxWidth: 460, margin: '0 auto 24px' }}>
             Free consultation. Tell us about your data challenge — we&apos;ll show you what a dashboard built around your numbers could look like.
           </p>
           <Link
@@ -414,8 +414,8 @@ export default async function DashboardsPage() {
             style={{
               display: 'inline-block',
               padding: '12px 28px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               borderRadius: 100,
               fontSize: 13,
               fontWeight: 600,

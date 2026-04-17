@@ -71,8 +71,8 @@ const PROJECTS = [
 const btnPrimary: React.CSSProperties = {
   display: 'inline-block',
   padding: '12px 28px',
-  background: '#D4A84B',
-  color: '#1B2A4A',
+  background: '#E85D3A',
+  color: '#1A1A1A',
   borderRadius: 100,
   fontSize: 13,
   fontWeight: 600,
@@ -82,11 +82,11 @@ const btnPrimary: React.CSSProperties = {
 export default function WorkPage() {
   return (
     <>
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Our work
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 440, margin: '0 auto' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 440, margin: '0 auto' }}>
           Products we&apos;ve built and shipped. Real things, live in the wild.
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function WorkPage() {
             {PROJECTS.map((p) => (
               <div
                 key={p.title}
-                style={{ background: '#F5F0E6', borderRadius: 12, padding: 32, transition: 'transform 0.25s ease' }}
+                style={{ background: '#FAF8F5', borderRadius: 12, padding: 32, transition: 'transform 0.25s ease' }}
                 className="work-card-hover"
               >
                 <span
@@ -108,27 +108,27 @@ export default function WorkPage() {
                     borderRadius: 100,
                     fontWeight: 600,
                     marginBottom: 14,
-                    background: p.live ? '#1B2A4A' : 'rgba(212,168,75,0.2)',
-                    color: p.live ? '#D4A84B' : '#8B6D2B',
+                    background: p.live ? '#1A1A1A' : 'rgba(232,93,58,0.2)',
+                    color: p.live ? '#E85D3A' : '#B8472A',
                   }}
                 >
                   {p.badge}
                 </span>
-                <h3 style={{ fontSize: 20, fontWeight: 600, marginBottom: 8, color: '#1B2A4A' }}>{p.title}</h3>
-                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#2D4A7A', marginBottom: 12 }}>{p.desc1}</p>
-                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#2D4A7A', marginBottom: 16 }}>{p.desc2}</p>
+                <h3 style={{ fontSize: 20, fontWeight: 600, marginBottom: 8, color: '#1A1A1A' }}>{p.title}</h3>
+                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#333333', marginBottom: 12 }}>{p.desc1}</p>
+                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#333333', marginBottom: 16 }}>{p.desc2}</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
                   {p.tags.map((t) => (
-                    <span key={t} style={{ fontSize: 10, padding: '3px 10px', background: 'rgba(27,42,74,0.08)', color: '#1B2A4A', borderRadius: 100 }}>
+                    <span key={t} style={{ fontSize: 10, padding: '3px 10px', background: 'rgba(0,0,0,0.08)', color: '#1A1A1A', borderRadius: 100 }}>
                       {t}
                     </span>
                   ))}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>
+                  <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#E85D3A', fontWeight: 600 }}>
                     {p.linkLabel}
                   </a>
-                  <Link href={p.moreInfo} style={{ fontSize: 12, color: '#2D4A7A', fontWeight: 500 }}>
+                  <Link href={p.moreInfo} style={{ fontSize: 12, color: '#333333', fontWeight: 500 }}>
                     More info →
                   </Link>
                 </div>
@@ -143,24 +143,24 @@ export default function WorkPage() {
           <div
             style={{
               padding: 28,
-              border: '1px solid rgba(27,42,74,0.1)',
-              borderLeft: '3px solid #D4A84B',
+              border: '1px solid rgba(0,0,0,0.1)',
+              borderLeft: '3px solid #E85D3A',
               borderRadius: '0 8px 8px 0',
               marginBottom: 48,
             }}
           >
             <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>Local business SaaS</h3>
-            <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A' }}>
+            <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A' }}>
               A booking and job tracking tool for sole traders and small businesses in D&amp;G. Scheduling, invoicing, customer comms, and job status — all in one place. Currently in planning.
             </p>
           </div>
 
           {/* CTA */}
-          <div className="cta-banner" style={{ background: '#1B2A4A', borderRadius: 12, padding: '56px 48px', textAlign: 'center', color: '#F5F0E6' }}>
+          <div className="cta-banner" style={{ background: '#1A1A1A', borderRadius: 12, padding: '56px 48px', textAlign: 'center', color: '#FAF8F5' }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, marginBottom: 8 }}>
               Want something built?
             </h2>
-            <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', marginBottom: 24, maxWidth: 440, margin: '0 auto 24px' }}>
+            <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', marginBottom: 24, maxWidth: 440, margin: '0 auto 24px' }}>
               We ship fast. Got an idea for a product or need a web app? Let&apos;s talk.
             </p>
             <Link href="/contact" style={btnPrimary}>Get in touch</Link>

@@ -26,8 +26,8 @@ export const metadata: Metadata = {
 const btnPrimary: React.CSSProperties = {
   display: 'inline-block',
   padding: '12px 28px',
-  background: '#D4A84B',
-  color: '#1B2A4A',
+  background: '#E85D3A',
+  color: '#1A1A1A',
   borderRadius: 100,
   fontSize: 13,
   fontWeight: 600,
@@ -79,7 +79,7 @@ export default async function ServicesPage() {
       {/* Page header */}
       <div
         style={{
-          background: '#1B2A4A',
+          background: '#1A1A1A',
           padding: '56px 24px',
           textAlign: 'center',
         }}
@@ -88,14 +88,14 @@ export default async function ServicesPage() {
           style={{
             fontFamily: 'var(--font-display)',
             fontSize: 32,
-            color: '#F5F0E6',
+            color: '#FAF8F5',
             fontWeight: 400,
             marginBottom: 8,
           }}
         >
           Services &amp; pricing
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 440, margin: '0 auto' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 440, margin: '0 auto' }}>
           Clear pricing, no surprises. Every project starts with a free consultation.
         </p>
       </div>
@@ -117,13 +117,13 @@ export default async function ServicesPage() {
                 key={s.title}
                 style={{
                   padding: 28,
-                  border: '1px solid rgba(27,42,74,0.1)',
-                  borderLeft: '3px solid #D4A84B',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderLeft: '3px solid #E85D3A',
                   borderRadius: '0 8px 8px 0',
                 }}
               >
                 <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>{s.title}</h3>
-                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A' }}>{s.desc}</p>
+                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A' }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -150,9 +150,9 @@ export default async function ServicesPage() {
                       fontSize: 10,
                       textTransform: 'uppercase',
                       letterSpacing: 1,
-                      color: '#5A6A7A',
+                      color: '#7A7A7A',
                       padding: '12px 16px',
-                      borderBottom: '2px solid #1B2A4A',
+                      borderBottom: '2px solid #1A1A1A',
                       fontWeight: 500,
                     }}
                   >
@@ -167,7 +167,7 @@ export default async function ServicesPage() {
                   <td
                     style={{
                       padding: 16,
-                      borderBottom: '1px solid rgba(27,42,74,0.1)',
+                      borderBottom: '1px solid rgba(0,0,0,0.1)',
                       fontSize: 14,
                       fontWeight: 600,
                     }}
@@ -177,9 +177,9 @@ export default async function ServicesPage() {
                   <td
                     style={{
                       padding: 16,
-                      borderBottom: '1px solid rgba(27,42,74,0.1)',
+                      borderBottom: '1px solid rgba(0,0,0,0.1)',
                       fontSize: 13,
-                      color: '#5A6A7A',
+                      color: '#7A7A7A',
                     }}
                   >
                     {row.inc}
@@ -187,15 +187,15 @@ export default async function ServicesPage() {
                   <td
                     style={{
                       padding: 16,
-                      borderBottom: '1px solid rgba(27,42,74,0.1)',
+                      borderBottom: '1px solid rgba(0,0,0,0.1)',
                       textAlign: 'right',
                     }}
                   >
                     <span
                       style={{
                         display: 'inline-block',
-                        background: '#F5F0E6',
-                        color: '#1B2A4A',
+                        background: '#FAF8F5',
+                        color: '#1A1A1A',
                         fontSize: 12,
                         padding: '4px 14px',
                         borderRadius: 100,
@@ -212,10 +212,10 @@ export default async function ServicesPage() {
 
           {/* Data & BI specialist pages */}
           <div style={{ marginBottom: 48 }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
               Data &amp; BI consulting
             </h2>
-            <p style={{ fontSize: 14, lineHeight: 1.7, color: '#5A6A7A', marginBottom: 20 }}>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: '#7A7A7A', marginBottom: 20 }}>
               10+ years delivering data and business intelligence solutions across NHS, energy, finance, and the public sector.
             </p>
             <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
@@ -233,13 +233,13 @@ export default async function ServicesPage() {
                   style={{
                     display: 'block',
                     padding: '16px 20px',
-                    border: '1px solid rgba(27,42,74,0.1)',
+                    border: '1px solid rgba(0,0,0,0.1)',
                     borderRadius: 8,
                     textDecoration: 'none',
                   }}
                 >
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{l.label}</div>
-                  <div style={{ fontSize: 12, color: '#5A6A7A' }}>{l.desc}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 4 }}>{l.label}</div>
+                  <div style={{ fontSize: 12, color: '#7A7A7A' }}>{l.desc}</div>
                 </Link>
               ))}
             </div>
@@ -249,11 +249,11 @@ export default async function ServicesPage() {
           <div
             className="cta-banner"
             style={{
-              background: '#1B2A4A',
+              background: '#1A1A1A',
               borderRadius: 12,
               padding: '56px 48px',
               textAlign: 'center',
-              color: '#F5F0E6',
+              color: '#FAF8F5',
             }}
           >
             <h2
@@ -269,7 +269,7 @@ export default async function ServicesPage() {
             <p
               style={{
                 fontSize: 14,
-                color: 'rgba(245,240,230,0.6)',
+                color: 'rgba(250,248,245,0.6)',
                 marginBottom: 24,
                 maxWidth: 440,
                 margin: '0 auto 24px',
@@ -290,7 +290,7 @@ export default async function ServicesPage() {
           .two-col-grid { grid-template-columns: 1fr !important; }
           .cta-banner { padding: 40px 24px !important; }
           .pricing-table thead { display: none; }
-          .pricing-table tbody tr { display: block; padding: 16px 0; border-bottom: 1px solid rgba(27,42,74,0.1); }
+          .pricing-table tbody tr { display: block; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
           .pricing-table tbody td { display: block; padding: 2px 0 !important; border-bottom: none !important; text-align: left !important; }
           .pricing-table tbody td:first-child { font-size: 15px !important; margin-bottom: 4px; }
           .pricing-table tbody td:last-child { margin-top: 8px; }

@@ -161,31 +161,31 @@ export default function BookingClient() {
       <div style={{ maxWidth: 600, margin: '64px auto', padding: '0 24px', textAlign: 'center' }}>
         <div style={{ fontSize: 56, marginBottom: 20 }}>✅</div>
         <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, marginBottom: 12 }}>Your call is booked!</h2>
-        <p style={{ fontSize: 15, color: '#5A6A7A', marginBottom: 32, lineHeight: 1.7 }}>
+        <p style={{ fontSize: 15, color: '#7A7A7A', marginBottom: 32, lineHeight: 1.7 }}>
           We&apos;ll be in touch at the time below. If you need to reschedule, email{' '}
-          <a href="mailto:hello@nithdigital.uk" style={{ color: '#D4A84B' }}>hello@nithdigital.uk</a>
+          <a href="mailto:hello@nithdigital.uk" style={{ color: '#E85D3A' }}>hello@nithdigital.uk</a>
         </p>
-        <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 28, marginBottom: 28, textAlign: 'left' }}>
+        <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 28, marginBottom: 28, textAlign: 'left' }}>
           <div style={{ display: 'grid', gap: 12 }}>
-            <div><span style={{ fontSize: 11, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '1px' }}>Service</span><div style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginTop: 2 }}>{confirmed.service}</div></div>
-            <div><span style={{ fontSize: 11, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '1px' }}>Date</span><div style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginTop: 2 }}>{formatDateLong(new Date(confirmed.date + 'T12:00:00'))}</div></div>
-            <div><span style={{ fontSize: 11, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '1px' }}>Time</span><div style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A', marginTop: 2 }}>{formatTime(confirmed.start_time)} – {formatTime(confirmed.end_time)}</div></div>
+            <div><span style={{ fontSize: 11, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '1px' }}>Service</span><div style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', marginTop: 2 }}>{confirmed.service}</div></div>
+            <div><span style={{ fontSize: 11, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '1px' }}>Date</span><div style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', marginTop: 2 }}>{formatDateLong(new Date(confirmed.date + 'T12:00:00'))}</div></div>
+            <div><span style={{ fontSize: 11, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '1px' }}>Time</span><div style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', marginTop: 2 }}>{formatTime(confirmed.start_time)} – {formatTime(confirmed.end_time)}</div></div>
           </div>
         </div>
         {confirmed.meetLink && (
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '20px 24px', marginBottom: 20, textAlign: 'center' }}>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '20px 24px', marginBottom: 20, textAlign: 'center' }}>
             <div style={{ fontSize: 11, color: '#8A9AAA', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 8 }}>Your Google Meet link</div>
-            <a href={confirmed.meetLink} target="_blank" rel="noopener noreferrer" style={{ color: '#D4A84B', fontWeight: 700, fontSize: 15, wordBreak: 'break-all' }}>
+            <a href={confirmed.meetLink} target="_blank" rel="noopener noreferrer" style={{ color: '#E85D3A', fontWeight: 700, fontSize: 15, wordBreak: 'break-all' }}>
               {confirmed.meetLink}
             </a>
             <div style={{ fontSize: 12, color: '#8A9AAA', marginTop: 6 }}>This link will also be in your calendar invite</div>
           </div>
         )}
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href={gcalUrl} target="_blank" rel="noopener noreferrer" style={{ padding: '10px 20px', background: '#1B2A4A', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600 }}>
+          <a href={gcalUrl} target="_blank" rel="noopener noreferrer" style={{ padding: '10px 20px', background: '#1A1A1A', color: '#FAF8F5', borderRadius: 100, fontSize: 13, fontWeight: 600 }}>
             Add to Google Calendar
           </a>
-          <button onClick={downloadIcs} style={{ padding: '10px 20px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+          <button onClick={downloadIcs} style={{ padding: '10px 20px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer' }}>
             Download .ics
           </button>
         </div>
@@ -196,9 +196,9 @@ export default function BookingClient() {
   return (
     <div style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
       {/* Step indicator */}
-      <div style={{ display: 'flex', gap: 0, marginBottom: 40, borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(27,42,74,0.1)' }}>
+      <div style={{ display: 'flex', gap: 0, marginBottom: 40, borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.1)' }}>
         {[1, 2, 3].map((s) => (
-          <div key={s} style={{ flex: 1, padding: '12px 16px', textAlign: 'center', fontSize: 12, fontWeight: step === s ? 600 : 400, background: step === s ? '#1B2A4A' : step > s ? '#F5F0E6' : 'white', color: step === s ? '#F5F0E6' : step > s ? '#D4A84B' : '#5A6A7A', borderRight: s < 3 ? '1px solid rgba(27,42,74,0.1)' : 'none' }}>
+          <div key={s} style={{ flex: 1, padding: '12px 16px', textAlign: 'center', fontSize: 12, fontWeight: step === s ? 600 : 400, background: step === s ? '#1A1A1A' : step > s ? '#FAF8F5' : 'white', color: step === s ? '#FAF8F5' : step > s ? '#E85D3A' : '#7A7A7A', borderRight: s < 3 ? '1px solid rgba(0,0,0,0.1)' : 'none' }}>
             {step > s ? '✓ ' : `${s}. `}
             {s === 1 ? 'Choose service' : s === 2 ? 'Choose date & time' : 'Confirm details'}
           </div>
@@ -217,22 +217,22 @@ export default function BookingClient() {
                 style={{
                   padding: '20px 24px',
                   borderRadius: 10,
-                  border: `2px solid ${selectedService === svc.id ? '#1B2A4A' : 'rgba(27,42,74,0.1)'}`,
-                  background: selectedService === svc.id ? '#F5F0E6' : 'white',
+                  border: `2px solid ${selectedService === svc.id ? '#1A1A1A' : 'rgba(0,0,0,0.1)'}`,
+                  background: selectedService === svc.id ? '#FAF8F5' : 'white',
                   textAlign: 'left',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                 }}
               >
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{svc.label}</div>
-                <div style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.5 }}>{svc.desc} <span style={{ color: '#D4A84B', fontWeight: 600 }}>{svc.duration} min</span></div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', marginBottom: 4 }}>{svc.label}</div>
+                <div style={{ fontSize: 13, color: '#7A7A7A', lineHeight: 1.5 }}>{svc.desc} <span style={{ color: '#E85D3A', fontWeight: 600 }}>{svc.duration} min</span></div>
               </button>
             ))}
           </div>
           <button
             onClick={() => setStep(2)}
             disabled={!selectedService}
-            style={{ marginTop: 28, padding: '12px 28px', background: selectedService ? '#D4A84B' : 'rgba(27,42,74,0.1)', color: selectedService ? '#1B2A4A' : '#5A6A7A', borderRadius: 100, fontWeight: 600, fontSize: 13, border: 'none', cursor: selectedService ? 'pointer' : 'not-allowed' }}
+            style={{ marginTop: 28, padding: '12px 28px', background: selectedService ? '#E85D3A' : 'rgba(0,0,0,0.1)', color: selectedService ? '#1A1A1A' : '#7A7A7A', borderRadius: 100, fontWeight: 600, fontSize: 13, border: 'none', cursor: selectedService ? 'pointer' : 'not-allowed' }}
           >
             Next: Choose date &amp; time →
           </button>
@@ -244,14 +244,14 @@ export default function BookingClient() {
         <div>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, marginBottom: 24 }}>Choose a date and time</h2>
           {/* Calendar */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24, marginBottom: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24, marginBottom: 24 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-              <button onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))} style={{ background: 'none', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, padding: '6px 12px', cursor: 'pointer', color: '#1B2A4A' }}>←</button>
+              <button onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))} style={{ background: 'none', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 6, padding: '6px 12px', cursor: 'pointer', color: '#1A1A1A' }}>←</button>
               <span style={{ fontFamily: 'var(--font-display)', fontSize: 16 }}>{MONTHS[viewDate.getMonth()]} {viewDate.getFullYear()}</span>
-              <button onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))} style={{ background: 'none', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, padding: '6px 12px', cursor: 'pointer', color: '#1B2A4A' }}>→</button>
+              <button onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))} style={{ background: 'none', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 6, padding: '6px 12px', cursor: 'pointer', color: '#1A1A1A' }}>→</button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4, textAlign: 'center' }}>
-              {DAYS.map(d => <div key={d} style={{ fontSize: 11, fontWeight: 600, color: '#5A6A7A', padding: '4px 0', textTransform: 'uppercase' }}>{d}</div>)}
+              {DAYS.map(d => <div key={d} style={{ fontSize: 11, fontWeight: 600, color: '#7A7A7A', padding: '4px 0', textTransform: 'uppercase' }}>{d}</div>)}
               {calendarDays().map((d, i) => {
                 if (!d) return <div key={i} />
                 const avail = isDayAvailable(d)
@@ -267,8 +267,8 @@ export default function BookingClient() {
                       border: 'none',
                       fontSize: 13,
                       fontWeight: isSelected ? 700 : 400,
-                      background: isSelected ? '#D4A84B' : 'transparent',
-                      color: isSelected ? '#1B2A4A' : avail ? '#1B2A4A' : 'rgba(27,42,74,0.25)',
+                      background: isSelected ? '#E85D3A' : 'transparent',
+                      color: isSelected ? '#1A1A1A' : avail ? '#1A1A1A' : 'rgba(0,0,0,0.25)',
                       cursor: avail ? 'pointer' : 'default',
                     }}
                   >
@@ -282,11 +282,11 @@ export default function BookingClient() {
           {/* Time slots */}
           {selectedDate && (
             <div>
-              <h3 style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', marginBottom: 12 }}>
+              <h3 style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', marginBottom: 12 }}>
                 Available times for {formatDateLong(selectedDate)}:
               </h3>
               {availableSlots.length === 0 ? (
-                <p style={{ fontSize: 13, color: '#5A6A7A' }}>No slots available for this day. Try another date.</p>
+                <p style={{ fontSize: 13, color: '#7A7A7A' }}>No slots available for this day. Try another date.</p>
               ) : (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {availableSlots
@@ -300,9 +300,9 @@ export default function BookingClient() {
                           style={{
                             padding: '8px 16px',
                             borderRadius: 8,
-                            border: `2px solid ${isSelected ? '#1B2A4A' : 'rgba(27,42,74,0.12)'}`,
-                            background: isSelected ? '#D4A84B' : '#F5F0E6',
-                            color: '#1B2A4A',
+                            border: `2px solid ${isSelected ? '#1A1A1A' : 'rgba(0,0,0,0.12)'}`,
+                            background: isSelected ? '#E85D3A' : '#FAF8F5',
+                            color: '#1A1A1A',
                             fontSize: 13,
                             fontWeight: isSelected ? 700 : 400,
                             cursor: 'pointer',
@@ -318,13 +318,13 @@ export default function BookingClient() {
           )}
 
           <div style={{ marginTop: 28, display: 'flex', gap: 12 }}>
-            <button onClick={() => setStep(1)} style={{ padding: '12px 24px', background: 'transparent', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 100, fontSize: 13, cursor: 'pointer', color: '#5A6A7A' }}>
+            <button onClick={() => setStep(1)} style={{ padding: '12px 24px', background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 100, fontSize: 13, cursor: 'pointer', color: '#7A7A7A' }}>
               ← Back
             </button>
             <button
               onClick={() => setStep(3)}
               disabled={!selectedDate || !selectedSlot}
-              style={{ padding: '12px 28px', background: selectedDate && selectedSlot ? '#D4A84B' : 'rgba(27,42,74,0.1)', color: selectedDate && selectedSlot ? '#1B2A4A' : '#5A6A7A', borderRadius: 100, fontWeight: 600, fontSize: 13, border: 'none', cursor: selectedDate && selectedSlot ? 'pointer' : 'not-allowed' }}
+              style={{ padding: '12px 28px', background: selectedDate && selectedSlot ? '#E85D3A' : 'rgba(0,0,0,0.1)', color: selectedDate && selectedSlot ? '#1A1A1A' : '#7A7A7A', borderRadius: 100, fontWeight: 600, fontSize: 13, border: 'none', cursor: selectedDate && selectedSlot ? 'pointer' : 'not-allowed' }}
             >
               Next: Confirm details →
             </button>
@@ -344,44 +344,44 @@ export default function BookingClient() {
                 { id: 'phone', label: 'Phone (optional)', type: 'tel', required: false },
               ].map(field => (
                 <div key={field.id}>
-                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 6 }}>{field.label}</label>
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 6 }}>{field.label}</label>
                   <input
                     type={field.type}
                     required={field.required}
                     value={form[field.id as keyof typeof form]}
                     onChange={e => setForm(f => ({ ...f, [field.id]: e.target.value }))}
-                    style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 14, color: '#1B2A4A', fontFamily: 'inherit' }}
+                    style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, fontSize: 14, color: '#1A1A1A', fontFamily: 'inherit' }}
                   />
                 </div>
               ))}
               <div>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 6 }}>Anything specific you&apos;d like to discuss?</label>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 6 }}>Anything specific you&apos;d like to discuss?</label>
                 <textarea
                   rows={3}
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                  style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 14, color: '#1B2A4A', fontFamily: 'inherit', resize: 'vertical' }}
+                  style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, fontSize: 14, color: '#1A1A1A', fontFamily: 'inherit', resize: 'vertical' }}
                 />
               </div>
               {error && <p style={{ color: '#c0392b', fontSize: 13 }}>{error}</p>}
               <div style={{ display: 'flex', gap: 12 }}>
-                <button type="button" onClick={() => setStep(2)} style={{ padding: '12px 20px', background: 'transparent', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 100, fontSize: 13, cursor: 'pointer', color: '#5A6A7A' }}>
+                <button type="button" onClick={() => setStep(2)} style={{ padding: '12px 20px', background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 100, fontSize: 13, cursor: 'pointer', color: '#7A7A7A' }}>
                   ← Back
                 </button>
-                <button type="submit" disabled={loading} style={{ flex: 1, padding: '12px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontWeight: 600, fontSize: 13, border: 'none', cursor: 'pointer', opacity: loading ? 0.7 : 1 }}>
+                <button type="submit" disabled={loading} style={{ flex: 1, padding: '12px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontWeight: 600, fontSize: 13, border: 'none', cursor: 'pointer', opacity: loading ? 0.7 : 1 }}>
                   {loading ? 'Booking…' : 'Confirm booking →'}
                 </button>
               </div>
             </form>
 
             {/* Summary */}
-            <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
-              <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#5A6A7A', marginBottom: 16, fontWeight: 600 }}>Booking summary</div>
+            <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
+              <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#7A7A7A', marginBottom: 16, fontWeight: 600 }}>Booking summary</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div><div style={{ fontSize: 11, color: '#5A6A7A' }}>Service</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>{SERVICES.find(s => s.id === selectedService)?.label}</div></div>
-                <div><div style={{ fontSize: 11, color: '#5A6A7A' }}>Date</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>{formatDateLong(selectedDate)}</div></div>
-                <div><div style={{ fontSize: 11, color: '#5A6A7A' }}>Time</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>{formatTime(selectedSlot.start)} – {formatTime(selectedSlot.end)}</div></div>
-                <div><div style={{ fontSize: 11, color: '#5A6A7A' }}>Duration</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>30 minutes</div></div>
+                <div><div style={{ fontSize: 11, color: '#7A7A7A' }}>Service</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>{SERVICES.find(s => s.id === selectedService)?.label}</div></div>
+                <div><div style={{ fontSize: 11, color: '#7A7A7A' }}>Date</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>{formatDateLong(selectedDate)}</div></div>
+                <div><div style={{ fontSize: 11, color: '#7A7A7A' }}>Time</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>{formatTime(selectedSlot.start)} – {formatTime(selectedSlot.end)}</div></div>
+                <div><div style={{ fontSize: 11, color: '#7A7A7A' }}>Duration</div><div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>30 minutes</div></div>
               </div>
             </div>
           </div>

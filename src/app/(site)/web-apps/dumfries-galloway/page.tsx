@@ -75,16 +75,16 @@ export default function WebAppsDGPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Custom Development · Dumfries & Galloway
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 36,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.25,
@@ -92,7 +92,7 @@ export default function WebAppsDGPage() {
           >
             Custom Web App Development<br />in Dumfries &amp; Galloway
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 560, marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 560, marginBottom: 28, lineHeight: 1.7 }}>
             When off-the-shelf software doesn&apos;t fit, we build exactly what you need.
             Bespoke tools, built to your process, deployed and supported.
           </p>
@@ -102,8 +102,8 @@ export default function WebAppsDGPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -118,11 +118,11 @@ export default function WebAppsDGPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -133,10 +133,10 @@ export default function WebAppsDGPage() {
       </section>
 
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px' }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1A1A1A' }}>
           What we build
         </h2>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 32, maxWidth: 720 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 32, maxWidth: 720 }}>
           We build full-stack web applications using modern technologies — Next.js, React, TypeScript, Supabase,
           and Python for data-heavy work. Every application is purpose-built for your process, hosted on reliable
           infrastructure, and comes with full training and ongoing support.
@@ -148,36 +148,36 @@ export default function WebAppsDGPage() {
               key={ex.title}
               style={{
                 padding: 24,
-                border: '1px solid rgba(27,42,74,0.1)',
-                borderLeft: '3px solid #D4A84B',
+                border: '1px solid rgba(0,0,0,0.1)',
+                borderLeft: '3px solid #E85D3A',
                 borderRadius: '0 8px 8px 0',
               }}
             >
-              <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 8, color: '#1B2A4A' }}>{ex.title}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', margin: 0 }}>{ex.desc}</p>
+              <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 8, color: '#1A1A1A' }}>{ex.title}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', margin: 0 }}>{ex.desc}</p>
             </div>
           ))}
         </div>
 
-        <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1B2A4A' }}>
+        <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1A1A1A' }}>
           How the process works
         </h3>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
           We start with a free discovery call to understand your problem and what a solution needs to do.
           From there, we scope the project, agree a fixed price, and build it in phases — giving you
           something to test and use at each stage. No surprises.
         </p>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 48 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 48 }}>
           Custom web apps start from £3,000 for simpler tools. More complex applications with integrations,
           AI features, or multiple user roles are typically £5,000–£15,000. We provide a detailed quote
           after the discovery call.
         </p>
 
-        <div style={{ background: '#F5F0E6', borderRadius: 12, padding: '40px 48px', textAlign: 'center' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <div style={{ background: '#FAF8F5', borderRadius: 12, padding: '40px 48px', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
             Have a project in mind?
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 20, maxWidth: 440, margin: '0 auto 20px' }}>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 20, maxWidth: 440, margin: '0 auto 20px' }}>
             Tell us what you need. Free initial call, no obligation, no jargon.
           </p>
           <Link
@@ -185,8 +185,8 @@ export default function WebAppsDGPage() {
             style={{
               display: 'inline-block',
               padding: '12px 28px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               borderRadius: 100,
               fontSize: 13,
               fontWeight: 600,

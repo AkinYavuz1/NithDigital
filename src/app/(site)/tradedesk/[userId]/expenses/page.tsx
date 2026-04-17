@@ -41,18 +41,18 @@ export default async function ExpensesPage({ params }: Props) {
   const displayName = user.business_name || user.name || 'My Expenses'
 
   return (
-    <div style={{ minHeight: '60vh', background: '#F5F0E6' }}>
+    <div style={{ minHeight: '60vh', background: '#FAF8F5' }}>
       {/* Header */}
-      <section style={{ background: '#1B2A4A', padding: '48px 0 36px' }}>
+      <section style={{ background: '#1A1A1A', padding: '48px 0 36px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 10, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 10, fontWeight: 600 }}>
             TradeDesk · Expenses
           </div>
           <h1 style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(22px, 3vw, 30px)',
             fontWeight: 700,
-            color: '#F5F0E6',
+            color: '#FAF8F5',
           }}>
             {displayName}
           </h1>

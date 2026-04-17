@@ -138,7 +138,7 @@ export default function ChecklistClient() {
   if (loading) {
     return (
       <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ fontSize: 14, color: '#5A6A7A' }}>Loading...</div>
+        <div style={{ fontSize: 14, color: '#7A7A7A' }}>Loading...</div>
       </div>
     )
   }
@@ -146,11 +146,11 @@ export default function ChecklistClient() {
   return (
     <>
       {/* Page header */}
-      <div style={{ background: '#1B2A4A', padding: '40px 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <div style={{ background: '#1A1A1A', padding: '40px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Your Startup Checklist
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)' }}>
           10 steps to launch your Scottish business
         </p>
       </div>
@@ -159,16 +159,16 @@ export default function ChecklistClient() {
         {/* Progress bar */}
         <div style={{ marginBottom: 32 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>
+            <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>
               {completed} of 10 complete
             </span>
-            <span style={{ fontSize: 14, color: '#5A6A7A' }}>{pct}%</span>
+            <span style={{ fontSize: 14, color: '#7A7A7A' }}>{pct}%</span>
           </div>
-          <div style={{ height: 8, background: 'rgba(27,42,74,0.1)', borderRadius: 100, overflow: 'hidden' }}>
+          <div style={{ height: 8, background: 'rgba(0,0,0,0.1)', borderRadius: 100, overflow: 'hidden' }}>
             <div
               style={{
                 height: '100%',
-                background: '#D4A84B',
+                background: '#E85D3A',
                 borderRadius: 100,
                 width: `${pct}%`,
                 transition: 'width 0.4s ease',
@@ -181,9 +181,9 @@ export default function ChecklistClient() {
         {!user && (
           <div
             style={{
-              background: '#F5F0E6',
-              border: '1px solid rgba(27,42,74,0.1)',
-              borderLeft: '3px solid #D4A84B',
+              background: '#FAF8F5',
+              border: '1px solid rgba(0,0,0,0.1)',
+              borderLeft: '3px solid #E85D3A',
               borderRadius: '0 8px 8px 0',
               padding: '12px 16px',
               marginBottom: 24,
@@ -195,13 +195,13 @@ export default function ChecklistClient() {
               gap: 8,
             }}
           >
-            <span style={{ color: '#5A6A7A' }}>
+            <span style={{ color: '#7A7A7A' }}>
               💾 Create a free account to save your progress across devices
             </span>
             <div style={{ display: 'flex', gap: 8 }}>
-              <Link href="/auth/login" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>Sign in</Link>
-              <span style={{ color: '#5A6A7A' }}>·</span>
-              <Link href="/auth/signup" style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>Create account</Link>
+              <Link href="/auth/login" style={{ fontSize: 12, color: '#E85D3A', fontWeight: 600 }}>Sign in</Link>
+              <span style={{ color: '#7A7A7A' }}>·</span>
+              <Link href="/auth/signup" style={{ fontSize: 12, color: '#E85D3A', fontWeight: 600 }}>Create account</Link>
             </div>
           </div>
         )}
@@ -217,10 +217,10 @@ export default function ChecklistClient() {
               <div
                 key={step.n}
                 style={{
-                  border: `1px solid ${isCompleted ? 'rgba(212,168,75,0.4)' : 'rgba(27,42,74,0.1)'}`,
+                  border: `1px solid ${isCompleted ? 'rgba(232,93,58,0.4)' : 'rgba(0,0,0,0.1)'}`,
                   borderRadius: 8,
                   overflow: 'hidden',
-                  background: isCompleted ? 'rgba(212,168,75,0.04)' : '#fff',
+                  background: isCompleted ? 'rgba(232,93,58,0.04)' : '#fff',
                 }}
               >
                 {/* Step header */}
@@ -243,8 +243,8 @@ export default function ChecklistClient() {
                       width: 24,
                       height: 24,
                       borderRadius: 6,
-                      border: `2px solid ${isCompleted ? '#D4A84B' : 'rgba(27,42,74,0.2)'}`,
-                      background: isCompleted ? '#D4A84B' : 'transparent',
+                      border: `2px solid ${isCompleted ? '#E85D3A' : 'rgba(0,0,0,0.2)'}`,
+                      background: isCompleted ? '#E85D3A' : 'transparent',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -253,10 +253,10 @@ export default function ChecklistClient() {
                       transition: 'all 0.2s ease',
                     }}
                   >
-                    {isCompleted && <Check size={14} color="#1B2A4A" />}
+                    {isCompleted && <Check size={14} color="#1A1A1A" />}
                   </button>
 
-                  <span style={{ fontSize: 11, color: '#5A6A7A', minWidth: 20 }}>
+                  <span style={{ fontSize: 11, color: '#7A7A7A', minWidth: 20 }}>
                     {step.n < 10 ? `0${step.n}` : step.n}
                   </span>
                   <span style={{ fontSize: 16 }}>{step.icon}</span>
@@ -265,7 +265,7 @@ export default function ChecklistClient() {
                       flex: 1,
                       fontSize: 15,
                       fontWeight: 600,
-                      color: '#1B2A4A',
+                      color: '#1A1A1A',
                       textDecoration: isCompleted ? 'line-through' : 'none',
                       opacity: isCompleted ? 0.6 : 1,
                     }}
@@ -274,35 +274,35 @@ export default function ChecklistClient() {
                   </span>
                   <ChevronDown
                     size={16}
-                    color="#5A6A7A"
+                    color="#7A7A7A"
                     style={{ transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s', flexShrink: 0 }}
                   />
                 </div>
 
                 {/* Expanded content */}
                 {isOpen && (
-                  <div style={{ padding: '0 20px 20px', borderTop: '1px solid rgba(27,42,74,0.06)' }}>
+                  <div style={{ padding: '0 20px 20px', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                     {/* Why it matters */}
                     <div style={{ padding: '16px 0 12px' }}>
-                      <p style={{ fontSize: 14, lineHeight: 1.7, color: '#5A6A7A' }}>{step.why}</p>
+                      <p style={{ fontSize: 14, lineHeight: 1.7, color: '#7A7A7A' }}>{step.why}</p>
                     </div>
 
                     {/* Actions */}
                     {step.actions.length > 0 && (
                       <div style={{ marginBottom: 16 }}>
-                        <h4 style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#1B2A4A', marginBottom: 8, fontWeight: 600 }}>
+                        <h4 style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#1A1A1A', marginBottom: 8, fontWeight: 600 }}>
                           Action items
                         </h4>
                         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
                           {step.actions.map((a, i) => (
                             <li key={i} style={{ fontSize: 13, display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                              <span style={{ color: '#D4A84B', marginTop: 2 }}>→</span>
+                              <span style={{ color: '#E85D3A', marginTop: 2 }}>→</span>
                               {a.href ? (
-                                <a href={a.href} target="_blank" rel="noopener noreferrer" style={{ color: '#2D4A7A', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: 4 }}>
+                                <a href={a.href} target="_blank" rel="noopener noreferrer" style={{ color: '#333333', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: 4 }}>
                                   {a.text} <ExternalLink size={11} />
                                 </a>
                               ) : (
-                                <span style={{ color: '#1B2A4A' }}>{a.text}</span>
+                                <span style={{ color: '#1A1A1A' }}>{a.text}</span>
                               )}
                             </li>
                           ))}
@@ -313,7 +313,7 @@ export default function ChecklistClient() {
                     {/* Providers table */}
                     {step.providers && (
                       <div style={{ marginBottom: 16 }}>
-                        <h4 style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#1B2A4A', marginBottom: 8, fontWeight: 600 }}>
+                        <h4 style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#1A1A1A', marginBottom: 8, fontWeight: 600 }}>
                           Recommended providers
                         </h4>
                         <div style={{ overflowX: 'auto' }}>
@@ -321,7 +321,7 @@ export default function ChecklistClient() {
                             <thead>
                               <tr>
                                 {['Provider', 'Cost', 'Key features', 'Best for'].map((h) => (
-                                  <th key={h} style={{ textAlign: 'left', padding: '8px 12px', background: '#F5F0E6', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.8, color: '#5A6A7A', fontWeight: 500 }}>
+                                  <th key={h} style={{ textAlign: 'left', padding: '8px 12px', background: '#FAF8F5', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.8, color: '#7A7A7A', fontWeight: 500 }}>
                                     {h}
                                   </th>
                                 ))}
@@ -329,15 +329,15 @@ export default function ChecklistClient() {
                             </thead>
                             <tbody>
                               {step.providers.map((p) => (
-                                <tr key={p.name} style={{ borderBottom: '1px solid rgba(27,42,74,0.06)' }}>
+                                <tr key={p.name} style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
                                   <td style={{ padding: '10px 12px', fontWeight: 600 }}>
-                                    <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ color: '#D4A84B' }}>
+                                    <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ color: '#E85D3A' }}>
                                       {p.name}
                                     </a>
                                   </td>
-                                  <td style={{ padding: '10px 12px', color: '#5A6A7A' }}>{p.cost}</td>
-                                  <td style={{ padding: '10px 12px', color: '#5A6A7A' }}>{p.cover}</td>
-                                  <td style={{ padding: '10px 12px', color: '#5A6A7A' }}>{p.bestFor}</td>
+                                  <td style={{ padding: '10px 12px', color: '#7A7A7A' }}>{p.cost}</td>
+                                  <td style={{ padding: '10px 12px', color: '#7A7A7A' }}>{p.cover}</td>
+                                  <td style={{ padding: '10px 12px', color: '#7A7A7A' }}>{p.bestFor}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -350,25 +350,25 @@ export default function ChecklistClient() {
                     {step.tip && (
                       <div
                         style={{
-                          background: '#F5F0E6',
-                          borderLeft: '3px solid #D4A84B',
+                          background: '#FAF8F5',
+                          borderLeft: '3px solid #E85D3A',
                           padding: '10px 14px',
                           borderRadius: '0 6px 6px 0',
                           fontSize: 13,
-                          color: '#5A6A7A',
+                          color: '#7A7A7A',
                           marginBottom: 16,
                         }}
                       >
-                        <strong style={{ color: '#1B2A4A' }}>Tip: </strong>
+                        <strong style={{ color: '#1A1A1A' }}>Tip: </strong>
                         {step.tip}
                       </div>
                     )}
 
                     {/* Step 6 website CTA */}
                     {step.n === 6 && (
-                      <div style={{ background: '#1B2A4A', borderRadius: 8, padding: '16px 20px', marginBottom: 16, color: '#F5F0E6', fontSize: 13 }}>
-                        <strong style={{ color: '#D4A84B' }}>Need a website?</strong> Nith Digital builds business websites from £500. Or{' '}
-                        <Link href="/launchpad/bundle" style={{ color: '#D4A84B', textDecoration: 'underline' }}>
+                      <div style={{ background: '#1A1A1A', borderRadius: 8, padding: '16px 20px', marginBottom: 16, color: '#FAF8F5', fontSize: 13 }}>
+                        <strong style={{ color: '#E85D3A' }}>Need a website?</strong> Nith Digital builds business websites from £500. Or{' '}
+                        <Link href="/launchpad/bundle" style={{ color: '#E85D3A', textDecoration: 'underline' }}>
                           complete this checklist
                         </Link>{' '}
                         and unlock our Startup Bundle — we&apos;ll build it for free.
@@ -384,7 +384,7 @@ export default function ChecklistClient() {
 
                     {/* Notes */}
                     <div>
-                      <label style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#1B2A4A', fontWeight: 600, display: 'block', marginBottom: 6 }}>
+                      <label style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#1A1A1A', fontWeight: 600, display: 'block', marginBottom: 6 }}>
                         Notes (optional)
                       </label>
                       <textarea
@@ -394,14 +394,14 @@ export default function ChecklistClient() {
                         style={{
                           width: '100%',
                           padding: '10px 12px',
-                          border: '1px solid rgba(27,42,74,0.15)',
+                          border: '1px solid rgba(0,0,0,0.15)',
                           borderRadius: 6,
                           fontFamily: 'var(--font-body)',
                           fontSize: 13,
                           resize: 'vertical',
                           minHeight: 72,
                           outline: 'none',
-                          color: '#1B2A4A',
+                          color: '#1A1A1A',
                         }}
                       />
                     </div>
@@ -412,12 +412,12 @@ export default function ChecklistClient() {
                       style={{
                         marginTop: 12,
                         padding: '10px 20px',
-                        background: isCompleted ? 'transparent' : '#D4A84B',
-                        color: isCompleted ? '#5A6A7A' : '#1B2A4A',
+                        background: isCompleted ? 'transparent' : '#E85D3A',
+                        color: isCompleted ? '#7A7A7A' : '#1A1A1A',
                         borderRadius: 100,
                         fontSize: 13,
                         fontWeight: 600,
-                        border: isCompleted ? '1px solid rgba(27,42,74,0.1)' : 'none',
+                        border: isCompleted ? '1px solid rgba(0,0,0,0.1)' : 'none',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease',
                       }}
@@ -469,7 +469,7 @@ function CompletionSection({ promoCode, onGenerateCode }: { promoCode: string | 
 
       {!promoCode ? (
         <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 16 }}>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 16 }}>
             You&apos;ve completed all 10 steps! Generate your unique promo code to claim the Startup Bundle.
           </p>
           <button
@@ -477,8 +477,8 @@ function CompletionSection({ promoCode, onGenerateCode }: { promoCode: string | 
             disabled={generating}
             style={{
               padding: '12px 28px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               borderRadius: 100,
               fontSize: 13,
               fontWeight: 600,
@@ -492,21 +492,21 @@ function CompletionSection({ promoCode, onGenerateCode }: { promoCode: string | 
       ) : (
         <div
           style={{
-            border: '2px solid #D4A84B',
+            border: '2px solid #E85D3A',
             borderRadius: 12,
             padding: 24,
             textAlign: 'center',
-            background: 'rgba(212,168,75,0.04)',
+            background: 'rgba(232,93,58,0.04)',
           }}
         >
-          <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 8 }}>
+          <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 8 }}>
             🎁 You&apos;ve unlocked the Nith Digital Startup Bundle!
           </p>
           <div
             style={{
               fontSize: 24,
               fontWeight: 700,
-              color: '#1B2A4A',
+              color: '#1A1A1A',
               letterSpacing: 2,
               margin: '12px 0',
               fontFamily: 'monospace',
@@ -518,8 +518,8 @@ function CompletionSection({ promoCode, onGenerateCode }: { promoCode: string | 
             onClick={copyCode}
             style={{
               padding: '8px 20px',
-              background: copied ? '#2D4A7A' : '#1B2A4A',
-              color: '#F5F0E6',
+              background: copied ? '#333333' : '#1A1A1A',
+              color: '#FAF8F5',
               borderRadius: 100,
               fontSize: 12,
               fontWeight: 600,
@@ -530,14 +530,14 @@ function CompletionSection({ promoCode, onGenerateCode }: { promoCode: string | 
           >
             {copied ? '✓ Copied!' : 'Copy code'}
           </button>
-          <p style={{ fontSize: 12, color: '#5A6A7A', marginBottom: 16 }}>
+          <p style={{ fontSize: 12, color: '#7A7A7A', marginBottom: 16 }}>
             Use this code to claim: free website build + Business OS
           </p>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/launchpad/bundle" style={{ padding: '10px 20px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 12, fontWeight: 600 }}>
+            <Link href="/launchpad/bundle" style={{ padding: '10px 20px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 12, fontWeight: 600 }}>
               Claim Startup Bundle
             </Link>
-            <Link href="/os" style={{ padding: '10px 20px', background: 'transparent', color: '#1B2A4A', borderRadius: 100, fontSize: 12, fontWeight: 600, border: '1px solid rgba(27,42,74,0.2)' }}>
+            <Link href="/os" style={{ padding: '10px 20px', background: 'transparent', color: '#1A1A1A', borderRadius: 100, fontSize: 12, fontWeight: 600, border: '1px solid rgba(0,0,0,0.2)' }}>
               Try Business OS
             </Link>
           </div>

@@ -150,8 +150,8 @@ export default function InvoiceGeneratorClient() {
   }
 
   const inputStyle: React.CSSProperties = {
-    width: '100%', padding: '10px 14px', border: '1px solid rgba(27,42,74,0.15)',
-    borderRadius: 8, fontSize: 13, color: '#1B2A4A', fontFamily: 'inherit',
+    width: '100%', padding: '10px 14px', border: '1px solid rgba(0,0,0,0.15)',
+    borderRadius: 8, fontSize: 13, color: '#1A1A1A', fontFamily: 'inherit',
   }
 
   return (
@@ -160,7 +160,7 @@ export default function InvoiceGeneratorClient() {
         {/* Form */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* From */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 16, fontWeight: 400 }}>Your business</h3>
             {[
               { label: 'Business name', key: 'name', placeholder: 'Acme Ltd' },
@@ -168,28 +168,28 @@ export default function InvoiceGeneratorClient() {
               { label: 'Email', key: 'email', placeholder: 'hello@example.com' },
             ].map(f => (
               <div key={f.key} style={{ marginBottom: 12 }}>
-                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>{f.label}</label>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>{f.label}</label>
                 <input style={inputStyle} value={biz[f.key as keyof typeof biz]} onChange={e => setBiz(b => ({ ...b, [f.key]: e.target.value }))} placeholder={f.placeholder} />
               </div>
             ))}
           </div>
 
           {/* To */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 16, fontWeight: 400 }}>Bill to</h3>
             {[
               { label: 'Client name', key: 'name', placeholder: 'Client Ltd' },
               { label: 'Client address', key: 'address', placeholder: 'Edinburgh, EH1 1AB' },
             ].map(f => (
               <div key={f.key} style={{ marginBottom: 12 }}>
-                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>{f.label}</label>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>{f.label}</label>
                 <input style={inputStyle} value={client[f.key as keyof typeof client]} onChange={e => setClient(c => ({ ...c, [f.key]: e.target.value }))} placeholder={f.placeholder} />
               </div>
             ))}
           </div>
 
           {/* Invoice details */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 16, fontWeight: 400 }}>Invoice details</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 12 }}>
               {[
@@ -198,16 +198,16 @@ export default function InvoiceGeneratorClient() {
                 { label: 'Due date', val: dueDate, set: setDueDate, type: 'date' },
               ].map(f => (
                 <div key={f.label}>
-                  <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>{f.label}</label>
+                  <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>{f.label}</label>
                   <input type={f.type} style={inputStyle} value={f.val} onChange={e => f.set(e.target.value)} />
                 </div>
               ))}
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>VAT rate</label>
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.3px' }}>VAT rate</label>
               <div style={{ display: 'flex', gap: 8 }}>
                 {([0, 5, 20] as VATRate[]).map(r => (
-                  <button key={r} onClick={() => setVatRate(r)} style={{ flex: 1, padding: '8px', borderRadius: 8, border: '2px solid', borderColor: vatRate === r ? '#1B2A4A' : 'rgba(27,42,74,0.15)', background: vatRate === r ? '#1B2A4A' : 'white', color: vatRate === r ? '#F5F0E6' : '#5A6A7A', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
+                  <button key={r} onClick={() => setVatRate(r)} style={{ flex: 1, padding: '8px', borderRadius: 8, border: '2px solid', borderColor: vatRate === r ? '#1A1A1A' : 'rgba(0,0,0,0.15)', background: vatRate === r ? '#1A1A1A' : 'white', color: vatRate === r ? '#FAF8F5' : '#7A7A7A', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
                     {r}%
                   </button>
                 ))}
@@ -219,7 +219,7 @@ export default function InvoiceGeneratorClient() {
         {/* Preview */}
         <div>
           {/* Line items */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24, marginBottom: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24, marginBottom: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 16, fontWeight: 400 }}>Line items</h3>
             {items.map(item => (
               <div key={item.id} style={{ display: 'grid', gridTemplateColumns: '1fr 60px 80px 30px', gap: 8, marginBottom: 8, alignItems: 'center' }}>
@@ -229,47 +229,47 @@ export default function InvoiceGeneratorClient() {
                 <button onClick={() => removeItem(item.id)} style={{ padding: '8px', background: 'none', border: 'none', cursor: 'pointer', color: '#c0392b', fontSize: 16 }}>×</button>
               </div>
             ))}
-            <button onClick={addItem} style={{ padding: '8px 16px', background: 'transparent', border: '1px dashed rgba(27,42,74,0.3)', borderRadius: 8, fontSize: 12, cursor: 'pointer', color: '#5A6A7A', marginTop: 4 }}>
+            <button onClick={addItem} style={{ padding: '8px 16px', background: 'transparent', border: '1px dashed rgba(0,0,0,0.3)', borderRadius: 8, fontSize: 12, cursor: 'pointer', color: '#7A7A7A', marginTop: 4 }}>
               + Add line
             </button>
           </div>
 
           {/* Totals */}
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: 24, color: '#F5F0E6', marginBottom: 24 }}>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: 24, color: '#FAF8F5', marginBottom: 24 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }}>
-                <span style={{ color: 'rgba(245,240,230,0.6)' }}>Subtotal</span>
+                <span style={{ color: 'rgba(250,248,245,0.6)' }}>Subtotal</span>
                 <span>{fmt(subtotal)}</span>
               </div>
               {vatRate > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }}>
-                  <span style={{ color: 'rgba(245,240,230,0.6)' }}>VAT ({vatRate}%)</span>
+                  <span style={{ color: 'rgba(250,248,245,0.6)' }}>VAT ({vatRate}%)</span>
                   <span>{fmt(vat)}</span>
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 22, fontWeight: 700, paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                 <span>Total</span>
-                <span style={{ color: '#D4A84B' }}>{fmt(total)}</span>
+                <span style={{ color: '#E85D3A' }}>{fmt(total)}</span>
               </div>
             </div>
           </div>
 
           {/* Notes */}
           <div style={{ marginBottom: 24 }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 6 }}>Notes / payment terms</label>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 6 }}>Notes / payment terms</label>
             <textarea rows={3} style={inputStyle} value={notes} onChange={e => setNotes(e.target.value)} />
           </div>
 
           <button onClick={downloadPdf}
-            style={{ width: '100%', padding: '14px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', marginBottom: 16 }}>
+            style={{ width: '100%', padding: '14px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', marginBottom: 16 }}>
             Download PDF →
           </button>
 
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 20 }}>
-            <p style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.7, margin: 0 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 20 }}>
+            <p style={{ fontSize: 13, color: '#7A7A7A', lineHeight: 1.7, margin: 0 }}>
               Want to <strong>save</strong> invoices, track payments, and manage clients?{' '}
-              <Link href="/os" style={{ color: '#D4A84B', fontWeight: 600 }}>Try the Business OS</Link> —
-              first month free with the <Link href="/launchpad/bundle" style={{ color: '#D4A84B', fontWeight: 600 }}>Startup Bundle</Link>.
+              <Link href="/os" style={{ color: '#E85D3A', fontWeight: 600 }}>Try the Business OS</Link> —
+              first month free with the <Link href="/launchpad/bundle" style={{ color: '#E85D3A', fontWeight: 600 }}>Startup Bundle</Link>.
             </p>
           </div>
         </div>

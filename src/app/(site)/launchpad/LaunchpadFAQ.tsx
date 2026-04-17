@@ -17,7 +17,7 @@ export default function LaunchpadFAQ({ faqs }: { faqs: FAQ[] }) {
         <div
           key={i}
           style={{
-            border: '1px solid rgba(27,42,74,0.1)',
+            border: '1px solid rgba(0,0,0,0.1)',
             borderRadius: 8,
             overflow: 'hidden',
           }}
@@ -36,7 +36,7 @@ export default function LaunchpadFAQ({ faqs }: { faqs: FAQ[] }) {
               alignItems: 'center',
               fontSize: 14,
               fontWeight: 600,
-              color: '#1B2A4A',
+              color: '#1A1A1A',
               fontFamily: 'inherit',
             }}
           >
@@ -51,7 +51,7 @@ export default function LaunchpadFAQ({ faqs }: { faqs: FAQ[] }) {
             />
           </button>
           {open === i && (
-            <div style={{ padding: '0 20px 16px', fontSize: 13, lineHeight: 1.7, color: '#5A6A7A' }}>
+            <div style={{ padding: '0 20px 16px', fontSize: 13, lineHeight: 1.7, color: '#7A7A7A' }}>
               {faq.a}
             </div>
           )}

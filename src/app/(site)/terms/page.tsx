@@ -127,11 +127,11 @@ const SECTIONS = [
 export default function TermsPage() {
   return (
     <>
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Terms &amp; Conditions
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 440, margin: '0 auto' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 440, margin: '0 auto' }}>
           Please read these terms before engaging our services.
         </p>
       </div>
@@ -144,7 +144,7 @@ export default function TermsPage() {
                 {s.heading}
               </h2>
               {s.body.map((para, i) => (
-                <p key={i} style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 10 }}>
+                <p key={i} style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 10 }}>
                   {para}
                 </p>
               ))}

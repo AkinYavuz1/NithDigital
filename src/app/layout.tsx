@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Libre_Baskerville, DM_Sans } from 'next/font/google'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -8,17 +8,11 @@ import './globals.css'
 const GA_ID = 'AW-18063310136'
 const GA4_ID = 'G-7CEGSQ3TGS'
 
-const libreBaskerville = Libre_Baskerville({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-libre-baskerville',
-})
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-dm-sans',
+  variable: '--font-plus-jakarta-sans',
 })
 
 export const metadata: Metadata = {
@@ -61,9 +55,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en-GB" className={`${libreBaskerville.variable} ${dmSans.variable}`}>
+    <html lang="en-GB" className={plusJakartaSans.variable}>
       <head>
         <meta name="facebook-domain-verification" content="e8q8w5dp4ssnscsk1wsjqnfepv9plf" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link

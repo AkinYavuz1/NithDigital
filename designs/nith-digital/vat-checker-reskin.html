@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAT Threshold Checker — Nith Digital</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+  :root{
+    --bg:#FAF8F5;
+    --surface:#FFFFFF;
+    --text:#1A1A1A;
+    --text-muted:#7A7A7A;
+    --accent:#E85D3A;
+    --accent-hover:#D04E2D;
+    --radius:14px;
+    --max-w:1080px;
+    --pad:max(5vw,24px);
+    --ease:cubic-bezier(.35,0,0,1);
+  }
+
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#fff}
+
+  /* ── Lava lamp background ── */
+  .lava-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+  .lava-blob{position:absolute;border-radius:50%;will-change:transform;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .lava-blob-1{width:60vw;height:60vw;background:radial-gradient(circle,rgba(232,93,58,0.55) 0%,rgba(232,93,58,0.18) 40%,transparent 65%);top:-20%;left:-15%;filter:blur(45px);animation:lava1 14s infinite}
+  .lava-blob-2{width:55vw;height:55vw;background:radial-gradient(circle,rgba(45,127,249,0.4) 0%,rgba(45,127,249,0.12) 40%,transparent 65%);bottom:-15%;right:-10%;filter:blur(40px);animation:lava2 16s infinite}
+  .lava-blob-3{width:50vw;height:50vw;background:radial-gradient(circle,rgba(245,166,35,0.45) 0%,rgba(245,166,35,0.14) 40%,transparent 65%);top:30%;left:25%;filter:blur(42px);animation:lava3 18s infinite}
+  @keyframes lava1{0%,100%{transform:translate(0,0) scale(1)}20%{transform:translate(25vw,12vh) scale(1.25)}45%{transform:translate(-10vw,22vh) scale(0.85)}70%{transform:translate(20vw,-10vh) scale(1.18)}}
+  @keyframes lava2{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(-22vw,-14vh) scale(1.2)}55%{transform:translate(18vw,-20vh) scale(0.88)}80%{transform:translate(-15vw,12vh) scale(1.12)}}
+  @keyframes lava3{0%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(-28vw,14vh) scale(1.3)}60%{transform:translate(20vw,-16vh) scale(0.78)}85%{transform:translate(-8vw,8vh) scale(1.1)}}
+
+  .noise-overlay{position:fixed;inset:-10rem;z-index:1;pointer-events:none;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px;animation:grain 1.5s steps(3) infinite}
+  @keyframes grain{0%,100%{transform:translate3d(0,9rem,0)}25%{transform:translate3d(-5rem,-4rem,0)}50%{transform:translate3d(7rem,2rem,0)}75%{transform:translate3d(-3rem,-7rem,0)}}
+
+  .frost-overlay{position:fixed;top:0;left:0;width:100%;height:100%;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);background-color:rgba(250,248,245,0.45);z-index:1;pointer-events:none}
+
+  .page{position:relative;z-index:2}
+
+  /* ── Navbar (matches design-10) ── */
+  .navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px var(--pad);background:rgba(250,248,245,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 12px rgba(0,0,0,0.04)}
+  .nav-logo{font-size:1.2rem;font-weight:700;letter-spacing:-0.02em;color:var(--text);text-decoration:none}
+  .nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+  .nav-links a{font-size:0.9rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.3s var(--ease);position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--accent);transition:width 0.3s var(--ease)}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a:hover::after{width:100%}
+  .nav-links a.nav-cta{padding:10px 24px;border-radius:50px;font-size:0.85rem;font-weight:600;background:var(--accent);color:#fff;box-shadow:0 4px 20px rgba(232,93,58,0.3);transition:all 0.4s var(--ease)}
+  .nav-links a.nav-cta::after{display:none}
+  .nav-links a.nav-cta:hover{background:var(--accent-hover);transform:translateY(-2px)}
+
+  /* ── Hero ── */
+  .hero{padding:64px var(--pad) 48px;max-width:var(--max-w);margin:0 auto}
+  .hero-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:12px}
+  .hero h1{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+  .hero p{font-size:1rem;color:var(--text-muted)}
+
+  /* ── Tool layout ── */
+  .tool-layout{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad) 80px;display:grid;grid-template-columns:1fr 320px;gap:40px}
+
+  /* ── Card styling ── */
+  .card{background:var(--surface);border-radius:var(--radius);padding:32px;box-shadow:0 2px 16px rgba(0,0,0,0.03)}
+  .card h2{font-size:1.15rem;font-weight:600;margin-bottom:20px;letter-spacing:-0.01em}
+  .card h3{font-size:1rem;font-weight:600;margin-bottom:16px}
+
+  /* ── Form fields ── */
+  .field{margin-bottom:24px}
+  .field label{display:block;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:8px}
+  .field input[type="text"],.field input[type="number"]{width:100%;border:none;border-bottom:1.5px solid rgba(0,0,0,0.1);background:transparent;padding:10px 0;font-size:1rem;font-family:inherit;color:var(--text);outline:none;transition:border-color 0.3s var(--ease)}
+  .field input:focus{border-bottom-color:var(--accent)}
+  .field input::placeholder{color:rgba(0,0,0,0.25)}
+
+  /* ── Trend buttons ── */
+  .trend-group{display:flex;gap:8px}
+  .trend-btn{padding:8px 18px;border-radius:50px;font-size:0.85rem;font-weight:500;border:1.5px solid rgba(0,0,0,0.1);background:transparent;color:var(--text);cursor:pointer;transition:all 0.3s var(--ease);font-family:inherit}
+  .trend-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .trend-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* ── Result card ── */
+  .result{background:#F0FAF0;border-radius:var(--radius);padding:24px;margin-top:24px}
+  .result-status{display:flex;align-items:center;gap:8px;font-weight:600;font-size:1rem;margin-bottom:8px}
+  .result-dot{width:10px;height:10px;border-radius:50%;background:#27ae60}
+  .result-detail{font-size:0.9rem;color:var(--text-muted);margin-bottom:16px}
+
+  /* ── Progress bar ── */
+  .progress-wrap{display:flex;align-items:center;gap:12px;font-size:0.8rem;color:var(--text-muted);margin-bottom:8px}
+  .progress-bar{flex:1;height:8px;background:rgba(0,0,0,0.06);border-radius:4px;overflow:hidden}
+  .progress-fill{height:100%;background:#27ae60;border-radius:4px;transition:width 0.6s var(--ease)}
+  .progress-label{font-size:0.8rem;color:var(--text-muted);margin-top:4px}
+
+  /* ── Flat rate cards ── */
+  .frs-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  .frs-card{background:var(--bg);border-radius:10px;padding:16px;text-align:center}
+  .frs-card .frs-label{font-size:0.75rem;color:var(--text-muted);margin-bottom:4px}
+  .frs-card .frs-value{font-size:1.3rem;font-weight:700;color:var(--text)}
+  .frs-note{font-size:0.8rem;color:var(--text-muted);font-style:italic;margin-top:12px}
+  .frs-saving{font-size:0.9rem;font-weight:600;color:var(--accent);margin-top:8px}
+
+  /* ── Facts table ── */
+  .facts-table{width:100%}
+  .facts-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.85rem}
+  .facts-row:last-child{border-bottom:none}
+  .facts-key{color:var(--text-muted)}
+  .facts-val{font-weight:600}
+
+  /* ── Sidebar ── */
+  .sidebar{display:flex;flex-direction:column;gap:24px}
+  .sidebar .card{padding:24px}
+  .sidebar .card h3{font-size:0.9rem}
+  .sidebar .card p{font-size:0.85rem;color:var(--text-muted);line-height:1.6}
+  .sidebar .card a{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+
+  /* ── Footer (matches design-10) ── */
+  .footer{max-width:var(--max-w);margin:0 auto;padding:48px var(--pad) 32px;border-top:1px solid rgba(0,0,0,0.06)}
+  .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-bottom:32px}
+  .footer-col-title{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px}
+  .footer-col a{display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;transition:color 0.3s var(--ease)}
+  .footer-col a:hover{color:var(--accent)}
+  .footer-areas{padding:20px 0;border-top:1px solid rgba(0,0,0,0.06)}
+  .footer-areas-title{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:10px}
+  .footer-areas-links{display:flex;flex-wrap:wrap;gap:6px 20px}
+  .footer-areas-links a{font-size:0.8rem;color:var(--text-muted);transition:color 0.3s var(--ease)}
+  .footer-areas-links a:hover{color:var(--accent)}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:20px;border-top:1px solid rgba(0,0,0,0.06);font-size:0.8rem;color:var(--text-muted)}
+  .footer-bottom a{transition:color 0.3s var(--ease)}
+  .footer-bottom a:hover{color:var(--accent)}
+  .footer-bottom-links{display:flex;gap:16px}
+
+  /* ── Mobile ── */
+  @media(max-width:768px){
+    .nav-links li:not(:last-child){display:none}
+    .tool-layout{grid-template-columns:1fr;gap:24px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .frs-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div class="lava-canvas">
+  <div class="lava-blob lava-blob-1"></div>
+  <div class="lava-blob lava-blob-2"></div>
+  <div class="lava-blob lava-blob-3"></div>
+</div>
+<div class="noise-overlay"></div>
+<div class="frost-overlay"></div>
+
+<div class="page">
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="/" class="nav-logo">Nith Digital</a>
+  <ul class="nav-links">
+    <li><a href="/services">Services</a></li>
+    <li><a href="/work">Work</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/tools">Tools</a></li>
+    <li><a href="/contact" class="nav-cta">Contact us</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <p class="hero-label">Free tool &middot; No signup</p>
+  <h1>VAT Threshold Checker</h1>
+  <p>Do I need to register for VAT? Find out instantly.</p>
+</div>
+
+<!-- Tool -->
+<div class="tool-layout">
+  <div>
+    <div class="card">
+      <h2>Your business turnover</h2>
+
+      <div class="field">
+        <label>Annual taxable turnover (last 12 months)</label>
+        <input type="text" placeholder="&pound; 60,000" value="&pound; 60,000">
+      </div>
+
+      <div class="field">
+        <label>Expected turnover in the next 30 days alone</label>
+        <input type="text" placeholder="&pound; 5,000" value="&pound; 5,000">
+      </div>
+
+      <div class="field">
+        <label>Business trend</label>
+        <div class="trend-group">
+          <button class="trend-btn active">Growing</button>
+          <button class="trend-btn">Stable</button>
+          <button class="trend-btn">Declining</button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="result">
+        <div class="result-status">
+          <span class="result-dot"></span>
+          You don't need to register for VAT yet
+        </div>
+        <p class="result-detail">You're &pound;30,000 below the &pound;90,000 threshold.</p>
+        <div class="progress-wrap">
+          <span>&pound;0</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:67%"></div></div>
+          <span>&pound;90,000</span>
+        </div>
+        <p class="progress-label">Your turnover: &pound;60,000 (67% of threshold)</p>
+      </div>
+    </div>
+
+    <!-- Flat Rate Scheme -->
+    <div class="card" style="margin-top:24px">
+      <h3>VAT Flat Rate Scheme</h3>
+      <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px">If you register for VAT, the Flat Rate Scheme (FRS) can simplify returns.</p>
+      <div class="frs-grid">
+        <div class="frs-card">
+          <p class="frs-label">Standard VAT collected (20%)</p>
+          <p class="frs-value">&pound;12,000</p>
+        </div>
+        <div class="frs-card">
+          <p class="frs-label">Flat Rate paid (est. 12%)</p>
+          <p class="frs-value">&pound;7,200</p>
+        </div>
+      </div>
+      <p class="frs-saving">You could potentially keep &pound;4,800/year with the Flat Rate Scheme.</p>
+      <p class="frs-note">Note: Flat Rate Scheme percentages vary by industry.</p>
+    </div>
+
+    <!-- Facts -->
+    <div class="card" style="margin-top:24px">
+      <h3>VAT facts</h3>
+      <div class="facts-table">
+        <div class="facts-row"><span class="facts-key">Registration threshold</span><span class="facts-val">&pound;90,000</span></div>
+        <div class="facts-row"><span class="facts-key">Standard rate</span><span class="facts-val">20%</span></div>
+        <div class="facts-row"><span class="facts-key">Reduced rate</span><span class="facts-val">5%</span></div>
+        <div class="facts-row"><span class="facts-key">Zero rate</span><span class="facts-val">0%</span></div>
+        <div class="facts-row"><span class="facts-key">Registration deadline</span><span class="facts-val">30 days after exceeding threshold</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="card">
+      <h3>Need help with VAT?</h3>
+      <p>We can connect you with a local accountant or help you understand your obligations. <a href="/contact">Get in touch</a>.</p>
+    </div>
+    <div class="card">
+      <h3>More free tools</h3>
+      <p><a href="/tools/take-home-calculator">Take-Home Calculator</a></p>
+      <p><a href="/tools/invoice-generator">Invoice Generator</a></p>
+      <p><a href="/tools/website-quote">Website Quote</a></p>
+      <p><a href="/tools/site-audit">Site Audit</a></p>
+      <p><a href="/tools/sole-trader-vs-limited">Sole Trader vs Limited</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-col-title">Services</div>
+      <a href="/services">Business websites</a>
+      <a href="/services">Dashboards &amp; reporting</a>
+      <a href="/services">Booking systems</a>
+      <a href="/services">Custom apps</a>
+      <a href="/book">Book a free call</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Free Tools</div>
+      <a href="/tools/vat-checker">VAT Threshold Checker</a>
+      <a href="/tools/take-home-calculator">Take-Home Calculator</a>
+      <a href="/tools/invoice-generator">Invoice Generator</a>
+      <a href="/tools/website-quote">Website Quote</a>
+      <a href="/tools/site-audit">Site Audit</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Blog</div>
+      <a href="/blog?category=starting-a-business">Starting a Business</a>
+      <a href="/blog?category=tax-and-finance">Tax &amp; Finance</a>
+      <a href="/blog?category=marketing">Marketing</a>
+      <a href="/blog?category=websites-and-digital">Websites &amp; Digital</a>
+      <a href="/blog?category=local-business">Local Business</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="/about">About</a>
+      <a href="/work">Our Work</a>
+      <a href="/contact">Contact</a>
+      <a href="/help">Help Centre</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms &amp; Conditions</a>
+    </div>
+  </div>
+
+  <div class="footer-areas">
+    <div class="footer-areas-title">Web Design in Dumfries &amp; Galloway</div>
+    <div class="footer-areas-links">
+      <a href="/web-design/dumfries">Dumfries</a>
+      <a href="/web-design/thornhill">Thornhill</a>
+      <a href="/web-design/castle-douglas">Castle Douglas</a>
+      <a href="/web-design/stranraer">Stranraer</a>
+      <a href="/web-design/moffat">Moffat</a>
+      <a href="/web-design/annan">Annan</a>
+      <a href="/web-design/lockerbie">Lockerbie</a>
+      <a href="/web-design/sanquhar">Sanquhar</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 Nith Digital &mdash; Sanquhar, Dumfries &amp; Galloway, DG4</span>
+    <div class="footer-bottom-links">
+      <a href="mailto:hello@nithdigital.uk">hello@nithdigital.uk</a>
+      <a href="tel:+447404173024">+44 7404 173024</a>
+      <a href="https://www.facebook.com/nithdigital">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+</div><!-- .page -->
+
+<script>
+document.querySelectorAll('.trend-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.trend-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

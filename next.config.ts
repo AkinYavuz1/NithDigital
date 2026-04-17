@@ -10,7 +10,7 @@ const securityHeaders = [
       "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://api.starlingbank.com",
-      "frame-src https://www.googletagmanager.com https://www.facebook.com",
+      "frame-src https://www.googletagmanager.com https://www.facebook.com https://maps.google.com https://www.google.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -48,11 +48,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: '/webdesign/:path*',
-        destination: '/web-design/:path*',
-        permanent: true,
-      },
+      { source: '/webdesign/:path*', destination: '/web-design/:path*', permanent: true },
+      { source: '/services', destination: '/#services', permanent: true },
+      { source: '/work', destination: '/#work', permanent: true },
+      { source: '/contact', destination: '/#contact', permanent: true },
+      { source: '/about', destination: '/#trust', permanent: true },
+      { source: '/pricing', destination: '/#pricing', permanent: true },
     ]
   },
   async headers() {

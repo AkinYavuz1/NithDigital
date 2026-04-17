@@ -37,7 +37,7 @@ function UnsubscribeContent() {
     <>
       <h1 style={{ fontSize: 22, marginBottom: 12 }}>Something went wrong.</h1>
       <p style={{ color: '#555', lineHeight: 1.6 }}>
-        Please email <a href="mailto:hello@nithdigital.uk" style={{ color: '#D4A84B' }}>hello@nithdigital.uk</a> and we&apos;ll remove you manually.
+        Please email <a href="mailto:hello@nithdigital.uk" style={{ color: '#E85D3A' }}>hello@nithdigital.uk</a> and we&apos;ll remove you manually.
       </p>
     </>
   )
@@ -47,8 +47,8 @@ function UnsubscribeContent() {
 
 export default function UnsubscribePage() {
   return (
-    <div style={{ fontFamily: 'Georgia, serif', maxWidth: 480, margin: '80px auto', padding: '0 24px', color: '#1B2A4A' }}>
-      <p style={{ fontSize: 13, fontWeight: 600, color: '#D4A84B', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 24 }}>
+    <div style={{ fontFamily: 'Georgia, serif', maxWidth: 480, margin: '80px auto', padding: '0 24px', color: '#1A1A1A' }}>
+      <p style={{ fontSize: 13, fontWeight: 600, color: '#E85D3A', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 24 }}>
         Nith Digital
       </p>
       <Suspense fallback={<p>Loading…</p>}>

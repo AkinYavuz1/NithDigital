@@ -19,14 +19,14 @@ const SCREENSHOTS = [
 export default function DailyDuelPage() {
   return (
     <>
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <p style={{ fontSize: 12, color: 'rgba(245,240,230,0.45)', marginBottom: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <p style={{ fontSize: 12, color: 'rgba(250,248,245,0.45)', marginBottom: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           <Link href="/work" style={{ color: 'inherit', textDecoration: 'none' }}>Our work</Link> / Daily Duel
         </p>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Daily Duel
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 480, margin: '0 auto 24px' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 480, margin: '0 auto 24px' }}>
           30 games. Friend leagues. Weekly winners.
         </p>
         <a
@@ -36,8 +36,8 @@ export default function DailyDuelPage() {
           style={{
             display: 'inline-block',
             padding: '12px 28px',
-            background: '#D4A84B',
-            color: '#1B2A4A',
+            background: '#E85D3A',
+            color: '#1A1A1A',
             borderRadius: 100,
             fontSize: 13,
             fontWeight: 600,
@@ -66,7 +66,7 @@ export default function DailyDuelPage() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16 }}>Stack</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {['Next.js', 'TypeScript', 'Tailwind', 'Supabase', 'Supabase Auth', 'Postgres', 'RLS'].map((t) => (
-                <span key={t} style={{ fontSize: 11, padding: '4px 12px', background: 'rgba(27,42,74,0.07)', color: '#1B2A4A', borderRadius: 100, fontWeight: 500 }}>
+                <span key={t} style={{ fontSize: 11, padding: '4px 12px', background: 'rgba(0,0,0,0.07)', color: '#1A1A1A', borderRadius: 100, fontWeight: 500 }}>
                   {t}
                 </span>
               ))}
@@ -78,7 +78,7 @@ export default function DailyDuelPage() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 24 }}>Screenshots</h2>
             <div className="screenshots-grid">
               {SCREENSHOTS.map((s) => (
-                <div key={s.src} style={{ background: '#F5F0E6', borderRadius: 12, overflow: 'hidden' }}>
+                <div key={s.src} style={{ background: '#FAF8F5', borderRadius: 12, overflow: 'hidden' }}>
                   <div style={{ position: 'relative', width: '100%', aspectRatio: '9/16' }}>
                     <Image
                       src={s.src}
@@ -87,7 +87,7 @@ export default function DailyDuelPage() {
                       style={{ objectFit: 'cover', objectPosition: 'top' }}
                     />
                   </div>
-                  <p style={{ fontSize: 12, color: '#5A6A7A', padding: '12px 16px', margin: 0 }}>{s.caption}</p>
+                  <p style={{ fontSize: 12, color: '#7A7A7A', padding: '12px 16px', margin: 0 }}>{s.caption}</p>
                 </div>
               ))}
             </div>
@@ -96,7 +96,7 @@ export default function DailyDuelPage() {
           {/* Back */}
           <Link
             href="/work"
-            style={{ fontSize: 13, color: '#D4A84B', fontWeight: 600, textDecoration: 'none' }}
+            style={{ fontSize: 13, color: '#E85D3A', fontWeight: 600, textDecoration: 'none' }}
           >
             ← Back to our work
           </Link>

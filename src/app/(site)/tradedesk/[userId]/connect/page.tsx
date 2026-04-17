@@ -36,7 +36,7 @@ export default async function ConnectPage({ params, searchParams }: Props) {
 
   const statusMessages: Record<string, { text: string; colour: string }> = {
     google_connected: { text: '✅ Google Business Profile connected! Photos will now be posted automatically.', colour: '#15803d' },
-    cancelled: { text: 'Connection cancelled — you can connect any time.', colour: '#5A6A7A' },
+    cancelled: { text: 'Connection cancelled — you can connect any time.', colour: '#7A7A7A' },
     no_refresh_token: { text: 'Something went wrong — please try connecting again.', colour: '#b91c1c' },
     error: { text: 'An error occurred — please try again or contact Nith Digital.', colour: '#b91c1c' },
   }
@@ -44,23 +44,23 @@ export default async function ConnectPage({ params, searchParams }: Props) {
   const statusMsg = status ? statusMessages[status] : null
 
   return (
-    <div style={{ minHeight: '60vh', background: '#F5F0E6' }}>
+    <div style={{ minHeight: '60vh', background: '#FAF8F5' }}>
       {/* Header */}
-      <section style={{ background: '#1B2A4A', padding: '48px 0 36px' }}>
+      <section style={{ background: '#1A1A1A', padding: '48px 0 36px' }}>
         <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 10, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 10, fontWeight: 600 }}>
             TradeDesk
           </div>
           <h1 style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(20px, 3vw, 28px)',
             fontWeight: 700,
-            color: '#F5F0E6',
+            color: '#FAF8F5',
             marginBottom: 8,
           }}>
             Connect your accounts
           </h1>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.55)', margin: 0 }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.55)', margin: 0 }}>
             {displayName}
           </p>
         </div>
@@ -87,11 +87,11 @@ export default async function ConnectPage({ params, searchParams }: Props) {
         <div style={{
           background: '#fff',
           borderRadius: 10,
-          border: '1px solid rgba(27,42,74,0.1)',
+          border: '1px solid rgba(0,0,0,0.1)',
           overflow: 'hidden',
           marginBottom: 16,
         }}>
-          <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(27,42,74,0.07)' }}>
+          <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(0,0,0,0.07)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                 {/* Google G icon */}
@@ -102,8 +102,8 @@ export default async function ConnectPage({ params, searchParams }: Props) {
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
                 <div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: '#1B2A4A' }}>Google Business Profile</div>
-                  <div style={{ fontSize: 12, color: '#5A6A7A', marginTop: 2 }}>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: '#1A1A1A' }}>Google Business Profile</div>
+                  <div style={{ fontSize: 12, color: '#7A7A7A', marginTop: 2 }}>
                     Auto-post job photos to Google Maps & Search
                   </div>
                 </div>
@@ -124,7 +124,7 @@ export default async function ConnectPage({ params, searchParams }: Props) {
             </div>
           </div>
           <div style={{ padding: '16px 24px' }}>
-            <p style={{ fontSize: 13, color: '#5A6A7A', margin: '0 0 16px', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 13, color: '#7A7A7A', margin: '0 0 16px', lineHeight: 1.6 }}>
               Every job photo you send on WhatsApp will automatically appear on your Google Business listing — visible to anyone searching for your trade in your area.
             </p>
             {googleConnected ? (
@@ -133,7 +133,7 @@ export default async function ConnectPage({ params, searchParams }: Props) {
                 style={{
                   display: 'inline-block',
                   fontSize: 13,
-                  color: '#5A6A7A',
+                  color: '#7A7A7A',
                   textDecoration: 'underline',
                 }}
               >
@@ -144,7 +144,7 @@ export default async function ConnectPage({ params, searchParams }: Props) {
                 href={`/api/tradedesk/connect/google?userId=${userId}`}
                 style={{
                   display: 'inline-block',
-                  background: '#1B2A4A',
+                  background: '#1A1A1A',
                   color: '#fff',
                   padding: '10px 22px',
                   borderRadius: 6,
@@ -167,21 +167,21 @@ export default async function ConnectPage({ params, searchParams }: Props) {
           <div key={item.name} style={{
             background: '#fff',
             borderRadius: 10,
-            border: '1px solid rgba(27,42,74,0.08)',
+            border: '1px solid rgba(0,0,0,0.08)',
             padding: '20px 24px',
             marginBottom: 16,
             opacity: 0.6,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
               <div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: '#1B2A4A', marginBottom: 4 }}>{item.name}</div>
-                <div style={{ fontSize: 13, color: '#5A6A7A' }}>{item.desc}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: '#1A1A1A', marginBottom: 4 }}>{item.name}</div>
+                <div style={{ fontSize: 13, color: '#7A7A7A' }}>{item.desc}</div>
               </div>
               <span style={{
                 fontSize: 11,
                 padding: '3px 10px',
                 borderRadius: 100,
-                background: 'rgba(212,168,75,0.12)',
+                background: 'rgba(232,93,58,0.12)',
                 color: '#92621a',
                 fontWeight: 600,
                 whiteSpace: 'nowrap',
@@ -192,9 +192,9 @@ export default async function ConnectPage({ params, searchParams }: Props) {
           </div>
         ))}
 
-        <p style={{ fontSize: 12, color: '#5A6A7A', marginTop: 24, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 12, color: '#7A7A7A', marginTop: 24, lineHeight: 1.6 }}>
           Need help? Message TradeDesk on WhatsApp or contact{' '}
-          <a href="mailto:hello@nithdigital.uk" style={{ color: '#D4A84B' }}>hello@nithdigital.uk</a>
+          <a href="mailto:hello@nithdigital.uk" style={{ color: '#E85D3A' }}>hello@nithdigital.uk</a>
         </p>
       </section>
     </div>

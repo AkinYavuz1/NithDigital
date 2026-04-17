@@ -10,17 +10,17 @@ export const metadata: Metadata = {
 export default function GainsPage() {
   return (
     <>
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <p style={{ fontSize: 12, color: 'rgba(245,240,230,0.45)', marginBottom: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <p style={{ fontSize: 12, color: 'rgba(250,248,245,0.45)', marginBottom: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           <Link href="/work" style={{ color: 'inherit', textDecoration: 'none' }}>Our work</Link> / gAIns
         </p>
-        <span style={{ display: 'inline-block', fontSize: 10, padding: '3px 10px', borderRadius: 100, fontWeight: 600, marginBottom: 14, background: 'rgba(212,168,75,0.2)', color: '#8B6D2B' }}>
+        <span style={{ display: 'inline-block', fontSize: 10, padding: '3px 10px', borderRadius: 100, fontWeight: 600, marginBottom: 14, background: 'rgba(232,93,58,0.2)', color: '#B8472A' }}>
           In development
         </span>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           gAIns
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 480, margin: '0 auto 24px' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 480, margin: '0 auto 24px' }}>
           AI-powered gym tracking for strength athletes.
         </p>
         <a
@@ -30,8 +30,8 @@ export default function GainsPage() {
           style={{
             display: 'inline-block',
             padding: '12px 28px',
-            background: '#D4A84B',
-            color: '#1B2A4A',
+            background: '#E85D3A',
+            color: '#1A1A1A',
             borderRadius: 100,
             fontSize: 13,
             fontWeight: 600,
@@ -61,14 +61,14 @@ export default function GainsPage() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16 }}>Stack</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {['React', 'Vite', 'Supabase', 'Supabase Edge Functions', 'Anthropic API', 'Stripe', 'Recharts'].map((t) => (
-                <span key={t} style={{ fontSize: 11, padding: '4px 12px', background: 'rgba(27,42,74,0.07)', color: '#1B2A4A', borderRadius: 100, fontWeight: 500 }}>
+                <span key={t} style={{ fontSize: 11, padding: '4px 12px', background: 'rgba(0,0,0,0.07)', color: '#1A1A1A', borderRadius: 100, fontWeight: 500 }}>
                   {t}
                 </span>
               ))}
             </div>
           </div>
 
-          <Link href="/work" style={{ fontSize: 13, color: '#D4A84B', fontWeight: 600, textDecoration: 'none' }}>
+          <Link href="/work" style={{ fontSize: 13, color: '#E85D3A', fontWeight: 600, textDecoration: 'none' }}>
             ← Back to our work
           </Link>
         </div>

@@ -55,15 +55,15 @@ export default function HelpArticleContent() {
   }, [slug])
 
   if (loading) return (
-    <div style={{ maxWidth: 780, margin: '80px auto', padding: '0 24px', textAlign: 'center', color: '#5A6A7A', fontSize: 14 }}>
+    <div style={{ maxWidth: 780, margin: '80px auto', padding: '0 24px', textAlign: 'center', color: '#7A7A7A', fontSize: 14 }}>
       Loading...
     </div>
   )
 
   if (notFound) return (
     <div style={{ maxWidth: 640, margin: '80px auto', padding: '0 24px', textAlign: 'center' }}>
-      <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1B2A4A' }}>Article not found</h1>
-      <Link href="/help" style={{ color: '#D4A84B', fontSize: 14 }}>← Back to Help Centre</Link>
+      <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1A1A1A' }}>Article not found</h1>
+      <Link href="/help" style={{ color: '#E85D3A', fontSize: 14 }}>← Back to Help Centre</Link>
     </div>
   )
 

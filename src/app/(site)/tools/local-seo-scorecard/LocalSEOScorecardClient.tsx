@@ -136,9 +136,9 @@ export default function LocalSEOScorecardClient() {
     return {
       padding: '7px 16px',
       borderRadius: 100,
-      border: `2px solid ${selected ? color : 'rgba(27,42,74,0.15)'}`,
+      border: `2px solid ${selected ? color : 'rgba(0,0,0,0.15)'}`,
       background: selected ? `${color}18` : '#fff',
-      color: selected ? color : '#5A6A7A',
+      color: selected ? color : '#7A7A7A',
       cursor: 'pointer',
       fontSize: 12,
       fontWeight: 600,
@@ -162,7 +162,7 @@ export default function LocalSEOScorecardClient() {
         <div style={{ background: '#c0392b', color: '#fff', display: 'inline-block', padding: '8px 20px', borderRadius: 100, fontWeight: 700, fontSize: 14, marginBottom: 24 }}>
           No website detected
         </div>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1B2A4A', marginBottom: 12, fontWeight: 400 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1A1A1A', marginBottom: 12, fontWeight: 400 }}>
           {businessName ? `${businessName} is` : 'You\'re'} invisible to 97% of online searchers
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.75, color: '#4A5A6A', marginBottom: 24, maxWidth: 600 }}>
@@ -174,30 +174,30 @@ export default function LocalSEOScorecardClient() {
             ['88%', 'use Google to find local business info'],
             ['£0', 'is the cost of a Google Business Profile listing'],
           ].map(([stat, label]) => (
-            <div key={stat} style={{ background: '#F5F0E6', borderRadius: 12, padding: '20px', textAlign: 'center' }}>
-              <div style={{ fontSize: 28, fontWeight: 700, color: '#D4A84B', marginBottom: 4 }}>{stat}</div>
+            <div key={stat} style={{ background: '#FAF8F5', borderRadius: 12, padding: '20px', textAlign: 'center' }}>
+              <div style={{ fontSize: 28, fontWeight: 700, color: '#E85D3A', marginBottom: 4 }}>{stat}</div>
               <div style={{ fontSize: 12, color: '#4A5A6A', lineHeight: 1.5 }}>{label}</div>
             </div>
           ))}
         </div>
-        <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+        <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
             Let&apos;s get {businessName || 'your business'} online
           </h3>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.65)', marginBottom: 24 }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.65)', marginBottom: 24 }}>
             We build professional websites for small businesses across Dumfries & Galloway, starting from £360. Book a free call to get started.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
               Book a free call
             </Link>
-            <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(245,240,230,0.3)', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+            <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(250,248,245,0.3)', color: '#FAF8F5', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               View our services
             </Link>
           </div>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <button onClick={reset} style={{ fontSize: 13, color: '#D4A84B', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Start again</button>
+          <button onClick={reset} style={{ fontSize: 13, color: '#E85D3A', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Start again</button>
         </div>
         <style>{`
           @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -218,7 +218,7 @@ export default function LocalSEOScorecardClient() {
         {/* Score circle */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <svg width="130" height="130" viewBox="0 0 110 110" aria-label={`Score: ${score} out of 100`}>
-            <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(27,42,74,0.08)" strokeWidth="8" />
+            <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="8" />
             <circle
               cx="55" cy="55" r="48" fill="none"
               stroke={band.color} strokeWidth="8"
@@ -228,8 +228,8 @@ export default function LocalSEOScorecardClient() {
               transform="rotate(-90 55 55)"
               style={{ transition: 'stroke-dashoffset 1s ease' }}
             />
-            <text x="55" y="50" textAnchor="middle" fontSize="22" fontWeight="700" fill="#1B2A4A">{score}</text>
-            <text x="55" y="66" textAnchor="middle" fontSize="11" fill="#5A6A7A">out of 100</text>
+            <text x="55" y="50" textAnchor="middle" fontSize="22" fontWeight="700" fill="#1A1A1A">{score}</text>
+            <text x="55" y="66" textAnchor="middle" fontSize="11" fill="#7A7A7A">out of 100</text>
           </svg>
           <div style={{ display: 'inline-block', padding: '6px 18px', borderRadius: 100, background: band.bg, color: band.color, fontWeight: 700, fontSize: 14, marginTop: 8 }}>
             {band.label}
@@ -239,18 +239,18 @@ export default function LocalSEOScorecardClient() {
 
         {/* Priority fixes */}
         {priorityFixes.length > 0 && (
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: '28px 32px', marginBottom: 24 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', marginBottom: 16, fontWeight: 400 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: '28px 32px', marginBottom: 24 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', marginBottom: 16, fontWeight: 400 }}>
               Your top priority fixes
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {priorityFixes.map((q, i) => (
                 <div key={q.id} style={{ display: 'flex', gap: 14 }}>
-                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#D4A84B', color: '#1B2A4A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#E85D3A', color: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
                     {i + 1}
                   </div>
                   <div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', marginBottom: 2 }}>{q.text}</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', marginBottom: 2 }}>{q.text}</div>
                     <div style={{ fontSize: 12, color: '#4A5A6A', lineHeight: 1.6 }}>{q.fix}</div>
                   </div>
                 </div>
@@ -261,8 +261,8 @@ export default function LocalSEOScorecardClient() {
 
         {/* Full breakdown */}
         {issues.length > 0 && (
-          <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12, padding: '28px 32px', marginBottom: 24 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', marginBottom: 16, fontWeight: 400 }}>
+          <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12, padding: '28px 32px', marginBottom: 24 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', marginBottom: 16, fontWeight: 400 }}>
               Full breakdown
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -280,12 +280,12 @@ export default function LocalSEOScorecardClient() {
                       <div style={{ width: 20, height: 20, borderRadius: '50%', background: a === 'no' ? '#c0392b' : '#e67e22', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, flexShrink: 0, marginTop: 1 }}>
                         {a === 'no' ? '✗' : '?'}
                       </div>
-                      <span style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A' }}>{q.text}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A' }}>{q.text}</span>
                     </div>
                     <p style={{ fontSize: 12, color: '#4A5A6A', lineHeight: 1.6, margin: '0 0 4px' }}>
                       {a === 'no' ? q.noExplanation : q.notsureExplanation}
                     </p>
-                    <p style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600, margin: 0 }}>Fix: {q.fix}</p>
+                    <p style={{ fontSize: 12, color: '#E85D3A', fontWeight: 600, margin: 0 }}>Fix: {q.fix}</p>
                   </div>
                 )
               })}
@@ -294,25 +294,25 @@ export default function LocalSEOScorecardClient() {
         )}
 
         {/* CTA */}
-        <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+        <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
             Want us to fix these for you?
           </h3>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.65)', marginBottom: 24 }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.65)', marginBottom: 24 }}>
             Book a free call and we&apos;ll walk you through exactly what needs doing — no jargon, no pressure.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
               Book a free call
             </Link>
-            <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(245,240,230,0.3)', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+            <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(250,248,245,0.3)', color: '#FAF8F5', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               View our services
             </Link>
           </div>
         </div>
 
         <div style={{ textAlign: 'center' }}>
-          <button onClick={reset} style={{ fontSize: 13, color: '#D4A84B', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Start again</button>
+          <button onClick={reset} style={{ fontSize: 13, color: '#E85D3A', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Start again</button>
         </div>
         <p style={{ textAlign: 'center', fontSize: 11, color: '#9AA8B8', marginTop: 32 }}>
           Built by <a href="https://nithdigital.uk" style={{ color: '#9AA8B8' }}>Nith Digital</a>
@@ -326,48 +326,48 @@ export default function LocalSEOScorecardClient() {
   if (!started) {
     return (
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 24px' }}>
-        <div style={{ background: '#F5F0E6', borderRadius: 16, padding: '36px' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1B2A4A', marginBottom: 6, fontWeight: 400 }}>
+        <div style={{ background: '#FAF8F5', borderRadius: 16, padding: '36px' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1A1A1A', marginBottom: 6, fontWeight: 400 }}>
             Let&apos;s check your online presence
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24 }}>Answer 10 quick questions to get your score. Takes about 2 minutes.</p>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24 }}>Answer 10 quick questions to get your score. Takes about 2 minutes.</p>
 
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 8 }}>Your business name</label>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>Your business name</label>
             <input
               type="text"
               value={businessName}
               onChange={e => setBusinessName(e.target.value)}
               placeholder="e.g. Nith Valley Plumbing"
-              style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 8, fontSize: 14, color: '#1B2A4A', fontFamily: 'inherit', boxSizing: 'border-box' }}
+              style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 8, fontSize: 14, color: '#1A1A1A', fontFamily: 'inherit', boxSizing: 'border-box' }}
             />
           </div>
 
           <div style={{ marginBottom: 24 }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 12 }}>Do you currently have a website?</label>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 12 }}>Do you currently have a website?</label>
             <div style={{ display: 'flex', gap: 10 }}>
               <button
                 onClick={() => setHasWebsite(true)}
-                style={{ padding: '10px 24px', borderRadius: 100, border: `2px solid ${hasWebsite === true ? '#D4A84B' : 'rgba(27,42,74,0.2)'}`, background: hasWebsite === true ? 'rgba(212,168,75,0.1)' : '#fff', color: '#1B2A4A', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
+                style={{ padding: '10px 24px', borderRadius: 100, border: `2px solid ${hasWebsite === true ? '#E85D3A' : 'rgba(0,0,0,0.2)'}`, background: hasWebsite === true ? 'rgba(232,93,58,0.1)' : '#fff', color: '#1A1A1A', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
               >
                 Yes, I have a website
               </button>
               <button
                 onClick={() => setHasWebsite(false)}
-                style={{ padding: '10px 24px', borderRadius: 100, border: `2px solid ${hasWebsite === false ? '#D4A84B' : 'rgba(27,42,74,0.2)'}`, background: hasWebsite === false ? 'rgba(212,168,75,0.1)' : '#fff', color: '#1B2A4A', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
+                style={{ padding: '10px 24px', borderRadius: 100, border: `2px solid ${hasWebsite === false ? '#E85D3A' : 'rgba(0,0,0,0.2)'}`, background: hasWebsite === false ? 'rgba(232,93,58,0.1)' : '#fff', color: '#1A1A1A', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
               >
                 No, I don&apos;t
               </button>
             </div>
             {hasWebsite === true && (
               <div style={{ marginTop: 12 }}>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 6 }}>Your website URL (optional)</label>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 6 }}>Your website URL (optional)</label>
                 <input
                   type="text"
                   value={websiteUrl}
                   onChange={e => setWebsiteUrl(e.target.value)}
                   placeholder="e.g. www.nithvalleyplumbing.co.uk"
-                  style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 8, fontSize: 13, color: '#1B2A4A', fontFamily: 'inherit', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 8, fontSize: 13, color: '#1A1A1A', fontFamily: 'inherit', boxSizing: 'border-box' }}
                 />
               </div>
             )}
@@ -378,8 +378,8 @@ export default function LocalSEOScorecardClient() {
             disabled={hasWebsite === null || !businessName.trim()}
             style={{
               padding: '13px 32px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               border: 'none',
               borderRadius: 100,
               fontSize: 14,
@@ -403,16 +403,16 @@ export default function LocalSEOScorecardClient() {
     <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 24px' }}>
       <div style={{ marginBottom: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-          <span style={{ fontSize: 12, color: '#5A6A7A', fontWeight: 600 }}>
+          <span style={{ fontSize: 12, color: '#7A7A7A', fontWeight: 600 }}>
             {Object.keys(answers).length} of {QUESTIONS.length} answered
           </span>
-          <span style={{ fontSize: 12, color: '#5A6A7A' }}>{businessName}</span>
+          <span style={{ fontSize: 12, color: '#7A7A7A' }}>{businessName}</span>
         </div>
-        <div style={{ height: 6, background: 'rgba(27,42,74,0.1)', borderRadius: 100, overflow: 'hidden' }}>
+        <div style={{ height: 6, background: 'rgba(0,0,0,0.1)', borderRadius: 100, overflow: 'hidden' }}>
           <div
             style={{
               height: '100%',
-              background: '#D4A84B',
+              background: '#E85D3A',
               borderRadius: 100,
               width: `${(Object.keys(answers).length / QUESTIONS.length) * 100}%`,
               transition: 'width 0.3s ease',
@@ -428,16 +428,16 @@ export default function LocalSEOScorecardClient() {
             <div
               key={q.id}
               style={{
-                background: a ? (a === 'yes' ? 'rgba(39,174,96,0.04)' : 'rgba(27,42,74,0.02)') : '#F5F0E6',
-                border: `1px solid ${a ? 'rgba(27,42,74,0.1)' : 'rgba(27,42,74,0.08)'}`,
+                background: a ? (a === 'yes' ? 'rgba(39,174,96,0.04)' : 'rgba(0,0,0,0.02)') : '#FAF8F5',
+                border: `1px solid ${a ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.08)'}`,
                 borderRadius: 12,
                 padding: '20px 24px',
                 transition: 'all 0.2s ease',
               }}
             >
               <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 12 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: '#D4A84B', minWidth: 20 }}>{i + 1}</span>
-                <p style={{ fontSize: 14, color: '#1B2A4A', fontWeight: 500, margin: 0, lineHeight: 1.5 }}>{q.text}</p>
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#E85D3A', minWidth: 20 }}>{i + 1}</span>
+                <p style={{ fontSize: 14, color: '#1A1A1A', fontWeight: 500, margin: 0, lineHeight: 1.5 }}>{q.text}</p>
               </div>
               <div style={{ display: 'flex', gap: 8, paddingLeft: 32, flexWrap: 'wrap' }}>
                 {(['yes', 'no', 'notsure'] as const).map(val => (
@@ -462,8 +462,8 @@ export default function LocalSEOScorecardClient() {
           disabled={!allAnswered}
           style={{
             padding: '14px 40px',
-            background: '#D4A84B',
-            color: '#1B2A4A',
+            background: '#E85D3A',
+            color: '#1A1A1A',
             border: 'none',
             borderRadius: 100,
             fontSize: 15,

@@ -1,19 +1,21 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 
 const SOCIAL_LINKS = [
-  { label: 'Facebook', href: 'https://www.facebook.com/nithdigital' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/nith-digital' },
+  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61572337490238&locale=en_GB' },
 ]
 
 const LINKS = [
   {
     heading: 'Services',
     items: [
-      { label: 'Business websites', href: '/services' },
-      { label: 'Dashboards & reporting', href: '/services' },
-      { label: 'Booking systems', href: '/services' },
-      { label: 'Custom apps', href: '/services' },
-      { label: 'Book a free call', href: '/book' },
+      { label: 'Business websites', href: '/#services' },
+      { label: 'Dashboards & reporting', href: '/#services' },
+      { label: 'Booking systems', href: '/#services' },
+      { label: 'Custom apps', href: '/#services' },
+      { label: 'Contact us', href: '/#contact' },
     ],
   },
   {
@@ -39,9 +41,8 @@ const LINKS = [
   {
     heading: 'Company',
     items: [
-      { label: 'About', href: '/about' },
-      { label: 'Our Work', href: '/work' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'Our Work', href: '/#work' },
+      { label: 'Pricing', href: '/#pricing' },
       { label: 'Launchpad', href: '/launchpad' },
       { label: 'Help Centre', href: '/help' },
       { label: 'Privacy Policy', href: '/privacy' },
@@ -62,98 +63,146 @@ const LOCATION_LINKS = [
 ]
 
 export default function Footer() {
+  const [sitemapOpen, setSitemapOpen] = useState(false)
+
   return (
-    <footer
-      style={{
-        borderTop: '1px solid var(--color-border)',
-        marginTop: 80,
-      }}
-    >
-      {/* Main link grid */}
+    <footer style={{ borderTop: '1px solid rgba(0,0,0,0.06)', marginTop: 80, position: 'relative', zIndex: 2 }}>
+      {/* Main footer — minimal */}
       <div
         style={{
           maxWidth: 'var(--max-width)',
           margin: '0 auto',
-          padding: '48px 24px 32px',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 32,
+          padding: '48px 24px 24px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'start',
+          flexWrap: 'wrap',
+          gap: 24,
         }}
-        className="footer-grid"
       >
-        {LINKS.map((col) => (
-          <div key={col.heading}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13, color: '#7A7A7A' }}>
+          <a href="mailto:hello@nithdigital.uk" style={{ color: 'inherit' }}>hello@nithdigital.uk</a>
+          <a href="tel:+447404173024" style={{ color: 'inherit' }}>+44 7404 173024</a>
+          <span>Sanquhar, Dumfries &amp; Galloway</span>
+          {SOCIAL_LINKS.map(s => (
+            <a key={s.label} href={s.href} rel="noopener noreferrer" aria-label={s.label} className="nd-footer-link" style={{ color: 'inherit' }}>
+              {s.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Sitemap toggle */}
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto', padding: '0 24px' }}>
+        <button
+          onClick={() => setSitemapOpen(!sitemapOpen)}
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: '12px 0',
+            fontSize: 12,
+            color: '#7A7A7A',
+            cursor: 'pointer',
+            fontFamily: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            transition: 'color 0.3s ease',
+          }}
+        >
+          <span style={{
+            display: 'inline-block',
+            transition: 'transform 0.3s cubic-bezier(.35,0,0,1)',
+            transform: sitemapOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+            fontSize: 10,
+          }}>
+            &#9654;
+          </span>
+          Sitemap
+        </button>
+
+        <div
+          style={{
+            maxHeight: sitemapOpen ? 600 : 0,
+            overflow: 'hidden',
+            transition: 'max-height 0.5s cubic-bezier(.35,0,0,1)',
+          }}
+        >
+          {/* Link grid */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: 32,
+              paddingBottom: 24,
+            }}
+            className="footer-grid"
+          >
+            {LINKS.map((col) => (
+              <div key={col.heading}>
+                <div
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: '1.5px',
+                    textTransform: 'uppercase' as const,
+                    color: '#7A7A7A',
+                    fontWeight: 600,
+                    marginBottom: 12,
+                  }}
+                >
+                  {col.heading}
+                </div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {col.items.map((item) => (
+                    <li key={item.label}>
+                      <Link
+                        href={item.href}
+                        className="nd-footer-link"
+                        style={{ fontSize: 13, color: '#7A7A7A', textDecoration: 'none' }}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Local SEO links */}
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: 16, paddingBottom: 16 }}>
             <div
               style={{
                 fontSize: 10,
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase' as const,
-                color: '#1B2A4A',
+                color: '#7A7A7A',
                 fontWeight: 600,
-                marginBottom: 12,
+                marginBottom: 10,
               }}
             >
-              {col.heading}
+              Web Design in Dumfries &amp; Galloway
             </div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {col.items.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    style={{
-                      fontSize: 13,
-                      color: 'var(--color-text-secondary)',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 20px' }}>
+              {LOCATION_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="nd-footer-link"
+                  style={{ fontSize: 12, color: '#7A7A7A', textDecoration: 'none' }}
+                >
+                  {link.label}
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
-        ))}
-      </div>
-
-      {/* Local SEO links */}
-      <div
-        style={{
-          maxWidth: 'var(--max-width)',
-          margin: '0 auto',
-          padding: '0 24px 24px',
-          borderTop: '1px solid rgba(27,42,74,0.06)',
-          paddingTop: 20,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 10,
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase' as const,
-            color: '#1B2A4A',
-            fontWeight: 600,
-            marginBottom: 10,
-          }}
-        >
-          Web Design in Dumfries &amp; Galloway
-        </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 20px' }}>
-          {LOCATION_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              style={{ fontSize: 12, color: 'var(--color-text-secondary)', textDecoration: 'none' }}
-            >
-              {link.label}
-            </Link>
-          ))}
         </div>
       </div>
 
       {/* Bottom bar */}
       <div
         style={{
-          borderTop: '1px solid var(--color-border)',
+          borderTop: '1px solid rgba(0,0,0,0.06)',
           padding: '16px 24px',
         }}
       >
@@ -165,7 +214,7 @@ export default function Footer() {
             justifyContent: 'space-between',
             alignItems: 'center',
             fontSize: 12,
-            color: 'var(--color-text-secondary)',
+            color: '#7A7A7A',
             flexWrap: 'wrap',
             gap: 12,
           }}
@@ -181,23 +230,19 @@ export default function Footer() {
               </span>
             </span>
           </span>
-          <span style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-            <a href="mailto:hello@nithdigital.uk" style={{ color: 'inherit' }}>
-              hello@nithdigital.uk
-            </a>
-            <a href="tel:+447404173024" style={{ color: 'inherit' }}>
-              +44 7404 173024
-            </a>
-            {SOCIAL_LINKS.map(s => (
-              <a key={s.label} href={s.href} rel="noopener noreferrer" aria-label={s.label} style={{ color: 'inherit' }}>
-                {s.label}
-              </a>
-            ))}
+          <span style={{ display: 'flex', gap: 16 }}>
+            <Link href="/privacy" className="nd-footer-link" style={{ color: '#7A7A7A', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="nd-footer-link" style={{ color: '#7A7A7A', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
+              Terms &amp; Conditions
+            </Link>
           </span>
         </div>
       </div>
 
       <style>{`
+        .nd-footer-link:hover { color: #E85D3A !important; }
         @media (max-width: 768px) {
           .footer-grid { grid-template-columns: 1fr 1fr !important; }
         }

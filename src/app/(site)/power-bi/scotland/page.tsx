@@ -84,16 +84,16 @@ export default function PowerBIScotlandPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Data & BI · Scotland
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 36,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.25,
@@ -101,7 +101,7 @@ export default function PowerBIScotlandPage() {
           >
             Power BI Consultant Scotland
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 580, marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 580, marginBottom: 28, lineHeight: 1.7 }}>
             Freelance Power BI developer and consultant based in Scotland. 10+ years delivering data and business
             intelligence solutions across NHS, energy, finance, and the public sector. Remote and on-site across Scotland.
           </p>
@@ -111,8 +111,8 @@ export default function PowerBIScotlandPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -127,11 +127,11 @@ export default function PowerBIScotlandPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -143,10 +143,10 @@ export default function PowerBIScotlandPage() {
 
       {/* Services */}
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px 40px' }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
           Power BI services
         </h2>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 32, maxWidth: 680 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 32, maxWidth: 680 }}>
           Whether you need a single dashboard built quickly or a full BI strategy delivered over months,
           I work as a freelance consultant or can embed within your team. Available for day-rate contracts,
           fixed-price projects, and ongoing retainer arrangements.
@@ -158,22 +158,22 @@ export default function PowerBIScotlandPage() {
               key={s.title}
               style={{
                 padding: 24,
-                border: '1px solid rgba(27,42,74,0.1)',
-                borderLeft: '3px solid #D4A84B',
+                border: '1px solid rgba(0,0,0,0.1)',
+                borderLeft: '3px solid #E85D3A',
                 borderRadius: '0 8px 8px 0',
               }}
             >
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1B2A4A' }}>{s.title}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', margin: 0 }}>{s.desc}</p>
+              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1A1A1A' }}>{s.title}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', margin: 0 }}>{s.desc}</p>
             </div>
           ))}
         </div>
 
         {/* Sectors */}
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
           Sector experience
         </h2>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24, maxWidth: 680 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24, maxWidth: 680 }}>
           Deep domain knowledge across the sectors that matter most in Scotland. I understand the data, the
           reporting requirements, and the challenges specific to each industry — not just the technology.
         </p>
@@ -184,18 +184,18 @@ export default function PowerBIScotlandPage() {
               key={s.name}
               style={{
                 padding: 20,
-                background: '#F5F0E6',
+                background: '#FAF8F5',
                 borderRadius: 8,
               }}
             >
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, color: '#1B2A4A' }}>{s.name}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', margin: 0 }}>{s.desc}</p>
+              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, color: '#1A1A1A' }}>{s.name}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', margin: 0 }}>{s.desc}</p>
             </div>
           ))}
         </div>
 
         {/* Pricing */}
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1A1A1A' }}>
           Rates & engagement models
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 56 }} className="bi-grid">
@@ -208,24 +208,24 @@ export default function PowerBIScotlandPage() {
               key={r.model}
               style={{
                 padding: 28,
-                border: '1px solid rgba(27,42,74,0.1)',
+                border: '1px solid rgba(0,0,0,0.1)',
                 borderRadius: 8,
                 textAlign: 'center',
               }}
             >
-              <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '1px', color: '#5A6A7A', marginBottom: 8, fontWeight: 500 }}>{r.model}</div>
-              <div style={{ fontSize: 26, fontWeight: 700, color: '#1B2A4A', marginBottom: 8 }}>{r.price}</div>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', margin: 0 }}>{r.desc}</p>
+              <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '1px', color: '#7A7A7A', marginBottom: 8, fontWeight: 500 }}>{r.model}</div>
+              <div style={{ fontSize: 26, fontWeight: 700, color: '#1A1A1A', marginBottom: 8 }}>{r.price}</div>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', margin: 0 }}>{r.desc}</p>
             </div>
           ))}
         </div>
 
         {/* CTA */}
-        <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '40px 48px', textAlign: 'center', color: '#F5F0E6' }}>
+        <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '40px 48px', textAlign: 'center', color: '#FAF8F5' }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8 }}>
             Ready to get your data working for you?
           </h2>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
             Free 30-minute discovery call. No jargon, no obligation. Let&apos;s talk about what your data could tell you.
           </p>
           <Link
@@ -233,8 +233,8 @@ export default function PowerBIScotlandPage() {
             style={{
               display: 'inline-block',
               padding: '12px 28px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               borderRadius: 100,
               fontSize: 13,
               fontWeight: 600,

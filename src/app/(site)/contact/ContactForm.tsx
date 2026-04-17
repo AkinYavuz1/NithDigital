@@ -6,11 +6,11 @@ import { createClient } from '@/lib/supabase'
 const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '12px 16px',
-  border: '1px solid rgba(27,42,74,0.1)',
+  border: '1px solid rgba(0,0,0,0.1)',
   borderRadius: 8,
   fontFamily: 'var(--font-body)',
   fontSize: 14,
-  color: '#1B2A4A',
+  color: '#1A1A1A',
   background: '#fff',
   transition: 'border-color 0.25s ease',
   outline: 'none',
@@ -21,7 +21,7 @@ const labelStyle: React.CSSProperties = {
   fontSize: 12,
   fontWeight: 500,
   marginBottom: 6,
-  color: '#5A6A7A',
+  color: '#7A7A7A',
   textTransform: 'uppercase',
   letterSpacing: '0.5px',
 }
@@ -62,7 +62,7 @@ export default function ContactForm() {
     return (
       <div
         style={{
-          background: '#F5F0E6',
+          background: '#FAF8F5',
           borderRadius: 12,
           padding: 40,
           textAlign: 'center',
@@ -72,7 +72,7 @@ export default function ContactForm() {
         <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, marginBottom: 8 }}>
           Message sent!
         </h3>
-        <p style={{ fontSize: 14, color: '#5A6A7A' }}>
+        <p style={{ fontSize: 14, color: '#7A7A7A' }}>
           Thanks for getting in touch. We&apos;ll be back to you within 24 hours.
         </p>
       </div>
@@ -91,8 +91,8 @@ export default function ContactForm() {
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#1B2A4A')}
-          onBlur={(e) => (e.target.style.borderColor = 'rgba(27,42,74,0.1)')}
+          onFocus={(e) => (e.target.style.borderColor = '#1A1A1A')}
+          onBlur={(e) => (e.target.style.borderColor = 'rgba(0,0,0,0.1)')}
         />
       </div>
       <div>
@@ -105,8 +105,8 @@ export default function ContactForm() {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#1B2A4A')}
-          onBlur={(e) => (e.target.style.borderColor = 'rgba(27,42,74,0.1)')}
+          onFocus={(e) => (e.target.style.borderColor = '#1A1A1A')}
+          onBlur={(e) => (e.target.style.borderColor = 'rgba(0,0,0,0.1)')}
         />
       </div>
       <div>
@@ -118,8 +118,8 @@ export default function ContactForm() {
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#1B2A4A')}
-          onBlur={(e) => (e.target.style.borderColor = 'rgba(27,42,74,0.1)')}
+          onFocus={(e) => (e.target.style.borderColor = '#1A1A1A')}
+          onBlur={(e) => (e.target.style.borderColor = 'rgba(0,0,0,0.1)')}
         />
       </div>
       <div>
@@ -129,8 +129,8 @@ export default function ContactForm() {
           value={form.service}
           onChange={(e) => setForm({ ...form, service: e.target.value })}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#1B2A4A')}
-          onBlur={(e) => (e.target.style.borderColor = 'rgba(27,42,74,0.1)')}
+          onFocus={(e) => (e.target.style.borderColor = '#1A1A1A')}
+          onBlur={(e) => (e.target.style.borderColor = 'rgba(0,0,0,0.1)')}
         >
           <option value="">Select a service...</option>
           <option value="website">Business website</option>
@@ -149,8 +149,8 @@ export default function ContactForm() {
           value={form.budget}
           onChange={(e) => setForm({ ...form, budget: e.target.value })}
           style={inputStyle}
-          onFocus={(e) => (e.target.style.borderColor = '#1B2A4A')}
-          onBlur={(e) => (e.target.style.borderColor = 'rgba(27,42,74,0.1)')}
+          onFocus={(e) => (e.target.style.borderColor = '#1A1A1A')}
+          onBlur={(e) => (e.target.style.borderColor = 'rgba(0,0,0,0.1)')}
         >
           <option value="">Prefer not to say</option>
           <option value="under500">Under £500</option>
@@ -168,8 +168,8 @@ export default function ContactForm() {
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           style={{ ...inputStyle, resize: 'vertical', minHeight: 120 }}
-          onFocus={(e) => (e.target.style.borderColor = '#1B2A4A')}
-          onBlur={(e) => (e.target.style.borderColor = 'rgba(27,42,74,0.1)')}
+          onFocus={(e) => (e.target.style.borderColor = '#1A1A1A')}
+          onBlur={(e) => (e.target.style.borderColor = 'rgba(0,0,0,0.1)')}
         />
       </div>
       {status === 'error' && (
@@ -183,8 +183,8 @@ export default function ContactForm() {
         style={{
           alignSelf: 'flex-start',
           padding: '12px 28px',
-          background: status === 'sending' ? '#E8C97A' : '#D4A84B',
-          color: '#1B2A4A',
+          background: status === 'sending' ? '#F07055' : '#E85D3A',
+          color: '#1A1A1A',
           borderRadius: 100,
           fontSize: 13,
           fontWeight: 600,

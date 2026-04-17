@@ -60,17 +60,17 @@ export default function HelpIndexClient() {
   return (
     <>
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '64px 24px 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 24px 48px' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: '#F5F0E6', fontWeight: 400, marginBottom: 12 }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: '#FAF8F5', fontWeight: 400, marginBottom: 12 }}>
             Help Centre
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', marginBottom: 28 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', marginBottom: 28 }}>
             Find answers to common questions about the Business OS
           </p>
           {/* Search */}
           <div style={{ position: 'relative', maxWidth: 480, margin: '0 auto' }}>
-            <Search size={16} color="rgba(245,240,230,0.4)" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)' }} />
+            <Search size={16} color="rgba(250,248,245,0.4)" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)' }} />
             <input
               type="text"
               value={search}
@@ -78,7 +78,7 @@ export default function HelpIndexClient() {
               placeholder="Search for help..."
               style={{
                 width: '100%', padding: '13px 16px 13px 40px', borderRadius: 8, border: 'none',
-                fontSize: 15, color: '#1B2A4A', outline: 'none', boxSizing: 'border-box',
+                fontSize: 15, color: '#1A1A1A', outline: 'none', boxSizing: 'border-box',
               }}
             />
           </div>
@@ -90,18 +90,18 @@ export default function HelpIndexClient() {
         {/* Search Results */}
         {search.length >= 2 && (
           <div style={{ marginBottom: 48 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#1B2A4A', marginBottom: 16 }}>
+            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#1A1A1A', marginBottom: 16 }}>
               {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for &ldquo;{search}&rdquo;
             </h2>
             {searchResults.length === 0 ? (
-              <p style={{ color: '#5A6A7A', fontSize: 14 }}>No articles found. Try a different search term.</p>
+              <p style={{ color: '#7A7A7A', fontSize: 14 }}>No articles found. Try a different search term.</p>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {searchResults.map(a => (
                   <Link key={a.id} href={`/help/${a.slug}`} style={{ textDecoration: 'none' }}>
-                    <div style={{ background: '#fff', borderRadius: 8, padding: '14px 18px', border: '1px solid rgba(27,42,74,0.08)', transition: 'border-color 0.2s' }}>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{a.title}</div>
-                      <div style={{ fontSize: 12, color: '#5A6A7A' }}>{a.content.replace(/#+\s*/g, '').slice(0, 120)}...</div>
+                    <div style={{ background: '#fff', borderRadius: 8, padding: '14px 18px', border: '1px solid rgba(0,0,0,0.08)', transition: 'border-color 0.2s' }}>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', marginBottom: 4 }}>{a.title}</div>
+                      <div style={{ fontSize: 12, color: '#7A7A7A' }}>{a.content.replace(/#+\s*/g, '').slice(0, 120)}...</div>
                     </div>
                   </Link>
                 ))}
@@ -113,7 +113,7 @@ export default function HelpIndexClient() {
         {/* Category Grid */}
         {search.length < 2 && (
           <>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', marginBottom: 24, fontWeight: 400 }}>Browse by category</h2>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', marginBottom: 24, fontWeight: 400 }}>Browse by category</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 56 }} className="help-grid">
               {CATEGORIES.map(cat => {
                 const Icon = cat.icon
@@ -121,18 +121,18 @@ export default function HelpIndexClient() {
                   <Link key={cat.id} href={`/help/category/${cat.id}`} style={{ textDecoration: 'none' }}>
                     <div style={{
                       background: '#fff', borderRadius: 10, padding: '20px 22px',
-                      border: '1px solid rgba(27,42,74,0.08)', transition: 'box-shadow 0.2s, transform 0.2s',
+                      border: '1px solid rgba(0,0,0,0.08)', transition: 'box-shadow 0.2s, transform 0.2s',
                       display: 'flex', alignItems: 'flex-start', gap: 14,
                     }}
                     className="help-cat-card"
                     >
-                      <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(27,42,74,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        <Icon size={18} color="#1B2A4A" />
+                      <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <Icon size={18} color="#1A1A1A" />
                       </div>
                       <div>
-                        <div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A', marginBottom: 3 }}>{cat.label}</div>
-                        <div style={{ fontSize: 12, color: '#5A6A7A', marginBottom: 4 }}>{cat.desc}</div>
-                        <div style={{ fontSize: 11, color: '#D4A84B', fontWeight: 500 }}>{counts[cat.id] || 0} articles</div>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', marginBottom: 3 }}>{cat.label}</div>
+                        <div style={{ fontSize: 12, color: '#7A7A7A', marginBottom: 4 }}>{cat.desc}</div>
+                        <div style={{ fontSize: 11, color: '#E85D3A', fontWeight: 500 }}>{counts[cat.id] || 0} articles</div>
                       </div>
                     </div>
                   </Link>
@@ -143,20 +143,20 @@ export default function HelpIndexClient() {
             {/* Popular articles */}
             {articles.length > 0 && (
               <div>
-                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1B2A4A', marginBottom: 20, fontWeight: 400 }}>Popular articles</h2>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1A1A1A', marginBottom: 20, fontWeight: 400 }}>Popular articles</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {articles.slice(0, 5).map(a => (
                     <Link key={a.id} href={`/help/${a.slug}`} style={{ textDecoration: 'none' }}>
                       <div style={{
                         background: '#fff', borderRadius: 8, padding: '14px 18px',
-                        border: '1px solid rgba(27,42,74,0.08)', display: 'flex', alignItems: 'center', gap: 12,
+                        border: '1px solid rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', gap: 12,
                         transition: 'border-color 0.2s',
                       }}
                       className="help-article-row"
                       >
-                        <HelpCircle size={14} color="#D4A84B" style={{ flexShrink: 0 }} />
-                        <span style={{ fontSize: 14, color: '#1B2A4A', fontWeight: 500 }}>{a.title}</span>
-                        <span style={{ marginLeft: 'auto', fontSize: 12, color: '#D4A84B', fontWeight: 500, flexShrink: 0 }}>Read →</span>
+                        <HelpCircle size={14} color="#E85D3A" style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: 14, color: '#1A1A1A', fontWeight: 500 }}>{a.title}</span>
+                        <span style={{ marginLeft: 'auto', fontSize: 12, color: '#E85D3A', fontWeight: 500, flexShrink: 0 }}>Read →</span>
                       </div>
                     </Link>
                   ))}
@@ -165,10 +165,10 @@ export default function HelpIndexClient() {
             )}
 
             {/* CTA */}
-            <div style={{ marginTop: 56, background: '#1B2A4A', borderRadius: 12, padding: '40px 32px', textAlign: 'center', color: '#F5F0E6' }}>
+            <div style={{ marginTop: 56, background: '#1A1A1A', borderRadius: 12, padding: '40px 32px', textAlign: 'center', color: '#FAF8F5' }}>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 10 }}>Can&apos;t find what you need?</h3>
-              <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.65)', marginBottom: 20 }}>Book a free call and we&apos;ll walk you through it.</p>
-              <Link href="/book" style={{ display: 'inline-block', padding: '11px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+              <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.65)', marginBottom: 20 }}>Book a free call and we&apos;ll walk you through it.</p>
+              <Link href="/book" style={{ display: 'inline-block', padding: '11px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
                 Book a free call →
               </Link>
             </div>
@@ -179,8 +179,8 @@ export default function HelpIndexClient() {
       <style>{`
         @media (max-width: 900px) { .help-grid { grid-template-columns: 1fr 1fr !important; } }
         @media (max-width: 580px) { .help-grid { grid-template-columns: 1fr !important; } }
-        .help-cat-card:hover { box-shadow: 0 4px 16px rgba(27,42,74,0.1); transform: translateY(-1px); }
-        .help-article-row:hover { border-color: rgba(212,168,75,0.4); }
+        .help-cat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-1px); }
+        .help-article-row:hover { border-color: rgba(232,93,58,0.4); }
       `}</style>
     </>
   )

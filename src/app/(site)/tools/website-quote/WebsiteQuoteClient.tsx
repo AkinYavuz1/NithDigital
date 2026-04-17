@@ -78,24 +78,24 @@ function SelectCard({
       onClick={onClick}
       style={{
         display: 'flex', alignItems: 'flex-start', gap: 12, padding: '16px 18px', borderRadius: 10,
-        border: `2px solid ${selected ? '#D4A84B' : 'rgba(27,42,74,0.15)'}`,
-        background: selected ? 'rgba(212,168,75,0.08)' : '#fff',
+        border: `2px solid ${selected ? '#E85D3A' : 'rgba(0,0,0,0.15)'}`,
+        background: selected ? 'rgba(232,93,58,0.08)' : '#fff',
         cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s', width: '100%',
       }}
     >
       {multi && (
         <div style={{
-          width: 18, height: 18, borderRadius: 4, border: `2px solid ${selected ? '#D4A84B' : 'rgba(27,42,74,0.2)'}`,
-          background: selected ? '#D4A84B' : 'transparent',
+          width: 18, height: 18, borderRadius: 4, border: `2px solid ${selected ? '#E85D3A' : 'rgba(0,0,0,0.2)'}`,
+          background: selected ? '#E85D3A' : 'transparent',
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2,
         }}>
-          {selected && <Check size={11} color="#1B2A4A" />}
+          {selected && <Check size={11} color="#1A1A1A" />}
         </div>
       )}
-      {Icon && <Icon size={20} color={selected ? '#D4A84B' : '#5A6A7A'} style={{ flexShrink: 0, marginTop: 1 }} />}
+      {Icon && <Icon size={20} color={selected ? '#E85D3A' : '#7A7A7A'} style={{ flexShrink: 0, marginTop: 1 }} />}
       <div>
-        <div style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>{label}</div>
-        {sub && <div style={{ fontSize: 12, color: '#5A6A7A', marginTop: 3 }}>{sub}</div>}
+        <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>{label}</div>
+        {sub && <div style={{ fontSize: 12, color: '#7A7A7A', marginTop: 3 }}>{sub}</div>}
       </div>
     </button>
   )
@@ -164,17 +164,17 @@ export default function WebsiteQuoteClient() {
       <div style={{ minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '48px 24px' }}>
         <div style={{ maxWidth: 480, textAlign: 'center' }}>
           <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1B2A4A', fontWeight: 400, marginBottom: 12 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1A1A1A', fontWeight: 400, marginBottom: 12 }}>
             Thanks, {lead.name.split(' ')[0]}!
           </h2>
-          <p style={{ fontSize: 15, color: '#5A6A7A', lineHeight: 1.7, marginBottom: 28 }}>
+          <p style={{ fontSize: 15, color: '#7A7A7A', lineHeight: 1.7, marginBottom: 28 }}>
             We&apos;ll review your requirements and send you a detailed quote within 24 hours.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/book" style={{ padding: '11px 24px', background: '#1B2A4A', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+            <Link href="/book" style={{ padding: '11px 24px', background: '#1A1A1A', color: '#FAF8F5', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               Book a free consultation →
             </Link>
-            <Link href="/launchpad" style={{ padding: '11px 24px', background: 'rgba(27,42,74,0.08)', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: 'none' }}>
+            <Link href="/launchpad" style={{ padding: '11px 24px', background: 'rgba(0,0,0,0.08)', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: 'none' }}>
               Explore Launchpad
             </Link>
           </div>
@@ -184,31 +184,31 @@ export default function WebsiteQuoteClient() {
   }
 
   return (
-    <div style={{ minHeight: '80vh', background: '#F5F0E6' }}>
+    <div style={{ minHeight: '80vh', background: '#FAF8F5' }}>
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '48px 24px 36px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <section style={{ background: '#1A1A1A', padding: '48px 24px 36px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Website Quote Calculator
         </h1>
-        <p style={{ fontSize: 15, color: 'rgba(245,240,230,0.7)', maxWidth: 480, margin: '0 auto' }}>
+        <p style={{ fontSize: 15, color: 'rgba(250,248,245,0.7)', maxWidth: 480, margin: '0 auto' }}>
           Answer a few questions and get an instant price estimate for your website
         </p>
       </section>
 
       {/* Progress bar */}
-      <div style={{ height: 4, background: 'rgba(27,42,74,0.1)' }}>
-        <div style={{ height: '100%', width: `${progress}%`, background: '#D4A84B', transition: 'width 0.3s' }} />
+      <div style={{ height: 4, background: 'rgba(0,0,0,0.1)' }}>
+        <div style={{ height: '100%', width: `${progress}%`, background: '#E85D3A', transition: 'width 0.3s' }} />
       </div>
 
       <div style={{ maxWidth: 680, margin: '0 auto', padding: '40px 24px 80px' }}>
-        <div style={{ fontSize: 11, color: '#5A6A7A', marginBottom: 24, fontWeight: 600, letterSpacing: '0.5px' }}>
+        <div style={{ fontSize: 11, color: '#7A7A7A', marginBottom: 24, fontWeight: 600, letterSpacing: '0.5px' }}>
           STEP {step} OF {TOTAL_STEPS}
         </div>
 
         {/* Step 1: Business type */}
         {step === 1 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', fontWeight: 400, marginBottom: 24 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', fontWeight: 400, marginBottom: 24 }}>
               What type of business are you?
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="quote-grid">
@@ -231,7 +231,7 @@ export default function WebsiteQuoteClient() {
         {/* Step 2: Pages */}
         {step === 2 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', fontWeight: 400, marginBottom: 24 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', fontWeight: 400, marginBottom: 24 }}>
               How many pages do you need?
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -250,10 +250,10 @@ export default function WebsiteQuoteClient() {
         {/* Step 3: Features */}
         {step === 3 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', fontWeight: 400, marginBottom: 8 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', fontWeight: 400, marginBottom: 8 }}>
               Which features do you need?
             </h2>
-            <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 24 }}>Select all that apply</p>
+            <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 24 }}>Select all that apply</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="quote-grid">
               {[
                 { id: 'contact_form', label: 'Contact form', sub: 'Included free' },
@@ -278,10 +278,10 @@ export default function WebsiteQuoteClient() {
         {/* Step 4: Extras */}
         {step === 4 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', fontWeight: 400, marginBottom: 8 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', fontWeight: 400, marginBottom: 8 }}>
               Do you need any extras?
             </h2>
-            <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 24 }}>Select all that apply</p>
+            <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 24 }}>Select all that apply</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }} className="quote-grid">
               {[
                 { id: 'logo', label: 'Logo design', sub: '+£150–£300' },
@@ -302,7 +302,7 @@ export default function WebsiteQuoteClient() {
         {/* Step 5: Timeline */}
         {step === 5 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', fontWeight: 400, marginBottom: 24 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', fontWeight: 400, marginBottom: 24 }}>
               What&apos;s your timeline?
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -321,21 +321,21 @@ export default function WebsiteQuoteClient() {
         {/* Step 6: Estimate */}
         {step === 6 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', fontWeight: 400, marginBottom: 8 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', fontWeight: 400, marginBottom: 8 }}>
               Your estimated investment
             </h2>
-            <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 28 }}>Based on your selections</p>
+            <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 28 }}>Based on your selections</p>
 
-            <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '28px 32px', textAlign: 'center', marginBottom: 20 }}>
-              <p style={{ fontSize: 13, color: 'rgba(245,240,230,0.6)', marginBottom: 8 }}>Estimated website cost</p>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 40, color: '#D4A84B', fontWeight: 400, margin: '0 0 4px' }}>
+            <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '28px 32px', textAlign: 'center', marginBottom: 20 }}>
+              <p style={{ fontSize: 13, color: 'rgba(250,248,245,0.6)', marginBottom: 8 }}>Estimated website cost</p>
+              <p style={{ fontFamily: 'var(--font-display)', fontSize: 40, color: '#E85D3A', fontWeight: 400, margin: '0 0 4px' }}>
                 {fmt(priceLow)} — {fmt(priceHigh)}
               </p>
-              <p style={{ fontSize: 12, color: 'rgba(245,240,230,0.5)', marginTop: 8 }}>+ £40/month hosting, support & maintenance</p>
+              <p style={{ fontSize: 12, color: 'rgba(250,248,245,0.5)', marginTop: 8 }}>+ £40/month hosting, support & maintenance</p>
             </div>
 
-            <div style={{ background: '#fff', borderRadius: 10, padding: '20px 24px', marginBottom: 16, border: '1px solid rgba(27,42,74,0.08)' }}>
-              <h4 style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 10 }}>What&apos;s included:</h4>
+            <div style={{ background: '#fff', borderRadius: 10, padding: '20px 24px', marginBottom: 16, border: '1px solid rgba(0,0,0,0.08)' }}>
+              <h4 style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 10 }}>What&apos;s included:</h4>
               <ul style={{ paddingLeft: 16, margin: 0 }}>
                 {[
                   pages === 'simple' ? '1–3 page website' : pages === 'standard' ? '4–7 page website' : pages === 'comprehensive' ? '8–15 page website' : '15+ page website',
@@ -367,30 +367,30 @@ export default function WebsiteQuoteClient() {
                     maintenance: 'Ongoing maintenance',
                   }[e] || e)),
                 ].map((item, i) => (
-                  <li key={i} style={{ fontSize: 13, color: '#1B2A4A', marginBottom: 5, lineHeight: 1.6 }}>{item}</li>
+                  <li key={i} style={{ fontSize: 13, color: '#1A1A1A', marginBottom: 5, lineHeight: 1.6 }}>{item}</li>
                 ))}
               </ul>
             </div>
 
-            <p style={{ fontSize: 12, color: '#5A6A7A', fontStyle: 'italic', marginBottom: 20, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 12, color: '#7A7A7A', fontStyle: 'italic', marginBottom: 20, lineHeight: 1.6 }}>
               This is an estimate based on typical projects. Your final quote may differ based on specific requirements.
             </p>
 
             {/* Startup Bundle callout */}
             <div style={{
-              border: '2px solid #D4A84B', borderRadius: 10, padding: '20px 24px', marginBottom: 8,
-              background: 'rgba(212,168,75,0.05)',
+              border: '2px solid #E85D3A', borderRadius: 10, padding: '20px 24px', marginBottom: 8,
+              background: 'rgba(232,93,58,0.05)',
             }}>
-              <div style={{ fontSize: 11, letterSpacing: '1px', textTransform: 'uppercase', color: '#D4A84B', fontWeight: 600, marginBottom: 8 }}>
+              <div style={{ fontSize: 11, letterSpacing: '1px', textTransform: 'uppercase', color: '#E85D3A', fontWeight: 600, marginBottom: 8 }}>
                 Startup Bundle
               </div>
-              <p style={{ fontSize: 14, color: '#1B2A4A', fontWeight: 500, marginBottom: 8 }}>
+              <p style={{ fontSize: 14, color: '#1A1A1A', fontWeight: 500, marginBottom: 8 }}>
                 Get your website built for £0 upfront — just £40/month
               </p>
-              <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 12, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 12, lineHeight: 1.6 }}>
                 Complete our free Launchpad checklist to qualify for the Startup Bundle.
               </p>
-              <Link href="/launchpad" style={{ fontSize: 13, color: '#D4A84B', fontWeight: 600, textDecoration: 'none' }}>
+              <Link href="/launchpad" style={{ fontSize: 13, color: '#E85D3A', fontWeight: 600, textDecoration: 'none' }}>
                 Start the Launchpad →
               </Link>
             </div>
@@ -400,10 +400,10 @@ export default function WebsiteQuoteClient() {
         {/* Step 7: Lead capture */}
         {step === 7 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1B2A4A', fontWeight: 400, marginBottom: 8 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: '#1A1A1A', fontWeight: 400, marginBottom: 8 }}>
               Get your detailed quote
             </h2>
-            <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24 }}>
               We&apos;ll send a full breakdown within 24 hours.
             </p>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -414,36 +414,36 @@ export default function WebsiteQuoteClient() {
                 { key: 'business_name', label: 'Business name (optional)', type: 'text', required: false, placeholder: 'e.g. Nithsdale Plumbing' },
               ].map(field => (
                 <div key={field.key}>
-                  <label style={{ fontSize: 12, fontWeight: 600, color: '#5A6A7A', display: 'block', marginBottom: 6 }}>{field.label}</label>
+                  <label style={{ fontSize: 12, fontWeight: 600, color: '#7A7A7A', display: 'block', marginBottom: 6 }}>{field.label}</label>
                   <input
                     type={field.type}
                     required={field.required}
                     placeholder={field.placeholder}
                     value={(lead as Record<string, string>)[field.key]}
                     onChange={e => setLead(prev => ({ ...prev, [field.key]: e.target.value }))}
-                    style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 6, fontSize: 14, color: '#1B2A4A', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 6, fontSize: 14, color: '#1A1A1A', boxSizing: 'border-box' }}
                   />
                 </div>
               ))}
               <div>
-                <label style={{ fontSize: 12, fontWeight: 600, color: '#5A6A7A', display: 'block', marginBottom: 6 }}>Any other details? (optional)</label>
+                <label style={{ fontSize: 12, fontWeight: 600, color: '#7A7A7A', display: 'block', marginBottom: 6 }}>Any other details? (optional)</label>
                 <textarea
                   rows={3}
                   placeholder="Anything else we should know about your project..."
                   value={lead.notes}
                   onChange={e => setLead(prev => ({ ...prev, notes: e.target.value }))}
-                  style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 6, fontSize: 14, color: '#1B2A4A', boxSizing: 'border-box', resize: 'vertical' }}
+                  style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 6, fontSize: 14, color: '#1A1A1A', boxSizing: 'border-box', resize: 'vertical' }}
                 />
               </div>
-              <div style={{ background: '#F5F0E6', borderRadius: 8, padding: '14px 16px', fontSize: 13, color: '#1B2A4A', display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ background: '#FAF8F5', borderRadius: 8, padding: '14px 16px', fontSize: 13, color: '#1A1A1A', display: 'flex', justifyContent: 'space-between' }}>
                 <span>Your estimate:</span>
-                <strong style={{ color: '#D4A84B' }}>{fmt(priceLow)} — {fmt(priceHigh)}</strong>
+                <strong style={{ color: '#E85D3A' }}>{fmt(priceLow)} — {fmt(priceHigh)}</strong>
               </div>
               <button
                 type="submit"
                 disabled={submitting}
                 style={{
-                  padding: '13px', background: '#D4A84B', color: '#1B2A4A',
+                  padding: '13px', background: '#E85D3A', color: '#1A1A1A',
                   borderRadius: 100, fontSize: 14, fontWeight: 700, border: 'none',
                   cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1,
                 }}
@@ -459,7 +459,7 @@ export default function WebsiteQuoteClient() {
           {step > 1 ? (
             <button
               onClick={() => setStep(s => s - 1)}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: 'none', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 100, cursor: 'pointer', fontSize: 13, color: '#5A6A7A' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 20px', background: 'none', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 100, cursor: 'pointer', fontSize: 13, color: '#7A7A7A' }}
             >
               <ChevronLeft size={15} /> Back
             </button>
@@ -471,7 +471,7 @@ export default function WebsiteQuoteClient() {
               disabled={!canContinue()}
               style={{
                 display: 'flex', alignItems: 'center', gap: 6, padding: '10px 24px',
-                background: canContinue() ? '#1B2A4A' : 'rgba(27,42,74,0.3)', color: '#F5F0E6',
+                background: canContinue() ? '#1A1A1A' : 'rgba(0,0,0,0.3)', color: '#FAF8F5',
                 borderRadius: 100, border: 'none', cursor: canContinue() ? 'pointer' : 'not-allowed', fontSize: 13, fontWeight: 500,
               }}
             >

@@ -82,16 +82,16 @@ export default function WebDesignScotlandPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Web Design · Scotland
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 40,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.2,
@@ -99,7 +99,7 @@ export default function WebDesignScotlandPage() {
           >
             Web Design in Scotland
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 580, marginBottom: 32, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 580, marginBottom: 32, lineHeight: 1.7 }}>
             Affordable, custom-built websites for small businesses across Scotland. No templates,
             no page builders. Designed from scratch, optimised for search, and built to convert. From £500.
           </p>
@@ -109,8 +109,8 @@ export default function WebDesignScotlandPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -125,11 +125,11 @@ export default function WebDesignScotlandPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -143,35 +143,35 @@ export default function WebDesignScotlandPage() {
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 48, alignItems: 'start' }} className="scotland-grid">
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1B2A4A' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1A1A1A' }}>
               Web design for Scottish small businesses
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               Nith Digital builds websites for small businesses, sole traders, and startups across Scotland. We work
               remotely with clients from the Borders to the Highlands — you don&apos;t need a local agency in your town
               to get a professional website. Everything is handled over video calls, email, and phone. No office visits
               required.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               We&apos;re based in Sanquhar, Dumfries &amp; Galloway — a small rural town in the south of Scotland. That
               means low overheads, which we pass on as lower prices. You get the same quality of work you&apos;d expect
               from an Edinburgh or Glasgow agency, without the city-centre price tag.
             </p>
 
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1A1A1A' }}>
               Who we build websites for
             </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               Most of our clients are small businesses with one to ten employees. Tradespeople, hospitality businesses,
               professional services firms, healthcare practices, restaurants, and retailers. If you need a website that
               looks professional, loads fast, and gets found on Google — we build exactly that. No unnecessary complexity,
               no ongoing contracts you can&apos;t leave.
             </p>
 
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1A1A1A' }}>
               Why Scottish businesses choose Nith Digital
             </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 16 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 16 }}>
               We&apos;re a one-person operation. You deal directly with the person who designs and builds your site — no
               account managers, no middlemen, no agency bloat. That means faster turnaround, clearer communication, and
               a website that actually reflects your business.
@@ -191,11 +191,11 @@ export default function WebDesignScotlandPage() {
                   key={reason}
                   style={{
                     padding: '12px 16px',
-                    border: '1px solid rgba(27,42,74,0.1)',
-                    borderLeft: '3px solid #D4A84B',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderLeft: '3px solid #E85D3A',
                     borderRadius: '0 6px 6px 0',
                     fontSize: 13,
-                    color: '#1B2A4A',
+                    color: '#1A1A1A',
                     lineHeight: 1.5,
                   }}
                 >
@@ -204,17 +204,17 @@ export default function WebDesignScotlandPage() {
               ))}
             </div>
 
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1A1A1A' }}>
               How it works
             </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               We start with a free 20-minute call to understand your business, your customers, and what you need your
               website to do. From there, we handle everything: design, copywriting, development, SEO setup, and
               deployment. Most sites are live within two to three weeks. After launch, we handle hosting, security
               updates, and any content changes you need — all included in a simple monthly plan.
             </p>
 
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: '#1A1A1A' }}>
               What&apos;s included in every website
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 32 }} className="features-grid">
@@ -232,11 +232,11 @@ export default function WebDesignScotlandPage() {
                   key={feat}
                   style={{
                     padding: '12px 16px',
-                    border: '1px solid rgba(27,42,74,0.1)',
-                    borderLeft: '3px solid #D4A84B',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderLeft: '3px solid #E85D3A',
                     borderRadius: '0 6px 6px 0',
                     fontSize: 13,
-                    color: '#1B2A4A',
+                    color: '#1A1A1A',
                     lineHeight: 1.5,
                   }}
                 >
@@ -251,18 +251,18 @@ export default function WebDesignScotlandPage() {
             {/* Pricing card */}
             <div
               style={{
-                background: '#1B2A4A',
+                background: '#1A1A1A',
                 borderRadius: 12,
                 padding: 28,
                 marginBottom: 20,
-                color: '#F5F0E6',
+                color: '#FAF8F5',
               }}
             >
-              <div style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
+              <div style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 8, fontWeight: 600 }}>
                 Starting price
               </div>
-              <div style={{ fontSize: 36, fontWeight: 600, color: '#D4A84B', marginBottom: 4 }}>£500</div>
-              <div style={{ fontSize: 13, color: 'rgba(245,240,230,0.6)', marginBottom: 16 }}>
+              <div style={{ fontSize: 36, fontWeight: 600, color: '#E85D3A', marginBottom: 4 }}>£500</div>
+              <div style={{ fontSize: 13, color: 'rgba(250,248,245,0.6)', marginBottom: 16 }}>
                 + £40/month hosting & support
               </div>
               <Link
@@ -271,8 +271,8 @@ export default function WebDesignScotlandPage() {
                   display: 'block',
                   textAlign: 'center',
                   padding: '12px 20px',
-                  background: '#D4A84B',
-                  color: '#1B2A4A',
+                  background: '#E85D3A',
+                  color: '#1A1A1A',
                   borderRadius: 100,
                   fontSize: 13,
                   fontWeight: 600,
@@ -286,26 +286,26 @@ export default function WebDesignScotlandPage() {
             {/* Tools card */}
             <div
               style={{
-                background: '#F5F0E6',
+                background: '#FAF8F5',
                 borderRadius: 12,
                 padding: 24,
                 marginBottom: 20,
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 12 }}>
                 Free tools
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <Link href="/tools/website-quote" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/tools/website-quote" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Instant website quote calculator
                 </Link>
-                <Link href="/tools/take-home-calculator" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/tools/take-home-calculator" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Take-home pay calculator
                 </Link>
-                <Link href="/tools/site-audit" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/tools/site-audit" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Free website audit tool
                 </Link>
-                <Link href="/launchpad" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/launchpad" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Business startup checklist
                 </Link>
               </div>
@@ -314,18 +314,18 @@ export default function WebDesignScotlandPage() {
             {/* Sectors card */}
             <div
               style={{
-                border: '1px solid rgba(27,42,74,0.1)',
+                border: '1px solid rgba(0,0,0,0.1)',
                 borderRadius: 12,
                 padding: 24,
                 marginBottom: 20,
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 12 }}>
                 Web design by sector
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {SECTORS.map((sector) => (
-                  <Link key={sector.slug} href={`/web-design/${sector.slug}`} style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                  <Link key={sector.slug} href={`/web-design/${sector.slug}`} style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                     → {sector.name}
                   </Link>
                 ))}
@@ -335,25 +335,25 @@ export default function WebDesignScotlandPage() {
             {/* Blog card */}
             <div
               style={{
-                border: '1px solid rgba(27,42,74,0.1)',
+                border: '1px solid rgba(0,0,0,0.1)',
                 borderRadius: 12,
                 padding: 24,
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 12 }}>
                 Helpful guides
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <Link href="/blog/what-does-a-website-cost-small-business-uk" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/what-does-a-website-cost-small-business-uk" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → How much does a website cost?
                 </Link>
-                <Link href="/blog/why-your-small-business-needs-a-website-in-2025" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/why-your-small-business-needs-a-website-in-2025" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → Why your business needs a website
                 </Link>
-                <Link href="/blog/what-is-seo-beginners-guide-small-business" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/what-is-seo-beginners-guide-small-business" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → What is SEO?
                 </Link>
-                <Link href="/blog/google-my-business-guide-local-businesses" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/google-my-business-guide-local-businesses" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → Google Business Profile guide
                 </Link>
               </div>
@@ -363,12 +363,12 @@ export default function WebDesignScotlandPage() {
       </section>
 
       {/* D&G towns section */}
-      <section style={{ background: '#F5F0E6', padding: '56px 24px' }}>
+      <section style={{ background: '#FAF8F5', padding: '56px 24px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
             Local web design across Dumfries & Galloway
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 28, lineHeight: 1.7 }}>
             Based in Sanquhar, we have deep roots in D&amp;G. Visit a town page for local information.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12 }} className="towns-grid">
@@ -380,16 +380,16 @@ export default function WebDesignScotlandPage() {
                   display: 'block',
                   padding: '16px 20px',
                   background: '#fff',
-                  border: '1px solid rgba(27,42,74,0.12)',
+                  border: '1px solid rgba(0,0,0,0.12)',
                   borderRadius: 8,
                   fontSize: 14,
                   fontWeight: 500,
-                  color: '#1B2A4A',
+                  color: '#1A1A1A',
                   textDecoration: 'none',
                 }}
               >
                 {town.name}
-                <span style={{ display: 'block', fontSize: 11, color: '#5A6A7A', marginTop: 2, fontWeight: 400 }}>
+                <span style={{ display: 'block', fontSize: 11, color: '#7A7A7A', marginTop: 2, fontWeight: 400 }}>
                   Web design →
                 </span>
               </Link>
@@ -401,10 +401,10 @@ export default function WebDesignScotlandPage() {
       {/* CTA */}
       <section style={{ padding: '56px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 560, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
             Ready to get started?
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24, lineHeight: 1.7 }}>
             Free initial consultation. No jargon, no pressure. We work with businesses right across Scotland.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -413,8 +413,8 @@ export default function WebDesignScotlandPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -429,11 +429,11 @@ export default function WebDesignScotlandPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#1B2A4A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(27,42,74,0.2)',
+                border: '1px solid rgba(0,0,0,0.2)',
                 textDecoration: 'none',
               }}
             >

@@ -72,15 +72,15 @@ export default function TakeHomeClient() {
   const chartData = [
     { name: 'Take-home', value: Math.max(0, Math.round(takeHome)), fill: '#27ae60' },
     { name: 'Income tax', value: Math.round(incomeTax), fill: '#c0392b' },
-    { name: 'NI (Class 2 + 4)', value: Math.round(class2 + class4), fill: '#D4A84B' },
-    ...(slRepayment > 0 ? [{ name: 'Student loan', value: Math.round(slRepayment), fill: '#2D4A7A' }] : []),
+    { name: 'NI (Class 2 + 4)', value: Math.round(class2 + class4), fill: '#E85D3A' },
+    ...(slRepayment > 0 ? [{ name: 'Student loan', value: Math.round(slRepayment), fill: '#333333' }] : []),
   ].filter(d => d.value > 0)
 
   return (
     <div style={{ maxWidth: 1080, margin: '0 auto', padding: '48px 24px' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 40, alignItems: 'start' }} className="takehome-layout">
         <div>
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 32, marginBottom: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 32, marginBottom: 24 }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, marginBottom: 24, fontWeight: 400 }}>Your income</h2>
 
             {[
@@ -88,36 +88,36 @@ export default function TakeHomeClient() {
               { label: 'Annual business expenses', value: expInput, handler: handleExp, sliderVal: expenses, setSlider: setExpenses, setInput: setExpInput, max: 100000 },
             ].map(field => (
               <div key={field.label} style={{ marginBottom: 20 }}>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 8 }}>{field.label}</label>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>{field.label}</label>
                 <div style={{ position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#5A6A7A', fontWeight: 600 }}>£</span>
+                  <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#7A7A7A', fontWeight: 600 }}>£</span>
                   <input type="text" value={field.value} onChange={e => field.handler(e.target.value)}
-                    style={{ width: '100%', padding: '12px 14px 12px 28px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 15, fontWeight: 600, color: '#1B2A4A', fontFamily: 'inherit' }} />
+                    style={{ width: '100%', padding: '12px 14px 12px 28px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, fontSize: 15, fontWeight: 600, color: '#1A1A1A', fontFamily: 'inherit' }} />
                 </div>
                 <input type="range" min={0} max={field.max} step={500} value={field.sliderVal} onChange={e => { field.setSlider(Number(e.target.value)); field.setInput(String(e.target.value)) }} style={{ width: '100%', marginTop: 8 }} />
               </div>
             ))}
 
             <div>
-              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 8 }}>Student loan plan</label>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>Student loan plan</label>
               <select value={studentLoan} onChange={e => setStudentLoan(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', background: 'white' }}>
+                style={{ width: '100%', padding: '10px 14px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', background: 'white' }}>
                 {STUDENT_LOAN_PLANS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
               </select>
             </div>
           </div>
 
           {/* Results */}
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: 32, color: '#F5F0E6', marginBottom: 24 }}>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: 32, color: '#FAF8F5', marginBottom: 24 }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, marginBottom: 24, fontWeight: 400 }}>Your results</h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
               <div>
-                <div style={{ fontSize: 11, color: 'rgba(245,240,230,0.5)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 4 }}>Annual take-home</div>
+                <div style={{ fontSize: 11, color: 'rgba(250,248,245,0.5)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 4 }}>Annual take-home</div>
                 <div style={{ fontSize: 36, fontWeight: 700, color: '#27ae60' }}>{fmt(takeHome)}</div>
               </div>
               <div>
-                <div style={{ fontSize: 11, color: 'rgba(245,240,230,0.5)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 4 }}>Monthly take-home</div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: '#D4A84B' }}>{fmt(takeHome / 12)}</div>
+                <div style={{ fontSize: 11, color: 'rgba(250,248,245,0.5)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 4 }}>Monthly take-home</div>
+                <div style={{ fontSize: 28, fontWeight: 700, color: '#E85D3A' }}>{fmt(takeHome / 12)}</div>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -132,7 +132,7 @@ export default function TakeHomeClient() {
                 ['Effective tax rate', `${effectiveRate.toFixed(1)}%`],
               ].map(([k, v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span style={{ color: 'rgba(245,240,230,0.6)' }}>{k}</span>
+                  <span style={{ color: 'rgba(250,248,245,0.6)' }}>{k}</span>
                   <span style={{ fontWeight: 600 }}>{v}</span>
                 </div>
               ))}
@@ -142,7 +142,7 @@ export default function TakeHomeClient() {
 
         {/* Chart + sidebar */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ background: 'white', border: '1px solid rgba(27,42,74,0.08)', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: 'white', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, marginBottom: 16, fontWeight: 400 }}>Income breakdown</h3>
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
@@ -155,20 +155,20 @@ export default function TakeHomeClient() {
             </ResponsiveContainer>
           </div>
 
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 15, marginBottom: 12, fontWeight: 400 }}>Monthly budget</h3>
-            <div style={{ fontSize: 28, fontWeight: 700, color: '#1B2A4A', marginBottom: 8 }}>{fmt(takeHome / 12)}</div>
-            <p style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.6 }}>
+            <div style={{ fontSize: 28, fontWeight: 700, color: '#1A1A1A', marginBottom: 8 }}>{fmt(takeHome / 12)}</div>
+            <p style={{ fontSize: 13, color: '#7A7A7A', lineHeight: 1.6 }}>
               This is your monthly take-home after all deductions. Set aside at least 25–30% of each payment for your Self Assessment bill.
             </p>
           </div>
 
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: 24, color: '#F5F0E6' }}>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: 24, color: '#FAF8F5' }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 15, marginBottom: 10, fontWeight: 400 }}>Track your income</h3>
-            <p style={{ fontSize: 13, color: 'rgba(245,240,230,0.7)', marginBottom: 16, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 13, color: 'rgba(250,248,245,0.7)', marginBottom: 16, lineHeight: 1.6 }}>
               The Business OS tracks your income, expenses, and estimated tax in real time.
             </p>
-            <Link href="/os" style={{ display: 'inline-block', padding: '8px 18px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 12, fontWeight: 600 }}>
+            <Link href="/os" style={{ display: 'inline-block', padding: '8px 18px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 12, fontWeight: 600 }}>
               Try Business OS →
             </Link>
           </div>
