@@ -149,10 +149,10 @@
   .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
 
   /* Scrolling screenshot */
-  .work-card-video .scroll-preview{width:100%;display:block;animation:scroll-site 28s ease-in-out infinite alternate}
-  .work-card-video .scroll-preview-slow{animation-duration:20s}
+  .work-card-video .scroll-preview{width:100%;display:block;animation:scroll-site 28s linear infinite}
+  .work-card-video .scroll-preview-slow{animation-duration:40s}
 
-  @keyframes scroll-site{0%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 280px))}}
+  @keyframes scroll-site{0%{transform:translateY(0)}90%{transform:translateY(calc(-100% + 280px))}90.01%,100%{transform:translateY(0)}}
 
   /* Static screenshot */
   .work-card-video .static-preview{width:100%;display:block;object-fit:cover;object-position:top;height:100%;position:absolute;top:0;left:0}
