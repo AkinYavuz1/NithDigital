@@ -316,8 +316,8 @@
     .hero{padding:80px 16px 40px;min-height:auto}
     .hero-headline{font-size:clamp(1.4rem,6vw,2rem);min-height:2.8em;line-height:1.15;letter-spacing:-0.02em}
     .hero-sub{font-size:0.9rem;max-width:100%;margin-bottom:20px}
-    .hero-ctas{flex-direction:column;gap:10px}
-    .hero-ctas a{text-align:center;justify-content:center;width:100%}
+    .hero-ctas{flex-direction:row;gap:10px}
+    .hero-ctas a{text-align:center;justify-content:center;flex:1;padding:12px 16px;font-size:0.8rem}
 
     /* Intro */
     .intro-section{padding-top:32px;padding-bottom:48px}
@@ -372,13 +372,18 @@
 
     /* Contact form */
     .contact-section{padding-top:32px;padding-bottom:48px}
-    .contact-sub{font-size:0.85rem;margin-bottom:20px}
-    .contact-form{padding:20px 16px}
-    .form-row{grid-template-columns:1fr;gap:20px}
-    .service-pills{gap:6px}
-    .service-pill{padding:7px 14px;font-size:0.75rem}
-    .form-bottom{flex-direction:column;align-items:stretch;gap:12px}
-    .form-submit{width:100%;justify-content:center}
+    .contact-sub{font-size:0.78rem;margin-bottom:16px}
+    .contact-form{padding:16px 14px}
+    .form-group-label{font-size:0.6rem;margin-bottom:10px}
+    .form-row{grid-template-columns:1fr;gap:12px;margin-bottom:12px}
+    .form-field label{font-size:0.6rem}
+    .form-field input{padding:8px 0;font-size:0.85rem}
+    .form-field textarea{padding:8px 0;font-size:0.85rem;min-height:80px}
+    .service-pills{gap:6px;margin-bottom:20px}
+    .service-pill{padding:6px 12px;font-size:0.7rem}
+    .form-bottom{flex-direction:column;align-items:stretch;gap:10px;margin-top:20px}
+    .form-submit{width:100%;justify-content:center;padding:12px 24px;font-size:0.85rem}
+    .form-privacy{font-size:0.7rem}
 
     /* Map */
     .map-wrap{height:280px;margin-top:20px;border-radius:10px}
