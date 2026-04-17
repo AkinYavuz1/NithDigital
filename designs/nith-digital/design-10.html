@@ -149,7 +149,7 @@
   .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
 
   /* Scrolling screenshot */
-  .work-card-video .scroll-preview{width:100%;display:block;animation:scroll-site 14s ease-in-out infinite alternate}
+  .work-card-video .scroll-preview{width:100%;display:block;animation:scroll-site 28s ease-in-out infinite alternate}
   .work-card-video .scroll-preview-slow{animation-duration:20s}
 
   @keyframes scroll-site{0%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 280px))}}
@@ -158,7 +158,7 @@
   .work-card-video .static-preview{width:100%;display:block;object-fit:cover;object-position:top;height:100%;position:absolute;top:0;left:0}
 
   /* Looping video */
-  .work-card-video video{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+  .work-card-video video{width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0;background:#111}
 
 
   .work-card-info{padding:20px 24px}
