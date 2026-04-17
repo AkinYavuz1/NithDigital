@@ -15,6 +15,11 @@ export default function CookieBanner() {
     setVisible(false)
   }
 
+  const reject = () => {
+    localStorage.setItem('cookie-consent', 'rejected')
+    setVisible(false)
+  }
+
   if (!visible) return null
 
   return (
@@ -47,22 +52,38 @@ export default function CookieBanner() {
           Privacy Policy
         </Link>
       </p>
-      <button
-        onClick={accept}
-        style={{
-          background: '#E85D3A',
-          color: '#fff',
-          border: 'none',
-          borderRadius: 50,
-          padding: '8px 18px',
-          fontSize: 13,
-          fontWeight: 600,
-          cursor: 'pointer',
-          flexShrink: 0,
-        }}
-      >
-        Accept
-      </button>
+      <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+        <button
+          onClick={reject}
+          style={{
+            background: 'transparent',
+            color: '#fff',
+            border: '1.5px solid rgba(255,255,255,0.2)',
+            borderRadius: 50,
+            padding: '8px 18px',
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: 'pointer',
+          }}
+        >
+          Reject
+        </button>
+        <button
+          onClick={accept}
+          style={{
+            background: '#E85D3A',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 50,
+            padding: '8px 18px',
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: 'pointer',
+          }}
+        >
+          Accept
+        </button>
+      </div>
     </div>
   )
 }

@@ -10,7 +10,7 @@ const securityHeaders = [
       "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://api.starlingbank.com",
-      "frame-src https://www.googletagmanager.com https://www.facebook.com",
+      "frame-src https://www.googletagmanager.com https://www.facebook.com https://maps.google.com https://www.google.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
