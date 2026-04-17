@@ -420,7 +420,7 @@ export default function HomeClient() {
         </ScrollSelectText>
 
         <div className="nd-map-wrap">
-          <iframe src="https://maps.google.com/maps?q=55.3802589,-3.9226708&z=10&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Nith Digital location" />
+          <iframe src="https://maps.google.com/maps?q=55.3802589,-3.9226708&z=10&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Nith Digital location"></iframe>
         </div>
       </section>
 
