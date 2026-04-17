@@ -136,22 +136,30 @@
   .work-card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.04);transition:transform 0.5s var(--ease),box-shadow 0.5s var(--ease);position:relative;transform-style:preserve-3d;perspective:800px}
   .work-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
 
-  /* Video placeholder with animated gradient */
-  .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
-  .work-card-video::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,93,58,0.5),rgba(45,127,249,0.4),rgba(245,166,35,0.5),rgba(168,85,247,0.35),rgba(16,185,129,0.3));background-size:400% 400%;animation:video-shimmer 6s ease-in-out infinite;z-index:1}
-  .work-card-video::after{content:'';position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.08) 50%,transparent 70%);background-size:200% 200%;animation:video-shine 3s ease-in-out infinite;z-index:2}
-  @keyframes video-shimmer{0%{background-position:0% 0%}25%{background-position:100% 50%}50%{background-position:50% 100%}75%{background-position:0% 50%}100%{background-position:0% 0%}}
-  @keyframes video-shine{0%,100%{background-position:200% 0%}50%{background-position:-200% 0%}}
-  .work-card-video .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.2);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;transition:all 0.4s var(--ease);z-index:5}
-  .work-card:hover .play-icon{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
-  .play-icon::after{content:'';width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:3px}
+  /* Browser chrome bar */
+  .browser-chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#222;position:relative;z-index:3}
+  .browser-dots{display:flex;gap:5px}
+  .browser-dots span{width:8px;height:8px;border-radius:50%;background:#444}
+  .browser-dots span:first-child{background:#FF5F57}
+  .browser-dots span:nth-child(2){background:#FFBD2E}
+  .browser-dots span:nth-child(3){background:#28CA42}
+  .browser-url{flex:1;background:#333;border-radius:4px;padding:4px 10px;font-size:0.65rem;color:#999;font-family:monospace;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 
-  /* Hover reveal overlay */
-  .work-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.9) 0%,transparent 60%);opacity:0;transition:opacity 0.5s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;z-index:4}
-  .work-card:hover .work-card-overlay{opacity:1}
-  .work-card-overlay .overlay-tags{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-bottom:8px}
-  .work-card-overlay .overlay-desc{font-size:0.85rem;color:rgba(255,255,255,0.85);line-height:1.5;max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease)}
-  .work-card:hover .overlay-desc{max-height:80px}
+  /* Preview viewport */
+  .work-card-video{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
+
+  /* Scrolling screenshot */
+  .work-card-video .scroll-preview{width:100%;display:block;animation:scroll-site 14s ease-in-out infinite alternate}
+  .work-card-video .scroll-preview-slow{animation-duration:20s}
+
+  @keyframes scroll-site{0%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 280px))}}
+
+  /* Static screenshot */
+  .work-card-video .static-preview{width:100%;display:block;object-fit:cover;object-position:top;height:100%;position:absolute;top:0;left:0}
+
+  /* Looping video */
+  .work-card-video video{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+
 
   .work-card-info{padding:20px 24px}
   .work-card-header{display:flex;justify-content:space-between;align-items:center}
@@ -284,6 +292,7 @@
     .line-inner{transform:none;transition:none}
     .clip-reveal{clip-path:none;transition:none}
     .parallax-img{position:relative!important;height:100%!important}
+    .scroll-preview{animation:none!important}
   }
 
   /* ══════════════════ TABLET ══════════════════ */
@@ -337,9 +346,10 @@
     .work-section{padding-top:32px;padding-bottom:48px}
     .work-grid{grid-template-columns:1fr;gap:12px}
     .work-card-video{aspect-ratio:16/10}
-    .parallax-img{position:relative!important;height:100%!important}
-    .work-card-overlay{opacity:1}
-    .work-card-overlay .overlay-desc{max-height:80px}
+    .scroll-preview{animation:none!important;position:relative}
+    .browser-chrome{padding:8px 10px}
+    .browser-dots span{width:6px;height:6px}
+    .browser-url{font-size:0.55rem;padding:3px 8px}
 
     /* Pricing */
     .pricing-section{padding-top:32px;padding-bottom:48px}
@@ -487,15 +497,14 @@
     <span class="section-title text-reveal">Work</span>
   </div>
   <div class="work-grid">
-    <!-- Card 1 -->
+    <!-- Card 1 — Not an Octavia (scrolling screenshot) -->
     <div class="work-card anim" data-tilt>
-      <div class="work-card-video clip-reveal">
-        <img class="parallax-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Not an Octavia — data dashboard" style="opacity:0.4">
-        <div class="play-icon"></div>
-        <div class="work-card-overlay">
-          <div class="overlay-tags">Next.js &middot; TypeScript &middot; Supabase &middot; XGBoost &middot; Groq</div>
-          <div class="overlay-desc">Machine learning model that finds underpriced used cars across the UK. Scans thousands of listings daily.</div>
-        </div>
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">not-an-octavia.uk</div>
+      </div>
+      <div class="work-card-video">
+        <img class="scroll-preview" src="notanoctavia.png" alt="Not an Octavia — full page preview">
       </div>
       <div class="work-card-info">
         <div class="work-card-header">
@@ -505,15 +514,16 @@
         <p class="work-card-desc">ML-powered used car deals finder</p>
       </div>
     </div>
-    <!-- Card 2 -->
+    <!-- Card 2 — gAIns (looping video) -->
     <div class="work-card anim" data-tilt style="transition-delay:0.1s">
-      <div class="work-card-video clip-reveal">
-        <img class="parallax-img" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="gAIns — gym tracker" style="opacity:0.4">
-        <div class="play-icon"></div>
-        <div class="work-card-overlay">
-          <div class="overlay-tags">React &middot; Vite &middot; Supabase &middot; Anthropic API &middot; Stripe</div>
-          <div class="overlay-desc">AI-powered gym tracker with a built-in coach. Logs workouts and gives personalised programming advice.</div>
-        </div>
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">gainsai.uk</div>
+      </div>
+      <div class="work-card-video">
+        <video autoplay muted loop playsinline>
+          <source src="gains.mp4" type="video/mp4">
+        </video>
       </div>
       <div class="work-card-info">
         <div class="work-card-header">
@@ -523,15 +533,16 @@
         <p class="work-card-desc">AI gym tracker with built-in coach</p>
       </div>
     </div>
-    <!-- Card 3 -->
+    <!-- Card 3 — Daily Duel (looping video) -->
     <div class="work-card anim" data-tilt style="transition-delay:0.2s">
-      <div class="work-card-video clip-reveal">
-        <img class="parallax-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80" alt="Daily Duel — mini-games" style="opacity:0.4">
-        <div class="play-icon"></div>
-        <div class="work-card-overlay">
-          <div class="overlay-tags">Next.js &middot; TypeScript &middot; Tailwind &middot; Supabase</div>
-          <div class="overlay-desc">30 daily mini-games — trivia, puzzles, pattern matching, memory. Fresh challenges every day.</div>
-        </div>
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">dailyduel.uk</div>
+      </div>
+      <div class="work-card-video">
+        <video autoplay muted loop playsinline>
+          <source src="dailyduel.mp4" type="video/mp4">
+        </video>
       </div>
       <div class="work-card-info">
         <div class="work-card-header">
@@ -541,22 +552,21 @@
         <p class="work-card-desc">30 daily mini-games with leaderboards</p>
       </div>
     </div>
-    <!-- Card 4 -->
+    <!-- Card 4 — DG Directory (scrolling screenshot) -->
     <div class="work-card anim" data-tilt style="transition-delay:0.3s">
-      <div class="work-card-video clip-reveal">
-        <img class="parallax-img" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" alt="Tumble Tots — childminding" style="opacity:0.4">
-        <div class="play-icon"></div>
-        <div class="work-card-overlay">
-          <div class="overlay-tags">HTML &middot; CSS &middot; JavaScript</div>
-          <div class="overlay-desc">Clean, mobile-first website for a local childminding business. Simple, fast, easy to find on Google.</div>
-        </div>
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">dgdirectory.com</div>
+      </div>
+      <div class="work-card-video">
+        <img class="scroll-preview scroll-preview-slow" src="dgdirectory.png" alt="DG Directory — full page preview">
       </div>
       <div class="work-card-info">
         <div class="work-card-header">
-          <span class="work-card-name">Tumble Tots</span>
+          <span class="work-card-name">DG Directory</span>
           <span class="work-card-status status-live">Live</span>
         </div>
-        <p class="work-card-desc">Childminding website — Dumfries</p>
+        <p class="work-card-desc">Local business directory — Dumfries &amp; Galloway</p>
       </div>
     </div>
   </div>
