@@ -90,16 +90,16 @@ export default function DataAnalyticsPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Data Analytics · Business Intelligence · Scotland & UK
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 36,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.25,
@@ -107,12 +107,12 @@ export default function DataAnalyticsPage() {
           >
             Data Analytics &amp;<br />Business Intelligence Consulting
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 580, marginBottom: 16, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 580, marginBottom: 16, lineHeight: 1.7 }}>
             10+ years delivering data analytics and business intelligence across NHS, energy, finance,
             and the public sector. Now offering the same expertise to businesses of all sizes —
             from ambitious SMEs to enterprise organisations.
           </p>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 580, marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 580, marginBottom: 28, lineHeight: 1.7 }}>
             Based in Dumfries &amp; Galloway, working remotely across Scotland and the UK.
             Contract, project, and retainer arrangements available.
           </p>
@@ -122,8 +122,8 @@ export default function DataAnalyticsPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -138,11 +138,11 @@ export default function DataAnalyticsPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -154,10 +154,10 @@ export default function DataAnalyticsPage() {
 
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px 40px' }}>
 
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
           Services
         </h2>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 32, maxWidth: 720 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 32, maxWidth: 720 }}>
           End-to-end data analytics capability — from raw data to boardroom-ready insight.
         </p>
 
@@ -167,23 +167,23 @@ export default function DataAnalyticsPage() {
               key={s.title}
               style={{
                 padding: 24,
-                border: '1px solid rgba(27,42,74,0.1)',
-                borderLeft: '3px solid #D4A84B',
+                border: '1px solid rgba(0,0,0,0.1)',
+                borderLeft: '3px solid #E85D3A',
                 borderRadius: '0 8px 8px 0',
               }}
             >
-              <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 6, color: '#1B2A4A' }}>{s.title}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', marginBottom: 12 }}>{s.desc}</p>
-              <Link href={s.href} style={{ fontSize: 12, fontWeight: 600, color: '#D4A84B', textDecoration: 'none' }}>Learn more →</Link>
+              <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 6, color: '#1A1A1A' }}>{s.title}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', marginBottom: 12 }}>{s.desc}</p>
+              <Link href={s.href} style={{ fontSize: 12, fontWeight: 600, color: '#E85D3A', textDecoration: 'none' }}>Learn more →</Link>
             </div>
           ))}
         </div>
 
         {/* Sector experience */}
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
           Sector experience
         </h2>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 32, maxWidth: 720 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 32, maxWidth: 720 }}>
           Deep experience working with data in regulated, complex environments. Understand the governance,
           security, and stakeholder requirements of each sector.
         </p>
@@ -194,18 +194,18 @@ export default function DataAnalyticsPage() {
               key={s.sector}
               style={{
                 padding: 24,
-                background: '#F5F0E6',
+                background: '#FAF8F5',
                 borderRadius: 8,
               }}
             >
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1B2A4A' }}>{s.sector}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', margin: 0 }}>{s.desc}</p>
+              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1A1A1A' }}>{s.sector}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', margin: 0 }}>{s.desc}</p>
             </div>
           ))}
         </div>
 
         {/* Tech stack */}
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1A1A1A' }}>
           Tools & technologies
         </h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 48 }}>
@@ -218,10 +218,10 @@ export default function DataAnalyticsPage() {
               key={tech}
               style={{
                 padding: '6px 14px',
-                background: '#F5F0E6',
+                background: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
-                color: '#1B2A4A',
+                color: '#1A1A1A',
                 fontWeight: 500,
               }}
             >
@@ -230,11 +230,11 @@ export default function DataAnalyticsPage() {
           ))}
         </div>
 
-        <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '40px 48px', textAlign: 'center', color: '#F5F0E6' }}>
+        <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '40px 48px', textAlign: 'center', color: '#FAF8F5' }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8 }}>
             Make better decisions with your data
           </h2>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
             Free 30-minute call. Tell me about your data challenge — I&apos;ll give you an honest view of what&apos;s possible.
           </p>
           <Link
@@ -242,8 +242,8 @@ export default function DataAnalyticsPage() {
             style={{
               display: 'inline-block',
               padding: '12px 28px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               borderRadius: 100,
               fontSize: 13,
               fontWeight: 600,

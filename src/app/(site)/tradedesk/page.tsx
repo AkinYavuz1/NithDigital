@@ -122,7 +122,7 @@ function PhoneMockup({ messages }: { messages: { from: string; text: string }[] 
     }}>
       {/* Status bar */}
       <div style={{ background: '#075E54', padding: '12px 16px 8px', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#D4A84B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#1B2A4A', flexShrink: 0 }}>TD</div>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#E85D3A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#1A1A1A', flexShrink: 0 }}>TD</div>
         <div>
           <div style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>TradeDesk</div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>online</div>
@@ -158,20 +158,20 @@ export default function TradeDeskPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '80px 0 72px' }}>
+      <section style={{ background: '#1A1A1A', padding: '80px 0 72px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
-            background: 'rgba(212,168,75,0.15)',
-            border: '1px solid rgba(212,168,75,0.3)',
+            background: 'rgba(232,93,58,0.15)',
+            border: '1px solid rgba(232,93,58,0.3)',
             borderRadius: 100,
             padding: '5px 14px',
             fontSize: 12,
             fontWeight: 600,
             letterSpacing: '0.5px',
-            color: '#D4A84B',
+            color: '#E85D3A',
             marginBottom: 24,
           }}>
             Free during beta · UK tradespeople only
@@ -182,26 +182,26 @@ export default function TradeDeskPage() {
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(32px, 4.5vw, 52px)',
                 fontWeight: 700,
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 marginBottom: 20,
                 lineHeight: 1.15,
               }}>
                 Better answers, faster admin — all on WhatsApp
               </h1>
-              <p style={{ fontSize: 17, color: 'rgba(245,240,230,0.7)', lineHeight: 1.75, maxWidth: 520, marginBottom: 32 }}>
+              <p style={{ fontSize: 17, color: 'rgba(250,248,245,0.7)', lineHeight: 1.75, maxWidth: 520, marginBottom: 32 }}>
                 One WhatsApp number. Ask trade questions, build your portfolio from job photos, and log expenses by photographing invoices. No app. No login.
               </p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 40 }}>
                 <Link href="/contact" style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
-                  background: '#D4A84B', color: '#1B2A4A',
+                  background: '#E85D3A', color: '#1A1A1A',
                   padding: '14px 30px', borderRadius: 100, fontWeight: 700, fontSize: 15, textDecoration: 'none',
                 }}>
                   Get early access <ArrowRight size={16} />
                 </Link>
                 <Link href="#features" style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
-                  border: '1.5px solid rgba(245,240,230,0.25)', color: 'rgba(245,240,230,0.8)',
+                  border: '1.5px solid rgba(250,248,245,0.25)', color: 'rgba(250,248,245,0.8)',
                   padding: '14px 30px', borderRadius: 100, fontWeight: 500, fontSize: 15, textDecoration: 'none',
                 }}>
                   See how it works
@@ -209,8 +209,8 @@ export default function TradeDeskPage() {
               </div>
               <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
                 {['No app to download', 'Works on any phone', 'Scottish trade knowledge'].map(t => (
-                  <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'rgba(245,240,230,0.6)' }}>
-                    <CheckCircle size={13} color="#D4A84B" />
+                  <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'rgba(250,248,245,0.6)' }}>
+                    <CheckCircle size={13} color="#E85D3A" />
                     {t}
                   </div>
                 ))}
@@ -230,13 +230,13 @@ export default function TradeDeskPage() {
       </section>
 
       {/* Stats bar */}
-      <section style={{ background: '#D4A84B', padding: '32px 0' }}>
+      <section style={{ background: '#E85D3A', padding: '32px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, textAlign: 'center' }} className="td-stats-grid">
             {STATS.map(s => (
               <div key={s.num}>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: '#1B2A4A', lineHeight: 1 }}>{s.num}</div>
-                <div style={{ fontSize: 13, color: 'rgba(27,42,74,0.65)', marginTop: 4, fontWeight: 500 }}>{s.label}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: '#1A1A1A', lineHeight: 1 }}>{s.num}</div>
+                <div style={{ fontSize: 13, color: 'rgba(0,0,0,0.65)', marginTop: 4, fontWeight: 500 }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -248,7 +248,7 @@ export default function TradeDeskPage() {
         {FEATURES.map((f, i) => {
           const isOdd = i % 2 !== 0
           return (
-            <section key={f.tag} style={{ background: isOdd ? '#F5F0E6' : '#fff', padding: '80px 0' }}>
+            <section key={f.tag} style={{ background: isOdd ? '#FAF8F5' : '#fff', padding: '80px 0' }}>
               <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
                 <div
                   style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}
@@ -266,7 +266,7 @@ export default function TradeDeskPage() {
                   <div style={{ order: isOdd ? 1 : 2 }} className="td-copy-col">
                     <div style={{
                       display: 'inline-block',
-                      background: 'rgba(212,168,75,0.15)',
+                      background: 'rgba(232,93,58,0.15)',
                       color: '#B8860B',
                       fontSize: 11,
                       fontWeight: 700,
@@ -282,19 +282,19 @@ export default function TradeDeskPage() {
                       fontFamily: 'var(--font-display)',
                       fontSize: 'clamp(22px, 2.5vw, 32px)',
                       fontWeight: 700,
-                      color: '#1B2A4A',
+                      color: '#1A1A1A',
                       marginBottom: 16,
                       lineHeight: 1.25,
                     }}>
                       {f.headline}
                     </h2>
-                    <p style={{ fontSize: 15, color: '#5A6A7A', lineHeight: 1.8, marginBottom: 24 }}>
+                    <p style={{ fontSize: 15, color: '#7A7A7A', lineHeight: 1.8, marginBottom: 24 }}>
                       {f.body}
                     </p>
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
                       {f.bullets.map(b => (
-                        <li key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: '#1B2A4A' }}>
-                          <CheckCircle size={16} color="#D4A84B" style={{ flexShrink: 0, marginTop: 2 }} />
+                        <li key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: '#1A1A1A' }}>
+                          <CheckCircle size={16} color="#E85D3A" style={{ flexShrink: 0, marginTop: 2 }} />
                           {b}
                         </li>
                       ))}
@@ -308,16 +308,16 @@ export default function TradeDeskPage() {
       </div>
 
       {/* Trades */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Built for every trade
           </div>
           <h2 style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(20px, 2.5vw, 28px)',
             fontWeight: 700,
-            color: '#F5F0E6',
+            color: '#FAF8F5',
             marginBottom: 32,
           }}>
             Works for every trade in the UK
@@ -326,11 +326,11 @@ export default function TradeDeskPage() {
             {TRADES.map(t => (
               <span key={t} style={{
                 padding: '8px 18px',
-                background: 'rgba(245,240,230,0.08)',
-                border: '1px solid rgba(245,240,230,0.15)',
+                background: 'rgba(250,248,245,0.08)',
+                border: '1px solid rgba(250,248,245,0.15)',
                 borderRadius: 100,
                 fontSize: 13,
-                color: 'rgba(245,240,230,0.85)',
+                color: 'rgba(250,248,245,0.85)',
                 fontWeight: 500,
               }}>
                 {t}
@@ -343,14 +343,14 @@ export default function TradeDeskPage() {
       {/* FAQ */}
       <section style={{ background: '#fff', padding: '80px 0' }}>
         <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 8, fontWeight: 600 }}>
             Common questions
           </div>
           <h2 style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(20px, 2.5vw, 28px)',
             fontWeight: 700,
-            color: '#1B2A4A',
+            color: '#1A1A1A',
             marginBottom: 40,
           }}>
             Frequently asked questions
@@ -358,12 +358,12 @@ export default function TradeDeskPage() {
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {FAQS.map((faq, i) => (
               <div key={faq.q} style={{
-                borderTop: i === 0 ? '1px solid rgba(27,42,74,0.1)' : 'none',
-                borderBottom: '1px solid rgba(27,42,74,0.1)',
+                borderTop: i === 0 ? '1px solid rgba(0,0,0,0.1)' : 'none',
+                borderBottom: '1px solid rgba(0,0,0,0.1)',
                 padding: '24px 0',
               }}>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1B2A4A', marginBottom: 10 }}>{faq.q}</h3>
-                <p style={{ fontSize: 14, color: '#5A6A7A', lineHeight: 1.75, margin: 0 }}>{faq.a}</p>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1A1A1A', marginBottom: 10 }}>{faq.q}</h3>
+                <p style={{ fontSize: 14, color: '#7A7A7A', lineHeight: 1.75, margin: 0 }}>{faq.a}</p>
               </div>
             ))}
           </div>
@@ -371,27 +371,27 @@ export default function TradeDeskPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section style={{ background: '#1B2A4A', padding: '80px 0' }}>
+      <section style={{ background: '#1A1A1A', padding: '80px 0' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 16, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 16, fontWeight: 600 }}>
             Free during beta
           </div>
           <h2 style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(24px, 3.5vw, 40px)',
             fontWeight: 700,
-            color: '#F5F0E6',
+            color: '#FAF8F5',
             marginBottom: 16,
             lineHeight: 1.2,
           }}>
             Start using TradeDesk today
           </h2>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.65)', lineHeight: 1.75, maxWidth: 480, margin: '0 auto 36px' }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.65)', lineHeight: 1.75, maxWidth: 480, margin: '0 auto 36px' }}>
             Free during beta. Get in now and lock in free usage while we build. Early users get priority pricing when paid plans launch.
           </p>
           <Link href="/contact" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: '#D4A84B', color: '#1B2A4A',
+            background: '#E85D3A', color: '#1A1A1A',
             padding: '15px 36px', borderRadius: 100, fontWeight: 700, fontSize: 16, textDecoration: 'none',
           }}>
             Get early access <ArrowRight size={16} />
@@ -401,7 +401,7 @@ export default function TradeDeskPage() {
 
       {/* Related */}
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '48px 24px' }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 600, color: '#1B2A4A', marginBottom: 16 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 600, color: '#1A1A1A', marginBottom: 16 }}>
           Related services
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="td-grid">
@@ -413,10 +413,10 @@ export default function TradeDeskPage() {
           ].map(l => (
             <Link key={l.href} href={l.href} style={{
               display: 'block', padding: '16px 20px',
-              border: '1px solid rgba(27,42,74,0.1)', borderRadius: 8, textDecoration: 'none',
+              border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, textDecoration: 'none',
             }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{l.label}</div>
-              <div style={{ fontSize: 12, color: '#5A6A7A' }}>{l.desc}</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 4 }}>{l.label}</div>
+              <div style={{ fontSize: 12, color: '#7A7A7A' }}>{l.desc}</div>
             </Link>
           ))}
         </div>

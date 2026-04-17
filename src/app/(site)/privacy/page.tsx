@@ -123,11 +123,11 @@ const SECTIONS = [
 export default function PrivacyPage() {
   return (
     <>
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Privacy Policy
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 440, margin: '0 auto' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 440, margin: '0 auto' }}>
           How we collect, use, and protect your data.
         </p>
       </div>
@@ -140,21 +140,21 @@ export default function PrivacyPage() {
                 {section.title}
               </h2>
               {section.body.map((para, i) => (
-                <p key={i} style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 12 }}>
+                <p key={i} style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 12 }}>
                   {para}
                 </p>
               ))}
               {section.list && (
                 <ul style={{ margin: '8px 0 12px 0', padding: '0 0 0 20px' }}>
                   {section.list.map((item) => (
-                    <li key={item} style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 4 }}>
+                    <li key={item} style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 4 }}>
                       {item}
                     </li>
                   ))}
                 </ul>
               )}
               {section.footer && (
-                <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A' }}>
+                <p style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A' }}>
                   {section.footer}
                 </p>
               )}

@@ -93,18 +93,18 @@ export default function CertificateDownload({ promoCode }: { promoCode: string }
   return (
     <div
       style={{
-        background: '#F5F0E6',
-        border: '1px solid rgba(27,42,74,0.1)',
+        background: '#FAF8F5',
+        border: '1px solid rgba(0,0,0,0.1)',
         borderRadius: 12,
         padding: 32,
         textAlign: 'center',
       }}
     >
       <div style={{ fontSize: 32, marginBottom: 12 }}>🏆</div>
-      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
         Download your Business Launch Certificate
       </h3>
-      <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 20, maxWidth: 360, margin: '0 auto 20px' }}>
+      <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 20, maxWidth: 360, margin: '0 auto 20px' }}>
         A branded PDF certificate to mark your launch milestone. Includes your promo code.
       </p>
       <button
@@ -112,8 +112,8 @@ export default function CertificateDownload({ promoCode }: { promoCode: string }
         disabled={downloading}
         style={{
           padding: '12px 28px',
-          background: '#1B2A4A',
-          color: '#F5F0E6',
+          background: '#1A1A1A',
+          color: '#FAF8F5',
           borderRadius: 100,
           fontSize: 13,
           fontWeight: 600,

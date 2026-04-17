@@ -141,15 +141,15 @@ export default function SoleTraderVsLimitedClient() {
     <div style={{ maxWidth: 1080, margin: '0 auto', padding: '48px 24px' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 40, alignItems: 'start' }} className="ltd-layout">
         <div>
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 32, marginBottom: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 32, marginBottom: 24 }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, marginBottom: 24, fontWeight: 400 }}>Your situation</h2>
 
             <div style={{ marginBottom: 20 }}>
-              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 8 }}>Expected annual profit</label>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>Expected annual profit</label>
               <div style={{ position: 'relative' }}>
-                <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#5A6A7A', fontWeight: 600 }}>£</span>
+                <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#7A7A7A', fontWeight: 600 }}>£</span>
                 <input type="text" value={profitInput} onChange={e => handleProfit(e.target.value)}
-                  style={{ width: '100%', padding: '12px 14px 12px 28px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 16, fontWeight: 600, color: '#1B2A4A', fontFamily: 'inherit' }} />
+                  style={{ width: '100%', padding: '12px 14px 12px 28px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, fontSize: 16, fontWeight: 600, color: '#1A1A1A', fontFamily: 'inherit' }} />
               </div>
               <input type="range" min={0} max={300000} step={1000} value={profit} onChange={e => { setProfit(Number(e.target.value)); setProfitInput(String(e.target.value)) }} style={{ width: '100%', marginTop: 8 }} />
             </div>
@@ -167,7 +167,7 @@ export default function SoleTraderVsLimitedClient() {
           </div>
 
           {/* Chart */}
-          <div style={{ background: 'white', border: '1px solid rgba(27,42,74,0.08)', borderRadius: 12, padding: 24, marginBottom: 24 }}>
+          <div style={{ background: 'white', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, padding: 24, marginBottom: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 17, marginBottom: 20, fontWeight: 400 }}>Tax comparison at £{profit.toLocaleString()} profit</h3>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={chartData} margin={{ left: -10 }}>
@@ -182,30 +182,30 @@ export default function SoleTraderVsLimitedClient() {
           </div>
 
           {/* Recommendation */}
-          <div style={{ background: rec.verdict === 'limited' ? 'rgba(27,42,74,0.04)' : 'rgba(212,168,75,0.1)', border: `2px solid ${rec.verdict === 'limited' ? '#1B2A4A' : '#D4A84B'}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
-            <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px', color: '#5A6A7A', marginBottom: 8 }}>Recommendation</div>
+          <div style={{ background: rec.verdict === 'limited' ? 'rgba(0,0,0,0.04)' : 'rgba(232,93,58,0.1)', border: `2px solid ${rec.verdict === 'limited' ? '#1A1A1A' : '#E85D3A'}`, borderRadius: 12, padding: 24, marginBottom: 24 }}>
+            <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px', color: '#7A7A7A', marginBottom: 8 }}>Recommendation</div>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, marginBottom: 10, fontWeight: 400 }}>
               {rec.verdict === 'limited' ? '🏢 Limited company may be worth considering' : '👤 Sole trader is likely the right choice'}
             </h2>
-            <p style={{ fontSize: 14, lineHeight: 1.7, color: '#2D4A7A' }}>{rec.text}</p>
-            {investment && <p style={{ fontSize: 14, color: '#1B2A4A', marginTop: 8, fontWeight: 600 }}>⚡ If you plan to raise investment, a limited company is essentially required — investors expect to receive shares.</p>}
-            <p style={{ fontSize: 12, color: '#5A6A7A', marginTop: 12, fontStyle: 'italic' }}>This is a simplified illustration. Speak to an accountant for advice tailored to your situation.</p>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: '#333333' }}>{rec.text}</p>
+            {investment && <p style={{ fontSize: 14, color: '#1A1A1A', marginTop: 8, fontWeight: 600 }}>⚡ If you plan to raise investment, a limited company is essentially required — investors expect to receive shares.</p>}
+            <p style={{ fontSize: 12, color: '#7A7A7A', marginTop: 12, fontStyle: 'italic' }}>This is a simplified illustration. Speak to an accountant for advice tailored to your situation.</p>
           </div>
 
           {/* Comparison table */}
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
-                <tr style={{ background: '#1B2A4A' }}>
-                  <th style={{ padding: '10px 16px', textAlign: 'left', color: '#F5F0E6', fontSize: 12, fontWeight: 600 }}></th>
-                  <th style={{ padding: '10px 16px', textAlign: 'left', color: '#F5F0E6', fontSize: 12, fontWeight: 600 }}>Sole Trader</th>
-                  <th style={{ padding: '10px 16px', textAlign: 'left', color: '#D4A84B', fontSize: 12, fontWeight: 600 }}>Limited Company</th>
+                <tr style={{ background: '#1A1A1A' }}>
+                  <th style={{ padding: '10px 16px', textAlign: 'left', color: '#FAF8F5', fontSize: 12, fontWeight: 600 }}></th>
+                  <th style={{ padding: '10px 16px', textAlign: 'left', color: '#FAF8F5', fontSize: 12, fontWeight: 600 }}>Sole Trader</th>
+                  <th style={{ padding: '10px 16px', textAlign: 'left', color: '#E85D3A', fontSize: 12, fontWeight: 600 }}>Limited Company</th>
                 </tr>
               </thead>
               <tbody>
                 {COMPARISON.map(([label, stVal, ltdVal]) => (
-                  <tr key={label} style={{ borderBottom: '1px solid rgba(27,42,74,0.08)' }}>
-                    <td style={{ padding: '12px 16px', fontWeight: 600, color: '#1B2A4A', background: '#F5F0E6', fontSize: 12 }}>{label}</td>
+                  <tr key={label} style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
+                    <td style={{ padding: '12px 16px', fontWeight: 600, color: '#1A1A1A', background: '#FAF8F5', fontSize: 12 }}>{label}</td>
                     <td style={{ padding: '12px 16px' }}>{stVal}</td>
                     <td style={{ padding: '12px 16px' }}>{ltdVal}</td>
                   </tr>
@@ -217,7 +217,7 @@ export default function SoleTraderVsLimitedClient() {
 
         {/* Sidebar */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 15, marginBottom: 16, fontWeight: 400 }}>Sole Trader breakdown</h3>
             {[
               ['Income tax', fmt(st.incomeTax)],
@@ -226,14 +226,14 @@ export default function SoleTraderVsLimitedClient() {
               ['Total tax', fmt(st.totalTax)],
               ['Take-home', fmt(st.takeHome)],
             ].map(([k, v]) => (
-              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(27,42,74,0.08)', fontSize: 13 }}>
-                <span style={{ color: '#5A6A7A' }}>{k}</span>
-                <span style={{ fontWeight: 600, color: '#1B2A4A' }}>{v}</span>
+              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(0,0,0,0.08)', fontSize: 13 }}>
+                <span style={{ color: '#7A7A7A' }}>{k}</span>
+                <span style={{ fontWeight: 600, color: '#1A1A1A' }}>{v}</span>
               </div>
             ))}
           </div>
 
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 15, marginBottom: 16, fontWeight: 400 }}>Limited Co breakdown</h3>
             {[
               ['Corporation tax', fmt(ltd.corpTax)],
@@ -242,17 +242,17 @@ export default function SoleTraderVsLimitedClient() {
               ['Total tax', fmt(ltd.totalTax)],
               ['Take-home', fmt(ltd.takeHome)],
             ].map(([k, v]) => (
-              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(27,42,74,0.08)', fontSize: 13 }}>
-                <span style={{ color: '#5A6A7A' }}>{k}</span>
-                <span style={{ fontWeight: 600, color: '#1B2A4A' }}>{v}</span>
+              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid rgba(0,0,0,0.08)', fontSize: 13 }}>
+                <span style={{ color: '#7A7A7A' }}>{k}</span>
+                <span style={{ fontWeight: 600, color: '#1A1A1A' }}>{v}</span>
               </div>
             ))}
           </div>
 
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: 24, color: '#F5F0E6' }}>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: 24, color: '#FAF8F5' }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 15, marginBottom: 10, fontWeight: 400 }}>Starting a business?</h3>
-            <p style={{ fontSize: 13, color: 'rgba(245,240,230,0.7)', marginBottom: 16, lineHeight: 1.6 }}>Our Launchpad checklist covers registering your business and more.</p>
-            <Link href="/launchpad" style={{ display: 'inline-block', padding: '8px 18px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 12, fontWeight: 600 }}>
+            <p style={{ fontSize: 13, color: 'rgba(250,248,245,0.7)', marginBottom: 16, lineHeight: 1.6 }}>Our Launchpad checklist covers registering your business and more.</p>
+            <Link href="/launchpad" style={{ display: 'inline-block', padding: '8px 18px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 12, fontWeight: 600 }}>
               Start checklist →
             </Link>
           </div>

@@ -10,15 +10,15 @@ export default function Logo({ size = 32 }: LogoProps) {
       style={{
         width: size,
         height: size,
-        background: 'var(--color-gold)',
-        borderRadius: 6,
+        background: '#E85D3A',
+        borderRadius: 8,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: 'var(--font-display)',
+        fontFamily: 'var(--font-body)',
         fontSize: size * 0.5,
         fontWeight: 700,
-        color: 'var(--color-navy)',
+        color: '#FFFFFF',
         flexShrink: 0,
       }}
     >

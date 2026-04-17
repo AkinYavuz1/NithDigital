@@ -74,11 +74,11 @@ export default function LaunchpadPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       {/* Page header */}
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: '#F5F0E6', fontWeight: 400, marginBottom: 12 }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: '#FAF8F5', fontWeight: 400, marginBottom: 12 }}>
           Launch Your Scottish Business
         </h1>
-        <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 520, margin: '0 auto 24px' }}>
+        <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 520, margin: '0 auto 24px' }}>
           The complete startup checklist — free forever.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -87,8 +87,8 @@ export default function LaunchpadPage() {
             style={{
               display: 'inline-block',
               padding: '14px 36px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               borderRadius: 100,
               fontSize: 14,
               fontWeight: 600,
@@ -103,11 +103,11 @@ export default function LaunchpadPage() {
               display: 'inline-block',
               padding: '14px 36px',
               background: 'transparent',
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               borderRadius: 100,
               fontSize: 14,
               fontWeight: 500,
-              border: '1px solid rgba(245,240,230,0.3)',
+              border: '1px solid rgba(250,248,245,0.3)',
             }}
           >
             Try the Business OS demo
@@ -128,14 +128,14 @@ export default function LaunchpadPage() {
                 key={b.title}
                 style={{
                   padding: 28,
-                  border: '1px solid rgba(27,42,74,0.1)',
-                  borderLeft: '3px solid #D4A84B',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderLeft: '3px solid #E85D3A',
                   borderRadius: '0 8px 8px 0',
                 }}
               >
-                <b.icon size={24} color="#D4A84B" style={{ marginBottom: 12 }} />
+                <b.icon size={24} color="#E85D3A" style={{ marginBottom: 12 }} />
                 <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>{b.title}</h3>
-                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A' }}>{b.desc}</p>
+                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A' }}>{b.desc}</p>
               </div>
             ))}
           </div>
@@ -153,7 +153,7 @@ export default function LaunchpadPage() {
                   alignItems: 'center',
                   gap: 16,
                   padding: '14px 20px',
-                  background: '#F5F0E6',
+                  background: '#FAF8F5',
                   borderRadius: 8,
                 }}
               >
@@ -161,12 +161,12 @@ export default function LaunchpadPage() {
                   style={{
                     width: 32,
                     height: 32,
-                    background: '#1B2A4A',
+                    background: '#1A1A1A',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#D4A84B',
+                    color: '#E85D3A',
                     fontSize: 12,
                     fontWeight: 700,
                     flexShrink: 0,
@@ -183,22 +183,22 @@ export default function LaunchpadPage() {
           <div
             className="cta-banner"
             style={{
-              background: '#1B2A4A',
+              background: '#1A1A1A',
               borderRadius: 12,
               padding: '48px 40px',
               textAlign: 'center',
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               marginBottom: 56,
             }}
           >
-            <Star size={32} color="#D4A84B" style={{ marginBottom: 16 }} />
+            <Star size={32} color="#E85D3A" style={{ marginBottom: 16 }} />
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, marginBottom: 8 }}>
               Complete all 10 steps and unlock our Startup Bundle
             </h2>
-            <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.7)', marginBottom: 12, maxWidth: 500, margin: '0 auto 12px' }}>
+            <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.7)', marginBottom: 12, maxWidth: 500, margin: '0 auto 12px' }}>
               We&apos;ll build your business website for free — you just pay £40/month hosting.
             </p>
-            <p style={{ fontSize: 13, color: '#D4A84B', marginBottom: 24 }}>
+            <p style={{ fontSize: 13, color: '#E85D3A', marginBottom: 24 }}>
               + 1 month free Business OS then £4.99/month
             </p>
             <Link
@@ -206,8 +206,8 @@ export default function LaunchpadPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -224,7 +224,7 @@ export default function LaunchpadPage() {
               '✓ Built by Nith Digital',
               '✓ Free forever — no credit card required',
             ].map((t) => (
-              <span key={t} style={{ fontSize: 13, color: '#5A6A7A', fontWeight: 500 }}>
+              <span key={t} style={{ fontSize: 13, color: '#7A7A7A', fontWeight: 500 }}>
                 {t}
               </span>
             ))}
@@ -233,7 +233,7 @@ export default function LaunchpadPage() {
           {/* FAQ */}
           <div style={{ maxWidth: 640, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 24 }}>
-              <HelpCircle size={20} color="#1B2A4A" />
+              <HelpCircle size={20} color="#1A1A1A" />
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400 }}>
                 Frequently asked questions
               </h2>

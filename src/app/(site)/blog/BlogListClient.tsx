@@ -110,22 +110,22 @@ export default function BlogListClient() {
   return (
     <>
       {/* Page header */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <p style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <p style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Nith Digital Blog
           </p>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: '#F5F0E6', fontWeight: 400, marginBottom: 12 }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: '#FAF8F5', fontWeight: 400, marginBottom: 12 }}>
             Blog
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 560 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 560 }}>
             Practical guides for starting and growing a business in Dumfries &amp; Galloway.
           </p>
         </div>
       </section>
 
       {/* Category filter pills */}
-      <div style={{ borderBottom: '1px solid rgba(27,42,74,0.1)' }}>
+      <div style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '16px 24px', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {CATEGORIES.map((cat) => (
             <button
@@ -136,10 +136,10 @@ export default function BlogListClient() {
                 padding: '6px 16px',
                 borderRadius: 100,
                 fontWeight: 600,
-                background: category === cat.value ? '#1B2A4A' : 'transparent',
-                color: category === cat.value ? '#F5F0E6' : '#5A6A7A',
+                background: category === cat.value ? '#1A1A1A' : 'transparent',
+                color: category === cat.value ? '#FAF8F5' : '#7A7A7A',
                 border: '1px solid',
-                borderColor: category === cat.value ? '#1B2A4A' : 'rgba(27,42,74,0.15)',
+                borderColor: category === cat.value ? '#1A1A1A' : 'rgba(0,0,0,0.15)',
                 transition: 'all 0.2s ease',
                 flexShrink: 0,
                 cursor: 'pointer',
@@ -156,16 +156,16 @@ export default function BlogListClient() {
         {/* Blog posts grid */}
         <div>
           {loading ? (
-            <p style={{ color: '#5A6A7A', fontSize: 15 }}>Loading posts…</p>
+            <p style={{ color: '#7A7A7A', fontSize: 15 }}>Loading posts…</p>
           ) : !posts || posts.length === 0 ? (
-            <p style={{ color: '#5A6A7A', fontSize: 15 }}>No posts found in this category yet. Check back soon!</p>
+            <p style={{ color: '#7A7A7A', fontSize: 15 }}>No posts found in this category yet. Check back soon!</p>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="blog-grid">
               {posts.map((post) => (
                 <article
                   key={post.id}
                   style={{
-                    background: '#F5F0E6',
+                    background: '#FAF8F5',
                     borderRadius: 12,
                     padding: 28,
                     transition: 'transform 0.25s ease',
@@ -180,8 +180,8 @@ export default function BlogListClient() {
                     fontSize: 10,
                     padding: '3px 10px',
                     borderRadius: 100,
-                    background: '#D4A84B',
-                    color: '#1B2A4A',
+                    background: '#E85D3A',
+                    color: '#1A1A1A',
                     fontWeight: 600,
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px',
@@ -189,17 +189,17 @@ export default function BlogListClient() {
                   }}>
                     {CATEGORIES.find(c => c.value === post.category)?.label || post.category}
                   </span>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, lineHeight: 1.35, color: '#1B2A4A', margin: 0 }}>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, lineHeight: 1.35, color: '#1A1A1A', margin: 0 }}>
                     {post.title}
                   </h3>
-                  <p style={{ fontSize: 13, lineHeight: 1.65, color: '#5A6A7A', margin: 0, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  <p style={{ fontSize: 13, lineHeight: 1.65, color: '#7A7A7A', margin: 0, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {post.excerpt}
                   </p>
-                  <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 12, borderTop: '1px solid rgba(27,42,74,0.1)' }}>
-                    <span style={{ fontSize: 11, color: '#5A6A7A' }}>
+                  <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 12, borderTop: '1px solid rgba(0,0,0,0.1)' }}>
+                    <span style={{ fontSize: 11, color: '#7A7A7A' }}>
                       {post.read_time_minutes} min read · {post.published_at ? formatDate(post.published_at) : ''}
                     </span>
-                    <Link href={`/blog/${post.slug}`} style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}>
+                    <Link href={`/blog/${post.slug}`} style={{ fontSize: 12, color: '#E85D3A', fontWeight: 600 }}>
                       Read more →
                     </Link>
                   </div>
@@ -214,7 +214,7 @@ export default function BlogListClient() {
               {page > 1 && (
                 <button
                   onClick={() => navigate(category, page - 1)}
-                  style={{ padding: '8px 16px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 13, color: '#1B2A4A', cursor: 'pointer', background: 'transparent' }}
+                  style={{ padding: '8px 16px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, fontSize: 13, color: '#1A1A1A', cursor: 'pointer', background: 'transparent' }}
                 >
                   ← Prev
                 </button>
@@ -226,12 +226,12 @@ export default function BlogListClient() {
                   style={{
                     padding: '8px 14px',
                     border: '1px solid',
-                    borderColor: p === page ? '#1B2A4A' : 'rgba(27,42,74,0.15)',
+                    borderColor: p === page ? '#1A1A1A' : 'rgba(0,0,0,0.15)',
                     borderRadius: 8,
                     fontSize: 13,
                     fontWeight: p === page ? 600 : 400,
-                    background: p === page ? '#1B2A4A' : 'transparent',
-                    color: p === page ? '#F5F0E6' : '#1B2A4A',
+                    background: p === page ? '#1A1A1A' : 'transparent',
+                    color: p === page ? '#FAF8F5' : '#1A1A1A',
                     cursor: 'pointer',
                   }}
                 >
@@ -241,7 +241,7 @@ export default function BlogListClient() {
               {page < totalPages && (
                 <button
                   onClick={() => navigate(category, page + 1)}
-                  style={{ padding: '8px 16px', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 8, fontSize: 13, color: '#1B2A4A', cursor: 'pointer', background: 'transparent' }}
+                  style={{ padding: '8px 16px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, fontSize: 13, color: '#1A1A1A', cursor: 'pointer', background: 'transparent' }}
                 >
                   Next →
                 </button>
@@ -253,36 +253,36 @@ export default function BlogListClient() {
         {/* Sidebar */}
         <aside style={{ display: 'flex', flexDirection: 'column', gap: 24 }} className="blog-sidebar">
           {/* Launchpad CTA */}
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: 24, color: '#F5F0E6' }}>
-            <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>Free tool</div>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: 24, color: '#FAF8F5' }}>
+            <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 8, fontWeight: 600 }}>Free tool</div>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 400, marginBottom: 10 }}>Start your business</h3>
-            <p style={{ fontSize: 13, color: 'rgba(245,240,230,0.7)', lineHeight: 1.6, marginBottom: 16 }}>
+            <p style={{ fontSize: 13, color: 'rgba(250,248,245,0.7)', lineHeight: 1.6, marginBottom: 16 }}>
               Our free 10-step Launchpad checklist walks you through everything you need to launch with confidence.
             </p>
-            <Link href="/launchpad" style={{ display: 'inline-block', fontSize: 12, padding: '8px 20px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontWeight: 600 }}>
+            <Link href="/launchpad" style={{ display: 'inline-block', fontSize: 12, padding: '8px 20px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontWeight: 600 }}>
               Launch your business →
             </Link>
           </div>
 
           {/* Free tools CTA */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
-            <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>Calculators</div>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
+            <div style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 8, fontWeight: 600 }}>Calculators</div>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 400, marginBottom: 10 }}>Free business tools</h3>
-            <p style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.6, marginBottom: 16 }}>
+            <p style={{ fontSize: 13, color: '#7A7A7A', lineHeight: 1.6, marginBottom: 16 }}>
               VAT threshold checker, take-home pay, and more.
             </p>
-            <Link href="/tools" style={{ display: 'inline-block', fontSize: 12, padding: '8px 20px', background: '#1B2A4A', color: '#F5F0E6', borderRadius: 100, fontWeight: 600 }}>
+            <Link href="/tools" style={{ display: 'inline-block', fontSize: 12, padding: '8px 20px', background: '#1A1A1A', color: '#FAF8F5', borderRadius: 100, fontWeight: 600 }}>
               View all tools →
             </Link>
           </div>
 
           {/* Website CTA */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: 24 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 400, marginBottom: 10 }}>Need a website?</h3>
-            <p style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.6, marginBottom: 16 }}>
+            <p style={{ fontSize: 13, color: '#7A7A7A', lineHeight: 1.6, marginBottom: 16 }}>
               Professional websites for local businesses from £500. Free consultation.
             </p>
-            <Link href="/book" style={{ display: 'inline-block', fontSize: 12, padding: '8px 20px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontWeight: 600 }}>
+            <Link href="/book" style={{ display: 'inline-block', fontSize: 12, padding: '8px 20px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontWeight: 600 }}>
               Book a free call →
             </Link>
           </div>
@@ -290,12 +290,12 @@ export default function BlogListClient() {
           {/* Popular tags */}
           {popularTags.length > 0 && (
             <div>
-              <h4 style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#5A6A7A', marginBottom: 12, fontWeight: 500 }}>Popular tags</h4>
+              <h4 style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#7A7A7A', marginBottom: 12, fontWeight: 500 }}>Popular tags</h4>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {popularTags.map(tag => (
                   <span
                     key={tag}
-                    style={{ fontSize: 11, padding: '4px 12px', background: 'rgba(27,42,74,0.06)', borderRadius: 100, color: '#5A6A7A', border: '1px solid rgba(27,42,74,0.1)' }}
+                    style={{ fontSize: 11, padding: '4px 12px', background: 'rgba(0,0,0,0.06)', borderRadius: 100, color: '#7A7A7A', border: '1px solid rgba(0,0,0,0.1)' }}
                   >
                     {tag}
                   </span>

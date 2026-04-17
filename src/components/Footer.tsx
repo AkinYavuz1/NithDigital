@@ -9,11 +9,11 @@ const LINKS = [
   {
     heading: 'Services',
     items: [
-      { label: 'Business websites', href: '/services' },
-      { label: 'Dashboards & reporting', href: '/services' },
-      { label: 'Booking systems', href: '/services' },
-      { label: 'Custom apps', href: '/services' },
-      { label: 'Book a free call', href: '/book' },
+      { label: 'Business websites', href: '/#services' },
+      { label: 'Dashboards & reporting', href: '/#services' },
+      { label: 'Booking systems', href: '/#services' },
+      { label: 'Custom apps', href: '/#services' },
+      { label: 'Contact us', href: '/#contact' },
     ],
   },
   {
@@ -39,9 +39,8 @@ const LINKS = [
   {
     heading: 'Company',
     items: [
-      { label: 'About', href: '/about' },
-      { label: 'Our Work', href: '/work' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'Our Work', href: '/#work' },
+      { label: 'Pricing', href: '/#pricing' },
       { label: 'Launchpad', href: '/launchpad' },
       { label: 'Help Centre', href: '/help' },
       { label: 'Privacy Policy', href: '/privacy' },
@@ -63,12 +62,7 @@ const LOCATION_LINKS = [
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        borderTop: '1px solid var(--color-border)',
-        marginTop: 80,
-      }}
-    >
+    <footer style={{ borderTop: '1px solid rgba(0,0,0,0.06)', marginTop: 80, position: 'relative', zIndex: 2 }}>
       {/* Main link grid */}
       <div
         style={{
@@ -88,22 +82,23 @@ export default function Footer() {
                 fontSize: 10,
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase' as const,
-                color: '#1B2A4A',
+                color: '#7A7A7A',
                 fontWeight: 600,
                 marginBottom: 12,
               }}
             >
               {col.heading}
             </div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
               {col.items.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
                     style={{
                       fontSize: 13,
-                      color: 'var(--color-text-secondary)',
+                      color: '#7A7A7A',
                       textDecoration: 'none',
+                      transition: 'color 0.3s ease',
                     }}
                   >
                     {item.label}
@@ -120,9 +115,8 @@ export default function Footer() {
         style={{
           maxWidth: 'var(--max-width)',
           margin: '0 auto',
-          padding: '0 24px 24px',
-          borderTop: '1px solid rgba(27,42,74,0.06)',
-          paddingTop: 20,
+          padding: '20px 24px 24px',
+          borderTop: '1px solid rgba(0,0,0,0.06)',
         }}
       >
         <div
@@ -130,7 +124,7 @@ export default function Footer() {
             fontSize: 10,
             letterSpacing: '1.5px',
             textTransform: 'uppercase' as const,
-            color: '#1B2A4A',
+            color: '#7A7A7A',
             fontWeight: 600,
             marginBottom: 10,
           }}
@@ -142,7 +136,7 @@ export default function Footer() {
             <Link
               key={link.href}
               href={link.href}
-              style={{ fontSize: 12, color: 'var(--color-text-secondary)', textDecoration: 'none' }}
+              style={{ fontSize: 12, color: '#7A7A7A', textDecoration: 'none' }}
             >
               {link.label}
             </Link>
@@ -153,7 +147,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div
         style={{
-          borderTop: '1px solid var(--color-border)',
+          borderTop: '1px solid rgba(0,0,0,0.06)',
           padding: '16px 24px',
         }}
       >
@@ -165,7 +159,7 @@ export default function Footer() {
             justifyContent: 'space-between',
             alignItems: 'center',
             fontSize: 12,
-            color: 'var(--color-text-secondary)',
+            color: '#7A7A7A',
             flexWrap: 'wrap',
             gap: 12,
           }}
@@ -182,6 +176,9 @@ export default function Footer() {
             </span>
           </span>
           <span style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/privacy" style={{ color: '#7A7A7A', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
+              Privacy Policy
+            </Link>
             <a href="mailto:hello@nithdigital.uk" style={{ color: 'inherit' }}>
               hello@nithdigital.uk
             </a>
@@ -198,6 +195,7 @@ export default function Footer() {
       </div>
 
       <style>{`
+        .footer-grid a:hover { color: #E85D3A !important; }
         @media (max-width: 768px) {
           .footer-grid { grid-template-columns: 1fr 1fr !important; }
         }

@@ -121,7 +121,7 @@ function ScoreGauge({ score, size = 80 }: { score: number; size?: number }) {
   return (
     <div style={{ position: 'relative', width: size, height: size, flexShrink: 0 }}>
       <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-        <circle cx={cx} cy={cy} r={radius} fill="none" stroke="rgba(27,42,74,0.1)" strokeWidth={6} />
+        <circle cx={cx} cy={cy} r={radius} fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth={6} />
         <circle
           cx={cx} cy={cy} r={radius} fill="none"
           stroke={color} strokeWidth={6}
@@ -135,7 +135,7 @@ function ScoreGauge({ score, size = 80 }: { score: number; size?: number }) {
         alignItems: 'center', justifyContent: 'center',
       }}>
         <span style={{ fontSize: size * 0.28, fontWeight: 700, color, lineHeight: 1 }}>{score}</span>
-        <span style={{ fontSize: size * 0.16, fontWeight: 600, color: '#5A6A7A', lineHeight: 1.2 }}>{scoreGrade(score)}</span>
+        <span style={{ fontSize: size * 0.16, fontWeight: 600, color: '#7A7A7A', lineHeight: 1.2 }}>{scoreGrade(score)}</span>
       </div>
     </div>
   )
@@ -169,7 +169,7 @@ function CheckRow({ status, name, detail, why, fix }: CheckRowProps) {
     : 'rgba(220,38,38,0.1)'
 
   return (
-    <div style={{ borderBottom: '1px solid rgba(27,42,74,0.07)', paddingBottom: 0 }}>
+    <div style={{ borderBottom: '1px solid rgba(0,0,0,0.07)', paddingBottom: 0 }}>
       <div
         style={{
           display: 'flex', alignItems: 'flex-start', gap: 12,
@@ -185,31 +185,31 @@ function CheckRow({ status, name, detail, why, fix }: CheckRowProps) {
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A' }}>{name}</span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A' }}>{name}</span>
             {(why || fix) && (
-              <span style={{ color: '#5A6A7A', flexShrink: 0 }}>
+              <span style={{ color: '#7A7A7A', flexShrink: 0 }}>
                 {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </span>
             )}
           </div>
-          {detail && <p style={{ fontSize: 12, color: '#5A6A7A', margin: '3px 0 0', lineHeight: 1.5 }}>{detail}</p>}
+          {detail && <p style={{ fontSize: 12, color: '#7A7A7A', margin: '3px 0 0', lineHeight: 1.5 }}>{detail}</p>}
         </div>
       </div>
       {open && (why || fix) && (
         <div style={{
-          margin: '0 0 12px 38px', background: 'rgba(27,42,74,0.03)',
+          margin: '0 0 12px 38px', background: 'rgba(0,0,0,0.03)',
           borderRadius: 8, padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8,
         }}>
           {why && (
             <div>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#D4A84B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Why it matters</span>
-              <p style={{ fontSize: 12, color: '#5A6A7A', margin: '4px 0 0', lineHeight: 1.6 }}>{why}</p>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#E85D3A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Why it matters</span>
+              <p style={{ fontSize: 12, color: '#7A7A7A', margin: '4px 0 0', lineHeight: 1.6 }}>{why}</p>
             </div>
           )}
           {fix && (
             <div>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#1B2A4A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>How to fix</span>
-              <p style={{ fontSize: 12, color: '#5A6A7A', margin: '4px 0 0', lineHeight: 1.6 }}>{fix}</p>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#1A1A1A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>How to fix</span>
+              <p style={{ fontSize: 12, color: '#7A7A7A', margin: '4px 0 0', lineHeight: 1.6 }}>{fix}</p>
             </div>
           )}
         </div>
@@ -226,14 +226,14 @@ function SectionCard({ id, title, icon: Icon, score, children }: {
   return (
     <div id={id} style={{
       background: '#fff', borderRadius: 12, padding: '28px 32px',
-      border: '1px solid rgba(27,42,74,0.08)', marginBottom: 20,
+      border: '1px solid rgba(0,0,0,0.08)', marginBottom: 20,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 8, background: '#1B2A4A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Icon size={18} color="#D4A84B" />
+          <div style={{ width: 36, height: 36, borderRadius: 8, background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Icon size={18} color="#E85D3A" />
           </div>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1B2A4A', fontWeight: 400, margin: 0 }}>{title}</h2>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1A1A1A', fontWeight: 400, margin: 0 }}>{title}</h2>
         </div>
         <ScoreGauge score={score} size={56} />
       </div>
@@ -345,22 +345,22 @@ export default function SiteAuditClient() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div style={{ background: '#F5F0E6', minHeight: '100vh' }}>
+    <div style={{ background: '#FAF8F5', minHeight: '100vh' }}>
 
       {/* ── Hero ── */}
-      <section style={{ background: '#1B2A4A', padding: '72px 24px 56px' }}>
+      <section style={{ background: '#1A1A1A', padding: '72px 24px 56px' }}>
         <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
           <p style={{
             fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase',
-            color: '#D4A84B', marginBottom: 14, fontWeight: 600,
+            color: '#E85D3A', marginBottom: 14, fontWeight: 600,
           }}>Free tool</p>
           <h1 style={{
             fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 5vw, 48px)',
-            color: '#F5F0E6', fontWeight: 400, marginBottom: 16, lineHeight: 1.2,
+            color: '#FAF8F5', fontWeight: 400, marginBottom: 16, lineHeight: 1.2,
           }}>
             Free Website Audit
           </h1>
-          <p style={{ fontSize: 17, color: 'rgba(245,240,230,0.75)', marginBottom: 36, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 17, color: 'rgba(250,248,245,0.75)', marginBottom: 36, lineHeight: 1.7 }}>
             Instant SEO, performance, security and mobile analysis for any website.
             No signup required.
           </p>
@@ -373,7 +373,7 @@ export default function SiteAuditClient() {
               placeholder="https://yourwebsite.com"
               style={{
                 flex: 1, padding: '16px 20px', fontSize: 15, border: 'none',
-                outline: 'none', color: '#1B2A4A', fontFamily: 'inherit',
+                outline: 'none', color: '#1A1A1A', fontFamily: 'inherit',
                 background: '#fff',
               }}
             />
@@ -381,7 +381,7 @@ export default function SiteAuditClient() {
               type="submit"
               disabled={loading || !url.trim()}
               style={{
-                padding: '16px 24px', background: '#D4A84B', color: '#1B2A4A',
+                padding: '16px 24px', background: '#E85D3A', color: '#1A1A1A',
                 border: 'none', fontSize: 14, fontWeight: 700, cursor: loading || !url.trim() ? 'not-allowed' : 'pointer',
                 opacity: loading || !url.trim() ? 0.7 : 1, whiteSpace: 'nowrap', fontFamily: 'inherit',
               }}
@@ -389,7 +389,7 @@ export default function SiteAuditClient() {
               {loading ? 'Auditing...' : 'Audit this site'}
             </button>
           </form>
-          <p style={{ fontSize: 12, color: 'rgba(245,240,230,0.45)', marginTop: 12 }}>
+          <p style={{ fontSize: 12, color: 'rgba(250,248,245,0.45)', marginTop: 12 }}>
             Takes about 10–15 seconds &middot; No account needed
           </p>
         </div>
@@ -398,8 +398,8 @@ export default function SiteAuditClient() {
       {/* ── Loading ── */}
       {loading && (
         <div style={{ maxWidth: 560, margin: '48px auto', padding: '0 24px' }}>
-          <div style={{ background: '#fff', borderRadius: 12, padding: '32px 36px', border: '1px solid rgba(27,42,74,0.08)', boxShadow: '0 2px 16px rgba(27,42,74,0.06)' }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', fontWeight: 400, marginBottom: 24 }}>
+          <div style={{ background: '#fff', borderRadius: 12, padding: '32px 36px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', fontWeight: 400, marginBottom: 24 }}>
               Analysing your site...
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -410,17 +410,17 @@ export default function SiteAuditClient() {
                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, opacity: i > loadingStep ? 0.35 : 1, transition: 'opacity 0.3s' }}>
                     <div style={{
                       width: 22, height: 22, borderRadius: '50%', flexShrink: 0,
-                      background: done ? 'rgba(22,163,74,0.12)' : active ? 'rgba(212,168,75,0.15)' : 'rgba(27,42,74,0.06)',
+                      background: done ? 'rgba(22,163,74,0.12)' : active ? 'rgba(232,93,58,0.15)' : 'rgba(0,0,0,0.06)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
                       {done
                         ? <Check size={12} color="#16A34A" />
                         : active
-                        ? <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#D4A84B', animation: 'pulse 1s infinite' }} />
-                        : <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(27,42,74,0.2)' }} />
+                        ? <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#E85D3A', animation: 'pulse 1s infinite' }} />
+                        : <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(0,0,0,0.2)' }} />
                       }
                     </div>
-                    <span style={{ fontSize: 13, color: done ? '#16A34A' : active ? '#1B2A4A' : '#5A6A7A', fontWeight: active ? 600 : 400 }}>
+                    <span style={{ fontSize: 13, color: done ? '#16A34A' : active ? '#1A1A1A' : '#7A7A7A', fontWeight: active ? 600 : 400 }}>
                       {step}
                     </span>
                   </div>
@@ -437,13 +437,13 @@ export default function SiteAuditClient() {
         <div style={{ maxWidth: 560, margin: '48px auto', padding: '0 24px' }}>
           <div style={{ background: '#fff', borderRadius: 12, padding: '28px 32px', border: '1px solid rgba(220,38,38,0.2)', textAlign: 'center' }}>
             <X size={32} color="#DC2626" style={{ marginBottom: 12 }} />
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', fontWeight: 400, marginBottom: 8 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', fontWeight: 400, marginBottom: 8 }}>
               Audit failed
             </h3>
-            <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 20, lineHeight: 1.6 }}>{error}</p>
+            <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 20, lineHeight: 1.6 }}>{error}</p>
             <button
               onClick={() => { setError(null); handleAudit() }}
-              style={{ padding: '10px 24px', background: '#1B2A4A', color: '#F5F0E6', borderRadius: 100, border: 'none', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
+              style={{ padding: '10px 24px', background: '#1A1A1A', color: '#FAF8F5', borderRadius: 100, border: 'none', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
             >
               Try again
             </button>
@@ -457,23 +457,23 @@ export default function SiteAuditClient() {
 
           {/* ── Top Summary ── */}
           <div style={{
-            background: '#1B2A4A', borderRadius: 16, padding: '36px 40px', marginBottom: 24,
+            background: '#1A1A1A', borderRadius: 16, padding: '36px 40px', marginBottom: 24,
             display: 'flex', flexWrap: 'wrap', gap: 28, alignItems: 'center',
           }} className="audit-summary">
             <ScoreGauge score={result.scores.overall} size={120} />
             <div style={{ flex: 1, minWidth: 200 }}>
-              <p style={{ fontSize: 11, color: 'rgba(245,240,230,0.5)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 4 }}>Overall score</p>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#F5F0E6', fontWeight: 400, margin: '0 0 6px' }}>
+              <p style={{ fontSize: 11, color: 'rgba(250,248,245,0.5)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 4 }}>Overall score</p>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#FAF8F5', fontWeight: 400, margin: '0 0 6px' }}>
                 {result.title || result.url}
               </h2>
-              <a href={result.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: 'rgba(245,240,230,0.5)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 10 }}>
+              <a href={result.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: 'rgba(250,248,245,0.5)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 10 }}>
                 {result.url} <ExternalLink size={11} />
               </a>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
-                <span style={{ fontSize: 12, color: 'rgba(245,240,230,0.55)' }}>
+                <span style={{ fontSize: 12, color: 'rgba(250,248,245,0.55)' }}>
                   Audited {new Date(result.fetchedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </span>
-                <span style={{ fontSize: 12, color: 'rgba(245,240,230,0.55)' }}>
+                <span style={{ fontSize: 12, color: 'rgba(250,248,245,0.55)' }}>
                   Load time: {result.loadTimeMs < 1000 ? `${result.loadTimeMs}ms` : `${(result.loadTimeMs / 1000).toFixed(1)}s`}
                 </span>
               </div>
@@ -483,7 +483,7 @@ export default function SiteAuditClient() {
                 href="/book"
                 style={{
                   display: 'flex', alignItems: 'center', gap: 8, padding: '11px 20px',
-                  background: '#D4A84B', color: '#1B2A4A', borderRadius: 100,
+                  background: '#E85D3A', color: '#1A1A1A', borderRadius: 100,
                   fontSize: 13, fontWeight: 700, textDecoration: 'none', whiteSpace: 'nowrap',
                 }}
               >
@@ -506,14 +506,14 @@ export default function SiteAuditClient() {
                 onClick={() => scrollToSection(`section-${cat.id}`)}
                 style={{
                   background: '#fff', borderRadius: 12, padding: '18px 12px',
-                  border: '1px solid rgba(27,42,74,0.08)', cursor: 'pointer',
+                  border: '1px solid rgba(0,0,0,0.08)', cursor: 'pointer',
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
                   transition: 'box-shadow 0.15s', textAlign: 'center',
                 }}
                 className="audit-cat-card"
               >
                 <ScoreGauge score={cat.score} size={64} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: '#1B2A4A' }}>{cat.label}</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: '#1A1A1A' }}>{cat.label}</span>
               </button>
             ))}
           </div>
@@ -808,48 +808,48 @@ export default function SiteAuditClient() {
 
           {/* ── Technology Section ── */}
           {(result.technology.platform || result.technology.framework || result.technology.analytics.length > 0 || result.technology.fonts.length > 0 || result.technology.cdn || result.technology.cms) && (
-            <div style={{ background: '#fff', borderRadius: 12, padding: '28px 32px', border: '1px solid rgba(27,42,74,0.08)', marginBottom: 20 }}>
+            <div style={{ background: '#fff', borderRadius: 12, padding: '28px 32px', border: '1px solid rgba(0,0,0,0.08)', marginBottom: 20 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 8, background: '#1B2A4A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Globe size={18} color="#D4A84B" />
+                <div style={{ width: 36, height: 36, borderRadius: 8, background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Globe size={18} color="#E85D3A" />
                 </div>
-                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1B2A4A', fontWeight: 400, margin: 0 }}>Technology</h2>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1A1A1A', fontWeight: 400, margin: 0 }}>Technology</h2>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
                 {result.technology.platform && (
                   <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Platform</span>
-                    <p style={{ fontSize: 14, color: '#1B2A4A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.platform}</p>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Platform</span>
+                    <p style={{ fontSize: 14, color: '#1A1A1A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.platform}</p>
                   </div>
                 )}
                 {result.technology.cms && (
                   <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CMS</span>
-                    <p style={{ fontSize: 14, color: '#1B2A4A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.cms}</p>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CMS</span>
+                    <p style={{ fontSize: 14, color: '#1A1A1A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.cms}</p>
                   </div>
                 )}
                 {result.technology.framework && (
                   <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Framework</span>
-                    <p style={{ fontSize: 14, color: '#1B2A4A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.framework}</p>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Framework</span>
+                    <p style={{ fontSize: 14, color: '#1A1A1A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.framework}</p>
                   </div>
                 )}
                 {result.technology.cdn && (
                   <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CDN</span>
-                    <p style={{ fontSize: 14, color: '#1B2A4A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.cdn}</p>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CDN</span>
+                    <p style={{ fontSize: 14, color: '#1A1A1A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.cdn}</p>
                   </div>
                 )}
                 {result.technology.analytics.length > 0 && (
                   <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Analytics</span>
-                    <p style={{ fontSize: 14, color: '#1B2A4A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.analytics.join(', ')}</p>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Analytics</span>
+                    <p style={{ fontSize: 14, color: '#1A1A1A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.analytics.join(', ')}</p>
                   </div>
                 )}
                 {result.technology.fonts.length > 0 && (
                   <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#5A6A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Fonts</span>
-                    <p style={{ fontSize: 14, color: '#1B2A4A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.fonts.join(', ')}</p>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: '#7A7A7A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Fonts</span>
+                    <p style={{ fontSize: 14, color: '#1A1A1A', margin: '4px 0 0', fontWeight: 500 }}>{result.technology.fonts.join(', ')}</p>
                   </div>
                 )}
               </div>
@@ -857,9 +857,9 @@ export default function SiteAuditClient() {
           )}
 
           {/* ── Comparison Section ── */}
-          <div style={{ background: '#fff', borderRadius: 12, padding: '28px 32px', border: '1px solid rgba(27,42,74,0.08)', marginBottom: 20 }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1B2A4A', fontWeight: 400, marginBottom: 6 }}>How does your site compare?</h2>
-            <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 24 }}>See how your score stacks up against typical websites</p>
+          <div style={{ background: '#fff', borderRadius: 12, padding: '28px 32px', border: '1px solid rgba(0,0,0,0.08)', marginBottom: 20 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1A1A1A', fontWeight: 400, marginBottom: 6 }}>How does your site compare?</h2>
+            <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 24 }}>See how your score stacks up against typical websites</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {[
                 { label: 'Average small business website', score: 45, sub: 'Typical SME with no active optimisation' },
@@ -869,12 +869,12 @@ export default function SiteAuditClient() {
                 <div key={item.label}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                     <div>
-                      <span style={{ fontSize: 13, fontWeight: item.highlight ? 700 : 500, color: item.highlight ? '#1B2A4A' : '#5A6A7A' }}>{item.label}</span>
-                      <span style={{ fontSize: 11, color: '#5A6A7A', marginLeft: 8 }}>{item.sub}</span>
+                      <span style={{ fontSize: 13, fontWeight: item.highlight ? 700 : 500, color: item.highlight ? '#1A1A1A' : '#7A7A7A' }}>{item.label}</span>
+                      <span style={{ fontSize: 11, color: '#7A7A7A', marginLeft: 8 }}>{item.sub}</span>
                     </div>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: item.highlight ? scoreColor(item.score) : '#5A6A7A', minWidth: 36, textAlign: 'right' }}>{item.score}</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: item.highlight ? scoreColor(item.score) : '#7A7A7A', minWidth: 36, textAlign: 'right' }}>{item.score}</span>
                   </div>
-                  <div style={{ height: 8, background: 'rgba(27,42,74,0.08)', borderRadius: 4, overflow: 'hidden' }}>
+                  <div style={{ height: 8, background: 'rgba(0,0,0,0.08)', borderRadius: 4, overflow: 'hidden' }}>
                     <div style={{
                       height: '100%', width: `${item.score}%`,
                       background: item.highlight ? scoreColor(item.score) : item.score >= 75 ? '#16A34A' : '#D97706',
@@ -884,78 +884,78 @@ export default function SiteAuditClient() {
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(27,42,74,0.07)' }}>
-              <p style={{ fontSize: 13, color: '#5A6A7A', marginBottom: 12 }}>
+            <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+              <p style={{ fontSize: 13, color: '#7A7A7A', marginBottom: 12 }}>
                 Want to see what a Nith Digital site looks like?
               </p>
-              <Link href="/templates" style={{ fontSize: 13, color: '#D4A84B', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+              <Link href="/templates" style={{ fontSize: 13, color: '#E85D3A', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                 View our templates <ArrowRight size={13} />
               </Link>
             </div>
           </div>
 
           {/* ── Lead Capture Form ── */}
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '32px 36px', marginBottom: 20 }}>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '32px 36px', marginBottom: 20 }}>
             {submitted ? (
               <div style={{ textAlign: 'center', padding: '8px 0' }}>
                 <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(22,163,74,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                   <Check size={22} color="#16A34A" />
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
                   Report on its way!
                 </h3>
-                <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.65)', lineHeight: 1.6 }}>
+                <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.65)', lineHeight: 1.6 }}>
                   We&apos;ll send a detailed breakdown to {contactEmail} shortly. Keep an eye on your inbox.
                 </p>
               </div>
             ) : (
               <>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#F5F0E6', fontWeight: 400, marginBottom: 6 }}>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#FAF8F5', fontWeight: 400, marginBottom: 6 }}>
                   Want a detailed breakdown emailed to you?
                 </h3>
-                <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', marginBottom: 24, lineHeight: 1.6 }}>
+                <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', marginBottom: 24, lineHeight: 1.6 }}>
                   We&apos;ll send a full report with prioritised recommendations for {new URL(result.url.startsWith('http') ? result.url : 'https://' + result.url).hostname}.
                 </p>
                 <form onSubmit={handleLeadSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="audit-form-grid">
                     <div>
-                      <label style={{ fontSize: 11, fontWeight: 600, color: 'rgba(245,240,230,0.6)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Name *</label>
+                      <label style={{ fontSize: 11, fontWeight: 600, color: 'rgba(250,248,245,0.6)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Name *</label>
                       <input
                         type="text"
                         required
                         value={contactName}
                         onChange={e => setContactName(e.target.value)}
                         placeholder="Your name"
-                        style={{ width: '100%', padding: '11px 14px', borderRadius: 8, border: '1px solid rgba(245,240,230,0.15)', background: 'rgba(245,240,230,0.07)', color: '#F5F0E6', fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '11px 14px', borderRadius: 8, border: '1px solid rgba(250,248,245,0.15)', background: 'rgba(250,248,245,0.07)', color: '#FAF8F5', fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box' }}
                       />
                     </div>
                     <div>
-                      <label style={{ fontSize: 11, fontWeight: 600, color: 'rgba(245,240,230,0.6)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Email *</label>
+                      <label style={{ fontSize: 11, fontWeight: 600, color: 'rgba(250,248,245,0.6)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Email *</label>
                       <input
                         type="email"
                         required
                         value={contactEmail}
                         onChange={e => setContactEmail(e.target.value)}
                         placeholder="your@email.com"
-                        style={{ width: '100%', padding: '11px 14px', borderRadius: 8, border: '1px solid rgba(245,240,230,0.15)', background: 'rgba(245,240,230,0.07)', color: '#F5F0E6', fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '11px 14px', borderRadius: 8, border: '1px solid rgba(250,248,245,0.15)', background: 'rgba(250,248,245,0.07)', color: '#FAF8F5', fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box' }}
                       />
                     </div>
                   </div>
                   <div>
-                    <label style={{ fontSize: 11, fontWeight: 600, color: 'rgba(245,240,230,0.6)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Phone (optional)</label>
+                    <label style={{ fontSize: 11, fontWeight: 600, color: 'rgba(250,248,245,0.6)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Phone (optional)</label>
                     <input
                       type="tel"
                       value={contactPhone}
                       onChange={e => setContactPhone(e.target.value)}
                       placeholder="+44 7700 000000"
-                      style={{ width: '100%', padding: '11px 14px', borderRadius: 8, border: '1px solid rgba(245,240,230,0.15)', background: 'rgba(245,240,230,0.07)', color: '#F5F0E6', fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '11px 14px', borderRadius: 8, border: '1px solid rgba(250,248,245,0.15)', background: 'rgba(250,248,245,0.07)', color: '#FAF8F5', fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box' }}
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={submitting || !contactName || !contactEmail}
                     style={{
-                      marginTop: 4, padding: '13px', background: '#D4A84B', color: '#1B2A4A',
+                      marginTop: 4, padding: '13px', background: '#E85D3A', color: '#1A1A1A',
                       borderRadius: 100, border: 'none', fontSize: 14, fontWeight: 700,
                       cursor: submitting || !contactName || !contactEmail ? 'not-allowed' : 'pointer',
                       opacity: submitting || !contactName || !contactEmail ? 0.7 : 1,
@@ -971,17 +971,17 @@ export default function SiteAuditClient() {
 
           {/* ── CTA Banner ── */}
           <div style={{
-            background: 'linear-gradient(135deg, #1B2A4A 0%, #2D4A7A 100%)',
+            background: 'linear-gradient(135deg, #1A1A1A 0%, #333333 100%)',
             borderRadius: 16, padding: '40px 40px', textAlign: 'center',
-            border: '1px solid rgba(212,168,75,0.2)',
+            border: '1px solid rgba(232,93,58,0.2)',
           }}>
-            <p style={{ fontSize: 11, color: '#D4A84B', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 12 }}>
+            <p style={{ fontSize: 11, color: '#E85D3A', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 12 }}>
               Ready to fix it?
             </p>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#F5F0E6', fontWeight: 400, marginBottom: 10 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#FAF8F5', fontWeight: 400, marginBottom: 10 }}>
               We can fix all of this.
             </h3>
-            <p style={{ fontSize: 15, color: 'rgba(245,240,230,0.7)', marginBottom: 28, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 28px' }}>
+            <p style={{ fontSize: 15, color: 'rgba(250,248,245,0.7)', marginBottom: 28, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 28px' }}>
               Our team builds fast, SEO-optimised websites for Scottish businesses.
               Book a free 30-minute call and we&apos;ll walk through your results together.
             </p>
@@ -989,7 +989,7 @@ export default function SiteAuditClient() {
               href="/book"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '14px 32px', background: '#D4A84B', color: '#1B2A4A',
+                padding: '14px 32px', background: '#E85D3A', color: '#1A1A1A',
                 borderRadius: 100, fontSize: 15, fontWeight: 700, textDecoration: 'none',
               }}
             >
@@ -1011,12 +1011,12 @@ export default function SiteAuditClient() {
               { icon: FileText, title: 'Content Quality', desc: 'Word count, contact details, privacy policy, cookie consent and broken links.' },
               { icon: Globe, title: 'Technology', desc: 'Platform, CMS, analytics tools, fonts, CDN and framework detection.' },
             ].map(item => (
-              <div key={item.title} style={{ background: '#fff', borderRadius: 12, padding: '24px 24px', border: '1px solid rgba(27,42,74,0.08)' }}>
-                <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(27,42,74,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
-                  <item.icon size={18} color="#1B2A4A" />
+              <div key={item.title} style={{ background: '#fff', borderRadius: 12, padding: '24px 24px', border: '1px solid rgba(0,0,0,0.08)' }}>
+                <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
+                  <item.icon size={18} color="#1A1A1A" />
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: '#1B2A4A', fontWeight: 400, marginBottom: 6 }}>{item.title}</h3>
-                <p style={{ fontSize: 13, color: '#5A6A7A', lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: '#1A1A1A', fontWeight: 400, marginBottom: 6 }}>{item.title}</h3>
+                <p style={{ fontSize: 13, color: '#7A7A7A', lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
               </div>
             ))}
           </div>

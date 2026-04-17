@@ -82,16 +82,16 @@ export default function WebDesignIndexPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Web Design · Dumfries & Galloway
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 40,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.2,
@@ -99,7 +99,7 @@ export default function WebDesignIndexPage() {
           >
             Web Design in Dumfries & Galloway
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 580, marginBottom: 32, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 580, marginBottom: 32, lineHeight: 1.7 }}>
             Affordable, professional websites for businesses across D&G. Built from scratch, mobile-first,
             and optimised for local search. From £500.
           </p>
@@ -109,8 +109,8 @@ export default function WebDesignIndexPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -125,11 +125,11 @@ export default function WebDesignIndexPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -140,9 +140,9 @@ export default function WebDesignIndexPage() {
       </section>
 
       {/* What's included */}
-      <section style={{ background: '#F5F0E6', padding: '48px 24px' }}>
+      <section style={{ background: '#FAF8F5', padding: '48px 24px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 400, color: '#1B2A4A', marginBottom: 24, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 400, color: '#1A1A1A', marginBottom: 24, textAlign: 'center' }}>
             What&apos;s included in every website
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }} className="features-grid">
@@ -161,11 +161,11 @@ export default function WebDesignIndexPage() {
                 style={{
                   padding: '14px 16px',
                   background: '#fff',
-                  border: '1px solid rgba(27,42,74,0.08)',
-                  borderLeft: '3px solid #D4A84B',
+                  border: '1px solid rgba(0,0,0,0.08)',
+                  borderLeft: '3px solid #E85D3A',
                   borderRadius: '0 8px 8px 0',
                   fontSize: 13,
-                  color: '#1B2A4A',
+                  color: '#1A1A1A',
                   lineHeight: 1.5,
                 }}
               >
@@ -178,10 +178,10 @@ export default function WebDesignIndexPage() {
 
       {/* Towns */}
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px' }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
           Web design by town
         </h2>
-        <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 28, lineHeight: 1.7 }}>
+        <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 28, lineHeight: 1.7 }}>
           We serve businesses right across Dumfries & Galloway. Select your nearest town for local information.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }} className="towns-grid">
@@ -193,17 +193,17 @@ export default function WebDesignIndexPage() {
                 display: 'block',
                 padding: '16px 20px',
                 background: '#fff',
-                border: '1px solid rgba(27,42,74,0.12)',
+                border: '1px solid rgba(0,0,0,0.12)',
                 borderRadius: 8,
                 fontSize: 14,
                 fontWeight: 500,
-                color: '#1B2A4A',
+                color: '#1A1A1A',
                 textDecoration: 'none',
                 transition: 'border-color 0.15s',
               }}
             >
               {town.name}
-              <span style={{ display: 'block', fontSize: 11, color: '#5A6A7A', marginTop: 2, fontWeight: 400 }}>
+              <span style={{ display: 'block', fontSize: 11, color: '#7A7A7A', marginTop: 2, fontWeight: 400 }}>
                 Web design →
               </span>
             </Link>
@@ -212,12 +212,12 @@ export default function WebDesignIndexPage() {
       </section>
 
       {/* Sectors */}
-      <section style={{ background: '#F5F0E6', padding: '56px 24px' }}>
+      <section style={{ background: '#FAF8F5', padding: '56px 24px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
             Web design by sector
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 28, lineHeight: 1.7 }}>
             Specialist website design for specific industries — built around how your customers search.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="sectors-grid">
@@ -229,16 +229,16 @@ export default function WebDesignIndexPage() {
                   display: 'block',
                   padding: '20px 24px',
                   background: '#fff',
-                  border: '1px solid rgba(27,42,74,0.12)',
+                  border: '1px solid rgba(0,0,0,0.12)',
                   borderRadius: 10,
                   fontSize: 14,
                   fontWeight: 500,
-                  color: '#1B2A4A',
+                  color: '#1A1A1A',
                   textDecoration: 'none',
                 }}
               >
                 {sector.name}
-                <span style={{ display: 'block', fontSize: 12, color: '#D4A84B', marginTop: 4, fontWeight: 500 }}>
+                <span style={{ display: 'block', fontSize: 12, color: '#E85D3A', marginTop: 4, fontWeight: 500 }}>
                   View page →
                 </span>
               </Link>
@@ -250,10 +250,10 @@ export default function WebDesignIndexPage() {
       {/* CTA */}
       <section style={{ padding: '56px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 560, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
             Ready to get started?
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24, lineHeight: 1.7 }}>
             Free initial consultation. No jargon, no pressure. We&apos;re based in Dumfries & Galloway
             and understand local businesses like yours.
           </p>
@@ -263,8 +263,8 @@ export default function WebDesignIndexPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -279,11 +279,11 @@ export default function WebDesignIndexPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#1B2A4A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(27,42,74,0.2)',
+                border: '1px solid rgba(0,0,0,0.2)',
                 textDecoration: 'none',
               }}
             >

@@ -291,16 +291,16 @@ export default async function WebDesignTownPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       {/* Hero */}
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Web Design · {data.region}
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 36,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.25,
@@ -308,7 +308,7 @@ export default async function WebDesignTownPage({
           >
             Web Design in {data.name}
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 560, marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 560, marginBottom: 28, lineHeight: 1.7 }}>
             Affordable, professional websites for businesses in {data.name} and the surrounding area. From £500.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -317,8 +317,8 @@ export default async function WebDesignTownPage({
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -333,11 +333,11 @@ export default async function WebDesignTownPage({
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -352,42 +352,42 @@ export default async function WebDesignTownPage({
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 48, alignItems: 'start' }} className="town-grid">
           <div>
             {/* Intro */}
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1B2A4A' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 16, color: '#1A1A1A' }}>
               Web design for {data.name} businesses
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               {data.intro}
             </p>
 
             {/* Businesses */}
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1A1A1A' }}>
               Who we work with in {data.name}
             </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               {data.businesses}
             </p>
 
             {/* Economy */}
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1A1A1A' }}>
               The {data.name} business landscape
             </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               {data.economy}
             </p>
 
             {/* Why Nith Digital */}
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#1A1A1A' }}>
               Why choose Nith Digital?
             </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
               {data.why}
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 32 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 32 }}>
               {data.cta}
             </p>
 
             {/* What's included */}
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: '#1B2A4A' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16, color: '#1A1A1A' }}>
               What&apos;s included in every website
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 32 }} className="features-grid">
@@ -405,11 +405,11 @@ export default async function WebDesignTownPage({
                   key={feat}
                   style={{
                     padding: '12px 16px',
-                    border: '1px solid rgba(27,42,74,0.1)',
-                    borderLeft: '3px solid #D4A84B',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderLeft: '3px solid #E85D3A',
                     borderRadius: '0 6px 6px 0',
                     fontSize: 13,
-                    color: '#1B2A4A',
+                    color: '#1A1A1A',
                     lineHeight: 1.5,
                   }}
                 >
@@ -424,18 +424,18 @@ export default async function WebDesignTownPage({
             {/* Pricing card */}
             <div
               style={{
-                background: '#1B2A4A',
+                background: '#1A1A1A',
                 borderRadius: 12,
                 padding: 28,
                 marginBottom: 20,
-                color: '#F5F0E6',
+                color: '#FAF8F5',
               }}
             >
-              <div style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 8, fontWeight: 600 }}>
+              <div style={{ fontSize: 11, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 8, fontWeight: 600 }}>
                 Starting price
               </div>
-              <div style={{ fontSize: 36, fontWeight: 600, color: '#D4A84B', marginBottom: 4 }}>£500</div>
-              <div style={{ fontSize: 13, color: 'rgba(245,240,230,0.6)', marginBottom: 16 }}>
+              <div style={{ fontSize: 36, fontWeight: 600, color: '#E85D3A', marginBottom: 4 }}>£500</div>
+              <div style={{ fontSize: 13, color: 'rgba(250,248,245,0.6)', marginBottom: 16 }}>
                 + £40/month hosting & support
               </div>
               <Link
@@ -444,8 +444,8 @@ export default async function WebDesignTownPage({
                   display: 'block',
                   textAlign: 'center',
                   padding: '12px 20px',
-                  background: '#D4A84B',
-                  color: '#1B2A4A',
+                  background: '#E85D3A',
+                  color: '#1A1A1A',
                   borderRadius: 100,
                   fontSize: 13,
                   fontWeight: 600,
@@ -459,26 +459,26 @@ export default async function WebDesignTownPage({
             {/* Tools card */}
             <div
               style={{
-                background: '#F5F0E6',
+                background: '#FAF8F5',
                 borderRadius: 12,
                 padding: 24,
                 marginBottom: 20,
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 12 }}>
                 Free tools for {data.name} businesses
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <Link href="/tools/website-quote" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/tools/website-quote" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Instant website quote calculator
                 </Link>
-                <Link href="/tools/take-home-calculator" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/tools/take-home-calculator" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Take-home pay calculator
                 </Link>
-                <Link href="/tools/site-audit" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/tools/site-audit" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Free website audit tool
                 </Link>
-                <Link href="/launchpad" style={{ fontSize: 13, color: '#1B2A4A', textDecoration: 'none' }}>
+                <Link href="/launchpad" style={{ fontSize: 13, color: '#1A1A1A', textDecoration: 'none' }}>
                   → Business startup checklist
                 </Link>
               </div>
@@ -487,25 +487,25 @@ export default async function WebDesignTownPage({
             {/* Related blog */}
             <div
               style={{
-                border: '1px solid rgba(27,42,74,0.1)',
+                border: '1px solid rgba(0,0,0,0.1)',
                 borderRadius: 12,
                 padding: 24,
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 12 }}>
                 Helpful guides
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <Link href="/blog/what-does-a-website-cost-small-business-uk" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/what-does-a-website-cost-small-business-uk" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → How much does a website cost?
                 </Link>
-                <Link href="/blog/why-your-small-business-needs-a-website-in-2025" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/why-your-small-business-needs-a-website-in-2025" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → Why your business needs a website
                 </Link>
-                <Link href="/blog/what-is-seo-beginners-guide-small-business" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/what-is-seo-beginners-guide-small-business" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → What is SEO?
                 </Link>
-                <Link href="/blog/google-my-business-guide-local-businesses" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none' }}>
+                <Link href="/blog/google-my-business-guide-local-businesses" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none' }}>
                   → Google Business Profile guide
                 </Link>
               </div>
@@ -515,12 +515,12 @@ export default async function WebDesignTownPage({
       </section>
 
       {/* CTA Banner */}
-      <section style={{ background: '#F5F0E6', padding: '56px 24px', textAlign: 'center' }}>
+      <section style={{ background: '#FAF8F5', padding: '56px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 560, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
             Ready to get started?
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24, lineHeight: 1.7 }}>
             Free initial consultation. No jargon, no pressure. We&apos;re based in Dumfries &amp; Galloway
             and understand local businesses like yours.
           </p>
@@ -530,8 +530,8 @@ export default async function WebDesignTownPage({
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -546,11 +546,11 @@ export default async function WebDesignTownPage({
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#1B2A4A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(27,42,74,0.2)',
+                border: '1px solid rgba(0,0,0,0.2)',
                 textDecoration: 'none',
               }}
             >

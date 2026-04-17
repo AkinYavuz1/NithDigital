@@ -50,15 +50,15 @@ export default function BundleRedeemForm() {
 
   if (status === 'valid') {
     return (
-      <div style={{ textAlign: 'center', padding: 32, background: 'rgba(212,168,75,0.08)', border: '2px solid #D4A84B', borderRadius: 12 }}>
+      <div style={{ textAlign: 'center', padding: 32, background: 'rgba(232,93,58,0.08)', border: '2px solid #E85D3A', borderRadius: 12 }}>
         <div style={{ fontSize: 40, marginBottom: 12 }}>🎉</div>
-        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#1B2A4A', marginBottom: 8 }}>
+        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#1A1A1A', marginBottom: 8 }}>
           Code redeemed!
         </h3>
-        <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24 }}>
+        <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24 }}>
           Your Startup Bundle has been activated. We&apos;ll be in touch within 24 hours to start building your website.
         </p>
-        <Link href="/contact" style={{ padding: '12px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 600 }}>
+        <Link href="/contact" style={{ padding: '12px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 600 }}>
           Get in touch to begin
         </Link>
       </div>
@@ -74,14 +74,14 @@ export default function BundleRedeemForm() {
         placeholder="LAUNCH-XXXX-XXXX"
         style={{
           padding: '14px 16px',
-          border: `1px solid ${status === 'invalid' || status === 'already_redeemed' ? '#dc2626' : 'rgba(27,42,74,0.15)'}`,
+          border: `1px solid ${status === 'invalid' || status === 'already_redeemed' ? '#dc2626' : 'rgba(0,0,0,0.15)'}`,
           borderRadius: 8,
           fontFamily: 'monospace',
           fontSize: 16,
           letterSpacing: 2,
           textAlign: 'center',
           outline: 'none',
-          color: '#1B2A4A',
+          color: '#1A1A1A',
         }}
       />
       {status === 'invalid' && (
@@ -104,8 +104,8 @@ export default function BundleRedeemForm() {
         disabled={status === 'checking' || !code.trim()}
         style={{
           padding: '12px 28px',
-          background: '#D4A84B',
-          color: '#1B2A4A',
+          background: '#E85D3A',
+          color: '#1A1A1A',
           borderRadius: 100,
           fontSize: 13,
           fontWeight: 600,
@@ -116,9 +116,9 @@ export default function BundleRedeemForm() {
       >
         {status === 'checking' ? 'Checking...' : 'Redeem code'}
       </button>
-      <p style={{ fontSize: 12, color: '#5A6A7A', textAlign: 'center' }}>
+      <p style={{ fontSize: 12, color: '#7A7A7A', textAlign: 'center' }}>
         Don&apos;t have a code yet?{' '}
-        <Link href="/launchpad/checklist" style={{ color: '#D4A84B', fontWeight: 600 }}>
+        <Link href="/launchpad/checklist" style={{ color: '#E85D3A', fontWeight: 600 }}>
           Complete the checklist →
         </Link>
       </p>

@@ -66,16 +66,16 @@ export default function WebDesignAccountantsPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section style={{ background: '#1B2A4A', padding: '64px 0 48px' }}>
+      <section style={{ background: '#1A1A1A', padding: '64px 0 48px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+          <div style={{ fontSize: 12, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
             Web Design · Accountants · Scotland
           </div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 36,
-              color: '#F5F0E6',
+              color: '#FAF8F5',
               fontWeight: 400,
               marginBottom: 16,
               lineHeight: 1.25,
@@ -83,11 +83,11 @@ export default function WebDesignAccountantsPage() {
           >
             Web Design for Accountants<br />Across Scotland
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 580, marginBottom: 16, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 580, marginBottom: 16, lineHeight: 1.7 }}>
             When a business owner needs a new accountant, they search online first. Making Tax Digital
             alone is driving a wave of businesses to switch — is your website ready to capture them?
           </p>
-          <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 580, marginBottom: 28, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 580, marginBottom: 28, lineHeight: 1.7 }}>
             I build professional, clear, credible websites for accounting firms across Scotland — designed
             to generate enquiries from exactly the type of clients you want.
           </p>
@@ -97,8 +97,8 @@ export default function WebDesignAccountantsPage() {
               style={{
                 display: 'inline-block',
                 padding: '12px 28px',
-                background: '#D4A84B',
-                color: '#1B2A4A',
+                background: '#E85D3A',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 600,
@@ -113,11 +113,11 @@ export default function WebDesignAccountantsPage() {
                 display: 'inline-block',
                 padding: '12px 28px',
                 background: 'transparent',
-                color: '#F5F0E6',
+                color: '#FAF8F5',
                 borderRadius: 100,
                 fontSize: 13,
                 fontWeight: 500,
-                border: '1px solid rgba(245,240,230,0.3)',
+                border: '1px solid rgba(250,248,245,0.3)',
                 textDecoration: 'none',
               }}
             >
@@ -129,10 +129,10 @@ export default function WebDesignAccountantsPage() {
 
       <section style={{ maxWidth: 1080, margin: '0 auto', padding: '56px 24px 40px' }}>
 
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
           Services that need their own pages
         </h2>
-        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 32, maxWidth: 720 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 32, maxWidth: 720 }}>
           Every service you offer is a search someone makes. A dedicated page for each service means
           Google can match your firm to the right client at the right time.
         </p>
@@ -143,18 +143,18 @@ export default function WebDesignAccountantsPage() {
               key={s.service}
               style={{
                 padding: 24,
-                border: '1px solid rgba(27,42,74,0.1)',
-                borderLeft: '3px solid #D4A84B',
+                border: '1px solid rgba(0,0,0,0.1)',
+                borderLeft: '3px solid #E85D3A',
                 borderRadius: '0 8px 8px 0',
               }}
             >
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1B2A4A' }}>{s.service}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', margin: 0 }}>{s.desc}</p>
+              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1A1A1A' }}>{s.service}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', margin: 0 }}>{s.desc}</p>
             </div>
           ))}
         </div>
 
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1B2A4A' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8, color: '#1A1A1A' }}>
           What every site includes
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 56 }} className="features-grid">
@@ -163,18 +163,18 @@ export default function WebDesignAccountantsPage() {
               key={f.title}
               style={{
                 padding: 24,
-                background: '#F5F0E6',
+                background: '#FAF8F5',
                 borderRadius: 8,
               }}
             >
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1B2A4A' }}>{f.title}</h3>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A', margin: 0 }}>{f.desc}</p>
+              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#1A1A1A' }}>{f.title}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A', margin: 0 }}>{f.desc}</p>
             </div>
           ))}
         </div>
 
         <div style={{ marginBottom: 48 }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, marginBottom: 16, color: '#1B2A4A' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, marginBottom: 16, color: '#1A1A1A' }}>
             Related services
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="acc-grid">
@@ -190,23 +190,23 @@ export default function WebDesignAccountantsPage() {
                 style={{
                   display: 'block',
                   padding: '16px 20px',
-                  border: '1px solid rgba(27,42,74,0.1)',
+                  border: '1px solid rgba(0,0,0,0.1)',
                   borderRadius: 8,
                   textDecoration: 'none',
                 }}
               >
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 4 }}>{l.label}</div>
-                <div style={{ fontSize: 12, color: '#5A6A7A' }}>{l.desc}</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 4 }}>{l.label}</div>
+                <div style={{ fontSize: 12, color: '#7A7A7A' }}>{l.desc}</div>
               </Link>
             ))}
           </div>
         </div>
 
-        <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '40px 48px', textAlign: 'center', color: '#F5F0E6' }}>
+        <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '40px 48px', textAlign: 'center', color: '#FAF8F5' }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 8 }}>
             Win more of the clients you want
           </h2>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', marginBottom: 20, maxWidth: 460, margin: '0 auto 20px' }}>
             Free 30-minute call. Tell me about your firm and I&apos;ll show you what&apos;s possible.
           </p>
           <Link
@@ -214,8 +214,8 @@ export default function WebDesignAccountantsPage() {
             style={{
               display: 'inline-block',
               padding: '12px 28px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               borderRadius: 100,
               fontSize: 13,
               fontWeight: 600,

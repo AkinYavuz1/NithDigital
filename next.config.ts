@@ -48,11 +48,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: '/webdesign/:path*',
-        destination: '/web-design/:path*',
-        permanent: true,
-      },
+      { source: '/webdesign/:path*', destination: '/web-design/:path*', permanent: true },
+      { source: '/services', destination: '/#services', permanent: true },
+      { source: '/work', destination: '/#work', permanent: true },
+      { source: '/contact', destination: '/#contact', permanent: true },
+      { source: '/about', destination: '/#trust', permanent: true },
+      { source: '/pricing', destination: '/#pricing', permanent: true },
     ]
   },
   async headers() {

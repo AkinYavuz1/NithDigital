@@ -31,11 +31,11 @@ const AREAS = [
 export default function ContactPage() {
   return (
     <>
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Get in touch
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 440, margin: '0 auto' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 440, margin: '0 auto' }}>
           Free initial consultation. No jargon, no pressure.
         </p>
       </div>
@@ -47,7 +47,7 @@ export default function ContactPage() {
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, marginBottom: 12 }}>
                 Let&apos;s talk about your project
               </h2>
-              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 24 }}>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 24 }}>
                 Whether you need a website, a dashboard, a custom tool, or you&apos;re not sure where to start — we&apos;re happy to chat. Get in touch and we&apos;ll get back to you within 24 hours.
               </p>
               {[
@@ -62,11 +62,11 @@ export default function ContactPage() {
                     alignItems: 'center',
                     gap: 12,
                     padding: '12px 0',
-                    borderBottom: i < 2 ? '1px solid rgba(27,42,74,0.1)' : 'none',
+                    borderBottom: i < 2 ? '1px solid rgba(0,0,0,0.1)' : 'none',
                     fontSize: 14,
                   }}
                 >
-                  <span style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#5A6A7A', minWidth: 80, fontWeight: 500 }}>
+                  <span style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#7A7A7A', minWidth: 80, fontWeight: 500 }}>
                     {d.label}
                   </span>
                   <span>{d.value}</span>
@@ -81,7 +81,7 @@ export default function ContactPage() {
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, marginBottom: 20 }}>
             Areas we serve
           </h2>
-          <div className="areas-cols" style={{ columns: 3, gap: 12, fontSize: 13, color: '#5A6A7A', lineHeight: 2.2, marginBottom: 32 }}>
+          <div className="areas-cols" style={{ columns: 3, gap: 12, fontSize: 13, color: '#7A7A7A', lineHeight: 2.2, marginBottom: 32 }}>
             {AREAS.map((a) => (
               <div key={a}>{a}</div>
             ))}

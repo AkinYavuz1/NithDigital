@@ -92,7 +92,7 @@ export default function VisibilityCheckerClient() {
         {/* Score gauge */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <svg width="130" height="130" viewBox="0 0 110 110" aria-label={`Visibility score: ${scorePercent}%`}>
-            <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(27,42,74,0.08)" strokeWidth="8" />
+            <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="8" />
             <circle
               cx="55" cy="55" r="48" fill="none"
               stroke={tier.color} strokeWidth="8"
@@ -102,8 +102,8 @@ export default function VisibilityCheckerClient() {
               transform="rotate(-90 55 55)"
               style={{ transition: 'stroke-dashoffset 1s ease' }}
             />
-            <text x="55" y="50" textAnchor="middle" fontSize="22" fontWeight="700" fill="#1B2A4A">{scorePercent}%</text>
-            <text x="55" y="66" textAnchor="middle" fontSize="10" fill="#5A6A7A">visible</text>
+            <text x="55" y="50" textAnchor="middle" fontSize="22" fontWeight="700" fill="#1A1A1A">{scorePercent}%</text>
+            <text x="55" y="66" textAnchor="middle" fontSize="10" fill="#7A7A7A">visible</text>
           </svg>
           <div style={{ display: 'inline-block', padding: '6px 18px', borderRadius: 100, background: tier.bg, color: tier.color, fontWeight: 700, fontSize: 14, marginTop: 8 }}>
             {tier.label}
@@ -112,8 +112,8 @@ export default function VisibilityCheckerClient() {
         </div>
 
         {/* Mock Google search snippet */}
-        <div style={{ border: '1px solid rgba(27,42,74,0.12)', borderRadius: 12, padding: '20px 24px', marginBottom: 24, background: '#fff' }}>
-          <p style={{ fontSize: 12, color: '#5A6A7A', marginBottom: 12, fontWeight: 600 }}>
+        <div style={{ border: '1px solid rgba(0,0,0,0.12)', borderRadius: 12, padding: '20px 24px', marginBottom: 24, background: '#fff' }}>
+          <p style={{ fontSize: 12, color: '#7A7A7A', marginBottom: 12, fontWeight: 600 }}>
             What someone searching for &ldquo;{businessType || 'your service'} in {town || 'your area'}&rdquo; would see:
           </p>
           <div style={{ background: '#F8F9FA', borderRadius: 8, padding: '12px 16px', border: '1px solid #E8EAED' }}>
@@ -140,7 +140,7 @@ export default function VisibilityCheckerClient() {
                     <div style={{ fontSize: 11, color: '#006621' }}>www.{name.toLowerCase().replace(/\s/g, '')}.co.uk</div>
                   </div>
                 ))}
-                <div style={{ marginBottom: 4, padding: '10px 12px', background: 'rgba(212,168,75,0.08)', borderRadius: 6, border: '1px solid rgba(212,168,75,0.3)' }}>
+                <div style={{ marginBottom: 4, padding: '10px 12px', background: 'rgba(232,93,58,0.08)', borderRadius: 6, border: '1px solid rgba(232,93,58,0.3)' }}>
                   <div style={{ fontSize: 13, color: '#1558D6', fontWeight: 500 }}>{businessName || 'Your Business'} — {businessType || 'Local Business'} in {town || 'your area'}</div>
                   <div style={{ fontSize: 11, color: '#006621' }}>www.yourbusiness.co.uk</div>
                   <div style={{ fontSize: 12, color: '#4A4A4A' }}>Professional services in {town || 'your area'}</div>
@@ -157,8 +157,8 @@ export default function VisibilityCheckerClient() {
             ['88%', 'of people use Google Maps to find local businesses'],
             ['126%', 'more traffic for businesses in the Google 3-Pack'],
           ].map(([stat, label]) => (
-            <div key={stat} style={{ background: '#F5F0E6', borderRadius: 10, padding: '16px', textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color: '#D4A84B', marginBottom: 4 }}>{stat}</div>
+            <div key={stat} style={{ background: '#FAF8F5', borderRadius: 10, padding: '16px', textAlign: 'center' }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#E85D3A', marginBottom: 4 }}>{stat}</div>
               <div style={{ fontSize: 11, color: '#4A5A6A', lineHeight: 1.5 }}>{label}</div>
             </div>
           ))}
@@ -166,14 +166,14 @@ export default function VisibilityCheckerClient() {
 
         {/* Unchecked tips */}
         {uncheckedItems.length > 0 && (
-          <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12, padding: '24px 28px', marginBottom: 24 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', marginBottom: 16, fontWeight: 400 }}>
+          <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12, padding: '24px 28px', marginBottom: 24 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', marginBottom: 16, fontWeight: 400 }}>
               What&apos;s holding you back
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               {uncheckedItems.map(item => (
-                <div key={item.id} style={{ borderLeft: '3px solid #D4A84B', paddingLeft: 14 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1B2A4A', marginBottom: 3 }}>{item.label}</div>
+                <div key={item.id} style={{ borderLeft: '3px solid #E85D3A', paddingLeft: 14 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', marginBottom: 3 }}>{item.label}</div>
                   <div style={{ fontSize: 12, color: '#4A5A6A', lineHeight: 1.6 }}>{item.tip}</div>
                 </div>
               ))}
@@ -182,25 +182,25 @@ export default function VisibilityCheckerClient() {
         )}
 
         {/* CTA */}
-        <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+        <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
             We can get you visible.
           </h3>
-          <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.65)', marginBottom: 24 }}>
+          <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.65)', marginBottom: 24 }}>
             Book a free call and we&apos;ll put together a plan to get {businessName || 'your business'} in front of more customers in {town || 'your area'}.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+            <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
               Book a free call
             </Link>
-            <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(245,240,230,0.3)', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+            <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(250,248,245,0.3)', color: '#FAF8F5', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               View our services
             </Link>
           </div>
         </div>
 
         <div style={{ textAlign: 'center' }}>
-          <button onClick={reset} style={{ fontSize: 13, color: '#D4A84B', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+          <button onClick={reset} style={{ fontSize: 13, color: '#E85D3A', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
             Start again
           </button>
         </div>
@@ -219,41 +219,41 @@ export default function VisibilityCheckerClient() {
   if (!started) {
     return (
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 24px' }}>
-        <div style={{ background: '#F5F0E6', borderRadius: 16, padding: '36px' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1B2A4A', marginBottom: 6, fontWeight: 400 }}>
+        <div style={{ background: '#FAF8F5', borderRadius: 16, padding: '36px' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1A1A1A', marginBottom: 6, fontWeight: 400 }}>
             Tell us about your business
           </h2>
-          <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24 }}>We&apos;ll personalise your results based on your location and industry.</p>
+          <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24 }}>We&apos;ll personalise your results based on your location and industry.</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }} className="form-grid">
             <div>
-              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 6 }}>Business name</label>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 6 }}>Business name</label>
               <input
                 type="text"
                 value={businessName}
                 onChange={e => setBusinessName(e.target.value)}
                 placeholder="e.g. Nith Valley Plumbing"
-                style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 8, fontSize: 14, color: '#1B2A4A', fontFamily: 'inherit', boxSizing: 'border-box' }}
+                style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 8, fontSize: 14, color: '#1A1A1A', fontFamily: 'inherit', boxSizing: 'border-box' }}
               />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 6 }}>Town / area</label>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 6 }}>Town / area</label>
               <input
                 type="text"
                 value={town}
                 onChange={e => setTown(e.target.value)}
                 placeholder="e.g. Dumfries, Thornhill"
-                style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 8, fontSize: 14, color: '#1B2A4A', fontFamily: 'inherit', boxSizing: 'border-box' }}
+                style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 8, fontSize: 14, color: '#1A1A1A', fontFamily: 'inherit', boxSizing: 'border-box' }}
               />
             </div>
           </div>
 
           <div style={{ marginBottom: 24 }}>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1B2A4A', marginBottom: 6 }}>Business type</label>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#1A1A1A', marginBottom: 6 }}>Business type</label>
             <select
               value={businessType}
               onChange={e => setBusinessType(e.target.value)}
-              style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 8, fontSize: 14, color: '#1B2A4A', fontFamily: 'inherit', background: '#fff', boxSizing: 'border-box' }}
+              style={{ width: '100%', padding: '11px 14px', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 8, fontSize: 14, color: '#1A1A1A', fontFamily: 'inherit', background: '#fff', boxSizing: 'border-box' }}
             >
               <option value="">Select your industry...</option>
               {BUSINESS_TYPES.map(bt => (
@@ -267,8 +267,8 @@ export default function VisibilityCheckerClient() {
             disabled={!businessName.trim() || !town.trim() || !businessType}
             style={{
               padding: '13px 32px',
-              background: '#D4A84B',
-              color: '#1B2A4A',
+              background: '#E85D3A',
+              color: '#1A1A1A',
               border: 'none',
               borderRadius: 100,
               fontSize: 14,
@@ -292,10 +292,10 @@ export default function VisibilityCheckerClient() {
   return (
     <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 24px' }}>
       <div style={{ marginBottom: 24 }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1B2A4A', marginBottom: 4, fontWeight: 400 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#1A1A1A', marginBottom: 4, fontWeight: 400 }}>
           Tick everything that applies to {businessName}
         </h2>
-        <p style={{ fontSize: 14, color: '#5A6A7A', margin: 0 }}>Be honest — this is for your benefit.</p>
+        <p style={{ fontSize: 14, color: '#7A7A7A', margin: 0 }}>Be honest — this is for your benefit.</p>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 32 }}>
@@ -309,8 +309,8 @@ export default function VisibilityCheckerClient() {
                 alignItems: 'flex-start',
                 gap: 14,
                 padding: '16px 20px',
-                background: isChecked ? 'rgba(39,174,96,0.06)' : '#F5F0E6',
-                border: `2px solid ${isChecked ? '#27ae60' : 'rgba(27,42,74,0.08)'}`,
+                background: isChecked ? 'rgba(39,174,96,0.06)' : '#FAF8F5',
+                border: `2px solid ${isChecked ? '#27ae60' : 'rgba(0,0,0,0.08)'}`,
                 borderRadius: 10,
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
@@ -321,7 +321,7 @@ export default function VisibilityCheckerClient() {
                   width: 20,
                   height: 20,
                   borderRadius: 4,
-                  border: `2px solid ${isChecked ? '#27ae60' : 'rgba(27,42,74,0.25)'}`,
+                  border: `2px solid ${isChecked ? '#27ae60' : 'rgba(0,0,0,0.25)'}`,
                   background: isChecked ? '#27ae60' : 'transparent',
                   flexShrink: 0,
                   marginTop: 1,
@@ -334,7 +334,7 @@ export default function VisibilityCheckerClient() {
                 {isChecked && <span style={{ color: '#fff', fontSize: 11, fontWeight: 800 }}>✓</span>}
               </div>
               <input type="checkbox" checked={isChecked} onChange={() => toggleCheck(item.id)} style={{ display: 'none' }} />
-              <span style={{ fontSize: 14, color: '#1B2A4A', lineHeight: 1.5, fontWeight: isChecked ? 600 : 400 }}>
+              <span style={{ fontSize: 14, color: '#1A1A1A', lineHeight: 1.5, fontWeight: isChecked ? 600 : 400 }}>
                 {item.label}
               </span>
             </label>
@@ -347,8 +347,8 @@ export default function VisibilityCheckerClient() {
           onClick={() => setShowResults(true)}
           style={{
             padding: '14px 40px',
-            background: '#D4A84B',
-            color: '#1B2A4A',
+            background: '#E85D3A',
+            color: '#1A1A1A',
             border: 'none',
             borderRadius: 100,
             fontSize: 15,

@@ -27,9 +27,11 @@ export default function CookieBanner() {
         left: 24,
         right: 24,
         maxWidth: 480,
-        background: '#1B2A4A',
-        color: '#F5F0E6',
-        borderRadius: 10,
+        background: 'rgba(26,26,26,0.92)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        color: '#fff',
+        borderRadius: 14,
         padding: '16px 20px',
         zIndex: 9999,
         boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
@@ -41,17 +43,17 @@ export default function CookieBanner() {
     >
       <p style={{ fontSize: 13, margin: 0, flex: 1, lineHeight: 1.5 }}>
         We use cookies to improve your experience.{' '}
-        <Link href="/privacy" style={{ color: '#D4A84B', textDecoration: 'underline' }}>
+        <Link href="/privacy" style={{ color: '#E85D3A', textDecoration: 'underline' }}>
           Privacy Policy
         </Link>
       </p>
       <button
         onClick={accept}
         style={{
-          background: '#D4A84B',
-          color: '#1B2A4A',
+          background: '#E85D3A',
+          color: '#fff',
           border: 'none',
-          borderRadius: 6,
+          borderRadius: 50,
           padding: '8px 18px',
           fontSize: 13,
           fontWeight: 600,

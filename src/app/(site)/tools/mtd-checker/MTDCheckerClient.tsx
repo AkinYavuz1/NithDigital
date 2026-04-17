@@ -135,10 +135,10 @@ export default function MTDCheckerClient() {
     alignItems: 'center',
     gap: 12,
     padding: '14px 18px',
-    border: `2px solid ${selected ? '#D4A84B' : 'rgba(27,42,74,0.15)'}`,
+    border: `2px solid ${selected ? '#E85D3A' : 'rgba(0,0,0,0.15)'}`,
     borderRadius: 8,
     cursor: 'pointer',
-    background: selected ? 'rgba(212,168,75,0.08)' : '#fff',
+    background: selected ? 'rgba(232,93,58,0.08)' : '#fff',
     marginBottom: 10,
     transition: 'all 0.15s ease',
   })
@@ -147,8 +147,8 @@ export default function MTDCheckerClient() {
     width: 18,
     height: 18,
     borderRadius: '50%',
-    border: `2px solid ${selected ? '#D4A84B' : 'rgba(27,42,74,0.3)'}`,
-    background: selected ? '#D4A84B' : 'transparent',
+    border: `2px solid ${selected ? '#E85D3A' : 'rgba(0,0,0,0.3)'}`,
+    background: selected ? '#E85D3A' : 'transparent',
     flexShrink: 0,
     transition: 'all 0.15s ease',
   })
@@ -179,7 +179,7 @@ export default function MTDCheckerClient() {
             {result.badge}
           </div>
 
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1B2A4A', marginBottom: 8, fontWeight: 400 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1A1A1A', marginBottom: 8, fontWeight: 400 }}>
             Your MTD start date: <strong>{result.startDate}</strong>
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.75, color: '#4A5A6A', marginBottom: 32, maxWidth: 640 }}>
@@ -187,8 +187,8 @@ export default function MTDCheckerClient() {
           </p>
 
           {/* Checklist */}
-          <div style={{ background: '#F5F0E6', borderRadius: 12, padding: '28px 32px', marginBottom: 28 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', marginBottom: 16, fontWeight: 400 }}>
+          <div style={{ background: '#FAF8F5', borderRadius: 12, padding: '28px 32px', marginBottom: 28 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', marginBottom: 16, fontWeight: 400 }}>
               What you need to do
             </h3>
             <ol style={{ margin: 0, paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -199,61 +199,61 @@ export default function MTDCheckerClient() {
           </div>
 
           {/* Key dates */}
-          <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12, padding: '28px 32px', marginBottom: 28 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', marginBottom: 16, fontWeight: 400 }}>
+          <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12, padding: '28px 32px', marginBottom: 28 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', marginBottom: 16, fontWeight: 400 }}>
               Key dates
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid rgba(27,42,74,0.08)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
                 <span style={{ fontSize: 14, color: '#4A5A6A' }}>MTD sign-up deadline</span>
-                <span style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>{result.signUpDeadline}</span>
+                <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>{result.signUpDeadline}</span>
               </div>
               {result.firstQuarterlyUpdate && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid rgba(27,42,74,0.08)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
                   <span style={{ fontSize: 14, color: '#4A5A6A' }}>First quarterly update due</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>{result.firstQuarterlyUpdate}</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>{result.firstQuarterlyUpdate}</span>
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0' }}>
                 <span style={{ fontSize: 14, color: '#4A5A6A' }}>Annual declaration deadline</span>
-                <span style={{ fontSize: 14, fontWeight: 600, color: '#1B2A4A' }}>31 January each year</span>
+                <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A' }}>31 January each year</span>
               </div>
             </div>
           </div>
 
           {/* GOV.UK links */}
-          <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12, padding: '20px 28px', marginBottom: 32 }}>
+          <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12, padding: '20px 28px', marginBottom: 32 }}>
             <p style={{ fontSize: 13, color: '#4A5A6A', marginBottom: 10, fontWeight: 600 }}>Useful GOV.UK links</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <a href="https://www.gov.uk/guidance/sign-up-your-business-for-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none', fontWeight: 600 }}>
+              <a href="https://www.gov.uk/guidance/sign-up-your-business-for-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none', fontWeight: 600 }}>
                 Sign up for MTD for Income Tax →
               </a>
-              <a href="https://www.gov.uk/guidance/find-software-thats-compatible-with-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#D4A84B', textDecoration: 'none', fontWeight: 600 }}>
+              <a href="https://www.gov.uk/guidance/find-software-thats-compatible-with-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#E85D3A', textDecoration: 'none', fontWeight: 600 }}>
                 Find MTD-compatible software →
               </a>
             </div>
           </div>
 
           {/* CTA */}
-          <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+          <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
               Need help getting your business ready for MTD?
             </h3>
-            <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.65)', marginBottom: 24 }}>
+            <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.65)', marginBottom: 24 }}>
               We build websites and digital tools that make running your business easier. Let&apos;s talk.
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+              <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
                 Book a free call
               </Link>
-              <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(245,240,230,0.3)', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+              <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(250,248,245,0.3)', color: '#FAF8F5', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
                 View our services
               </Link>
             </div>
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <button onClick={reset} style={{ fontSize: 13, color: '#D4A84B', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+            <button onClick={reset} style={{ fontSize: 13, color: '#E85D3A', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
               Start again
             </button>
           </div>
@@ -284,8 +284,8 @@ export default function MTDCheckerClient() {
                 width: 28,
                 height: 28,
                 borderRadius: '50%',
-                background: s === step ? '#D4A84B' : s < step ? '#1B2A4A' : 'rgba(27,42,74,0.12)',
-                color: s <= step ? (s === step ? '#1B2A4A' : '#fff') : '#9AA8B8',
+                background: s === step ? '#E85D3A' : s < step ? '#1A1A1A' : 'rgba(0,0,0,0.12)',
+                color: s <= step ? (s === step ? '#1A1A1A' : '#fff') : '#9AA8B8',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -296,21 +296,21 @@ export default function MTDCheckerClient() {
             >
               {s < step ? '✓' : s}
             </div>
-            <span style={{ fontSize: 12, color: s === step ? '#1B2A4A' : '#9AA8B8', fontWeight: s === step ? 600 : 400 }}>
+            <span style={{ fontSize: 12, color: s === step ? '#1A1A1A' : '#9AA8B8', fontWeight: s === step ? 600 : 400 }}>
               {s === 1 ? 'Business type' : s === 2 ? 'Income' : 'Records'}
             </span>
-            {s < 3 && <div style={{ width: 32, height: 2, background: 'rgba(27,42,74,0.1)', margin: '0 4px' }} />}
+            {s < 3 && <div style={{ width: 32, height: 2, background: 'rgba(0,0,0,0.1)', margin: '0 4px' }} />}
           </div>
         ))}
       </div>
 
-      <div style={{ background: '#F5F0E6', borderRadius: 16, padding: '36px' }}>
+      <div style={{ background: '#FAF8F5', borderRadius: 16, padding: '36px' }}>
         {step === 1 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1B2A4A', marginBottom: 6, fontWeight: 400 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1A1A1A', marginBottom: 6, fontWeight: 400 }}>
               What best describes you?
             </h2>
-            <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24 }}>Select the option that best fits your situation.</p>
+            <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24 }}>Select the option that best fits your situation.</p>
 
             {([
               ['sole-trader', 'Sole trader', 'Self-employed, running a business on your own'],
@@ -320,8 +320,8 @@ export default function MTDCheckerClient() {
               <label key={val} style={radioStyle(businessType === val)}>
                 <div style={dotStyle(businessType === val)} />
                 <div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A' }}>{label}</div>
-                  <div style={{ fontSize: 12, color: '#5A6A7A' }}>{sub}</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{label}</div>
+                  <div style={{ fontSize: 12, color: '#7A7A7A' }}>{sub}</div>
                 </div>
                 <input type="radio" value={val ?? ''} checked={businessType === val} onChange={() => setBusinessType(val)} style={{ display: 'none' }} />
               </label>
@@ -331,10 +331,10 @@ export default function MTDCheckerClient() {
 
         {step === 2 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1B2A4A', marginBottom: 6, fontWeight: 400 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1A1A1A', marginBottom: 6, fontWeight: 400 }}>
               What is your total annual income?
             </h2>
-            <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24 }}>From self-employment and/or property combined.</p>
+            <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24 }}>From self-employment and/or property combined.</p>
 
             {([
               ['under-20k', 'Under £20,000'],
@@ -344,7 +344,7 @@ export default function MTDCheckerClient() {
             ] as [IncomeBand, string][]).map(([val, label]) => (
               <label key={val} style={radioStyle(income === val)}>
                 <div style={dotStyle(income === val)} />
-                <span style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A' }}>{label}</span>
+                <span style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{label}</span>
                 <input type="radio" value={val ?? ''} checked={income === val} onChange={() => setIncome(val)} style={{ display: 'none' }} />
               </label>
             ))}
@@ -353,10 +353,10 @@ export default function MTDCheckerClient() {
 
         {step === 3 && (
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1B2A4A', marginBottom: 6, fontWeight: 400 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#1A1A1A', marginBottom: 6, fontWeight: 400 }}>
               How do you currently keep your business records?
             </h2>
-            <p style={{ fontSize: 14, color: '#5A6A7A', marginBottom: 24 }}>This helps us give you the right advice.</p>
+            <p style={{ fontSize: 14, color: '#7A7A7A', marginBottom: 24 }}>This helps us give you the right advice.</p>
 
             {([
               ['paper', 'Paper / pen and paper', 'Invoices, receipts, notebooks'],
@@ -368,8 +368,8 @@ export default function MTDCheckerClient() {
               <label key={val} style={radioStyle(records === val)}>
                 <div style={dotStyle(records === val)} />
                 <div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1B2A4A' }}>{label}</div>
-                  <div style={{ fontSize: 12, color: '#5A6A7A' }}>{sub}</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{label}</div>
+                  <div style={{ fontSize: 12, color: '#7A7A7A' }}>{sub}</div>
                 </div>
                 <input type="radio" value={val ?? ''} checked={records === val} onChange={() => setRecords(val)} style={{ display: 'none' }} />
               </label>
@@ -387,8 +387,8 @@ export default function MTDCheckerClient() {
           style={{
             marginTop: 24,
             padding: '13px 32px',
-            background: '#D4A84B',
-            color: '#1B2A4A',
+            background: '#E85D3A',
+            color: '#1A1A1A',
             border: 'none',
             borderRadius: 100,
             fontSize: 14,

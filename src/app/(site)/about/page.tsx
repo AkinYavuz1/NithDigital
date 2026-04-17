@@ -63,11 +63,11 @@ const CREDS = [
 export default function AboutPage() {
   return (
     <>
-      <div style={{ background: '#1B2A4A', padding: '56px 24px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <div style={{ background: '#1A1A1A', padding: '56px 24px', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           About Nith Digital
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.6)', maxWidth: 440, margin: '0 auto' }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.6)', maxWidth: 440, margin: '0 auto' }}>
           A decade of data, a passion for building, rooted in D&amp;G.
         </p>
       </div>
@@ -83,16 +83,16 @@ export default function AboutPage() {
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, marginBottom: 16 }}>
                 Built in the Nith Valley, for the Nith Valley
               </h2>
-              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 16 }}>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 16 }}>
                 Nith Digital is run by a Senior BI Developer based in Sanquhar, Dumfries &amp; Galloway. With over a decade of experience across healthcare, energy, finance, and the public sector, the focus is on turning messy data into clear decisions and building modern digital tools.
               </p>
-              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 16 }}>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 16 }}>
                 The business was born from a simple observation: rural Scotland deserves the same quality of digital services as any city. Too many brilliant local businesses in D&amp;G are held back by outdated websites, manual processes, and spreadsheets that should be dashboards. Nith Digital exists to change that.
               </p>
-              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A', marginBottom: 16 }}>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A', marginBottom: 16 }}>
                 The name comes from the River Nith, which flows right through Sanquhar on its 70-mile journey to the Solway Firth — connecting communities across Nithsdale just as we connect businesses to their digital potential.
               </p>
-              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#5A6A7A' }}>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: '#7A7A7A' }}>
                 Outside of work, there are four Commonwealth gold medals in competitive powerlifting — which tells you everything about the approach: show up consistently, put in the reps, and don&apos;t cut corners.
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function AboutPage() {
                     key={e.role + e.date}
                     style={{
                       padding: '16px 0',
-                      borderBottom: '1px solid rgba(27,42,74,0.1)',
+                      borderBottom: '1px solid rgba(0,0,0,0.1)',
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'flex-start',
@@ -115,9 +115,9 @@ export default function AboutPage() {
                   >
                     <div>
                       <div style={{ fontSize: 14, fontWeight: 600 }}>{e.role}</div>
-                      <div style={{ fontSize: 13, color: '#5A6A7A' }}>{e.context}</div>
+                      <div style={{ fontSize: 13, color: '#7A7A7A' }}>{e.context}</div>
                     </div>
-                    <div style={{ fontSize: 12, color: '#5A6A7A' }}>{e.date}</div>
+                    <div style={{ fontSize: 12, color: '#7A7A7A' }}>{e.date}</div>
                   </li>
                 ))}
               </ul>
@@ -128,12 +128,12 @@ export default function AboutPage() {
           <div className="three-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 32, marginBottom: 48 }}>
             {CREDS.map((g) => (
               <div key={g.title}>
-                <h4 style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#5A6A7A', marginBottom: 10, fontWeight: 500 }}>
+                <h4 style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#7A7A7A', marginBottom: 10, fontWeight: 500 }}>
                   {g.title}
                 </h4>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {g.pills.map((p) => (
-                    <span key={p} style={{ fontSize: 12, padding: '5px 14px', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 100, color: '#5A6A7A' }}>
+                    <span key={p} style={{ fontSize: 12, padding: '5px 14px', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 100, color: '#7A7A7A' }}>
                       {p}
                     </span>
                   ))}

@@ -46,7 +46,7 @@ export default function TradeDeskExpensesClient({ userId }: { userId: string }) 
 
   if (loading) {
     return (
-      <div style={{ padding: '48px 24px', color: '#5A6A7A', fontSize: 14 }}>
+      <div style={{ padding: '48px 24px', color: '#7A7A7A', fontSize: 14 }}>
         Loading expenses...
       </div>
     )
@@ -57,7 +57,7 @@ export default function TradeDeskExpensesClient({ userId }: { userId: string }) 
       {/* Controls */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <Filter size={14} color="#5A6A7A" />
+          <Filter size={14} color="#7A7A7A" />
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -65,9 +65,9 @@ export default function TradeDeskExpensesClient({ userId }: { userId: string }) 
               fontSize: 13,
               padding: '6px 10px',
               borderRadius: 6,
-              border: '1px solid rgba(27,42,74,0.15)',
+              border: '1px solid rgba(0,0,0,0.15)',
               background: '#fff',
-              color: '#1B2A4A',
+              color: '#1A1A1A',
               cursor: 'pointer',
             }}
           >
@@ -82,8 +82,8 @@ export default function TradeDeskExpensesClient({ userId }: { userId: string }) 
             display: 'flex',
             alignItems: 'center',
             gap: 6,
-            background: '#D4A84B',
-            color: '#1B2A4A',
+            background: '#E85D3A',
+            color: '#1A1A1A',
             border: 'none',
             padding: '8px 16px',
             borderRadius: 6,
@@ -99,39 +99,39 @@ export default function TradeDeskExpensesClient({ userId }: { userId: string }) 
 
       {/* Summary cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, marginBottom: 24 }}>
-        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(27,42,74,0.08)' }}>
-          <div style={{ fontSize: 11, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Expenses</div>
-          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1B2A4A' }}>{filtered.length}</div>
+        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: 11, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Expenses</div>
+          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1A1A1A' }}>{filtered.length}</div>
         </div>
-        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(27,42,74,0.08)' }}>
-          <div style={{ fontSize: 11, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Net Total</div>
-          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1B2A4A' }}>£{totalAmount.toFixed(2)}</div>
+        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: 11, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Net Total</div>
+          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1A1A1A' }}>£{totalAmount.toFixed(2)}</div>
         </div>
-        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(27,42,74,0.08)' }}>
-          <div style={{ fontSize: 11, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>VAT</div>
-          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1B2A4A' }}>£{totalVat.toFixed(2)}</div>
+        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: 11, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>VAT</div>
+          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1A1A1A' }}>£{totalVat.toFixed(2)}</div>
         </div>
-        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(27,42,74,0.08)' }}>
-          <div style={{ fontSize: 11, color: '#5A6A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Gross Total</div>
-          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1B2A4A' }}>£{(totalAmount + totalVat).toFixed(2)}</div>
+        <div style={{ background: '#fff', padding: '16px 20px', borderRadius: 8, border: '1px solid rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: 11, color: '#7A7A7A', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Gross Total</div>
+          <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1A1A1A' }}>£{(totalAmount + totalVat).toFixed(2)}</div>
         </div>
       </div>
 
       {/* Table */}
       {filtered.length === 0 ? (
-        <p style={{ fontSize: 14, color: '#5A6A7A' }}>No expenses found.</p>
+        <p style={{ fontSize: 14, color: '#7A7A7A' }}>No expenses found.</p>
       ) : (
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: '2px solid rgba(27,42,74,0.1)' }}>
+              <tr style={{ borderBottom: '2px solid rgba(0,0,0,0.1)' }}>
                 {['Date', 'Supplier', 'Amount', 'VAT', 'Category'].map((h) => (
                   <th
                     key={h}
                     style={{
                       textAlign: 'left',
                       padding: '10px 12px',
-                      color: '#5A6A7A',
+                      color: '#7A7A7A',
                       fontWeight: 600,
                       fontSize: 11,
                       textTransform: 'uppercase',
@@ -148,16 +148,16 @@ export default function TradeDeskExpensesClient({ userId }: { userId: string }) 
               {filtered.map((e, i) => (
                 <tr
                   key={e.id}
-                  style={{ borderBottom: '1px solid rgba(27,42,74,0.06)', background: i % 2 === 0 ? '#fff' : 'transparent' }}
+                  style={{ borderBottom: '1px solid rgba(0,0,0,0.06)', background: i % 2 === 0 ? '#fff' : 'transparent' }}
                 >
-                  <td style={{ padding: '12px 12px', color: '#1B2A4A', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px 12px', color: '#1A1A1A', whiteSpace: 'nowrap' }}>
                     {e.date ? new Date(e.date).toLocaleDateString('en-GB') : '—'}
                   </td>
-                  <td style={{ padding: '12px 12px', color: '#1B2A4A' }}>{e.supplier || '—'}</td>
-                  <td style={{ padding: '12px 12px', color: '#1B2A4A', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px 12px', color: '#1A1A1A' }}>{e.supplier || '—'}</td>
+                  <td style={{ padding: '12px 12px', color: '#1A1A1A', whiteSpace: 'nowrap' }}>
                     {e.amount != null ? `£${e.amount.toFixed(2)}` : '—'}
                   </td>
-                  <td style={{ padding: '12px 12px', color: '#5A6A7A', whiteSpace: 'nowrap' }}>
+                  <td style={{ padding: '12px 12px', color: '#7A7A7A', whiteSpace: 'nowrap' }}>
                     {e.vat != null ? `£${e.vat.toFixed(2)}` : '—'}
                   </td>
                   <td style={{ padding: '12px 12px' }}>
@@ -165,8 +165,8 @@ export default function TradeDeskExpensesClient({ userId }: { userId: string }) 
                       fontSize: 11,
                       padding: '3px 8px',
                       borderRadius: 100,
-                      background: 'rgba(212,168,75,0.12)',
-                      color: '#1B2A4A',
+                      background: 'rgba(232,93,58,0.12)',
+                      color: '#1A1A1A',
                       fontWeight: 500,
                     }}>
                       {e.category || 'Other'}

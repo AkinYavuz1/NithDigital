@@ -27,9 +27,9 @@ export interface WebsiteStatus {
   value: number
 }
 
-const GOLD = '#D4A84B'
-const NAVY = '#1B2A4A'
-const CREAM = '#F5F0E6'
+const GOLD = '#E85D3A'
+const NAVY = '#1A1A1A'
+const CREAM = '#FAF8F5'
 const MUTED = '#8A9AAA'
 const AMBER = '#C68B2A'
 
@@ -58,18 +58,18 @@ export function SectorBarChart({ data }: { data: SectorCount[] }) {
   return (
     <ResponsiveContainer width="100%" height={380}>
       <BarChart data={display} layout="vertical" margin={{ left: 8, right: 24, top: 8, bottom: 8 }}>
-        <XAxis type="number" tick={{ fontSize: 11, fill: '#5A6A7A' }} tickLine={false} axisLine={false} />
+        <XAxis type="number" tick={{ fontSize: 11, fill: '#7A7A7A' }} tickLine={false} axisLine={false} />
         <YAxis
           type="category"
           dataKey="sector"
           width={140}
-          tick={{ fontSize: 11, fill: '#1B2A4A', fontWeight: 500 }}
+          tick={{ fontSize: 11, fill: '#1A1A1A', fontWeight: 500 }}
           tickLine={false}
           axisLine={false}
         />
         <Tooltip
           formatter={(v) => [`${v} businesses`, 'Count']}
-          contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(27,42,74,0.12)' }}
+          contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(0,0,0,0.12)' }}
         />
         <Bar dataKey="count" radius={[0, 4, 4, 0]}>
           {display.map((_, i) => (
@@ -86,18 +86,18 @@ export function NeedBarChart({ data }: { data: SectorNeed[] }) {
   return (
     <ResponsiveContainer width="100%" height={380}>
       <BarChart data={display} layout="vertical" margin={{ left: 8, right: 40, top: 8, bottom: 8 }}>
-        <XAxis type="number" domain={[0, 10]} tick={{ fontSize: 11, fill: '#5A6A7A' }} tickLine={false} axisLine={false} />
+        <XAxis type="number" domain={[0, 10]} tick={{ fontSize: 11, fill: '#7A7A7A' }} tickLine={false} axisLine={false} />
         <YAxis
           type="category"
           dataKey="sector"
           width={140}
-          tick={{ fontSize: 11, fill: '#1B2A4A', fontWeight: 500 }}
+          tick={{ fontSize: 11, fill: '#1A1A1A', fontWeight: 500 }}
           tickLine={false}
           axisLine={false}
         />
         <Tooltip
           formatter={(v) => [typeof v === 'number' ? `${v.toFixed(1)} / 10` : v, 'Digital need score']}
-          contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(27,42,74,0.12)' }}
+          contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(0,0,0,0.12)' }}
         />
         <Bar dataKey="avg_need" radius={[0, 4, 4, 0]}>
           {display.map((entry, i) => {
@@ -138,7 +138,7 @@ export function WebsiteDonutChart({ data }: { data: WebsiteStatus[] }) {
           </Pie>
           <Tooltip
             formatter={(v) => [`${v}%`, '']}
-            contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(27,42,74,0.12)' }}
+            contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid rgba(0,0,0,0.12)' }}
           />
         </PieChart>
       </ResponsiveContainer>
@@ -146,7 +146,7 @@ export function WebsiteDonutChart({ data }: { data: WebsiteStatus[] }) {
         {data.map((entry, i) => (
           <div key={entry.name} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <div style={{ width: 10, height: 10, borderRadius: '50%', background: PIE_COLORS[i % PIE_COLORS.length], flexShrink: 0 }} />
-            <span style={{ fontSize: 12, color: '#1B2A4A' }}>{entry.name}</span>
+            <span style={{ fontSize: 12, color: '#1A1A1A' }}>{entry.name}</span>
           </div>
         ))}
       </div>

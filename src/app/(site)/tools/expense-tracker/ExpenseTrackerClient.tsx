@@ -282,10 +282,10 @@ export default function ExpenseTrackerClient() {
 
   const inputStyle = {
     padding: '9px 12px',
-    border: '1px solid rgba(27,42,74,0.2)',
+    border: '1px solid rgba(0,0,0,0.2)',
     borderRadius: 6,
     fontSize: 13,
-    color: '#1B2A4A',
+    color: '#1A1A1A',
     fontFamily: 'inherit',
     background: '#fff',
     width: '100%',
@@ -296,12 +296,12 @@ export default function ExpenseTrackerClient() {
     padding: '10px 14px',
     fontSize: 11,
     fontWeight: 700,
-    color: '#5A6A7A',
+    color: '#7A7A7A',
     textAlign: 'left' as const,
     cursor: 'pointer',
     userSelect: 'none' as const,
     whiteSpace: 'nowrap' as const,
-    background: sortField === field ? 'rgba(27,42,74,0.04)' : 'transparent',
+    background: sortField === field ? 'rgba(0,0,0,0.04)' : 'transparent',
   })
 
   if (!loaded) return null
@@ -310,19 +310,19 @@ export default function ExpenseTrackerClient() {
     <div style={{ maxWidth: 1080, margin: '0 auto', padding: '32px 24px 80px' }}>
 
       {/* Privacy notice */}
-      <div style={{ background: 'rgba(212,168,75,0.1)', border: '1px solid rgba(212,168,75,0.3)', borderRadius: 8, padding: '10px 16px', marginBottom: 24, fontSize: 12, color: '#4A5A6A', display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ background: 'rgba(232,93,58,0.1)', border: '1px solid rgba(232,93,58,0.3)', borderRadius: 8, padding: '10px 16px', marginBottom: 24, fontSize: 12, color: '#4A5A6A', display: 'flex', alignItems: 'center', gap: 8 }}>
         <span>🔒</span>
         <span>Your data is stored locally in your browser. It never leaves your device.</span>
       </div>
 
       {/* Add transaction */}
-      <div style={{ background: '#F5F0E6', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', marginBottom: 16, fontWeight: 400 }}>
+      <div style={{ background: '#FAF8F5', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', marginBottom: 16, fontWeight: 400 }}>
           Add transaction
         </h2>
 
         {/* Type toggle */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 16, borderRadius: 8, overflow: 'hidden', border: '2px solid rgba(27,42,74,0.15)', width: 'fit-content' }}>
+        <div style={{ display: 'flex', gap: 0, marginBottom: 16, borderRadius: 8, overflow: 'hidden', border: '2px solid rgba(0,0,0,0.15)', width: 'fit-content' }}>
           {(['income', 'expense'] as const).map(t => (
             <button
               key={t}
@@ -331,7 +331,7 @@ export default function ExpenseTrackerClient() {
                 padding: '9px 24px',
                 border: 'none',
                 background: formType === t ? (t === 'income' ? '#27ae60' : '#c0392b') : '#fff',
-                color: formType === t ? '#fff' : '#5A6A7A',
+                color: formType === t ? '#fff' : '#7A7A7A',
                 cursor: 'pointer',
                 fontSize: 13,
                 fontWeight: 600,
@@ -345,28 +345,28 @@ export default function ExpenseTrackerClient() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr 1fr 2fr auto', gap: 10, alignItems: 'end' }} className="add-form-grid">
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>Date</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>Date</label>
             <input type="date" value={formDate} onChange={e => setFormDate(e.target.value)} style={{ ...inputStyle, width: 'auto' }} />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>Category</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>Category</label>
             <select value={formCategory} onChange={e => setFormCategory(e.target.value)} style={inputStyle}>
               <option value="">Select...</option>
               {categories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>Amount (£)</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>Amount (£)</label>
             <input type="number" value={formAmount} onChange={e => setFormAmount(e.target.value)} placeholder="0.00" min="0.01" step="0.01" style={inputStyle} />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>Description</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>Description</label>
             <input type="text" value={formDescription} onChange={e => setFormDescription(e.target.value)} placeholder="Optional note..." style={inputStyle} />
           </div>
           <div>
             <button
               onClick={handleAdd}
-              style={{ padding: '9px 20px', background: '#D4A84B', color: '#1B2A4A', border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
+              style={{ padding: '9px 20px', background: '#E85D3A', color: '#1A1A1A', border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
             >
               Add
             </button>
@@ -376,9 +376,9 @@ export default function ExpenseTrackerClient() {
       </div>
 
       {/* Quarter summary */}
-      <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
+      <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', margin: 0, fontWeight: 400 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', margin: 0, fontWeight: 400 }}>
             Quarterly Summary
           </h2>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -397,10 +397,10 @@ export default function ExpenseTrackerClient() {
                 </option>
               ))}
             </select>
-            <button onClick={() => exportCSV(quarterTxns, `nith-transactions-Q${selectedQuarter}-${selectedYear}.csv`)} style={{ padding: '7px 14px', fontSize: 11, fontWeight: 600, background: 'rgba(27,42,74,0.06)', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, cursor: 'pointer', color: '#1B2A4A', whiteSpace: 'nowrap' }}>
+            <button onClick={() => exportCSV(quarterTxns, `nith-transactions-Q${selectedQuarter}-${selectedYear}.csv`)} style={{ padding: '7px 14px', fontSize: 11, fontWeight: 600, background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 6, cursor: 'pointer', color: '#1A1A1A', whiteSpace: 'nowrap' }}>
               Export CSV
             </button>
-            <button onClick={exportQuarterlySummaryCSV} style={{ padding: '7px 14px', fontSize: 11, fontWeight: 600, background: 'rgba(27,42,74,0.06)', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, cursor: 'pointer', color: '#1B2A4A', whiteSpace: 'nowrap' }}>
+            <button onClick={exportQuarterlySummaryCSV} style={{ padding: '7px 14px', fontSize: 11, fontWeight: 600, background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 6, cursor: 'pointer', color: '#1A1A1A', whiteSpace: 'nowrap' }}>
               Summary CSV
             </button>
           </div>
@@ -412,16 +412,16 @@ export default function ExpenseTrackerClient() {
             { label: 'Expenses', value: quarterExpenses, color: '#c0392b' },
             { label: 'Net profit', value: quarterNet, color: quarterNet >= 0 ? '#27ae60' : '#c0392b' },
           ].map(({ label, value, color }) => (
-            <div key={label} style={{ background: '#F5F0E6', borderRadius: 10, padding: '16px 20px' }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>{label}</div>
+            <div key={label} style={{ background: '#FAF8F5', borderRadius: 10, padding: '16px 20px' }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>{label}</div>
               <div style={{ fontSize: 22, fontWeight: 700, color }}>{formatCurrency(value)}</div>
             </div>
           ))}
         </div>
 
         {/* Year-to-date */}
-        <div style={{ borderTop: '1px solid rgba(27,42,74,0.08)', paddingTop: 16 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: '#5A6A7A', marginBottom: 8 }}>
+        <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)', paddingTop: 16 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: '#7A7A7A', marginBottom: 8 }}>
             Year-to-date ({selectedYear}/{String(selectedYear + 1).slice(-2)} tax year)
           </p>
           <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
@@ -433,8 +433,8 @@ export default function ExpenseTrackerClient() {
       </div>
 
       {/* Monthly bar chart */}
-      <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', marginBottom: 20, fontWeight: 400 }}>
+      <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', marginBottom: 20, fontWeight: 400 }}>
           Last 6 months
         </h2>
         <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end', height: 120 }}>
@@ -473,23 +473,23 @@ export default function ExpenseTrackerClient() {
           })}
         </div>
         <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#5A6A7A' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#7A7A7A' }}>
             <div style={{ width: 12, height: 12, background: 'rgba(39,174,96,0.7)', borderRadius: 2 }} /> Income
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#5A6A7A' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#7A7A7A' }}>
             <div style={{ width: 12, height: 12, background: 'rgba(192,57,43,0.65)', borderRadius: 2 }} /> Expenses
           </div>
         </div>
       </div>
 
       {/* Transaction list */}
-      <div style={{ background: '#fff', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
+      <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12, padding: '24px', marginBottom: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', margin: 0, fontWeight: 400 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', margin: 0, fontWeight: 400 }}>
             Transactions ({filtered.length})
           </h2>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            <button onClick={() => exportCSV(filtered, 'nith-transactions.csv')} style={{ padding: '7px 14px', fontSize: 11, fontWeight: 600, background: 'rgba(27,42,74,0.06)', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 6, cursor: 'pointer', color: '#1B2A4A' }}>
+            <button onClick={() => exportCSV(filtered, 'nith-transactions.csv')} style={{ padding: '7px 14px', fontSize: 11, fontWeight: 600, background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 6, cursor: 'pointer', color: '#1A1A1A' }}>
               Export all CSV
             </button>
           </div>
@@ -498,7 +498,7 @@ export default function ExpenseTrackerClient() {
         {/* Filters */}
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: 10, marginBottom: 16, alignItems: 'end' }} className="filter-grid">
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>Type</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>Type</label>
             <select value={filterType} onChange={e => setFilterType(e.target.value as FilterType)} style={{ ...inputStyle, width: 'auto' }}>
               <option value="all">All</option>
               <option value="income">Income</option>
@@ -506,27 +506,27 @@ export default function ExpenseTrackerClient() {
             </select>
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>Category</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>Category</label>
             <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)} style={inputStyle}>
               <option value="">All categories</option>
               {allCategories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>From</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>From</label>
             <input type="date" value={filterFrom} onChange={e => setFilterFrom(e.target.value)} style={{ ...inputStyle, width: 'auto' }} />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#5A6A7A', marginBottom: 4 }}>To</label>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#7A7A7A', marginBottom: 4 }}>To</label>
             <input type="date" value={filterTo} onChange={e => setFilterTo(e.target.value)} style={{ ...inputStyle, width: 'auto' }} />
           </div>
         </div>
 
         {/* Table */}
         {transactions.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '48px 24px', color: '#5A6A7A' }}>
+          <div style={{ textAlign: 'center', padding: '48px 24px', color: '#7A7A7A' }}>
             <div style={{ fontSize: 32, marginBottom: 12 }}>📊</div>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1B2A4A', fontWeight: 400, marginBottom: 8 }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#1A1A1A', fontWeight: 400, marginBottom: 8 }}>
               No transactions yet
             </h3>
             <p style={{ fontSize: 14, lineHeight: 1.7, maxWidth: 400, margin: '0 auto' }}>
@@ -534,32 +534,32 @@ export default function ExpenseTrackerClient() {
             </p>
           </div>
         ) : filtered.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '32px', color: '#5A6A7A', fontSize: 14 }}>
+          <div style={{ textAlign: 'center', padding: '32px', color: '#7A7A7A', fontSize: 14 }}>
             No transactions match your filters.
           </div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ borderBottom: '2px solid rgba(27,42,74,0.08)' }}>
+                <tr style={{ borderBottom: '2px solid rgba(0,0,0,0.08)' }}>
                   <th style={thStyle('date')} onClick={() => toggleSort('date')}>
                     Date {sortField === 'date' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
                   </th>
-                  <th style={{ padding: '10px 14px', fontSize: 11, fontWeight: 700, color: '#5A6A7A', textAlign: 'left' }}>Type</th>
+                  <th style={{ padding: '10px 14px', fontSize: 11, fontWeight: 700, color: '#7A7A7A', textAlign: 'left' }}>Type</th>
                   <th style={thStyle('category')} onClick={() => toggleSort('category')}>
                     Category {sortField === 'category' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
                   </th>
-                  <th style={{ padding: '10px 14px', fontSize: 11, fontWeight: 700, color: '#5A6A7A', textAlign: 'left' }}>Description</th>
+                  <th style={{ padding: '10px 14px', fontSize: 11, fontWeight: 700, color: '#7A7A7A', textAlign: 'left' }}>Description</th>
                   <th style={thStyle('amount')} onClick={() => toggleSort('amount')}>
                     Amount {sortField === 'amount' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
                   </th>
-                  <th style={{ padding: '10px 14px', fontSize: 11, fontWeight: 700, color: '#5A6A7A', textAlign: 'left' }}>Actions</th>
+                  <th style={{ padding: '10px 14px', fontSize: 11, fontWeight: 700, color: '#7A7A7A', textAlign: 'left' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map(txn => (
                   editingId === txn.id ? (
-                    <tr key={txn.id} style={{ background: 'rgba(212,168,75,0.06)', borderBottom: '1px solid rgba(27,42,74,0.06)' }}>
+                    <tr key={txn.id} style={{ background: 'rgba(232,93,58,0.06)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
                       <td style={{ padding: '8px 14px' }}>
                         <input type="date" value={editFields.date ?? txn.date} onChange={e => setEditFields(f => ({ ...f, date: e.target.value }))} style={{ ...inputStyle, fontSize: 12, padding: '5px 8px' }} />
                       </td>
@@ -583,20 +583,20 @@ export default function ExpenseTrackerClient() {
                       <td style={{ padding: '8px 14px' }}>
                         <div style={{ display: 'flex', gap: 6 }}>
                           <button onClick={saveEdit} style={{ padding: '4px 10px', fontSize: 11, fontWeight: 700, background: '#27ae60', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer' }}>Save</button>
-                          <button onClick={() => { setEditingId(null); setEditFields({}) }} style={{ padding: '4px 10px', fontSize: 11, background: 'none', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 4, cursor: 'pointer', color: '#5A6A7A' }}>Cancel</button>
+                          <button onClick={() => { setEditingId(null); setEditFields({}) }} style={{ padding: '4px 10px', fontSize: 11, background: 'none', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 4, cursor: 'pointer', color: '#7A7A7A' }}>Cancel</button>
                         </div>
                       </td>
                     </tr>
                   ) : (
-                    <tr key={txn.id} style={{ borderBottom: '1px solid rgba(27,42,74,0.06)', transition: 'background 0.1s' }}>
-                      <td style={{ padding: '10px 14px', fontSize: 13, color: '#5A6A7A' }}>{txn.date}</td>
+                    <tr key={txn.id} style={{ borderBottom: '1px solid rgba(0,0,0,0.06)', transition: 'background 0.1s' }}>
+                      <td style={{ padding: '10px 14px', fontSize: 13, color: '#7A7A7A' }}>{txn.date}</td>
                       <td style={{ padding: '10px 14px' }}>
                         <span style={{ padding: '3px 8px', borderRadius: 100, fontSize: 11, fontWeight: 600, background: txn.type === 'income' ? 'rgba(39,174,96,0.12)' : 'rgba(192,57,43,0.1)', color: txn.type === 'income' ? '#27ae60' : '#c0392b' }}>
                           {txn.type}
                         </span>
                       </td>
-                      <td style={{ padding: '10px 14px', fontSize: 13, color: '#1B2A4A' }}>{txn.category}</td>
-                      <td style={{ padding: '10px 14px', fontSize: 13, color: '#5A6A7A', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{txn.description || '—'}</td>
+                      <td style={{ padding: '10px 14px', fontSize: 13, color: '#1A1A1A' }}>{txn.category}</td>
+                      <td style={{ padding: '10px 14px', fontSize: 13, color: '#7A7A7A', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{txn.description || '—'}</td>
                       <td style={{ padding: '10px 14px', fontSize: 13, fontWeight: 700, color: txn.type === 'income' ? '#27ae60' : '#c0392b' }}>
                         {txn.type === 'income' ? '+' : '−'}{formatCurrency(txn.amount)}
                       </td>
@@ -605,11 +605,11 @@ export default function ExpenseTrackerClient() {
                           <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                             <span style={{ fontSize: 11, color: '#c0392b' }}>Delete?</span>
                             <button onClick={() => handleDelete(txn.id)} style={{ padding: '3px 8px', fontSize: 11, fontWeight: 700, background: '#c0392b', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer' }}>Yes</button>
-                            <button onClick={() => setDeleteConfirmId(null)} style={{ padding: '3px 8px', fontSize: 11, background: 'none', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 4, cursor: 'pointer', color: '#5A6A7A' }}>No</button>
+                            <button onClick={() => setDeleteConfirmId(null)} style={{ padding: '3px 8px', fontSize: 11, background: 'none', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 4, cursor: 'pointer', color: '#7A7A7A' }}>No</button>
                           </div>
                         ) : (
                           <div style={{ display: 'flex', gap: 6 }}>
-                            <button onClick={() => startEdit(txn)} style={{ padding: '4px 10px', fontSize: 11, background: 'rgba(27,42,74,0.06)', border: '1px solid rgba(27,42,74,0.15)', borderRadius: 4, cursor: 'pointer', color: '#1B2A4A' }}>Edit</button>
+                            <button onClick={() => startEdit(txn)} style={{ padding: '4px 10px', fontSize: 11, background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 4, cursor: 'pointer', color: '#1A1A1A' }}>Edit</button>
                             <button onClick={() => setDeleteConfirmId(txn.id)} style={{ padding: '4px 10px', fontSize: 11, background: 'none', border: '1px solid rgba(192,57,43,0.3)', borderRadius: 4, cursor: 'pointer', color: '#c0392b' }}>Delete</button>
                           </div>
                         )}
@@ -630,7 +630,7 @@ export default function ExpenseTrackerClient() {
             <div style={{ display: 'flex', gap: 10, justifyContent: 'center', alignItems: 'center' }}>
               <span style={{ fontSize: 13, color: '#c0392b' }}>Are you sure? This cannot be undone.</span>
               <button onClick={() => { setAndSave([]); setClearConfirm(false) }} style={{ padding: '7px 16px', fontSize: 12, fontWeight: 700, background: '#c0392b', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer' }}>Yes, clear all data</button>
-              <button onClick={() => setClearConfirm(false)} style={{ padding: '7px 16px', fontSize: 12, background: 'none', border: '1px solid rgba(27,42,74,0.2)', borderRadius: 6, cursor: 'pointer', color: '#5A6A7A' }}>Cancel</button>
+              <button onClick={() => setClearConfirm(false)} style={{ padding: '7px 16px', fontSize: 12, background: 'none', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 6, cursor: 'pointer', color: '#7A7A7A' }}>Cancel</button>
             </div>
           ) : (
             <button onClick={() => setClearConfirm(true)} style={{ fontSize: 12, color: '#9AA8B8', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
@@ -641,18 +641,18 @@ export default function ExpenseTrackerClient() {
       )}
 
       {/* CTA */}
-      <div style={{ background: '#1B2A4A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
-        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#F5F0E6', fontWeight: 400, marginBottom: 8 }}>
+      <div style={{ background: '#1A1A1A', borderRadius: 12, padding: '36px', textAlign: 'center', marginBottom: 24 }}>
+        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: '#FAF8F5', fontWeight: 400, marginBottom: 8 }}>
           Need a website that works as hard as you do?
         </h3>
-        <p style={{ fontSize: 14, color: 'rgba(245,240,230,0.65)', marginBottom: 24 }}>
+        <p style={{ fontSize: 14, color: 'rgba(250,248,245,0.65)', marginBottom: 24 }}>
           Nith Digital builds modern websites for small businesses across Dumfries & Galloway. Professional, affordable, and built to get you found.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+          <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
             Book a free call
           </Link>
-          <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(245,240,230,0.3)', color: '#F5F0E6', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+          <Link href="/services" style={{ display: 'inline-block', padding: '12px 28px', border: '2px solid rgba(250,248,245,0.3)', color: '#FAF8F5', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
             View our services
           </Link>
         </div>

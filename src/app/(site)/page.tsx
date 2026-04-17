@@ -30,9 +30,9 @@ const S: Record<string, React.CSSProperties> = {
   container: { maxWidth: 1080, margin: '0 auto', padding: '0 24px' },
   sectionSm: { padding: '48px 0' },
   sectionBar: {
-    background: '#F5F0E6',
+    background: '#FAF8F5',
     padding: '14px 24px',
-    borderBottom: '1px solid rgba(27,42,74,0.1)',
+    borderBottom: '1px solid rgba(0,0,0,0.1)',
   },
   sectionBarInner: {
     maxWidth: 1080,
@@ -40,14 +40,14 @@ const S: Record<string, React.CSSProperties> = {
     fontSize: 11,
     letterSpacing: 2,
     textTransform: 'uppercase' as const,
-    color: '#1B2A4A',
+    color: '#1A1A1A',
     fontWeight: 600,
   },
   btnPrimary: {
     display: 'inline-block',
     padding: '12px 28px',
-    background: '#D4A84B',
-    color: '#1B2A4A',
+    background: '#E85D3A',
+    color: '#1A1A1A',
     borderRadius: 100,
     fontSize: 13,
     fontWeight: 600,
@@ -59,11 +59,11 @@ const S: Record<string, React.CSSProperties> = {
     display: 'inline-block',
     padding: '12px 28px',
     background: 'transparent',
-    color: '#1B2A4A',
+    color: '#1A1A1A',
     borderRadius: 100,
     fontSize: 13,
     fontWeight: 500,
-    border: '1px solid rgba(27,42,74,0.1)',
+    border: '1px solid rgba(0,0,0,0.1)',
     transition: 'all 0.25s ease',
     cursor: 'pointer',
   },
@@ -91,7 +91,7 @@ export default async function HomePage() {
                   fontSize: 11,
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
-                  color: '#D4A84B',
+                  color: '#E85D3A',
                   marginBottom: 16,
                   fontWeight: 600,
                 }}
@@ -114,7 +114,7 @@ export default async function HomePage() {
                 style={{
                   fontSize: 16,
                   lineHeight: 1.7,
-                  color: '#5A6A7A',
+                  color: '#7A7A7A',
                   maxWidth: 520,
                   marginBottom: 28,
                 }}
@@ -133,10 +133,10 @@ export default async function HomePage() {
                 <Link href="/services" style={S.btnSecondary}>
                   View services &amp; pricing
                 </Link>
-                <Link href="/tools/website-quote" style={{ ...S.btnSecondary, color: '#D4A84B', borderColor: '#D4A84B' }}>
+                <Link href="/tools/website-quote" style={{ ...S.btnSecondary, color: '#E85D3A', borderColor: '#E85D3A' }}>
                   Get instant quote →
                 </Link>
-                <Link href="/os/demo" style={{ ...S.btnSecondary, color: '#5A6A7A', borderColor: 'rgba(27,42,74,0.1)' }}>
+                <Link href="/os/demo" style={{ ...S.btnSecondary, color: '#7A7A7A', borderColor: 'rgba(0,0,0,0.1)' }}>
                   See it in action →
                 </Link>
               </div>
@@ -158,7 +158,7 @@ export default async function HomePage() {
                   <div
                     key={m.label}
                     style={{
-                      background: '#1B2A4A',
+                      background: '#1A1A1A',
                       borderRadius: 8,
                       padding: 18,
                       textAlign: 'center',
@@ -168,7 +168,7 @@ export default async function HomePage() {
                       style={{
                         fontSize: 28,
                         fontWeight: 600,
-                        color: '#D4A84B',
+                        color: '#E85D3A',
                         lineHeight: 1,
                       }}
                     >
@@ -177,7 +177,7 @@ export default async function HomePage() {
                     <div
                       style={{
                         fontSize: 10,
-                        color: 'rgba(245,240,230,0.5)',
+                        color: 'rgba(250,248,245,0.5)',
                         marginTop: 4,
                       }}
                     >
@@ -208,8 +208,8 @@ export default async function HomePage() {
               style={{
                 fontSize: 11,
                 padding: '5px 14px',
-                background: '#F5F0E6',
-                color: '#1B2A4A',
+                background: '#FAF8F5',
+                color: '#1A1A1A',
                 borderRadius: 100,
                 fontWeight: 500,
               }}
@@ -259,13 +259,13 @@ export default async function HomePage() {
                 key={svc.title}
                 style={{
                   padding: 28,
-                  border: '1px solid rgba(27,42,74,0.1)',
-                  borderLeft: '3px solid #D4A84B',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderLeft: '3px solid #E85D3A',
                   borderRadius: '0 8px 8px 0',
                 }}
               >
                 <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>{svc.title}</h3>
-                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A' }}>{svc.desc}</p>
+                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A' }}>{svc.desc}</p>
               </div>
             ))}
           </div>
@@ -282,9 +282,9 @@ export default async function HomePage() {
                       fontSize: 10,
                       textTransform: 'uppercase',
                       letterSpacing: 1,
-                      color: '#5A6A7A',
+                      color: '#7A7A7A',
                       padding: '12px 16px',
-                      borderBottom: '2px solid #1B2A4A',
+                      borderBottom: '2px solid #1A1A1A',
                       fontWeight: 500,
                     }}
                   >
@@ -305,7 +305,7 @@ export default async function HomePage() {
                   <td
                     style={{
                       padding: 16,
-                      borderBottom: '1px solid rgba(27,42,74,0.1)',
+                      borderBottom: '1px solid rgba(0,0,0,0.1)',
                       fontSize: 14,
                       fontWeight: 600,
                     }}
@@ -315,9 +315,9 @@ export default async function HomePage() {
                   <td
                     style={{
                       padding: 16,
-                      borderBottom: '1px solid rgba(27,42,74,0.1)',
+                      borderBottom: '1px solid rgba(0,0,0,0.1)',
                       fontSize: 13,
-                      color: '#5A6A7A',
+                      color: '#7A7A7A',
                     }}
                   >
                     {row.desc}
@@ -325,15 +325,15 @@ export default async function HomePage() {
                   <td
                     style={{
                       padding: 16,
-                      borderBottom: '1px solid rgba(27,42,74,0.1)',
+                      borderBottom: '1px solid rgba(0,0,0,0.1)',
                       textAlign: 'right',
                     }}
                   >
                     <span
                       style={{
                         display: 'inline-block',
-                        background: '#F5F0E6',
-                        color: '#1B2A4A',
+                        background: '#FAF8F5',
+                        color: '#1A1A1A',
                         fontSize: 12,
                         padding: '4px 14px',
                         borderRadius: 100,
@@ -388,7 +388,7 @@ export default async function HomePage() {
               <div
                 key={w.title}
                 style={{
-                  background: '#F5F0E6',
+                  background: '#FAF8F5',
                   borderRadius: 12,
                   padding: 32,
                   transition: 'transform 0.25s ease',
@@ -403,16 +403,16 @@ export default async function HomePage() {
                     borderRadius: 100,
                     fontWeight: 600,
                     marginBottom: 14,
-                    background: w.live ? '#1B2A4A' : 'rgba(212,168,75,0.2)',
-                    color: w.live ? '#D4A84B' : '#8B6D2B',
+                    background: w.live ? '#1A1A1A' : 'rgba(232,93,58,0.2)',
+                    color: w.live ? '#E85D3A' : '#B8472A',
                   }}
                 >
                   {w.badge}
                 </span>
-                <h3 style={{ fontSize: 20, fontWeight: 600, marginBottom: 8, color: '#1B2A4A' }}>
+                <h3 style={{ fontSize: 20, fontWeight: 600, marginBottom: 8, color: '#1A1A1A' }}>
                   {w.title}
                 </h3>
-                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#2D4A7A', marginBottom: 16 }}>
+                <p style={{ fontSize: 13, lineHeight: 1.7, color: '#333333', marginBottom: 16 }}>
                   {w.desc}
                 </p>
                 <div
@@ -424,8 +424,8 @@ export default async function HomePage() {
                       style={{
                         fontSize: 10,
                         padding: '3px 10px',
-                        background: 'rgba(27,42,74,0.08)',
-                        color: '#1B2A4A',
+                        background: 'rgba(0,0,0,0.08)',
+                        color: '#1A1A1A',
                         borderRadius: 100,
                       }}
                     >
@@ -437,7 +437,7 @@ export default async function HomePage() {
                   href={w.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ fontSize: 12, color: '#D4A84B', fontWeight: 600 }}
+                  style={{ fontSize: 12, color: '#E85D3A', fontWeight: 600 }}
                 >
                   Visit site →
                 </a>
@@ -453,11 +453,11 @@ export default async function HomePage() {
           <div
             className="cta-banner"
             style={{
-              background: '#1B2A4A',
+              background: '#1A1A1A',
               borderRadius: 12,
               padding: '56px 48px',
               textAlign: 'center',
-              color: '#F5F0E6',
+              color: '#FAF8F5',
             }}
           >
             <h2
@@ -473,7 +473,7 @@ export default async function HomePage() {
             <p
               style={{
                 fontSize: 14,
-                color: 'rgba(245,240,230,0.6)',
+                color: 'rgba(250,248,245,0.6)',
                 marginBottom: 24,
                 maxWidth: 440,
                 marginLeft: 'auto',
@@ -519,7 +519,7 @@ export default async function HomePage() {
                     fontSize: 10,
                     letterSpacing: '1.5px',
                     textTransform: 'uppercase',
-                    color: '#5A6A7A',
+                    color: '#7A7A7A',
                     marginBottom: 10,
                     fontWeight: 500,
                   }}
@@ -533,9 +533,9 @@ export default async function HomePage() {
                       style={{
                         fontSize: 12,
                         padding: '5px 14px',
-                        border: '1px solid rgba(27,42,74,0.1)',
+                        border: '1px solid rgba(0,0,0,0.1)',
                         borderRadius: 100,
-                        color: '#5A6A7A',
+                        color: '#7A7A7A',
                       }}
                     >
                       {p}
@@ -560,7 +560,7 @@ export default async function HomePage() {
           .three-col-grid { grid-template-columns: 1fr !important; }
           .cta-banner { padding: 40px 24px !important; }
           .pricing-table thead { display: none; }
-          .pricing-table tbody tr { display: block; padding: 16px 0; border-bottom: 1px solid rgba(27,42,74,0.1); }
+          .pricing-table tbody tr { display: block; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
           .pricing-table tbody td { display: block; padding: 2px 0 !important; border-bottom: none !important; text-align: left !important; }
           .pricing-table tbody td:first-child { font-size: 15px !important; margin-bottom: 4px; }
           .pricing-table tbody td:last-child { margin-top: 8px; }

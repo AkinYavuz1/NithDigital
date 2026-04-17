@@ -46,21 +46,21 @@ export default function BundlePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       {/* Hero */}
-      <div style={{ background: '#1B2A4A', padding: '64px 24px', textAlign: 'center', color: '#F5F0E6' }}>
-        <div style={{ fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', color: '#D4A84B', marginBottom: 12, fontWeight: 600 }}>
+      <div style={{ background: '#1A1A1A', padding: '64px 24px', textAlign: 'center', color: '#FAF8F5' }}>
+        <div style={{ fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', color: '#E85D3A', marginBottom: 12, fontWeight: 600 }}>
           Complete the Launchpad to unlock
         </div>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 40, fontWeight: 400, marginBottom: 12 }}>
           The Startup Bundle
         </h1>
-        <p style={{ fontSize: 16, color: 'rgba(245,240,230,0.7)', maxWidth: 520, margin: '0 auto 32px' }}>
+        <p style={{ fontSize: 16, color: 'rgba(250,248,245,0.7)', maxWidth: 520, margin: '0 auto 32px' }}>
           Complete the Launchpad checklist and we&apos;ll build your website for free
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/launchpad/checklist" style={{ padding: '14px 36px', background: '#D4A84B', color: '#1B2A4A', borderRadius: 100, fontSize: 14, fontWeight: 600 }}>
+          <Link href="/launchpad/checklist" style={{ padding: '14px 36px', background: '#E85D3A', color: '#1A1A1A', borderRadius: 100, fontSize: 14, fontWeight: 600 }}>
             Start the checklist →
           </Link>
-          <Link href="/os/demo" style={{ padding: '14px 36px', background: 'transparent', color: '#F5F0E6', borderRadius: 100, fontSize: 14, fontWeight: 500, border: '1px solid rgba(245,240,230,0.3)' }}>
+          <Link href="/os/demo" style={{ padding: '14px 36px', background: 'transparent', color: '#FAF8F5', borderRadius: 100, fontSize: 14, fontWeight: 500, border: '1px solid rgba(250,248,245,0.3)' }}>
             Try the Business OS demo
           </Link>
         </div>
@@ -78,13 +78,13 @@ export default function BundlePage() {
               { n: '2', icon: '🎁', title: 'Receive your unique promo code', desc: 'On completing all 10 steps, you\'ll instantly receive a unique LAUNCH-XXXX-XXXX code.' },
               { n: '3', icon: '🌐', title: 'We build your website — £0 upfront', desc: 'Share your code and brief. We build your custom site. You just pay the monthly hosting.' },
             ].map((s) => (
-              <div key={s.n} style={{ textAlign: 'center', padding: '32px 24px', border: '1px solid rgba(27,42,74,0.1)', borderRadius: 12 }}>
+              <div key={s.n} style={{ textAlign: 'center', padding: '32px 24px', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 12 }}>
                 <div style={{ fontSize: 36, marginBottom: 12 }}>{s.icon}</div>
-                <div style={{ fontSize: 11, color: '#D4A84B', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>
+                <div style={{ fontSize: 11, color: '#E85D3A', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>
                   Step {s.n}
                 </div>
-                <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#1B2A4A' }}>{s.title}</h3>
-                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#5A6A7A' }}>{s.desc}</p>
+                <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: '#1A1A1A' }}>{s.title}</h3>
+                <p style={{ fontSize: 13, lineHeight: 1.6, color: '#7A7A7A' }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -98,7 +98,7 @@ export default function BundlePage() {
               <thead>
                 <tr>
                   {['', 'Months 1–12', 'Month 13+'].map((h) => (
-                    <th key={h} style={{ padding: '12px 16px', background: '#1B2A4A', color: '#F5F0E6', fontSize: 13, fontWeight: 600, textAlign: h ? 'center' : 'left' }}>
+                    <th key={h} style={{ padding: '12px 16px', background: '#1A1A1A', color: '#FAF8F5', fontSize: 13, fontWeight: 600, textAlign: h ? 'center' : 'left' }}>
                       {h}
                     </th>
                   ))}
@@ -109,16 +109,16 @@ export default function BundlePage() {
                   { label: 'Website hosting & support', m1: '£40/month', m2: '£30/month' },
                   { label: 'Business OS', m1: 'Month 1 free, then £4.99/mo', m2: '£4.99/month' },
                 ].map((row) => (
-                  <tr key={row.label} style={{ borderBottom: '1px solid rgba(27,42,74,0.08)' }}>
+                  <tr key={row.label} style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
                     <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 500 }}>{row.label}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, textAlign: 'center', color: '#5A6A7A' }}>{row.m1}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, textAlign: 'center', color: '#5A6A7A' }}>{row.m2}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, textAlign: 'center', color: '#7A7A7A' }}>{row.m1}</td>
+                    <td style={{ padding: '14px 16px', fontSize: 14, textAlign: 'center', color: '#7A7A7A' }}>{row.m2}</td>
                   </tr>
                 ))}
-                <tr style={{ background: '#1B2A4A' }}>
-                  <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 700, color: '#D4A84B' }}>Total</td>
-                  <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 700, color: '#F5F0E6', textAlign: 'center' }}>£40 → £44.99/month</td>
-                  <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 700, color: '#F5F0E6', textAlign: 'center' }}>£34.99/month</td>
+                <tr style={{ background: '#1A1A1A' }}>
+                  <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 700, color: '#E85D3A' }}>Total</td>
+                  <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 700, color: '#FAF8F5', textAlign: 'center' }}>£40 → £44.99/month</td>
+                  <td style={{ padding: '14px 16px', fontSize: 14, fontWeight: 700, color: '#FAF8F5', textAlign: 'center' }}>£34.99/month</td>
                 </tr>
               </tbody>
             </table>
@@ -139,8 +139,8 @@ export default function BundlePage() {
                   '12-month minimum commitment on website hosting',
                 ].map((item) => (
                   <li key={item} style={{ fontSize: 14, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                    <span style={{ color: '#D4A84B', flexShrink: 0, marginTop: 2 }}>✓</span>
-                    <span style={{ color: '#1B2A4A' }}>{item}</span>
+                    <span style={{ color: '#E85D3A', flexShrink: 0, marginTop: 2 }}>✓</span>
+                    <span style={{ color: '#1A1A1A' }}>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -155,7 +155,7 @@ export default function BundlePage() {
                 <thead>
                   <tr>
                     {['', 'Normal', 'Bundle', 'You save'].map((h) => (
-                      <th key={h} style={{ textAlign: h ? 'center' : 'left', padding: '8px 10px', background: '#F5F0E6', fontSize: 10, textTransform: 'uppercase', letterSpacing: 0.8, color: '#5A6A7A', fontWeight: 500 }}>
+                      <th key={h} style={{ textAlign: h ? 'center' : 'left', padding: '8px 10px', background: '#FAF8F5', fontSize: 10, textTransform: 'uppercase', letterSpacing: 0.8, color: '#7A7A7A', fontWeight: 500 }}>
                         {h}
                       </th>
                     ))}
@@ -167,18 +167,18 @@ export default function BundlePage() {
                     { label: 'Year 1 hosting', normal: '£480', bundle: '£480', save: '£0' },
                     { label: 'Year 1 Business OS', normal: '£59.88', bundle: '£54.89', save: '£4.99' },
                   ].map((row) => (
-                    <tr key={row.label} style={{ borderBottom: '1px solid rgba(27,42,74,0.06)' }}>
+                    <tr key={row.label} style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
                       <td style={{ padding: '10px', fontWeight: 500 }}>{row.label}</td>
-                      <td style={{ padding: '10px', textAlign: 'center', color: '#5A6A7A' }}>{row.normal}</td>
-                      <td style={{ padding: '10px', textAlign: 'center', color: '#5A6A7A' }}>{row.bundle}</td>
-                      <td style={{ padding: '10px', textAlign: 'center', color: '#D4A84B', fontWeight: 600 }}>{row.save}</td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#7A7A7A' }}>{row.normal}</td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#7A7A7A' }}>{row.bundle}</td>
+                      <td style={{ padding: '10px', textAlign: 'center', color: '#E85D3A', fontWeight: 600 }}>{row.save}</td>
                     </tr>
                   ))}
-                  <tr style={{ background: '#1B2A4A' }}>
-                    <td style={{ padding: '10px', fontWeight: 700, color: '#D4A84B' }}>Year 1 total</td>
-                    <td style={{ padding: '10px', textAlign: 'center', color: '#F5F0E6', fontWeight: 600 }}>£1,039.88</td>
-                    <td style={{ padding: '10px', textAlign: 'center', color: '#F5F0E6', fontWeight: 600 }}>£534.89</td>
-                    <td style={{ padding: '10px', textAlign: 'center', color: '#D4A84B', fontWeight: 700 }}>£505</td>
+                  <tr style={{ background: '#1A1A1A' }}>
+                    <td style={{ padding: '10px', fontWeight: 700, color: '#E85D3A' }}>Year 1 total</td>
+                    <td style={{ padding: '10px', textAlign: 'center', color: '#FAF8F5', fontWeight: 600 }}>£1,039.88</td>
+                    <td style={{ padding: '10px', textAlign: 'center', color: '#FAF8F5', fontWeight: 600 }}>£534.89</td>
+                    <td style={{ padding: '10px', textAlign: 'center', color: '#E85D3A', fontWeight: 700 }}>£505</td>
                   </tr>
                 </tbody>
               </table>
@@ -190,7 +190,7 @@ export default function BundlePage() {
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 400, textAlign: 'center', marginBottom: 8 }}>
               Redeem your code
             </h2>
-            <p style={{ fontSize: 13, color: '#5A6A7A', textAlign: 'center', marginBottom: 24 }}>
+            <p style={{ fontSize: 13, color: '#7A7A7A', textAlign: 'center', marginBottom: 24 }}>
               Have a LAUNCH-XXXX-XXXX code? Enter it below to claim your Startup Bundle.
             </p>
             <BundleRedeemForm />
