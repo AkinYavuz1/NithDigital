@@ -169,6 +169,12 @@
   .work-card-link:hover{gap:8px}
   .work-card-desc{font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.55}
 
+  /* ══════════════════ SCROLL HIGHLIGHT ══════════════════ */
+  .scroll-highlight{color:var(--text-muted);transition:color 0.3s}
+  .scroll-highlight .sh-word{display:inline-block;transition:color 0.4s var(--ease);color:rgba(26,26,26,0.2)}
+  .scroll-highlight .sh-word.lit{color:var(--text)}
+  .scroll-highlight .sh-word.lit-accent{color:var(--accent);font-weight:600}
+
   /* ══════════════════ CLIP-PATH IMAGE REVEAL ══════════════════ */
   .clip-reveal{clip-path:inset(10% 10% 10% 10%);transition:clip-path 1.2s cubic-bezier(0.33,1,0.68,1)}
   .clip-reveal.revealed{clip-path:inset(0% 0% 0% 0%)}
@@ -461,7 +467,7 @@
 
 <!-- ══════════ INTRO ══════════ -->
 <section class="intro-section section">
-  <p class="intro-text anim">Websites that look like they cost thousands. <span class="highlight">Built in a week. Priced for real businesses.</span></p>
+  <p class="intro-text scroll-highlight" data-accent="Built in a week. Priced for real businesses.">Websites that look like they cost thousands. Built in a week. Priced for real businesses.</p>
 </section>
 
 <!-- ══════════ HOW IT WORKS ══════════ -->
@@ -626,7 +632,7 @@
 
 <!-- ══════════ TRUST ══════════ -->
 <section class="trust-section section">
-  <p class="trust-text text-reveal">10 years building software for the NHS, energy, and finance. <em>Now one call away in Dumfries &amp; Galloway.</em></p>
+  <p class="trust-text scroll-highlight" data-accent="Now one call away in Dumfries & Galloway.">10 years building software for the NHS, energy, and finance. Now one call away in Dumfries &amp; Galloway.</p>
 </section>
 
 
@@ -1030,6 +1036,60 @@
       document.querySelectorAll('.service-item').forEach(function(i) { i.classList.remove('active'); });
       if (!wasActive) item.classList.add('active');
     });
+  });
+
+  /* ══════════════════════════════════════════════════════
+     SCROLL HIGHLIGHT — words light up as you scroll
+     ══════════════════════════════════════════════════════ */
+  document.querySelectorAll('.scroll-highlight').forEach(function(el) {
+    var text = el.textContent.trim();
+    var accentPhrase = (el.getAttribute('data-accent') || '').trim();
+    var words = text.split(/\s+/);
+
+    // Figure out which words are in the accent phrase
+    var accentWords = accentPhrase ? accentPhrase.split(/\s+/) : [];
+    var accentStart = -1;
+    if (accentWords.length) {
+      for (var i = 0; i <= words.length - accentWords.length; i++) {
+        var match = true;
+        for (var j = 0; j < accentWords.length; j++) {
+          if (words[i + j].replace(/[.,;:!?]/g, '') !== accentWords[j].replace(/[.,;:!?]/g, '')) { match = false; break; }
+        }
+        if (match) { accentStart = i; break; }
+      }
+    }
+
+    el.innerHTML = words.map(function(w, idx) {
+      var isAccent = accentStart >= 0 && idx >= accentStart && idx < accentStart + accentWords.length;
+      return '<span class="sh-word" data-accent="' + (isAccent ? '1' : '0') + '">' + w + ' </span>';
+    }).join('');
+
+    var wordEls = el.querySelectorAll('.sh-word');
+
+    function updateHighlight() {
+      var rect = el.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var progress = 1 - (rect.top - vh * 0.3) / (vh * 0.5);
+      progress = Math.max(0, Math.min(1, progress));
+      var litCount = Math.floor(progress * wordEls.length);
+
+      wordEls.forEach(function(w, i) {
+        if (i < litCount) {
+          w.classList.add(w.getAttribute('data-accent') === '1' ? 'lit-accent' : 'lit');
+        } else {
+          w.classList.remove('lit', 'lit-accent');
+        }
+      });
+    }
+
+    if (!reducedMotion) {
+      window.addEventListener('scroll', updateHighlight, { passive: true });
+      updateHighlight();
+    } else {
+      wordEls.forEach(function(w) {
+        w.classList.add(w.getAttribute('data-accent') === '1' ? 'lit-accent' : 'lit');
+      });
+    }
   });
 
   /* ══════════════════════════════════════════════════════
