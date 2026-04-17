@@ -164,9 +164,8 @@
   .work-card-info{padding:20px 24px}
   .work-card-header{display:flex;justify-content:space-between;align-items:center}
   .work-card-name{font-size:1.1rem;font-weight:600;letter-spacing:-0.01em}
-  .work-card-status{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:4px 10px;border-radius:50px}
-  .status-live{background:rgba(232,93,58,0.1);color:var(--accent)}
-  .status-dev{background:rgba(45,127,249,0.1);color:var(--accent2)}
+  .work-card-link{font-size:0.8rem;font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:gap 0.3s var(--ease)}
+  .work-card-link:hover{gap:8px}
   .work-card-desc{font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.55}
 
   /* ══════════════════ CLIP-PATH IMAGE REVEAL ══════════════════ */
@@ -509,7 +508,7 @@
       <div class="work-card-info">
         <div class="work-card-header">
           <span class="work-card-name">DG Directory</span>
-          <span class="work-card-status status-live">Live</span>
+          <a href="https://www.dgdirectory.com" class="work-card-link" target="_blank">Visit site &rarr;</a>
         </div>
         <p class="work-card-desc">Local business directory — Dumfries &amp; Galloway</p>
       </div>
@@ -528,7 +527,7 @@
       <div class="work-card-info">
         <div class="work-card-header">
           <span class="work-card-name">gAIns</span>
-          <span class="work-card-status status-dev">In development</span>
+          <a href="https://www.gainsai.uk" class="work-card-link" target="_blank">Visit site &rarr;</a>
         </div>
         <p class="work-card-desc">AI gym tracker with built-in coach</p>
       </div>
@@ -547,7 +546,7 @@
       <div class="work-card-info">
         <div class="work-card-header">
           <span class="work-card-name">Daily Duel</span>
-          <span class="work-card-status status-live">Live</span>
+          <a href="https://www.dailyduel.uk" class="work-card-link" target="_blank">Visit site &rarr;</a>
         </div>
         <p class="work-card-desc">30 daily mini-games with leaderboards</p>
       </div>
@@ -564,7 +563,7 @@
       <div class="work-card-info">
         <div class="work-card-header">
           <span class="work-card-name">Not an Octavia</span>
-          <span class="work-card-status status-live">Live</span>
+          <a href="https://www.not-an-octavia.uk" class="work-card-link" target="_blank">Visit site &rarr;</a>
         </div>
         <p class="work-card-desc">ML-powered used car deals finder</p>
       </div>
