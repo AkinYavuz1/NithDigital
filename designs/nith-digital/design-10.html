@@ -97,6 +97,17 @@
   .nav-cta{padding:10px 24px;border-radius:50px;font-size:0.85rem;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;transition:all 0.4s var(--ease);box-shadow:0 4px 20px rgba(232,93,58,0.3)}
   .nav-cta:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.4)}
 
+  /* ── Location badge + map dropdown ── */
+  .nav-location{position:relative;display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:500;color:var(--text-muted);cursor:default;padding:6px 0}
+  .nav-location-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  .nav-location-text{white-space:nowrap}
+  .nav-map-dropdown{position:absolute;top:calc(100% + 12px);right:0;width:360px;background:var(--surface);border-radius:var(--radius);box-shadow:0 12px 48px rgba(0,0,0,0.12);overflow:hidden;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity 0.4s var(--ease),transform 0.4s var(--ease),visibility 0.4s;z-index:200;pointer-events:none}
+  .nav-location:hover .nav-map-dropdown{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+  .nav-map-dropdown iframe{width:100%;height:220px;border:none;display:block}
+  .nav-map-info{padding:16px 20px}
+  .nav-map-info-title{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:4px}
+  .nav-map-info-sub{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+
   /* ── Section base ── */
   .section{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad)}
 
@@ -300,6 +311,7 @@
     .nav-links{gap:16px}
     .nav-links a{font-size:0.8rem}
     .nav-cta{padding:8px 18px;font-size:0.8rem}
+    .nav-location{display:none}
 
     /* Layout */
     .section{padding:0 20px}
@@ -409,6 +421,19 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
+    <li>
+      <div class="nav-location">
+        <span class="nav-location-dot"></span>
+        <span class="nav-location-text">Dumfries &amp; Galloway</span>
+        <div class="nav-map-dropdown">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2250!2d-3.9226708!3d55.3802589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1713350000000" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="nav-map-info">
+            <div class="nav-map-info-title">Sanquhar, Dumfries &amp; Galloway</div>
+            <div class="nav-map-info-sub">Scotland, DG4</div>
+          </div>
+        </div>
+      </div>
+    </li>
     <li><a href="#contact" class="nav-cta">Contact us</a></li>
   </ul>
 </nav>
