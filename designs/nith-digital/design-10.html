@@ -297,88 +297,89 @@
 
 
 
-    /* Navbar — hamburger hidden, just logo + CTA on mobile */
-    .navbar{padding:14px 20px;gap:12px}
-    .navbar.scrolled{padding:10px 20px}
-    .nav-logo{font-size:1rem;white-space:nowrap;flex-shrink:0}
-    .nav-links{gap:0;flex-wrap:nowrap;overflow:hidden}
-    .nav-links li{display:none}
-    .nav-links li:last-child{display:block}
-    .nav-cta{padding:8px 16px;font-size:0.8rem;white-space:nowrap}
+    /* Navbar — all links visible, tighter spacing */
+    .navbar{padding:12px 16px;gap:8px}
+    .navbar.scrolled{padding:10px 16px}
+    .nav-logo{font-size:0.95rem;white-space:nowrap;flex-shrink:0}
+    .nav-links{gap:10px;flex-wrap:nowrap}
+    .nav-links a{font-size:0.7rem}
+    .nav-links a::after{display:none}
+    .nav-cta{padding:6px 12px;font-size:0.7rem;white-space:nowrap}
 
-    /* Layout — consistent margins */
-    .section{padding:0 20px}
+    /* Layout — 16px margins on all content */
+    .section{padding:0 16px}
+    .work-wrap{padding:0 16px}
 
     /* Hero */
-    .hero{padding:90px 20px 50px;min-height:auto}
-    .hero-headline{font-size:clamp(1.5rem,6.5vw,2.2rem);min-height:2.8em;line-height:1.15;letter-spacing:-0.02em}
-    .hero-sub{font-size:0.95rem;max-width:100%;margin-bottom:24px}
-    .hero-ctas{flex-direction:column;gap:12px}
+    .hero{padding:80px 16px 40px;min-height:auto}
+    .hero-headline{font-size:clamp(1.4rem,6vw,2rem);min-height:2.8em;line-height:1.15;letter-spacing:-0.02em}
+    .hero-sub{font-size:0.9rem;max-width:100%;margin-bottom:20px}
+    .hero-ctas{flex-direction:column;gap:10px}
     .hero-ctas a{text-align:center;justify-content:center;width:100%}
 
     /* Intro */
-    .intro-section{padding:40px 0 60px}
-    .intro-text{font-size:0.95rem;text-align:left}
+    .intro-section{padding:32px 0 48px}
+    .intro-text{font-size:0.9rem;text-align:left}
 
     /* How it works */
-    .how-section{padding:40px 0 60px}
-    .steps-grid{grid-template-columns:1fr;gap:16px;margin-top:24px}
-    .step-card{padding:20px;margin:0}
-    .step-num{font-size:1.8rem}
+    .how-section{padding:32px 0 48px}
+    .steps-grid{grid-template-columns:1fr;gap:12px;margin-top:20px}
+    .step-card{padding:20px}
+    .step-num{font-size:1.6rem}
 
     /* Work */
-    .work-section{padding:40px 0 60px}
-    .work-grid{grid-template-columns:1fr;gap:16px}
-    .work-card{margin:0}
+    .work-section{padding:32px 0 48px}
+    .work-grid{grid-template-columns:1fr;gap:12px}
     .work-card-video{aspect-ratio:16/10}
     .parallax-img{position:relative!important;height:100%!important}
     .work-card-overlay{opacity:1}
     .work-card-overlay .overlay-desc{max-height:80px}
 
     /* Pricing */
-    .pricing-section{padding:40px 0 60px}
-    .pricing-grid{grid-template-columns:1fr;gap:16px;margin-top:24px;max-width:100%}
-    .pricing-card{padding:24px 20px;margin:0}
-    .pricing-price{font-size:1.8rem}
+    .pricing-section{padding:32px 0 48px}
+    .pricing-grid{grid-template-columns:1fr;gap:12px;margin-top:20px;max-width:100%}
+    .pricing-card{padding:24px 20px}
+    .pricing-price{font-size:1.6rem}
 
     /* Services — collapsed by default on mobile */
-    .services-section{padding:40px 0 60px}
-    .service-item{grid-template-columns:32px 1fr;gap:10px;padding:20px 0}
+    .services-section{padding:32px 0 48px}
+    .service-item{grid-template-columns:28px 1fr;gap:8px;padding:18px 0}
     .service-desc{grid-column:1/-1;max-height:0;opacity:0}
     .service-item.active .service-desc{max-height:200px;opacity:1}
+    .service-name{font-size:1rem}
 
     /* Trust */
-    .trust-section{padding:40px 0 60px;text-align:left}
-    .trust-text{font-size:0.95rem;line-height:1.7}
+    .trust-section{padding:32px 0 48px;text-align:left}
+    .trust-text{font-size:0.9rem;line-height:1.7}
 
     /* Built with */
-    .tech-section{padding:40px 0 60px}
-    .tech-grid{grid-template-columns:repeat(3,1fr);gap:12px;margin:0}
-    .tech-item{padding:16px 8px;margin:0}
-    .tech-name{font-size:0.8rem}
-    .tech-desc{font-size:0.65rem}
-    .tech-logo svg{width:28px;height:28px}
-    .tech-logo{height:36px;margin-bottom:10px}
+    .tech-section{padding:32px 0 48px}
+    .tech-grid{grid-template-columns:repeat(3,1fr);gap:10px}
+    .tech-item{padding:14px 6px}
+    .tech-name{font-size:0.75rem}
+    .tech-desc{font-size:0.6rem}
+    .tech-logo svg{width:24px;height:24px}
+    .tech-logo{height:32px;margin-bottom:8px}
 
     /* Contact form */
-    .contact-section{padding:40px 0 60px}
-    .contact-sub{font-size:0.9rem;margin-bottom:24px}
-    .contact-form{padding:24px 16px}
-    .form-row{grid-template-columns:1fr;gap:24px}
-    .service-pills{gap:8px}
-    .service-pill{padding:8px 16px;font-size:0.8rem}
+    .contact-section{padding:32px 0 48px}
+    .contact-sub{font-size:0.85rem;margin-bottom:20px}
+    .contact-form{padding:20px 16px}
+    .form-row{grid-template-columns:1fr;gap:20px}
+    .service-pills{gap:6px}
+    .service-pill{padding:7px 14px;font-size:0.75rem}
     .form-bottom{flex-direction:column;align-items:stretch;gap:12px}
     .form-submit{width:100%;justify-content:center}
 
     /* Map */
-    .map-wrap{height:300px;margin-top:24px;border-radius:12px}
+    .map-wrap{height:280px;margin-top:20px;border-radius:10px}
 
     /* Footer */
-    .footer{flex-direction:column;gap:20px;padding:32px 20px 48px}
+    .footer{flex-direction:column;gap:16px;padding:28px 16px 40px}
 
     /* Section labels */
-    .section-num{font-size:clamp(2rem,10vw,4rem)}
-    .section-label{flex-direction:column;gap:4px;margin-bottom:24px}
+    .section-num{font-size:clamp(1.8rem,8vw,3.5rem)}
+    .section-label{flex-direction:column;gap:4px;margin-bottom:20px}
 
     /* Lava blobs — smaller on mobile */
     .lava-blob{filter:blur(60px)!important}
