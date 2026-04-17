@@ -97,9 +97,8 @@
   .nav-cta{padding:10px 24px;border-radius:50px;font-size:0.85rem;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;transition:all 0.4s var(--ease);box-shadow:0 4px 20px rgba(232,93,58,0.3)}
   .nav-cta:hover{background:var(--accent-hover);transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,93,58,0.4)}
 
-  /* ── Full-width map ── */
-  .map-section{max-width:var(--max-w);margin:0 auto;padding:0 var(--pad) 120px;position:relative}
-  .map-wrap{width:100%;height:400px;position:relative;overflow:hidden;border-radius:var(--radius)}
+  /* ── Map ── */
+  .map-wrap{width:100%;height:400px;position:relative;overflow:hidden;border-radius:var(--radius);margin-top:32px}
   .map-wrap iframe{width:calc(100% + 2px);height:calc(100% + 80px);border:none;display:block;position:absolute;top:0;left:-1px;filter:grayscale(80%) sepia(30%) contrast(0.9)}
 
   /* ── Section base ── */
@@ -659,14 +658,11 @@
       <p class="form-privacy">By sending, you agree to our <a href="/privacy">privacy policy</a>.</p>
     </div>
   </form>
-</section>
 
-<!-- ══════════ MAP ══════════ -->
-<div class="map-section">
   <div class="map-wrap">
     <iframe src="https://maps.google.com/maps?q=55.3802589,-3.9226708&z=9&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
-</div>
+</section>
 
 <!-- ══════════ FOOTER ══════════ -->
 <footer class="footer">
