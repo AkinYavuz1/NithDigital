@@ -1,15 +1,18 @@
-# TradeDesk — Product Research & Strategy
+# OffTools — Product Research & Strategy
 
 > **Last updated:** 2026-04-18
-> **Purpose:** Reference document for all Claude instances working on TradeDesk features
+> **Purpose:** Reference document for all Claude instances working on OffTools features
 
 ---
 
-## What is TradeDesk?
+## What is OffTools?
 
 A WhatsApp-first business management tool for sole traders and tradespeople in the UK. One subscription, one WhatsApp conversation, four core features. The target customer is a plumber, joiner, electrician, or builder who runs their business from their phone and hates admin.
 
-**Current state:** TradeDesk Expenses is live — WhatsApp expense tracking via Twilio webhook at `/api/tradedesk/webhook`. Users send photos of receipts, the system extracts data via Claude Vision, and logs expenses to Supabase.
+**Brand:** OffTools (offtools.co.uk — domain pending purchase)
+**Previous name:** TradeDesk — all existing codebase paths, database tables, and routes still use `tradedesk` naming. Rebrand of code is a future task.
+
+**Current state:** OffTools Expenses is live — WhatsApp expense tracking via Twilio webhook at `/api/tradedesk/webhook`. Users send photos of receipts, the system extracts data via Claude Vision, and logs expenses to Supabase.
 
 **Infrastructure already built:**
 - Twilio WhatsApp webhook (`/api/tradedesk/webhook`)
@@ -17,6 +20,7 @@ A WhatsApp-first business management tool for sole traders and tradespeople in t
 - State machine via `tradedesk_users.pending_action` + `pending_expense_id`
 - Flows: expense extraction (invoice OCR via Claude Vision), portfolio photos, Q&A (Groq), onboarding
 - Public pages at `/tradedesk`, `/tradedesk/[userId]/expenses`, `/tradedesk/[userId]/portfolio`
+- **Note:** All `tradedesk` references in code/DB are legacy naming — product is now OffTools
 
 ---
 
@@ -30,7 +34,7 @@ A WhatsApp-first business management tool for sole traders and tradespeople in t
 
 ---
 
-## Feature 1: TradeDesk Expenses (LIVE)
+## Feature 1: OffTools Expenses (LIVE)
 
 **Status:** Built and working
 
@@ -53,7 +57,7 @@ A WhatsApp-first business management tool for sole traders and tradespeople in t
 
 ---
 
-## Feature 2: TradeDesk Tax (MTD Quarterly Submissions)
+## Feature 2: OffTools Tax (MTD Quarterly Submissions)
 
 **Status:** Not started — this is the big opportunity
 
@@ -175,22 +179,22 @@ Minimum functionality for "in-year" bridging software:
 - Quarterly update submission
 - Tax liability visibility
 
-### TradeDesk Tax — How It Would Work
+### OffTools Tax — How It Would Work
 
 1. User logs expenses all quarter via WhatsApp (Feature 1 — already built)
 2. User also logs income via WhatsApp ("Invoice paid £500 from ABC Plumbing")
-3. At quarter end, TradeDesk auto-aggregates totals by HMRC category
+3. At quarter end, OffTools auto-aggregates totals by HMRC category
 4. User gets WhatsApp message: "Q1 ready to submit. Income: £15,000. Expenses: £5,000. Tap here to review and submit."
 5. User taps link → simple web page showing summary
 6. First time: OAuth redirect to Government Gateway, user signs in and grants access
 7. User taps "Submit to HMRC"
-8. TradeDesk sends PUT request with quarterly totals
+8. OffTools sends PUT request with quarterly totals
 9. Confirmation WhatsApp: "Q1 submitted to HMRC. Next deadline: 5 November."
 
 ### What We Need to Build
 
 - [ ] Income tracking in WhatsApp flow ("I got paid £500")
-- [ ] Category mapping: TradeDesk categories → HMRC's 15 categories
+- [ ] Category mapping: OffTools categories → HMRC's 15 categories
 - [ ] Quarterly aggregation logic (running year-to-date totals for cumulative endpoint)
 - [ ] HMRC OAuth2 integration (Government Gateway sign-in)
 - [ ] Fraud prevention header collection (client-side JS → server)
@@ -215,7 +219,7 @@ Minimum functionality for "in-year" bridging software:
 
 ---
 
-## Feature 3: TradeDesk Calls (Missed Call Recovery)
+## Feature 3: OffTools Calls (Missed Call Recovery)
 
 **Status:** Not started
 
@@ -262,7 +266,7 @@ Minimum functionality for "in-year" bridging software:
 
 ---
 
-## Feature 4: TradeDesk Reviews (Post-Job Review Collection + Referrals)
+## Feature 4: OffTools Reviews (Post-Job Review Collection + Referrals)
 
 **Status:** Not started
 
@@ -277,7 +281,7 @@ Minimum functionality for "in-year" bridging software:
 ### How It Would Work
 
 1. Tradesperson completes a job → sends WhatsApp: "Job done for John Smith"
-2. TradeDesk sends automated WhatsApp to the customer (from tradesperson's number):
+2. OffTools sends automated WhatsApp to the customer (from tradesperson's number):
    "Thanks for choosing [Business Name]! If you're happy with the work, a Google review would mean a lot: [link]"
 3. Timed follow-up if no review after 48 hours (gentle reminder)
 4. When customer leaves a 5-star review → auto-sends referral offer:
@@ -348,27 +352,27 @@ New states needed:
 
 ## Go-To-Market Strategy
 
-### Phase 1: TradeDesk Tax (Q2 2026)
+### Phase 1: OffTools Tax (Q2 2026)
 - Build MTD integration
-- Target: existing TradeDesk Expenses users first
+- Target: existing OffTools Expenses users first
 - Pricing: £19/month (expenses + tax)
 - Marketing: "The only MTD software that works from WhatsApp"
 - Get listed on HMRC Software Choices page (free credibility)
 
-### Phase 2: TradeDesk Calls (Q3 2026)
+### Phase 2: OffTools Calls (Q3 2026)
 - Build missed call recovery
 - Target: all tradespeople (not just existing users)
 - Pricing: included in £39/month Pro tier
 - Marketing: "Never lose a job to a missed call again"
 
-### Phase 3: TradeDesk Reviews (Q4 2026)
+### Phase 3: OffTools Reviews (Q4 2026)
 - Build review collection + referrals
-- Target: existing TradeDesk users (upsell)
+- Target: existing OffTools users (upsell)
 - Pricing: included in £39/month Pro tier
 - Marketing: "Get more 5-star reviews on autopilot"
 
 ### Distribution Channels
-- Every Nith Digital website client becomes a TradeDesk user (natural upsell)
+- Every Nith Digital website client becomes a OffTools user (natural upsell)
 - Google Ads targeting "MTD software sole trader", "making tax digital help"
 - Content marketing: blog posts on MTD deadlines, CIS requirements
 - WhatsApp word-of-mouth (tradespeople talk to each other)
@@ -386,7 +390,7 @@ New states needed:
 | QuickBooks | £12-35/month | Yes | No | No |
 | FreeAgent | £14-34/month | Yes | No | No |
 | Nule | TBC (pre-launch) | Yes | No | Partial |
-| **TradeDesk** | **£19/month** | **Yes** | **Yes** | **Yes** |
+| **OffTools** | **£19/month** | **Yes** | **Yes** | **Yes** |
 
 ### AI Call Answering (Feature 3 competitors)
 
@@ -395,7 +399,7 @@ New states needed:
 | Trillet | £49/month | Partial | No | Partial |
 | AgentZap | $49/month | No | No | No |
 | Fonio | $39/month | No | No | No |
-| **TradeDesk** | **£39/month (bundled)** | **Yes** | **Yes** | **Yes** |
+| **OffTools** | **£39/month (bundled)** | **Yes** | **Yes** | **Yes** |
 
 ### Review Management (Feature 4 competitors)
 
@@ -403,7 +407,7 @@ New states needed:
 |---------|-------|----------|----------------|
 | Opineko | £29/month | No | No |
 | Birdeye | £200+/month | No | No |
-| **TradeDesk** | **£39/month (bundled)** | **Yes** | **Yes** |
+| **OffTools** | **£39/month (bundled)** | **Yes** | **Yes** |
 
 ---
 
