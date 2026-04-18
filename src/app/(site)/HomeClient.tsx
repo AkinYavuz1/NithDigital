@@ -101,12 +101,12 @@ function useScrollSelect(elRef: React.RefObject<HTMLElement | null>) {
 
     function update() {
       if (!hasScrolled) {
-        if (Math.abs(window.scrollY - initialY) > 30) hasScrolled = true
+        if (Math.abs(window.scrollY - initialY) > 150) hasScrolled = true
         else return
       }
       const rect = el!.getBoundingClientRect()
       const vh = window.innerHeight
-      let progress = 1 - (rect.top - vh * 0.5) / (vh * 0.4)
+      let progress = 1 - (rect.top - vh * 0.15) / (vh * 0.5)
       progress = Math.max(0, Math.min(1, progress))
       const count = Math.floor(progress * chars.length)
       chars.forEach((ch, i) => {
