@@ -96,24 +96,56 @@ function useScrollSelect(elRef: React.RefObject<HTMLElement | null>) {
 
     const chars = el.querySelectorAll('.ss-char')
 
-    let hasScrolled = false
+    let started = false
+    let animating = false
+    let litCount = 0
     const initialY = window.scrollY
 
-    function update() {
-      if (!hasScrolled) {
-        if (Math.abs(window.scrollY - initialY) > 150) hasScrolled = true
-        else return
-      }
-      const rect = el!.getBoundingClientRect()
-      const vh = window.innerHeight
-      let progress = 1 - (rect.top - vh * 0.15) / (vh * 0.5)
-      progress = Math.max(0, Math.min(1, progress))
-      const count = Math.floor(progress * chars.length)
+    function render() {
       chars.forEach((ch, i) => {
         const c = ch as HTMLElement
-        if (i < count) { c.style.background = '#E85D3A'; c.style.color = '#fff' }
+        if (i < litCount) { c.style.background = '#E85D3A'; c.style.color = '#fff' }
         else { c.style.background = ''; c.style.color = '' }
       })
+    }
+
+    function autoComplete() {
+      if (litCount >= chars.length) { animating = false; return }
+      litCount++
+      render()
+      setTimeout(autoComplete, 20)
+    }
+
+    function update() {
+      const rect = el!.getBoundingClientRect()
+      const vh = window.innerHeight
+
+      // Reset if scrolled past (off screen above)
+      if (rect.bottom < 0) {
+        started = false
+        animating = false
+        litCount = 0
+        render()
+        return
+      }
+
+      // Reset if scrolled back up (element below viewport)
+      if (rect.top > vh) {
+        started = false
+        animating = false
+        litCount = 0
+        render()
+        return
+      }
+
+      // Don't start until user has scrolled 150px
+      if (!started && Math.abs(window.scrollY - initialY) < 150) return
+
+      // Start auto-complete when element enters lower half of viewport
+      if (!started && rect.top < vh * 0.75) {
+        started = true
+        if (!animating) { animating = true; autoComplete() }
+      }
     }
 
     window.addEventListener('scroll', update, { passive: true })
