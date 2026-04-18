@@ -12,11 +12,13 @@ export default function CookieBanner() {
 
   const accept = () => {
     localStorage.setItem('cookie-consent', 'accepted')
+    window.dispatchEvent(new Event('cookie-consent-change'))
     setVisible(false)
   }
 
-  const reject = () => {
+  const configure = () => {
     localStorage.setItem('cookie-consent', 'rejected')
+    window.dispatchEvent(new Event('cookie-consent-change'))
     setVisible(false)
   }
 
@@ -54,7 +56,7 @@ export default function CookieBanner() {
       </p>
       <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
         <button
-          onClick={reject}
+          onClick={configure}
           style={{
             background: 'transparent',
             color: '#fff',
@@ -64,9 +66,10 @@ export default function CookieBanner() {
             fontSize: 13,
             fontWeight: 500,
             cursor: 'pointer',
+            fontFamily: 'inherit',
           }}
         >
-          Reject
+          Configure
         </button>
         <button
           onClick={accept}
@@ -79,6 +82,7 @@ export default function CookieBanner() {
             fontSize: 13,
             fontWeight: 600,
             cursor: 'pointer',
+            fontFamily: 'inherit',
           }}
         >
           Accept
