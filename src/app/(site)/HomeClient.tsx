@@ -96,10 +96,17 @@ function useScrollSelect(elRef: React.RefObject<HTMLElement | null>) {
 
     const chars = el.querySelectorAll('.ss-char')
 
+    let hasScrolled = false
+    const initialY = window.scrollY
+
     function update() {
+      if (!hasScrolled) {
+        if (Math.abs(window.scrollY - initialY) > 30) hasScrolled = true
+        else return
+      }
       const rect = el!.getBoundingClientRect()
       const vh = window.innerHeight
-      let progress = 1 - (rect.top - vh * 0.4) / (vh * 0.4)
+      let progress = 1 - (rect.top - vh * 0.5) / (vh * 0.4)
       progress = Math.max(0, Math.min(1, progress))
       const count = Math.floor(progress * chars.length)
       chars.forEach((ch, i) => {
@@ -110,7 +117,6 @@ function useScrollSelect(elRef: React.RefObject<HTMLElement | null>) {
     }
 
     window.addEventListener('scroll', update, { passive: true })
-    update()
     return () => window.removeEventListener('scroll', update)
   }, [elRef])
 }
