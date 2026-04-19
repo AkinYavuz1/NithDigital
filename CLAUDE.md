@@ -22,7 +22,7 @@
 - Jest flag: use `--testPathPatterns` (not `--testPathPattern`) — this version of Jest requires it
 
 ## Project structure
-- Pages: `src/app/(site)/` (public), `src/app/admin/` (internal dashboard), `src/app/tradedesk/` (WhatsApp app UI)
+- Pages: `src/app/(site)/` (public), `src/app/admin/` (internal dashboard)
 - API routes: `src/app/api/` — new routes go here
 - Shared logic/helpers: `src/lib/`
 - Cron routes are protected by a `CRON_SECRET` header check
@@ -39,10 +39,13 @@
 - Schedule via `/api/social/schedule`, publish via `/api/social/publish`
 - Old route `/api/publish-facebook-post` is the legacy single-client cron — new work uses the multi-client social routes
 
-## TradeDesk
-- WhatsApp expense manager for sole traders, driven by Twilio webhook at `/api/tradedesk/webhook`
-- Flows: expense extraction (invoice OCR via Claude Vision), portfolio photos, Q&A (Groq), onboarding
-- State machine stored in `tradedesk_users.pending_action` + `pending_expense_id`
+## Ringtap
+- Missed call recovery SaaS for UK sole traders — lives at `C:\ringtap` (separate repo: AkinYavuz1/ringtap)
+- When a customer calls and goes unanswered, Ringtap sends an automatic WhatsApp message and AI qualifies the lead
+- Twilio voice webhook: `/api/webhooks/call`, WhatsApp webhook: `/api/webhooks/whatsapp`
+- AI model: Claude Haiku for WhatsApp conversation
+- Supabase tables: `ringtap_users`, `ringtap_contacts`, `ringtap_calls`, `ringtap_messages`, `ringtap_reviews`, `ringtap_gallery_items`
+- Pricing: £19/mo (Stripe), 14-day free trial, gallery free forever
 
 ## Website Creation Workflow
 - To start a new website project: read `website-kickoff.md` and say "new website for [client]"
@@ -63,4 +66,4 @@
 - `social_clients` — per-client Meta credentials
 - `social_posts` — scheduled/published posts
 - `gsc_*` — Google Search Console (queries, pages, countries, devices, dates)
-- `tradedesk_users`, `tradedesk_expenses`, `tradedesk_messages` — WhatsApp app data
+- Ringtap tables are in a separate Supabase project — see `C:\ringtap`
